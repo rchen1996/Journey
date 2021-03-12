@@ -10,13 +10,20 @@ import RegisterForm from './components/RegisterForm';
 import ItineraryList from './components/ItineraryList';
 
 function App() {
-  const { state, dispatch, register, login, logout } = useApplicationData();
+  const {
+    state,
+    dispatch,
+    register,
+    login,
+    logout,
+    getItineraries,
+  } = useApplicationData();
 
-  const user = state.user;
+  const { user, itineraries } = state;
 
   return (
     <Router>
-      <Nav user={user} logout={logout} />
+      <Nav user={user} logout={logout} getItineraries={getItineraries} />
       <Switch>
         <Route path="/" exact>
           <Home />
@@ -28,7 +35,7 @@ function App() {
           <RegisterForm register={register} />
         </Route>
         <Route path="/itineraries">
-          <ItineraryList />
+          <ItineraryList itineraries={itineraries} />
         </Route>
       </Switch>
     </Router>
