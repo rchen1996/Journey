@@ -9,7 +9,7 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
   });
 
   router.post('/login', (req, res) => {
-    getUserByEmail(req.body.email).then(user => {
+    getUserByEmail(req.body.email).then((user) => {
       if (user && bcrypt.compareSync(req.body.password, user.password)) {
         req.session.userId = user.id;
         res.send(user);
@@ -21,8 +21,8 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
 
   router.get('/', (req, res) => {
     getUsers()
-      .then(users => res.json(users))
-      .catch(err =>
+      .then((users) => res.json(users))
+      .catch((err) =>
         res.json({
           error: err.message,
         })
@@ -33,17 +33,19 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
     const { first_name, last_name, email, password } = req.body;
     const hash = bcrypt.hashSync(password, saltRounds);
     getUserByEmail(email)
-      .then(user => {
+      .then((user) => {
         if (user) {
           res.json({
             msg: 'Sorry, a user account with this email already exists',
           });
         } else {
-          return addUser(first_name, last_name, email, hash);
+          return addUser(first_name, last_name, email, hash).then(
+            (user) => (req.session.userId = user.id)
+          );
         }
       })
-      .then(newUser => res.json(newUser))
-      .catch(err =>
+      .then((newUser) => res.json(newUser))
+      .catch((err) =>
         res.json({
           error: err.message,
         })
