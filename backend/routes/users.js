@@ -39,13 +39,11 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
   });
 
   router.post('/login', (req, res) => {
-    const user = getUserByEmail(req.body.email);
-
-    // if able to find user by email aka user exists
-    if (req.user && bcrypt.compareSync(user.password, req.body.password)) {
-      req.session.userId = user.id;
-      console.log('success!');
-    }
+    getUserByEmail(req.body.email).then(user => {
+      if (user && bcrypt.compareSync(req.body.password, user.password)) {
+        req.session.userId = user.id;
+      }
+    });
   });
 
   return router;
