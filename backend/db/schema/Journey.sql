@@ -20,6 +20,7 @@ CREATE TYPE "attraction_type" AS ENUM (
   'nature'
 );
 
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE "users" (
   "id" serial PRIMARY KEY NOT NULL,
   "first_name" varchar(255) NOT NULL,
@@ -28,12 +29,7 @@ CREATE TABLE "users" (
   "password" varchar(255) NOT NULL
 );
 
-CREATE TABLE "travel_parties" (
-  "id" serial PRIMARY KEY NOT NULL,
-  "itinerary_id" int NOT NULL,
-  "user_id" int NOT NULL
-);
-
+DROP TABLE IF EXISTS itineraries CASCADE;
 CREATE TABLE "itineraries" (
   "id" serial PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
@@ -46,6 +42,14 @@ CREATE TABLE "itineraries" (
   "end_date" date
 );
 
+DROP TABLE IF EXISTS travel_parties CASCADE;
+CREATE TABLE "travel_parties" (
+  "id" serial PRIMARY KEY NOT NULL,
+  "itinerary_id" int NOT NULL,
+  "user_id" int NOT NULL
+);
+
+DROP TABLE IF EXISTS locations CASCADE;
 CREATE TABLE "locations" (
   "id" serial PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
@@ -54,6 +58,7 @@ CREATE TABLE "locations" (
   "longitude" number NOT NULL
 );
 
+DROP TABLE IF EXISTS days CASCADE;
 CREATE TABLE "days" (
   "id" serial PRIMARY KEY NOT NULL,
   "itinerary_id" int NOT NULL,
@@ -62,6 +67,7 @@ CREATE TABLE "days" (
   "date" date
 );
 
+DROP TABLE IF EXISTS attractions CASCADE;
 CREATE TABLE "attractions" (
   "id" serial PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
@@ -71,6 +77,7 @@ CREATE TABLE "attractions" (
   "location" point NOT NULL
 );
 
+DROP TABLE IF EXISTS activities CASCADE;
 CREATE TABLE "activities" (
   "id" serial PRIMARY KEY NOT NULL,
   "day_id" int NOT NULL,
