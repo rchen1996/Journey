@@ -4,9 +4,9 @@
 
 ### Users / Sessions
 
-- POST /users/login (login)
-- POST /users/logout (logout)
-- POST /users/signup (user signup)
+- POST /api/users/login (login)
+- POST /api/users/logout (logout)
+- POST /api/users/signup (user signup)
 
 ### User / Dashboard
 
