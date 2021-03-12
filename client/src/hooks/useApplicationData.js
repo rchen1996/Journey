@@ -51,10 +51,11 @@ export default function useApplicationData() {
   };
 
   const getItineraries = function () {
-    return axios.get('/api/itineraries').then(itineraries => {
+    return axios.get('/api/itineraries').then(res => {
+      const itineraries = res.data;
       dispatch({
         type: SET_ALL_ITINERARIES,
-        action: itineraries,
+        itineraries: itineraries,
       });
     });
   };
