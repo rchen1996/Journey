@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import useApplicationData from './hooks/useApplicationData';
 import Home from './components/Home';
-import LoginForm from './components/LoginForm';
+import Login from './components/Login';
 import RegisterForm from './components/RegisterForm';
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
           <Home />
         </Route>
         <Route path="/login">
-          <LoginForm onSave={login} />
+          <Login onSave={login} />
         </Route>
         <Route path="/signup">
           <RegisterForm register={register} />

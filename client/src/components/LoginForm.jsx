@@ -55,6 +55,9 @@ export default function LoginForm(props) {
           type="password"
           placeholder="password"
         />
+        <span>
+          Don't have an account? Sign up <a href="/signup">here</a>
+        </span>
         <FormButton onClick={save}>Log in</FormButton>
       </form>
     </div>
