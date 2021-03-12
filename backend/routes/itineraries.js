@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = ({}) => {
+module.exports = ({ getAllItineraries }) => {
+  router.get('/', (req, res) => {
+    getAllItineraries.then(itineraries => res.send(itineraries));
+  });
+
   return router;
 };
