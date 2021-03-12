@@ -22,8 +22,18 @@ export default function useApplicationData() {
       .catch((err) => console.log(err));
   }, []);
 
+  function register(first_name, last_name, email, password) {
+    return axios.post(`/api/users/`, {
+      first_name,
+      last_name,
+      email,
+      password,
+    });
+  }
+
   return {
     state,
     dispatch,
+    register,
   };
 }
