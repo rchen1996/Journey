@@ -5,7 +5,7 @@ import useApplicationData from './hooks/useApplicationData';
 import Home from './components/Home';
 function App() {
   const { state, dispatch } = useApplicationData();
-  const userList = state.users.map(user => (
+  const userList = state.users.map((user) => (
     <li key={user.id}>
       {' '}
       {user.first_name} {user.last_name} {user.email}{' '}
@@ -13,14 +13,14 @@ function App() {
   ));
   return (
     <Router>
-      <div className="">
-        <h1 className="text-xl text-teal-600"> Users </h1>
+      <div className=''>
+        <h1 className='text-xl text-teal-600 font-body'> Users </h1>
 
-        <ul> {userList} </ul>
+        <ul className='font-body'> {userList} </ul>
       </div>
       <nav></nav>
       <Switch>
-        <Route path="/">
+        <Route path='/'>
           <Home />
         </Route>
       </Switch>
