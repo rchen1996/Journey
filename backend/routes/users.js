@@ -4,6 +4,19 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 module.exports = ({ getUsers, getUserByEmail, addUser }) => {
+  router.post('/logout', (req, res) => {
+    req.session.userId = null;
+  });
+
+  router.post('/login', (req, res) => {
+    getUserByEmail(req.body.email).then(user => {
+      if (user && bcrypt.compareSync(req.body.password, user.password)) {
+        req.session.userId = user.id;
+        res.send(user);
+      }
+    });
+  });
+
   router.get('/', (req, res) => {
     getUsers()
       .then(users => res.json(users))
@@ -33,10 +46,6 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
           error: err.message,
         })
       );
-  });
-
-  router.post('/logout', (req, res) => {
-    req.session.userId = null;
   });
 
   return router;
