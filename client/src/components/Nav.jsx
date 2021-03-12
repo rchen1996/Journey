@@ -26,7 +26,7 @@ export default function Nav(props) {
         <NavButton link={`/dashboard/${props.user.id}`}>Dashboard</NavButton>
       )}
       {props.user && (
-        <NavButton link="/logout" onClick={props.logout}>
+        <NavButton link="/" onClick={props.logout}>
           Log out
         </NavButton>
       )}
