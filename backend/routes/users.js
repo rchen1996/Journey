@@ -44,6 +44,7 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
     // if able to find user by email aka user exists
     if (req.user && bcrypt.compareSync(user.password, req.body.password)) {
       req.session.userId = user.id;
+      console.log('success!');
     }
   });
 
