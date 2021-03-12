@@ -54,7 +54,7 @@ VALUES(1,1, '16:00:00', '21:00:00', 1),
 (5,38,'17:00:00', '20:00:00',20);
 
 INSERT INTO activities(itinerary_id,day_id,attraction_id)
-VALUES(1,1, 1);
+VALUES(1,1,2);
 
 INSERT INTO activities(itinerary_id, attraction_id)
 VALUES(1, 1);

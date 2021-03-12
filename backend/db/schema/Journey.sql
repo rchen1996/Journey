@@ -34,7 +34,7 @@ CREATE TABLE "itineraries" (
   "id" serial PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
   "description" text NOT NULL,
-  "image" string,
+  "image" text,
   "trip_type" traveler_type,
   "visible" boolean NOT NULL DEFAULT false,
   "creator_id" int NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE "attractions" (
   "name" varchar(255) NOT NULL,
   "description" text NOT NULL,
   "category" attraction_type NOT NULL,
-  "image" string,
+  "image" text,
   "location" point NOT NULL
 );
 
