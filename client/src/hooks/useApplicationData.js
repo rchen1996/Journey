@@ -30,10 +30,6 @@ export default function useApplicationData() {
 
     return axios.post('/api/users/login', user);
   };
-<<<<<<< HEAD
-=======
-
->>>>>>> fdb4d448a677e3965b8356f26dac006ad1d52ae0
   function register(first_name, last_name, email, password) {
     return axios.post(`/api/users/`, {
       first_name,
