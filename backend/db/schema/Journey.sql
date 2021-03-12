@@ -80,9 +80,9 @@ CREATE TABLE "attractions" (
 DROP TABLE IF EXISTS activities CASCADE;
 CREATE TABLE "activities" (
   "id" serial PRIMARY KEY NOT NULL,
-  "day_id" int NOT NULL,
-  "start_time" time NOT NULL,
-  "end_time" time NOT NULL,
+  "day_id" int,
+  "start_time" time,
+  "end_time" time,
   "attraction_id" int NOT NULL,
   "itinerary_id" int NOT NULL,
   "visible" boolean NOT NULL DEFAULT false
