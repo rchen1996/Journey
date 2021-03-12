@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import FormButton from './FormButton';
 
-export default function LoginForm() {
+export default function LoginForm(props) {
   const [userInfo, setUserInfo] = useState({
     email: '',
     password: '',
@@ -10,7 +10,6 @@ export default function LoginForm() {
 
   const handleForm = event => {
     event.preventDefault();
-    // axios request with userInfo
     setUserInfo({
       email: '',
       password: '',
@@ -20,6 +19,10 @@ export default function LoginForm() {
   const handleChange = event => {
     const { value, name } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  const save = (email, password) => {
+    props.login(email, password);
   };
 
   return (
@@ -40,7 +43,9 @@ export default function LoginForm() {
         type="password"
         placeholder="password"
       />
-      <FormButton>Log in</FormButton>
+      <FormButton onClick={() => save(userInfo.email, userInfo.password)}>
+        Log in
+      </FormButton>
     </form>
   );
 }
