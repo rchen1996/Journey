@@ -1,6 +1,6 @@
-import { useEffect, useReducer } from "react";
-import dataReducer, { SET_USERS } from "../reducers/application";
-import axios from "axios";
+import { useEffect, useReducer } from 'react';
+import dataReducer, { SET_USERS } from '../reducers/application';
+import axios from 'axios';
 
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(dataReducer, {
@@ -9,8 +9,8 @@ export default function useApplicationData() {
   });
   useEffect(() => {
     axios({
-      method: "GET",
-      url: "/api/users",
+      method: 'GET',
+      url: '/api/users',
     })
       .then(({ data }) => {
         console.log(data);
@@ -19,11 +19,24 @@ export default function useApplicationData() {
           users: data,
         });
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }, []);
+
+  const login = function (email, password) {
+    const user = {
+      email: email,
+      password: password,
+    };
+
+    return axios
+      .post('/api/users/login', user)
+      .then(response => response.send('logged in'))
+      .catch(response => response.send('failed'));
+  };
 
   return {
     state,
     dispatch,
+    login,
   };
 }
