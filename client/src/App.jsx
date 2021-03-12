@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import useApplicationData from './hooks/useApplicationData';
 import Home from './components/Home';
-import RegisterForm from './components/RegisterForm'
+import RegisterForm from './components/RegisterForm';
 
 function App() {
   const { state, dispatch, register } = useApplicationData();
@@ -26,7 +26,7 @@ function App() {
           <Home />
         </Route>
         <Route path='/signup'>
-          <RegisterForm register={register}/>
+          <RegisterForm register={register} />
         </Route>
       </Switch>
     </Router>
