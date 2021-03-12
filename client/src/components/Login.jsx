@@ -4,7 +4,7 @@ export default function Login(props) {
   return (
     <div>
       <h1>Welcome Back!</h1>
-      <LoginForm onSave={props.onSave} />
+      <LoginForm onSave={props.onSave} dispatch={props.dispatch} />
     </div>
   );
 }
