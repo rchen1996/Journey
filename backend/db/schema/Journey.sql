@@ -41,7 +41,9 @@ CREATE TABLE "itineraries" (
   "image" string,
   "trip_type" traveler_type,
   "visible" boolean NOT NULL DEFAULT false,
-  "creator_id" int NOT NULL
+  "creator_id" int NOT NULL,
+  "start_date" date,
+  "end_date" date
 );
 
 CREATE TABLE "locations" (
@@ -56,7 +58,8 @@ CREATE TABLE "days" (
   "id" serial PRIMARY KEY NOT NULL,
   "itinerary_id" int NOT NULL,
   "location_id" int NOT NULL,
-  "day_order" int NOT NULL
+  "day_order" int NOT NULL,
+  "date" date
 );
 
 CREATE TABLE "attractions" (
