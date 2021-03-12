@@ -12,8 +12,8 @@ CREATE TYPE "traveler_type" AS ENUM (
 CREATE TYPE "attraction_type" AS ENUM (
   'adult',
   'amusement',
-  'accomodations',
-  'landmarks',
+  'accomodation',
+  'landmark',
   'sport',
   'food',
   'cultural',
@@ -21,44 +21,46 @@ CREATE TYPE "attraction_type" AS ENUM (
 );
 
 CREATE TABLE "users" (
-  "id" int PRIMARY KEY,
+  "id" serial PRIMARY KEY NOT NULL,
   "first_name" varchar(255) NOT NULL,
   "last_name" varchar(255) NOT NULL,
   "email" varchar(255) UNIQUE NOT NULL,
   "password" varchar(255) NOT NULL
 );
 
-CREATE TABLE "travel_party" (
-  "id" int PRIMARY KEY,
+CREATE TABLE "travel_parties" (
+  "id" serial PRIMARY KEY NOT NULL,
   "itinerary_id" int NOT NULL,
   "user_id" int NOT NULL
 );
 
 CREATE TABLE "itineraries" (
-  "id" int PRIMARY KEY,
+  "id" serial PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
   "description" text NOT NULL,
-  "days" array NOT NULL,
+  "image" string,
   "trip_type" traveler_type,
-  "visibile" boolean NOT NULL DEFAULT false
+  "visible" boolean NOT NULL DEFAULT false,
+  "creator_id" int NOT NULL
 );
 
 CREATE TABLE "locations" (
-  "id" int PRIMARY KEY,
+  "id" serial PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
   "country" varchar(255) NOT NULL,
-  "longitude" number NOT NULL,
-  "latitude" number NOT NULL
+  "latitude" number NOT NULL,
+  "longitude" number NOT NULL
 );
 
-CREATE TABLE "itinerary_locations" (
-  "id" int PRIMARY KEY,
+CREATE TABLE "days" (
+  "id" serial PRIMARY KEY NOT NULL,
   "itinerary_id" int NOT NULL,
-  "location_id" int NOT NULL
+  "location_id" int NOT NULL,
+  "day_order" int NOT NULL
 );
 
 CREATE TABLE "attractions" (
-  "id" int PRIMARY KEY,
+  "id" serial PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
   "description" text NOT NULL,
   "category" attraction_type NOT NULL,
@@ -66,24 +68,28 @@ CREATE TABLE "attractions" (
   "location" point NOT NULL
 );
 
-CREATE TABLE "time_slot" (
-  "id" int PRIMARY KEY,
-  "day" int NOT NULL,
+CREATE TABLE "activities" (
+  "id" serial PRIMARY KEY NOT NULL,
+  "day_id" int NOT NULL,
   "start_time" time NOT NULL,
   "end_time" time NOT NULL,
   "attraction_id" int NOT NULL,
   "itinerary_id" int NOT NULL,
-  "visibile" boolean NOT NULL DEFAULT false
+  "visible" boolean NOT NULL DEFAULT false
 );
 
-ALTER TABLE "travel_party" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id");
+ALTER TABLE "travel_parties" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE "travel_party" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "travel_parties" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE "itinerary_locations" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id");
+ALTER TABLE "itineraries" ADD FOREIGN KEY ("creator_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE "itinerary_locations" ADD FOREIGN KEY ("location_id") REFERENCES "locations" ("id");
+ALTER TABLE "days" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE "time_slot" ADD FOREIGN KEY ("attraction_id") REFERENCES "attractions" ("id");
+ALTER TABLE "days" ADD FOREIGN KEY ("location_id") REFERENCES "locations" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE "time_slot" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id");
+ALTER TABLE "activities" ADD FOREIGN KEY ("attraction_id") REFERENCES "attractions" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "activities" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "activities" ADD FOREIGN KEY ("day_id") REFERENCES "days" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
