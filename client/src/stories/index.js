@@ -1,11 +1,20 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+import { storiesOf } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 
 import Nav from '../components/Nav';
+import RegisterForm from '../components/RegisterForm';
 import NavButton from '../components/NavButton';
 import LoginForm from '../components/LoginForm';
+
+import '../index.css';
+
+storiesOf('Nav', module).add('Default', () => <Nav />);
+
+storiesOf('RegisterForm', module).add('Empty', () => (
+  <RegisterForm register={action('register')} />
+));
 
 storiesOf('Nav', module).add('Default', () => <Nav />);
 

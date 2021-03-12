@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import useApplicationData from './hooks/useApplicationData';
 import Home from './components/Home';
 import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 function App() {
-  const { state, dispatch, login } = useApplicationData();
+  const { state, dispatch, register, login } = useApplicationData();
   const userList = state.users.map(user => (
     <li key={user.id}>
       {' '}
@@ -27,6 +28,9 @@ function App() {
         </Route>
         <Route path="/login">
           <LoginForm onSave={login} />
+        </Route>
+        <Route path="/signup">
+          <RegisterForm register={register} />
         </Route>
       </Switch>
     </Router>

@@ -33,10 +33,19 @@ export default function useApplicationData() {
       .then(response => console.log('logged in'))
       .catch(response => console.log('failed'));
   };
+  function register(first_name, last_name, email, password) {
+    return axios.post(`/api/users/`, {
+      first_name,
+      last_name,
+      email,
+      password,
+    });
+  }
 
   return {
     state,
     dispatch,
     login,
+    register,
   };
 }
