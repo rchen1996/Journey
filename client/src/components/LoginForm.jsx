@@ -26,6 +26,7 @@ export default function LoginForm(props) {
       return;
     }
 
+    setError('');
     props.onSave(userInfo.email, userInfo.password);
   };
 
