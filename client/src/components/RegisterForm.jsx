@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import FormButton from './FormButton'
 
 export default function RegisterForm(props) {
   const [firstName, setFirstName] = useState(props.first_name || '');
@@ -18,7 +19,7 @@ export default function RegisterForm(props) {
       return;
     }
 
-    if (password == passwordConfirm) {
+    if (password === passwordConfirm) {
       props.register(firstName, lastName, email, password);
       setFirstName('');
       setLastName('');
@@ -82,7 +83,7 @@ export default function RegisterForm(props) {
         <span>
           Already have an account? <Link to='/login'>Sign in here!</Link>
         </span>
-        <button onClick={save}>Submit</button>
+        <FormButton onClick={save}>Submit</ FormButton>
       </footer>
     </section>
   );
