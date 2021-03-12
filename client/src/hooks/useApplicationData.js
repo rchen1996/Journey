@@ -30,8 +30,8 @@ export default function useApplicationData() {
 
     return axios
       .post('/api/users/login', user)
-      .then(response => response.send('logged in'))
-      .catch(response => response.send('failed'));
+      .then(response => console.log('logged in'))
+      .catch(response => console.log('failed'));
   };
 
   return {
