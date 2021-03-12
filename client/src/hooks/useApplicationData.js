@@ -30,6 +30,11 @@ export default function useApplicationData() {
 
     return axios.post('/api/users/login', user);
   };
+
+  const logout = () => {
+    return axios.post(`/api/users/logout`);
+  };
+
   function register(first_name, last_name, email, password) {
     return axios.post(`/api/users/`, {
       first_name,
@@ -44,5 +49,6 @@ export default function useApplicationData() {
     dispatch,
     login,
     register,
+    logout,
   };
 }

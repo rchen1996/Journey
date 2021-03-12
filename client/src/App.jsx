@@ -9,7 +9,7 @@ import Login from './components/Login';
 import RegisterForm from './components/RegisterForm';
 
 function App() {
-  const { state, dispatch, register, login } = useApplicationData();
+  const { state, dispatch, register, login, logout } = useApplicationData();
   const userList = state.users.map(user => (
     <li key={user.id}>
       {' '}
@@ -23,7 +23,7 @@ function App() {
         <h1 className="text-xl text-teal-600 font-body"> Users </h1>
         <ul className="font-body"> {userList} </ul>
       </div>
-      <Nav />
+      <Nav user={userList} logout={logout} />
       <Switch>
         <Route path="/" exact>
           <Home />
