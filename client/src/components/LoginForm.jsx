@@ -13,8 +13,8 @@ export default function LoginForm(props) {
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  const save = (email, password) => {
-    props.onSave(email, password);
+  const save = () => {
+    props.onSave(userInfo.email, userInfo.password);
   };
 
   return (
