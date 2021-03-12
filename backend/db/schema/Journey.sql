@@ -54,8 +54,8 @@ CREATE TABLE "locations" (
   "id" serial PRIMARY KEY NOT NULL,
   "name" varchar(255) NOT NULL,
   "country" varchar(255) NOT NULL,
-  "latitude" number NOT NULL,
-  "longitude" number NOT NULL
+  "latitude" float NOT NULL,
+  "longitude" float NOT NULL
 );
 
 DROP TABLE IF EXISTS days CASCADE;
