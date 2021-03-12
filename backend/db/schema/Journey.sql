@@ -28,7 +28,7 @@ CREATE TABLE "users" (
   "password" varchar(255) NOT NULL
 );
 
-CREATE TABLE "travel_party" (
+CREATE TABLE "travel_parties" (
   "id" int PRIMARY KEY,
   "itinerary_id" int NOT NULL,
   "user_id" int NOT NULL
@@ -68,7 +68,7 @@ CREATE TABLE "attractions" (
   "location" point NOT NULL
 );
 
-CREATE TABLE "time_slot" (
+CREATE TABLE "time_slots" (
   "id" int PRIMARY KEY,
   "day" int NOT NULL,
   "start_time" time NOT NULL,
@@ -78,9 +78,9 @@ CREATE TABLE "time_slot" (
   "visible" boolean NOT NULL DEFAULT false
 );
 
-ALTER TABLE "travel_party" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id");
+ALTER TABLE "travel_parties" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id");
 
-ALTER TABLE "travel_party" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "travel_parties" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "itineraries" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
@@ -88,6 +88,6 @@ ALTER TABLE "itinerary_locations" ADD FOREIGN KEY ("itinerary_id") REFERENCES "i
 
 ALTER TABLE "itinerary_locations" ADD FOREIGN KEY ("location_id") REFERENCES "locations" ("id");
 
-ALTER TABLE "time_slot" ADD FOREIGN KEY ("attraction_id") REFERENCES "attractions" ("id");
+ALTER TABLE "time_slots" ADD FOREIGN KEY ("attraction_id") REFERENCES "attractions" ("id");
 
-ALTER TABLE "time_slot" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id");
+ALTER TABLE "time_slots" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id");
