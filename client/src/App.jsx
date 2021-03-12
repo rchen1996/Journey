@@ -34,7 +34,7 @@ function App() {
           <Login onSave={login} dispatch={dispatch} />
         </Route>
         <Route path="/signup">
-          <RegisterForm register={register} />
+          <RegisterForm register={register} dispatch={dispatch}/>
         </Route>
       </Switch>
     </Router>

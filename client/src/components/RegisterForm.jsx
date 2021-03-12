@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import FormButton from './FormButton'
+import FormButton from './FormButton';
+import { SET_USER } from '../reducers/application';
 
 export default function RegisterForm(props) {
   const [firstName, setFirstName] = useState(props.first_name || '');
@@ -20,7 +21,13 @@ export default function RegisterForm(props) {
     }
 
     if (password === passwordConfirm) {
-      props.register(firstName, lastName, email, password);
+      props.register(firstName, lastName, email, password)
+      .then(res => {
+        props.dispatch({
+          type: SET_USER,
+          user: res.data,
+      });
+    })
       setFirstName('');
       setLastName('');
       setEmail('');

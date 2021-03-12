@@ -22,8 +22,8 @@ module.exports = ({ getUser, getUserByEmail, addUser }) => {
 
   router.get('/:user_id', (req, res) => {
     getUser(req.session.userId)
-      .then(user => res.send(user))
-      .catch(err =>
+      .then((user) => res.send(user))
+      .catch((err) =>
         res.send({
           error: err.message,
         })
@@ -40,11 +40,12 @@ module.exports = ({ getUser, getUserByEmail, addUser }) => {
             msg: 'Sorry, a user account with this email already exists',
           });
         } else {
-          req.session.userId = user.id;
-          return addUser(first_name, last_name, email, hash);
+          return addUser(first_name, last_name, email, hash).then((user) => {
+            req.session.userId = user.id;
+            res.send(user);
+          });
         }
       })
-      .then((newUser) => res.json(newUser))
       .catch((err) =>
         res.json({
           error: err.message,
