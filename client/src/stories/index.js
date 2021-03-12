@@ -5,6 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import Nav from '../components/Nav';
 import NavButton from '../components/NavButton';
+import LoginForm from '../components/LoginForm';
 
 storiesOf('Nav', module).add('Default', () => <Nav />);
 
@@ -14,3 +15,5 @@ storiesOf('NavButton', module)
   .add('Clickable', () => (
     <NavButton onClick={action('button-cicked')}>Clickable</NavButton>
   ));
+
+storiesOf('LoginForm', module).add('Login', () => <LoginForm />);
