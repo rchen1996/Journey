@@ -31,7 +31,7 @@ function App() {
           <Home />
         </Route>
         <Route path="/login">
-          <Login onSave={login} />
+          <Login onSave={login} dispatch={dispatch} />
         </Route>
         <Route path="/signup">
           <RegisterForm register={register} />
