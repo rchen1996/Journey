@@ -1,3 +1,3 @@
-export default function Home() {
-  return <h2>Welcome home!</h2>;
+export default function Home(props) {
+  return <h1>Welcome to Journey</h1>;
 }
