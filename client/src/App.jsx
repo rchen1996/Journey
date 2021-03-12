@@ -17,13 +17,15 @@ function App() {
     </li>
   ));
 
+  const user = state.user;
+
   return (
     <Router>
       <div className="">
         <h1 className="text-xl text-teal-600 font-body"> Users </h1>
         <ul className="font-body"> {userList} </ul>
       </div>
-      <Nav user={userList} logout={logout} />
+      <Nav user={user} logout={logout} />
       <Switch>
         <Route path="/" exact>
           <Home />
