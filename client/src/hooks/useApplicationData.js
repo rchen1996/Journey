@@ -28,10 +28,7 @@ export default function useApplicationData() {
       password: password,
     };
 
-    return axios
-      .post('/api/users/login', user)
-      .then(response => console.log('logged in'))
-      .catch(response => console.log('failed'));
+    return axios.post('/api/users/login', user);
   };
   function register(first_name, last_name, email, password) {
     return axios.post(`/api/users/`, {
