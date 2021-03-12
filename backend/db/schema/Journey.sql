@@ -76,7 +76,8 @@ CREATE TABLE "attractions" (
   "description" text NOT NULL,
   "category" attraction_type NOT NULL,
   "image" text,
-  "location" point NOT NULL
+  "location" point NOT NULL,
+  "visible" boolean NOT NULL DEFAULT false
 );
 
 DROP TABLE IF EXISTS activities CASCADE;
@@ -86,8 +87,7 @@ CREATE TABLE "activities" (
   "start_time" time,
   "end_time" time,
   "attraction_id" int NOT NULL,
-  "itinerary_id" int NOT NULL,
-  "visible" boolean NOT NULL DEFAULT false
+  "itinerary_id" int NOT NULL
 );
 
 ALTER TABLE "travel_parties" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
