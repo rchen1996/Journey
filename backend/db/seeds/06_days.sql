@@ -1,4 +1,4 @@
-INSERT INTO itinerary_locations(itinerary_id, location_id, days)
+INSERT INTO days(itinerary_id, location_id, day_order)
 VALUES(1, 1, [1, 2, 3, 4, 5, 6]),
 (2, 2, [1, 2, 3, 4])
 (2, 3, [5, 6, 7, 8]),
