@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import FormButton from './FormButton';
+
 export default function LoginForm() {
   const [userInfo, setUserInfo] = useState({
     email: '',
@@ -38,6 +40,7 @@ export default function LoginForm() {
         type="password"
         placeholder="password"
       />
+      <FormButton>Log in</FormButton>
     </form>
   );
 }
