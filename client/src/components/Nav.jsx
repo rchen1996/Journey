@@ -1,3 +1,5 @@
+import NavButton from './NavButton';
+
 export default function Nav(props) {
   return (
     <nav>
@@ -19,6 +21,17 @@ export default function Nav(props) {
           fill="#0D9488"
         />
       </svg>
+      <NavButton>Guides</NavButton>
+      {props.user && (
+        <NavButton link={`/dashboard/${props.user.id}`}>Dashboard</NavButton>
+      )}
+      {props.user && (
+        <NavButton link="/logout" onClick={props.logout}>
+          Log out
+        </NavButton>
+      )}
+      {!props.user && <NavButton link="/login">Log in</NavButton>}
+      {!props.user && <NavButton link="/signup">Sign up</NavButton>}
     </nav>
   );
 }
