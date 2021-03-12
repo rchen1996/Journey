@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-module.exports = ({ getUsers, getUserByEmail, addUser }) => {
+module.exports = ({ getUser, getUserByEmail, addUser }) => {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
     res.send({ message: 'successful logout' });
@@ -20,11 +20,11 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
     });
   });
 
-  router.get('/', (req, res) => {
-    getUsers()
-      .then(users => res.json(users))
+  router.get('/:user_id', (req, res) => {
+    getUser(req.session.userId)
+      .then(user => res.send(user))
       .catch(err =>
-        res.json({
+        res.send({
           error: err.message,
         })
       );
