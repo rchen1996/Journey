@@ -1,3 +1,4 @@
+DROP TYPE IF EXISTS traveler_type CASCADE;
 CREATE TYPE "traveler_type" AS ENUM (
   'couples',
   'groups',
@@ -9,6 +10,7 @@ CREATE TYPE "traveler_type" AS ENUM (
   'accessibility'
 );
 
+DROP TYPE IF EXISTS attraction_type CASCADE;
 CREATE TYPE "attraction_type" AS ENUM (
   'adult',
   'amusement',
