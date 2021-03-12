@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import useApplicationData from './hooks/useApplicationData';
-
+import Home from './components/Home';
 function App() {
   const { state, dispatch } = useApplicationData();
   const userList = state.users.map(user => (
