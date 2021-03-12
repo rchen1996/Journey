@@ -48,8 +48,8 @@ CREATE TABLE "locations" (
   "id" int PRIMARY KEY,
   "name" varchar(255) NOT NULL,
   "country" varchar(255) NOT NULL,
-  "longitude" number NOT NULL,
-  "latitude" number NOT NULL
+  "latitude" number NOT NULL,
+  "longitude" number NOT NULL
 );
 
 CREATE TABLE "itinerary_locations" (
