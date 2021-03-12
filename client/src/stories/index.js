@@ -7,6 +7,8 @@ import Nav from '../components/Nav';
 import RegisterForm from '../components/RegisterForm';
 import NavButton from '../components/NavButton';
 
+import '../index.css';
+
 storiesOf('Nav', module).add('Default', () => <Nav />);
 
 storiesOf('RegisterForm', module).add('Empty', () => (
