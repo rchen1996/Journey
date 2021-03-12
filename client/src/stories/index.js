@@ -6,6 +6,8 @@ import { action } from '@storybook/addon-actions';
 import Nav from '../components/Nav';
 import NavButton from '../components/NavButton';
 
+import '../index.css';
+
 storiesOf('Nav', module).add('Default', () => <Nav />);
 
 storiesOf('NavButton', module)
