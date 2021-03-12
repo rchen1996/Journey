@@ -55,7 +55,8 @@ CREATE TABLE "locations" (
 CREATE TABLE "itinerary_locations" (
   "id" int PRIMARY KEY,
   "itinerary_id" int NOT NULL,
-  "location_id" int NOT NULL
+  "location_id" int NOT NULL,
+  "days" array NOT NULL
 );
 
 CREATE TABLE "attractions" (
