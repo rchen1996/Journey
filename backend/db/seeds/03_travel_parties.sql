@@ -1,4 +1,4 @@
-INSERT INTO travel_party (itinerary_id, user_id)
+INSERT INTO travel_parties (itinerary_id, user_id)
 VALUES (1, 1),
 (1, 2),
 (1, 3),
