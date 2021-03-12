@@ -5,26 +5,29 @@ export default function RegisterForm(props) {
   const [lastName, setLastName] = useState(props.last_name || '');
   const [email, setEmail] = useState(props.email || '');
   const [password, setPassword] = useState(props.password || '');
-  const [passwordConfirm, setPasswordConfirm] = useState(props.password_confirmation || '');
+  const [passwordConfirm, setPasswordConfirm] = useState(
+    props.password_confirmation || ''
+  );
 
-  const [error, setError] = useState("")
+  const [error, setError] = useState('');
 
   const save = function () {
-    if(!firstName || !lastName || !email || !password) {
-      setError('Fields cannot be blank')
-      return
-    }
-
-    if(password == passwordConfirm) {
-      props.register(firstName, lastName, email, password);
-      setFirstName('')
-      setLastName('')
-      setEmail('')
-      setPassword('')
-      setPasswordConfirm('')
+    if (!firstName || !lastName || !email || !password) {
+      setError('Fields cannot be blank');
       return;
     }
-    setError('Passwords need to match')
+
+    if (password == passwordConfirm) {
+      props.register(firstName, lastName, email, password);
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+      setPasswordConfirm('');
+      setError('');
+      return;
+    }
+    setError('Passwords need to match');
   };
   return (
     <section>
@@ -38,7 +41,7 @@ export default function RegisterForm(props) {
           value={firstName}
           onChange={(event) => setFirstName(event.target.value)}
         />
-         <label for='last-name'>Last Name:</label>
+        <label for='last-name'>Last Name:</label>
         <input
           className='last-name'
           name='last-name'
@@ -47,7 +50,7 @@ export default function RegisterForm(props) {
           value={lastName}
           onChange={(event) => setLastName(event.target.value)}
         />
-         <label for='email'>Email:</label>
+        <label for='email'>Email:</label>
         <input
           className='email'
           name='email'
@@ -74,7 +77,7 @@ export default function RegisterForm(props) {
         />
       </form>
       <button onClick={save}>Submit</button>
-      <section className="form__validation">{error}</section>
+      <section className='form__validation'>{error}</section>
     </section>
   );
 }
