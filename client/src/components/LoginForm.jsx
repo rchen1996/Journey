@@ -8,6 +8,11 @@ export default function LoginForm() {
 
   const handleForm = event => {
     event.preventDefault();
+    // axios request with userInfo
+    setUserInfo({
+      email: '',
+      password: '',
+    });
   };
 
   const handleChange = event => {
