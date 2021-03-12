@@ -1,9 +1,10 @@
 export default function ItineraryListItem(props) {
+  const { name, description, image } = props.itinerary;
   return (
     <div>
-      {/* itinerary image */}
-      <h4>Itinerary Name</h4>
-      <p>Itinerary Description</p>
+      <img src={image} alt="itinerary cover" />
+      <h4>{name}</h4>
+      <p>{description}</p>
       {/* bookmark button */}
     </div>
   );
