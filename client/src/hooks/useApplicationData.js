@@ -1,26 +1,23 @@
 import { useEffect, useReducer } from 'react';
-import dataReducer, { SET_USERS } from '../reducers/application';
+import dataReducer, { SET_USER } from '../reducers/application';
 import axios from 'axios';
 
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(dataReducer, {
-    users: [],
-    loading: true,
+    user: {},
   });
+
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: '/api/users',
-    })
-      .then(({ data }) => {
-        console.log(data);
+    axios.get(`/api/users/${state.user.id}`).then(res => {
+      const user = res.data[0];
+      if (res.data.length > 0) {
         dispatch({
-          type: SET_USERS,
-          users: data,
+          type: SET_USER,
+          user: user,
         });
-      })
-      .catch(err => console.log(err));
-  }, []);
+      }
+    });
+  }, [state.user.id]);
 
   const login = function (email, password) {
     const user = {
@@ -32,7 +29,12 @@ export default function useApplicationData() {
   };
 
   const logout = () => {
-    return axios.post(`/api/users/logout`);
+    return axios.post(`/api/users/logout`).then(() => {
+      dispatch({
+        type: SET_USER,
+        user: {},
+      });
+    });
   };
 
   function register(first_name, last_name, email, password) {
