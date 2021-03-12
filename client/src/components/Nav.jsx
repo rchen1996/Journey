@@ -21,7 +21,9 @@ export default function Nav(props) {
           fill="#0D9488"
         />
       </svg>
-      <NavButton link="/itineraries">Itineraries</NavButton>
+      <NavButton link="/itineraries" onClick={props.getItineraries}>
+        Itineraries
+      </NavButton>
       {props.user.id && (
         <NavButton link="/dashboard/:user_id">Dashboard</NavButton>
       )}
