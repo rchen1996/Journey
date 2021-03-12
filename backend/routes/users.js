@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 module.exports = ({ getUsers, getUserByEmail, addUser }) => {
   router.get('/', (req, res) => {
@@ -14,7 +16,7 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
 
   router.post('/', (req, res) => {
     const { first_name, last_name, email, password } = req.body;
-
+    const hash = bcrypt.hashSync(password, saltRounds);
     getUserByEmail(email)
       .then(user => {
         if (user) {
@@ -22,7 +24,7 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
             msg: 'Sorry, a user account with this email already exists',
           });
         } else {
-          return addUser(first_name, last_name, email, password);
+          return addUser(first_name, last_name, email, hash);
         }
       })
       .then(newUser => res.json(newUser))
