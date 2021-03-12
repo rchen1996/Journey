@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function RegisterForm(props) {
   const [firstName, setFirstName] = useState(props.first_name || '');
@@ -31,6 +32,7 @@ export default function RegisterForm(props) {
   };
   return (
     <section>
+      <section className='form__validation'>{error}</section>
       <form autoComplete='off' onSubmit={(event) => event.preventDefault()}>
         <label for='first-name'>First Name:</label>
         <input
@@ -76,8 +78,12 @@ export default function RegisterForm(props) {
           onChange={(event) => setPasswordConfirm(event.target.value)}
         />
       </form>
-      <button onClick={save}>Submit</button>
-      <section className='form__validation'>{error}</section>
+      <footer>
+        <span>
+          Already have an account? <Link to='/login'>Sign in here!</Link>
+        </span>
+        <button onClick={save}>Submit</button>
+      </footer>
     </section>
   );
 }
