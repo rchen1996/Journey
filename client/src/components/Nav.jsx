@@ -23,7 +23,7 @@ export default function Nav(props) {
       </svg>
       <NavButton link="/itineraries">Itineraries</NavButton>
       {props.user.id && (
-        <NavButton link={`/dashboard/${props.user.id}`}>Dashboard</NavButton>
+        <NavButton link="/dashboard/:user_id">Dashboard</NavButton>
       )}
       {props.user.id && (
         <NavButton link="/" onClick={props.logout}>
