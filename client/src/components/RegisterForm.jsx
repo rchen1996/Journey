@@ -21,13 +21,12 @@ export default function RegisterForm(props) {
     }
 
     if (password === passwordConfirm) {
-      props.register(firstName, lastName, email, password)
-      .then(res => {
+      props.register(firstName, lastName, email, password).then((res) => {
         props.dispatch({
           type: SET_USER,
           user: res.data,
+        });
       });
-    })
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -90,7 +89,7 @@ export default function RegisterForm(props) {
         <span>
           Already have an account? <Link to='/login'>Sign in here!</Link>
         </span>
-        <FormButton onClick={save}>Submit</ FormButton>
+        <FormButton onClick={save}>Submit</FormButton>
       </footer>
     </section>
   );
