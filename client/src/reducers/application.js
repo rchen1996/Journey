@@ -1,12 +1,10 @@
-export const SET_USERS = "SET_USERS";
+export const SET_USER = 'SET_USER';
 
 const dataReducer = (state, action) => {
   switch (action.type) {
-    case SET_USERS:
+    case SET_USER:
       return {
-        ...state,
-        users: action.users,
-        loading: false,
+        user: action.user,
       };
     default:
       return state;
