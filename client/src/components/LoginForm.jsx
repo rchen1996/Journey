@@ -17,6 +17,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleForm}>
+      <label for="email">Email</label>
       <input
         value={userInfo.email}
         name="email"
@@ -24,6 +25,7 @@ export default function LoginForm() {
         type="email"
         placeholder="email"
       />
+      <label for="password">Password</label>
       <input
         value={userInfo.password}
         name="password"
