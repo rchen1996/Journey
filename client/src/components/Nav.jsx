@@ -22,16 +22,16 @@ export default function Nav(props) {
         />
       </svg>
       <NavButton>Guides</NavButton>
-      {props.user && (
+      {props.user.id && (
         <NavButton link={`/dashboard/${props.user.id}`}>Dashboard</NavButton>
       )}
-      {props.user && (
+      {props.user.id && (
         <NavButton link="/" onClick={props.logout}>
           Log out
         </NavButton>
       )}
-      {!props.user && <NavButton link="/login">Log in</NavButton>}
-      {!props.user && <NavButton link="/signup">Sign up</NavButton>}
+      {!props.user.id && <NavButton link="/login">Log in</NavButton>}
+      {!props.user.id && <NavButton link="/signup">Sign up</NavButton>}
     </nav>
   );
 }
