@@ -19,7 +19,7 @@ export default function LoginForm(props) {
 
   return (
     <form onSubmit={event => event.preventDefault()}>
-      <label for="email">Email</label>
+      <label htmlFor="email">Email</label>
       <input
         value={userInfo.email}
         name="email"
@@ -27,7 +27,7 @@ export default function LoginForm(props) {
         type="email"
         placeholder="email"
       />
-      <label for="password">Password</label>
+      <label htmlFor="password">Password</label>
       <input
         value={userInfo.password}
         name="password"
