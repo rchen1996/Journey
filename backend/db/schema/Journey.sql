@@ -40,7 +40,7 @@ CREATE TABLE "itineraries" (
   "description" text NOT NULL,
   "days" array NOT NULL,
   "trip_type" traveler_type,
-  "visibile" boolean NOT NULL DEFAULT false
+  "visible" boolean NOT NULL DEFAULT false
 );
 
 CREATE TABLE "locations" (
@@ -73,7 +73,7 @@ CREATE TABLE "time_slot" (
   "end_time" time NOT NULL,
   "attraction_id" int NOT NULL,
   "itinerary_id" int NOT NULL,
-  "visibile" boolean NOT NULL DEFAULT false
+  "visible" boolean NOT NULL DEFAULT false
 );
 
 ALTER TABLE "travel_party" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id");
