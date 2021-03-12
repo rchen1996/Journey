@@ -8,25 +8,17 @@ export default function LoginForm(props) {
     password: '',
   });
 
-  const handleForm = event => {
-    event.preventDefault();
-    setUserInfo({
-      email: '',
-      password: '',
-    });
-  };
-
   const handleChange = event => {
     const { value, name } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
 
   const save = (email, password) => {
-    props.login(email, password);
+    props.onSave(email, password);
   };
 
   return (
-    <form onSubmit={handleForm}>
+    <form onSubmit={event => event.preventDefault()}>
       <label for="email">Email</label>
       <input
         value={userInfo.email}
@@ -43,9 +35,7 @@ export default function LoginForm(props) {
         type="password"
         placeholder="password"
       />
-      <FormButton onClick={() => save(userInfo.email, userInfo.password)}>
-        Log in
-      </FormButton>
+      <FormButton onClick={save}>Log in</FormButton>
     </form>
   );
 }
