@@ -6,6 +6,7 @@ const saltRounds = 10;
 module.exports = ({ getUsers, getUserByEmail, addUser }) => {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
+    res.send({ message: 'successful logout' });
   });
 
   router.post('/login', (req, res) => {
