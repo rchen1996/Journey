@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 export default function LoginForm() {
   const [userInfo, setUserInfo] = useState({
     email: '',
@@ -20,12 +22,14 @@ export default function LoginForm() {
         name="email"
         onChange={handleChange}
         type="email"
+        placeholder="email"
       />
       <input
         value={userInfo.password}
         name="password"
         onChange={handleChange}
         type="password"
+        placeholder="password"
       />
     </form>
   );
