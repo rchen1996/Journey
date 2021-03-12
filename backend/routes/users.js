@@ -13,6 +13,8 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
       if (user && bcrypt.compareSync(req.body.password, user.password)) {
         req.session.userId = user.id;
         res.send(user);
+      } else {
+        res.send({ error: 'Error' });
       }
     });
   });

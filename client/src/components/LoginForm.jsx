@@ -26,8 +26,13 @@ export default function LoginForm(props) {
       return;
     }
 
-    setError('');
-    props.onSave(userInfo.email, userInfo.password);
+    props.onSave(userInfo.email, userInfo.password).then(res => {
+      if (res.data.email) {
+        setError('');
+      } else if (res.data.error) {
+        setError('Incorrect email or password');
+      }
+    });
   };
 
   return (
