@@ -2,7 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import useApplicationData from './hooks/useApplicationData';
+
 import Home from './components/Home';
+import Nav from './components/Nav';
 import Login from './components/Login';
 import RegisterForm from './components/RegisterForm';
 
@@ -21,7 +23,7 @@ function App() {
         <h1 className="text-xl text-teal-600 font-body"> Users </h1>
         <ul className="font-body"> {userList} </ul>
       </div>
-      <nav></nav>
+      <Nav />
       <Switch>
         <Route path="/" exact>
           <Home />
