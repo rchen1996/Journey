@@ -1,7 +1,8 @@
 module.exports = db => {
-  const getUsers = () => {
+  const getUser = id => {
     const query = {
-      text: 'SELECT * FROM users;',
+      text: 'SELECT * FROM users WHERE id = $1;',
+      values: [id],
     };
 
     return db
@@ -35,7 +36,7 @@ module.exports = db => {
   };
 
   return {
-    getUsers,
+    getUser,
     getUserByEmail,
     addUser,
   };

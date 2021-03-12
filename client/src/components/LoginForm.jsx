@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SET_USER } from '../reducers/application';
 
 import FormButton from './FormButton';
 
@@ -29,6 +30,10 @@ export default function LoginForm(props) {
     props.onSave(userInfo.email, userInfo.password).then(res => {
       if (res.data.email) {
         setError('');
+        props.dispatch({
+          type: SET_USER,
+          user: res.data,
+        });
       } else if (res.data.error) {
         setError('Incorrect email or password');
       }
