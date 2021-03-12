@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import Nav from '../components/Nav';
 import RegisterForm from '../components/RegisterForm';
@@ -25,4 +25,6 @@ storiesOf('NavButton', module)
     <NavButton onClick={action('button-cicked')}>Clickable</NavButton>
   ));
 
-storiesOf('LoginForm', module).add('Login', () => <LoginForm />);
+storiesOf('LoginForm', module).add('Login', () => (
+  <LoginForm onSave={action('login')} />
+));
