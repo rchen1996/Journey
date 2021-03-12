@@ -12,11 +12,19 @@ function App() {
     </li>
   ));
   return (
-    <div className="">
-      <h1 className="text-xl text-teal-600"> Users </h1>
+    <Router>
+      <div className="">
+        <h1 className="text-xl text-teal-600"> Users </h1>
 
-      <ul> {userList} </ul>
-    </div>
+        <ul> {userList} </ul>
+      </div>
+      <nav></nav>
+      <Switch>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
