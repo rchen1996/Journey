@@ -8,6 +8,9 @@ module.exports = {
       // Build your palette here
       teal: colors.teal,
     },
+    fontFamily: {
+      body: ['Open Sans', 'sans-serif'],
+    },
   },
   variants: {
     extend: {},
