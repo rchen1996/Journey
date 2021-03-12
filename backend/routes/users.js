@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 
 module.exports = ({ getUsers, getUserByEmail, addUser }) => {
   router.get('/', (req, res) => {
@@ -35,6 +36,15 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
 
   router.post('/logout', (req, res) => {
     req.session.userId = null;
+  });
+
+  router.post('/login', (req, res) => {
+    const user = getUserByEmail(req.body.email);
+
+    // if able to find user by email aka user exists
+    if (req.user && bcrypt.compareSync(user.password, req.body.password)) {
+      req.session.userId = user.id;
+    }
   });
 
   return router;
