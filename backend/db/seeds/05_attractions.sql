@@ -15,10 +15,10 @@ VALUES ('Guiness Storehouse', 'Free Stout for days','adult','https://lh5.googleu
 ('Terrazza Les Étoiles Roma', 'fine dining restaurant','food','https://lh5.googleusercontent.com/p/AF1QipPdXKgLMBGWTXOtVUtJrpmJ4F-YYPzFI52R5d16=w408-h270-k-no','41.8952448,12.4616392'),
 
 ('Van Gogh Museum', 'Museum housing the world''s largest collection of Van Gogh paintings, alongside drawings & letters.','cultural','https://lh5.googleusercontent.com/p/AF1QipMK2pmjhRGYsvERsFeiEQYUprxO4Wcbs9BPQice=w408-h306-k-no','52.3494033,4.7897131'),
-('Flower Market', 'An array of offerings','landmarks','https://lh5.googleusercontent.com/p/AF1QipOD9hZcG7qnjngRIEwQdDT4UbGWnRZk7xn9cVY=w408-h544-k-no','52.3561114,4.8931731'),
+('Flower Market', 'An array of offerings','landmark','https://lh5.googleusercontent.com/p/AF1QipOD9hZcG7qnjngRIEwQdDT4UbGWnRZk7xn9cVY=w408-h544-k-no','52.3561114,4.8931731'),
 
 ('Tokyo Disneyland', 'Mickey Mouse speaks japanese','amusement','https://lh5.googleusercontent.com/p/AF1QipOQqhceiyC1qq4AuiX_-I2i-9wVH31DD-i8Ss6b=w408-h306-k-no','35.6329007,139.8782003'),
-('Tokyo Skytree', 'World''s tallest freestanding broadcasting tower with an observation deck boasting 360-degree views.','landmarks','https://lh5.googleusercontent.com/p/AF1QipMZOND0BcUzqWzLKxntdXNq50vBbkP2ZRAAU4li=w408-h444-k-no','35.7100627,139.7406626'),
+('Tokyo Skytree', 'World''s tallest freestanding broadcasting tower with an observation deck boasting 360-degree views.','landmark','https://lh5.googleusercontent.com/p/AF1QipMZOND0BcUzqWzLKxntdXNq50vBbkP2ZRAAU4li=w408-h444-k-no','35.7100627,139.7406626'),
 
 ('Kinkaku-ji', 'Iconic golden temple','cultural','https://lh5.googleusercontent.com/p/AF1QipPjKak8aP8ew2EDy2YDZrD74dHbLTaLeAcEx1Yp=w408-h306-k-no','35.03937,135.7292431'),
 ('Jidaiya', 'Popular izakaya','food','https://lh5.googleusercontent.com/p/AF1QipNW5M4BvpNwa3q_HxFKAsVYObwzsthFP3XsIHQf=w408-h544-k-no','34.9638035,135.7684177'),
