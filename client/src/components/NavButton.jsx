@@ -2,7 +2,7 @@ export default function NavButton(props) {
   return (
     <button onClick={props.onClick}>
       {props.children}
-      {props.childen === 'Log out' && (
+      {props.children === 'Log out' && (
         <svg
           width="16"
           height="14"
