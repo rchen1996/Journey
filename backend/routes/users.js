@@ -39,9 +39,8 @@ module.exports = ({ getUsers, getUserByEmail, addUser }) => {
             msg: 'Sorry, a user account with this email already exists',
           });
         } else {
-          return addUser(first_name, last_name, email, hash).then(
-            (user) => (req.session.userId = user.id)
-          );
+          req.session.userId = user.id;
+          return addUser(first_name, last_name, email, hash);
         }
       })
       .then((newUser) => res.json(newUser))

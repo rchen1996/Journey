@@ -35,7 +35,7 @@ export default function RegisterForm(props) {
     <section>
       <section className='form__validation'>{error}</section>
       <form autoComplete='off' onSubmit={(event) => event.preventDefault()}>
-        <label for='first-name'>First Name:</label>
+        <label htmlFor='first-name'>First Name:</label>
         <input
           className='first-name'
           name='first-name'
@@ -44,7 +44,7 @@ export default function RegisterForm(props) {
           value={firstName}
           onChange={(event) => setFirstName(event.target.value)}
         />
-        <label for='last-name'>Last Name:</label>
+        <label htmlFor='last-name'>Last Name:</label>
         <input
           className='last-name'
           name='last-name'
@@ -53,7 +53,7 @@ export default function RegisterForm(props) {
           value={lastName}
           onChange={(event) => setLastName(event.target.value)}
         />
-        <label for='email'>Email:</label>
+        <label htmlFor='email'>Email:</label>
         <input
           className='email'
           name='email'
@@ -62,7 +62,7 @@ export default function RegisterForm(props) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-        <label for='password'>Password:</label>
+        <label htmlFor='password'>Password:</label>
         <input
           className='password'
           name='password'
@@ -70,7 +70,7 @@ export default function RegisterForm(props) {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <label for='password-confirmation'>Password confirmation:</label>
+        <label htmlFor='password-confirmation'>Password confirmation:</label>
         <input
           className='password-confirmation'
           name='password-confirmation'
