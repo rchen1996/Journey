@@ -1,16 +1,23 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+import { storiesOf } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 
-import Nav from '../components/Nav';
-import RegisterForm from '../components/RegisterForm'
+import Nav from "../components/Nav";
+import RegisterForm from "../components/RegisterForm";
 
-storiesOf('Nav', module).add('Default', () => <Nav />);
+storiesOf("RegisterForm", module).add("Empty", () => (
+  <RegisterForm register={action("register")} />
+));
+import NavButton from "../components/NavButton";
 
+import "../index.css";
 
-storiesOf('RegisterForm',module).add('Empty',()=> (
-<RegisterForm
-register={action('register')}
-/>
-))
+storiesOf("Nav", module).add("Default", () => <Nav />);
+
+storiesOf("NavButton", module)
+  .add("Dashboard", () => <NavButton>Dashboard</NavButton>)
+  .add("Log out", () => <NavButton>Log out</NavButton>)
+  .add("Clickable", () => (
+    <NavButton onClick={action("button-cicked")}>Clickable</NavButton>
+  ));
