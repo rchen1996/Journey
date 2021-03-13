@@ -70,6 +70,7 @@ export default function NewItineraryForm(props) {
         />
         <label htmlFor="tripType">Trip Type</label>
         <select name="tripType">
+          <option disabled selected value></option>
           <option value="couples">Couples</option>
           <option value="groups">Groups</option>
           <option value="families">Families</option>
