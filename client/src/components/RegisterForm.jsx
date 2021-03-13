@@ -22,7 +22,8 @@ export default function RegisterForm(props) {
 
   const history = useHistory();
 
-  const save = function () {
+  const save = function (event) {
+    event.preventDefault();
     switch (true) {
       case !firstName:
         setError({
@@ -100,7 +101,7 @@ export default function RegisterForm(props) {
       ></ErrorMessage>
       <form
         autoComplete='off'
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => save(event)}
         className='flex flex-col'
       >
         <div className='flex flex-col mx-8 my-6'>
@@ -160,16 +161,16 @@ export default function RegisterForm(props) {
             onChange={(event) => setPasswordConfirm(event.target.value)}
           />
         </div>
+        <footer className='flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
+          <span className='text-xs font-semibold'>
+            Already have an account? Sign in{' '}
+            <Link to='/login' className='text-teal-600 hover:underline'>
+              here!
+            </Link>
+          </span>
+          <FormButton>Sign up</FormButton>
+        </footer>
       </form>
-      <footer className='flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
-        <span className='text-xs font-semibold'>
-          Already have an account? Sign in{' '}
-          <Link to='/login' className='text-teal-600 hover:underline'>
-            here!
-          </Link>
-        </span>
-        <FormButton onClick={save}>Sign up</FormButton>
-      </footer>
     </section>
   );
 }

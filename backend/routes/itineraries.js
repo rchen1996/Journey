@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const { itineraryObj } = require('../helpers/dataHelpers');
 
 module.exports = ({
   getAllItineraries,
   createNewItinerary,
   createTravelParty,
+  getDetailedItinerary,
 }) => {
   router.get('/', (req, res) => {
-    getAllItineraries().then(itineraries => res.send(itineraries));
+    getAllItineraries().then((itineraries) => res.send(itineraries));
   });
 
   router.post('/', (req, res) => {
@@ -28,14 +30,23 @@ module.exports = ({
         userId,
         startDate,
         endDate,
-      }).then(itinerary => {
-        createTravelParty(itinerary.id, userId).then(travelParty =>
+      }).then((itinerary) => {
+        createTravelParty(itinerary.id, userId).then((travelParty) =>
           res.send(itinerary)
         );
       });
     } else {
       res.send({ error: 'cannot create itinerary when user does not exist' });
     }
+  });
+
+  router.get('/:itinerary_id', (req, res) => {
+    const itinerary_id = req.params.itinerary_id;
+    getDetailedItinerary(itinerary_id).then((resultArr) => {
+      const itinerary = itineraryObj(resultArr);
+
+      res.send(itinerary);
+    });
   });
 
   return router;

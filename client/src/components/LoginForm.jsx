@@ -25,7 +25,9 @@ export default function LoginForm(props) {
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  const save = () => {
+  const save = (event) => {
+    event.preventDefault();
+
     if (userInfo.email === '') {
       setError({
         ...error,
@@ -76,10 +78,7 @@ export default function LoginForm(props) {
         hide={error.hide}
         message={error.message}
       ></ErrorMessage>
-      <form
-        onSubmit={(event) => event.preventDefault()}
-        className='flex flex-col'
-      >
+      <form onSubmit={(event) => save(event)} className='flex flex-col'>
         <div className='flex flex-col mx-8 my-6'>
           <label htmlFor='email' className='font-semibold'>
             Email
@@ -104,16 +103,17 @@ export default function LoginForm(props) {
             className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
         </div>
+
+        <footer className='flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
+          <span className='text-xs font-semibold'>
+            Don't have an account? Sign up{' '}
+            <Link to='/signup' className='text-teal-600 hover:underline'>
+              here!
+            </Link>
+          </span>
+          <FormButton>Log in</FormButton>
+        </footer>
       </form>
-      <footer className='flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
-        <span className='text-xs font-semibold'>
-          Don't have an account? Sign up{' '}
-          <Link to='/signup' className='text-teal-600 hover:underline'>
-            here!
-          </Link>
-        </span>
-        <FormButton onClick={save}>Log in</FormButton>
-      </footer>
     </section>
   );
 }

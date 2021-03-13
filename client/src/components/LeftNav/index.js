@@ -4,8 +4,14 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 export default function LeftNav(props) {
   return (
-    <Router>
+    <div>
       <Switch>
+        <Route 
+        name='newItinerary'
+        path='/itineraries/new'
+        >
+          <DashboardLeftNav user={props.user} />
+        </Route>
         <Route
           name='routeWithItineraryId'
           path='/itineraries/:itinerary_id(\d+)'
@@ -23,15 +29,7 @@ export default function LeftNav(props) {
           <DashboardLeftNav user={props.user} />
         </Route>
       </Switch>
-      {/* {props.itinerary ? (
-        <ItineraryLeftNav
-          itinerary={props.itinerary}
-          user={props.user}
-          addLocation={props.addLocation}
-        />
-      ) : (
-        <DashboardLeftNav user={props.user} />
-      )} */}
-    </Router>
+      
+    </div>
   );
 }

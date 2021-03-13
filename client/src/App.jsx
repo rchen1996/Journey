@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import LeftNav from './components/LeftNav';
+import Itinerary from './components/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
 
@@ -38,18 +39,28 @@ function App() {
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
-          <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
+          {user.id && (
+            <main className="flex">
+              <LeftNav user={user} />
+              <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
+            </main>
+          )}
         </Route>
         <Route path="/itineraries" exact>
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
         <Route path="/itineraries/:itinerary_id">
-          <LeftNav user={user} itinerary={state.itinerary} />
+          <Itinerary dispatch={dispatch} />
+          {state.itinerary && (
+            <LeftNav user={user} itinerary={state.itinerary} />
+          )}
         </Route>
         <Route path="/dashboard/:user_id">
-          <LeftNav user={user} itinerary={state.itinerary} />
           {user.id && (
-            <MyItinerariesList myItineraries={myItineraries} user={user} />
+            <main className="flex">
+              <LeftNav user={user} itinerary={state.itinerary} />
+              <MyItinerariesList myItineraries={myItineraries} user={user} />
+            </main>
           )}
         </Route>
       </Switch>
