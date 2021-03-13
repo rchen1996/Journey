@@ -21,13 +21,12 @@ export default function RegisterForm(props) {
     }
 
     if (password === passwordConfirm) {
-      props.register(firstName, lastName, email, password)
-      .then(res => {
+      props.register(firstName, lastName, email, password).then(res => {
         props.dispatch({
           type: SET_USER,
           user: res.data,
+        });
       });
-    })
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -40,57 +39,59 @@ export default function RegisterForm(props) {
   };
   return (
     <section>
-      <section className='form__validation'>{error}</section>
-      <form autoComplete='off' onSubmit={(event) => event.preventDefault()}>
-        <label htmlFor='first-name'>First Name:</label>
+      <section className="form__validation">{error}</section>
+      <form autoComplete="off" onSubmit={event => event.preventDefault()}>
+        <label htmlFor="first-name">First Name:</label>
         <input
-          className='first-name'
-          name='first-name'
-          type='text'
-          placeholder='Alice'
+          className="first-name"
+          name="first-name"
+          type="text"
+          placeholder="Alice"
           value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
+          onChange={event => setFirstName(event.target.value)}
         />
-        <label htmlFor='last-name'>Last Name:</label>
+        <label htmlFor="last-name">Last Name:</label>
         <input
-          className='last-name'
-          name='last-name'
-          type='text'
-          placeholder='Wonderland'
+          className="last-name"
+          name="last-name"
+          type="text"
+          placeholder="Wonderland"
           value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
+          onChange={event => setLastName(event.target.value)}
         />
-        <label htmlFor='email'>Email:</label>
+        <label htmlFor="email">Email:</label>
         <input
-          className='email'
-          name='email'
-          type='text'
-          placeholder='Enter Email:'
+          className="email"
+          name="email"
+          type="text"
+          placeholder="Email:"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={event => setEmail(event.target.value)}
         />
-        <label htmlFor='password'>Password:</label>
+        <label htmlFor="password">Password:</label>
         <input
-          className='password'
-          name='password'
-          type='password'
+          className="password"
+          name="password"
+          type="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          placeholder="Password"
+          onChange={event => setPassword(event.target.value)}
         />
-        <label htmlFor='password-confirmation'>Password confirmation:</label>
+        <label htmlFor="password-confirmation">Password confirmation:</label>
         <input
-          className='password-confirmation'
-          name='password-confirmation'
-          type='password'
+          className="password-confirmation"
+          name="password-confirmation"
+          type="password"
+          placeholder="Password"
           value={passwordConfirm}
-          onChange={(event) => setPasswordConfirm(event.target.value)}
+          onChange={event => setPasswordConfirm(event.target.value)}
         />
       </form>
       <footer>
         <span>
-          Already have an account? <Link to='/login'>Sign in here!</Link>
+          Already have an account? <Link to="/login">Sign in here!</Link>
         </span>
-        <FormButton onClick={save}>Submit</ FormButton>
+        <FormButton onClick={save}>Submit</FormButton>
       </footer>
     </section>
   );
