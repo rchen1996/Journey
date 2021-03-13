@@ -1,20 +1,17 @@
 import DashboardLeftNav from './DashboardLeftNav';
 import ItineraryLeftNav from './ItineraryLeftNav';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 export default function LeftNav(props) {
   return (
     <div>
       <Switch>
-        <Route 
-        name='newItinerary'
-        path='/itineraries/new'
-        >
+        <Route name="newItinerary" path="/itineraries/new">
           <DashboardLeftNav user={props.user} />
         </Route>
         <Route
-          name='routeWithItineraryId'
-          path='/itineraries/:itinerary_id(\d+)'
+          name="routeWithItineraryId"
+          path="/itineraries/:itinerary_id(\d+)"
         >
           <ItineraryLeftNav
             itinerary={props.itinerary}
@@ -22,14 +19,10 @@ export default function LeftNav(props) {
             addLocation={props.addLocation}
           />
         </Route>
-        <Route 
-        name='routeWithDashboard'
-        path='/dashboard/:user_id(\d+)'
-        >
+        <Route name="routeWithDashboard" path="/dashboard/:user_id(\d+)">
           <DashboardLeftNav user={props.user} />
         </Route>
       </Switch>
-      
     </div>
   );
 }
