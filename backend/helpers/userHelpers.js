@@ -35,9 +35,22 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getItinerariesForUser = id => {
+    const query = {
+      text: `SELECT * FROM itineraries WHERE creator_id = $1;`,
+      values: [id],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
     addUser,
+    getItinerariesForUser,
   };
 };
