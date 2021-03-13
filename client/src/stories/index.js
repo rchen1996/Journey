@@ -7,6 +7,7 @@ import Nav from '../components/Nav';
 import RegisterForm from '../components/RegisterForm';
 import NavButton from '../components/NavButton';
 import LoginForm from '../components/LoginForm';
+import NewItineraryForm from '../components/NewItineraryForm';
 
 import '../index.css';
 
@@ -27,4 +28,8 @@ storiesOf('NavButton', module)
 
 storiesOf('LoginForm', module).add('Login', () => (
   <LoginForm onSave={action('login')} />
+));
+
+storiesOf('NewItineraryForm', module).add('New Itinerary', () => (
+  <NewItineraryForm />
 ));
