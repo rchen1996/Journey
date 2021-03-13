@@ -50,7 +50,7 @@ export default function useApplicationData() {
     });
   };
 
-  const getItineraries = function () {
+  useEffect(() => {
     return axios.get('/api/itineraries').then(res => {
       const itineraries = res.data;
       dispatch({
@@ -58,7 +58,7 @@ export default function useApplicationData() {
         itineraries: itineraries,
       });
     });
-  };
+  }, []);
 
   return {
     state,
@@ -66,6 +66,5 @@ export default function useApplicationData() {
     login,
     register,
     logout,
-    getItineraries,
   };
 }

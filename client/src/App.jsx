@@ -10,20 +10,13 @@ import RegisterForm from './components/RegisterForm';
 import ItineraryList from './components/ItineraryList';
 
 function App() {
-  const {
-    state,
-    dispatch,
-    register,
-    login,
-    logout,
-    getItineraries,
-  } = useApplicationData();
+  const { state, dispatch, register, login, logout } = useApplicationData();
 
   const { user, itineraries } = state;
 
   return (
     <Router>
-      <Nav user={user} logout={logout} getItineraries={getItineraries} />
+      <Nav user={user} logout={logout} />
       <Switch>
         <Route path="/" exact>
           <Home />
