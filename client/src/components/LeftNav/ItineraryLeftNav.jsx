@@ -2,6 +2,8 @@ import { SET_ITINERARY } from '../../reducers/application';
 import React, { useState } from 'react';
 
 export default function ItineraryLeftNav(props) {
+  
+
   const [newLocation, setNewLocation] = useState('');
 
   const { itinerary, user } = props;
