@@ -7,6 +7,7 @@ module.exports = ({
   createNewItinerary,
   createTravelParty,
   getDetailedItinerary,
+  getTravelParty
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then((itineraries) => res.send(itineraries));
@@ -38,6 +39,13 @@ module.exports = ({
     } else {
       res.send({ error: 'cannot create itinerary when user does not exist' });
     }
+  });
+
+  router.get('/:itinerary_id/collaborators', (req, res) => {
+    const itinerary_id = req.params.itinerary_id;
+    getTravelParty(itinerary_id).then((party) => {     
+      res.send(party);
+    });
   });
 
   router.get('/:itinerary_id', (req, res) => {

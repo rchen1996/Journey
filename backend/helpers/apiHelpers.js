@@ -44,6 +44,20 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const getTravelParty = (itineraryId) => {
+    const query = {
+      text: `select * from travel_parties 
+      JOIN users ON user_id = users.id
+      WHERE itinerary_id = $1;`,
+      values: [itineraryId],
+    };
+
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
   const getDetailedItinerary = (itineraryId) => {
     const query = {
       text: `select
@@ -82,5 +96,6 @@ module.exports = (db) => {
     createNewItinerary,
     createTravelParty,
     getDetailedItinerary,
+    getTravelParty
   };
 };
