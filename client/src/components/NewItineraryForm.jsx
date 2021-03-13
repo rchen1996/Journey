@@ -37,6 +37,7 @@ export default function NewItineraryForm(props) {
     }
 
     props.onSave(itineraryInfo).then(res => {
+      console.log(res);
       if (res.data.id) {
         setError('');
         props.dispatch({
