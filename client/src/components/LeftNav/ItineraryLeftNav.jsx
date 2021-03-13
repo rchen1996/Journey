@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 export default function ItineraryLeftNav(props) {
+  
+
   const [newLocation, setNewLocation] = useState('');
 
   const { itinerary } = props;
