@@ -5,7 +5,9 @@ export default function MyItinerariesList(props) {
     <MyItinerariesListItem itinerary={itinerary} />
   ));
   return (
-    <h1>My Itineraries</h1>
-    {parsedItineraries}
+    <div>
+      <h1>My Itineraries</h1>
+      {parsedItineraries}
+    </div>
   );
 }
