@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SET_ITINERARY } from '../reducers/application';
 
 import FormButton from './FormButton';
 
@@ -35,17 +36,17 @@ export default function NewItineraryForm(props) {
       return;
     }
 
-    // props.onSave(itineraryInfo).then(res => {
-    //   if (res.data.email) {
-    //     setError('');
-    //     props.dispatch({
-    //       type: SET_USER,
-    //       user: res.data,
-    //     });
-    //   } else if (res.data.error) {
-    //     setError('Incorrect email or password');
-    //   }
-    // });
+    props.onSave(itineraryInfo).then(res => {
+      if (res.data.id) {
+        setError('');
+        props.dispatch({
+          type: SET_ITINERARY,
+          itinerary: res.data,
+        });
+      } else if (res.data.error) {
+        setError('You must be logged in to create an itinerary');
+      }
+    });
   };
 
   return (
