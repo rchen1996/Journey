@@ -23,7 +23,7 @@ function App() {
     createItinerary,
   } = useApplicationData();
 
-  const { user, itineraries, myItineraries, key } = state;
+  const { user, itineraries, myItineraries, key, itinerary } = state;
 
   return (
     <Router>
@@ -50,7 +50,7 @@ function App() {
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
         <Route path="/itineraries/:itinerary_id">
-          <Itinerary dispatch={dispatch} />
+          <Itinerary dispatch={dispatch} itinerary={itinerary} />
           {state.itinerary && (
             <LeftNav user={user} itinerary={state.itinerary} />
           )}
