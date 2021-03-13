@@ -44,6 +44,20 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const getTravelParty = (itineraryId) => {
+    const query = {
+      text: `select * from travel_parties 
+      JOIN users ON user_id = users.id
+      WHERE itinerary_id = $1;`,
+      values: [itineraryId],
+    };
+
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
   const getDetailedItinerary = (itineraryId) => {
     const query = {
       text: `select * , itineraries.name as name, days.id as day_id, locations.name as location_name from itineraries JOIN days ON itineraries.id = itinerary_id JOIN locations ON location_id = locations.id WHERE itineraries.id = $1 GROUP BY itineraries.id, days.id, locations.id;`,
@@ -60,5 +74,6 @@ module.exports = (db) => {
     createNewItinerary,
     createTravelParty,
     getDetailedItinerary,
+    getTravelParty
   };
 };
