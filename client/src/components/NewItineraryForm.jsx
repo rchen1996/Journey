@@ -70,7 +70,11 @@ export default function NewItineraryForm(props) {
           placeholder="Description"
         />
         <label htmlFor="tripType">Trip Type</label>
-        <select name="tripType">
+        <select
+          name="tripType"
+          value={itineraryInfo.tripType}
+          onChange={handleChange}
+        >
           <option defaultValue></option>
           <option value="couples">Couples</option>
           <option value="groups">Groups</option>
