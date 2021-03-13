@@ -2,7 +2,11 @@ import { useEffect, useReducer } from 'react';
 import dataReducer, {
   SET_ALL_ITINERARIES,
   SET_USER,
+<<<<<<< HEAD
   SET_MY_ITINERARIES,
+=======
+  SET_ITINERARY
+>>>>>>> main
 } from '../reducers/application';
 import axios from 'axios';
 

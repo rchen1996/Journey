@@ -8,6 +8,7 @@ import Nav from './components/Nav';
 import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
+import LeftNav from './components/LeftNav';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
 
@@ -44,6 +45,7 @@ function App() {
         </Route>
         <Route path="/dashboard/:user_id">
           {user.id && <MyItinerariesList myItineraries={myItineraries} />}
+          <LeftNav user={user} itinerary={state.itinerary} />
         </Route>
       </Switch>
     </Router>
