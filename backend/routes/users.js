@@ -59,7 +59,7 @@ module.exports = ({
   });
 
   router.get('/:user_id/itineraries', (req, res) => {
-    const userId = req.session.id;
+    const userId = req.session.userId;
 
     if (userId) {
       getItinerariesForUser(userId).then(itineraries => {
