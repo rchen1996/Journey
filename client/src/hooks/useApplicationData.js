@@ -2,6 +2,7 @@ import { useEffect, useReducer } from 'react';
 import dataReducer, {
   SET_ALL_ITINERARIES,
   SET_USER,
+  SET_ITINERARY,
 } from '../reducers/application';
 import axios from 'axios';
 
@@ -60,11 +61,22 @@ export default function useApplicationData() {
     });
   }, []);
 
+  const createItinerary = function (itinerary) {
+    return axios.post('/api/itineraries').then(res => {
+      const itinerary = res.data;
+      dispatch({
+        type: SET_ITINERARY,
+        itinerary: itinerary,
+      });
+    });
+  };
+
   return {
     state,
     dispatch,
     login,
     register,
     logout,
+    createItinerary,
   };
 }
