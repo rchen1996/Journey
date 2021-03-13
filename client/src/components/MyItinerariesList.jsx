@@ -2,7 +2,7 @@ import MyItinerariesListItem from './MyItinerariesListItem';
 
 export default function MyItinerariesList(props) {
   const parsedItineraries = props.myItineraries.map(itinerary => (
-    <MyItinerariesListItem itinerary={itinerary} />
+    <MyItinerariesListItem key={itinerary.id} itinerary={itinerary} />
   ));
   return (
     <div>
