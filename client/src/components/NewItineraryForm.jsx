@@ -80,6 +80,28 @@ export default function NewItineraryForm(props) {
           <option value="business">Business</option>
           <option value="accessibility">Accessibility</option>
         </select>
+        <label htmlFor="image">Itinerary Cover Image URL</label>
+        <input
+          value={itineraryInfo.image}
+          name="image"
+          onChange={handleChange}
+          type="url"
+          placeholder="Image URL"
+        />
+        <label htmlFor="startDate">Trip Start Date</label>
+        <input
+          value={itineraryInfo.startDate}
+          name="startDate"
+          onChange={handleChange}
+          type="date"
+        />
+        <label htmlFor="endDate">Trip End Date</label>
+        <input
+          value={itineraryInfo.endDate}
+          name="endDate"
+          onChange={handleChange}
+          type="date"
+        />
         <FormButton onClick={save}>Create Itinerary</FormButton>
       </form>
     </div>
