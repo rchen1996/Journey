@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = ({ getAllItineraries, createNewItinerary }) => {
+module.exports = ({
+  getAllItineraries,
+  createNewItinerary,
+  createTravelParty,
+}) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
   });
@@ -25,7 +29,9 @@ module.exports = ({ getAllItineraries, createNewItinerary }) => {
         startDate,
         endDate,
       }).then(itinerary => {
-        res.send(itinerary);
+        createTravelParty(itinerary.id, userId).then(travelParty =>
+          res.send(itinerary)
+        );
       });
     } else {
       res.send({ error: 'cannot create itinerary when user does not exist' });
