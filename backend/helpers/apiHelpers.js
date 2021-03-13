@@ -46,7 +46,7 @@ module.exports = (db) => {
 
   const getDetailedItinerary = (itineraryId) => {
     const query = {
-      text: `select * , days.id as day_id, locations.name as location_name from itineraries JOIN days ON itineraries.id = itinerary_id JOIN locations ON location_id = locations.id WHERE itineraries.id = $1 GROUP BY itineraries.id, days.id, locations.id;`,
+      text: `select * , itineraries.name as name, days.id as day_id, locations.name as location_name from itineraries JOIN days ON itineraries.id = itinerary_id JOIN locations ON location_id = locations.id WHERE itineraries.id = $1 GROUP BY itineraries.id, days.id, locations.id;`,
       values: [itineraryId],
     };
     return db
