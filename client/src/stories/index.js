@@ -7,6 +7,7 @@ import Nav from '../components/Nav';
 import RegisterForm from '../components/RegisterForm';
 import NavButton from '../components/NavButton';
 import LoginForm from '../components/LoginForm';
+import LeftNav from '../components/LeftNav'
 
 import '../index.css';
 
@@ -28,3 +29,15 @@ storiesOf('NavButton', module)
 storiesOf('LoginForm', module).add('Login', () => (
   <LoginForm onSave={action('login')} />
 ));
+
+
+
+const user = {
+  id: 5, first_name: 'Bob', last_name: 'Smith', email: 'test@test.com'
+}
+
+storiesOf('LeftNav', module)
+.add('With Itinerary State', () => (
+  <LeftNav itinerary={1} user={user}/>
+))
+.add('Dashboard LeftNav')

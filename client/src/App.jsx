@@ -8,6 +8,7 @@ import Nav from './components/Nav';
 import Login from './components/Login';
 import RegisterForm from './components/RegisterForm';
 import ItineraryList from './components/ItineraryList';
+import LeftNav from './components/LeftNav';
 
 function App() {
   const { state, dispatch, register, login, logout } = useApplicationData();
@@ -29,6 +30,7 @@ function App() {
         </Route>
         <Route path='/itineraries'>
           <ItineraryList itineraries={itineraries} />
+          <LeftNav user={user} />
         </Route>
       </Switch>
     </Router>
