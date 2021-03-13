@@ -76,6 +76,7 @@ CREATE TABLE "attractions" (
   "description" text NOT NULL,
   "category" attraction_type NOT NULL,
   "image" text,
+  "address" text NOT NULL,
   "location" point NOT NULL,
   "visible" boolean NOT NULL DEFAULT true
 );
