@@ -14,7 +14,7 @@ export default function LeftNav(props) {
   
   return (
     <>
-   {props.itinerary ? <ItineraryLeftNav itinerary={props.itinerary} user={props.user} /> : <DashboardLeftNav user={props.user}/>}
+   {props.itinerary ? <ItineraryLeftNav itinerary={props.itinerary} user={props.user} addLocation = {props.addLocation}/> : <DashboardLeftNav user={props.user}/>}
    
    </>
   )

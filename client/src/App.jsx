@@ -13,11 +13,11 @@ import LeftNav from './components/LeftNav';
 function App() {
   const { state, dispatch, register, login, logout } = useApplicationData();
 
-  const { user, itineraries } = state;
+  const { user, itineraries} = state;
 
   return (
     <Router>
-      <Nav user={user} logout={logout} />
+      <Nav user={user} logout={logout} />      
       <Switch>
         <Route path="/" exact>
           <Home />
@@ -30,7 +30,9 @@ function App() {
         </Route>
         <Route path="/itineraries">
           <ItineraryList itineraries={itineraries} />
-          <LeftNav user={user} />
+        </Route>
+        <Route path="/dashboard">
+          <LeftNav user={user} itinerary={state.itinerary}/>
         </Route>
       </Switch>
     </Router>

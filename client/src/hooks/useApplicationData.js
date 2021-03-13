@@ -10,6 +10,7 @@ export default function useApplicationData() {
   const [state, dispatch] = useReducer(dataReducer, {
     user: {},
     itineraries: [],
+    itinerary: null
   });
 
   useEffect(() => {
