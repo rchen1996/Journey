@@ -78,7 +78,7 @@ export default function useApplicationData() {
         });
       }
     });
-  }, [state.user, state.itinerary]);
+  }, []);
 
   return {
     state,
