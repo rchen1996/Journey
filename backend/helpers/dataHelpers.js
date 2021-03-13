@@ -32,6 +32,7 @@ const itineraryObj = (resultArr) => {
       itinerary.days.push({
         id: item.day_id,
         location: { id: item.location_id, name: item.location_name },
+        day_order: item.day_order,
         activities: [],
       });
     }

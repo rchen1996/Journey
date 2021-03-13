@@ -48,7 +48,8 @@ module.exports = (db) => {
     const query = {
       text: `select
       itineraries.* ,
-      days.id as day_id, 
+      days.id as day_id,
+      days.day_order as day_order,
       locations.name as location_name,
       locations.id as location_id,
       activities.id as activity_id,
