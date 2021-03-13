@@ -50,10 +50,12 @@ function App() {
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
         <Route path="/itineraries/:itinerary_id">
-          <Itinerary dispatch={dispatch} itinerary={itinerary} />
-          {state.itinerary && (
-            <LeftNav user={user} itinerary={state.itinerary} />
-          )}
+          <main className="flex">
+            {state.itinerary && (
+              <LeftNav user={user} itinerary={state.itinerary} />
+            )}
+            <Itinerary dispatch={dispatch} itinerary={itinerary} />
+          </main>
         </Route>
         <Route path="/dashboard/:user_id">
           {user.id && (
