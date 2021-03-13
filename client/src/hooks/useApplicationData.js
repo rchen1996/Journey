@@ -61,7 +61,7 @@ export default function useApplicationData() {
         itineraries: itineraries,
       });
     });
-  }, [state.itinerary]);
+  }, []);
 
   const createItinerary = function (itinerary) {
     return axios.post('/api/itineraries', itinerary);
@@ -78,7 +78,7 @@ export default function useApplicationData() {
         });
       }
     });
-  }, []);
+  }, [state.user, state.itinerary]);
 
   return {
     state,
