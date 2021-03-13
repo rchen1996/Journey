@@ -7,24 +7,15 @@ import Home from './components/Home';
 import Nav from './components/Nav';
 import Login from './components/Login';
 import RegisterForm from './components/RegisterForm';
+import ItineraryList from './components/ItineraryList';
 
 function App() {
   const { state, dispatch, register, login, logout } = useApplicationData();
-  // const userList = state.users.map(user => (
-  //   <li key={user.id}>
-  //     {' '}
-  //     {user.first_name} {user.last_name} {user.email}{' '}
-  //   </li>
-  // ));
 
-  const user = state.user;
+  const { user, itineraries } = state;
 
   return (
     <Router>
-      {/* <div className="">
-        <h1 className="text-xl text-teal-600 font-body"> Users </h1>
-        <ul className="font-body"> {userList} </ul>
-      </div> */}
       <Nav user={user} logout={logout} />
       <Switch>
         <Route path='/' exact>
@@ -34,7 +25,10 @@ function App() {
           <Login onSave={login} dispatch={dispatch} />
         </Route>
         <Route path='/signup'>
-          <RegisterForm register={register} />
+          <RegisterForm register={register} dispatch={dispatch} />
+        </Route>
+        <Route path='/itineraries'>
+          <ItineraryList itineraries={itineraries} />
         </Route>
       </Switch>
     </Router>

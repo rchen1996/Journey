@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import FormButton from './FormButton';
+import { SET_USER } from '../reducers/application';
 
 export default function RegisterForm(props) {
   const [firstName, setFirstName] = useState(props.first_name || '');
@@ -17,8 +20,14 @@ export default function RegisterForm(props) {
       return;
     }
 
-    if (password == passwordConfirm) {
-      props.register(firstName, lastName, email, password);
+    if (password === passwordConfirm) {
+      props.register(firstName, lastName, email, password)
+      .then(res => {
+        props.dispatch({
+          type: SET_USER,
+          user: res.data,
+      });
+    })
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -31,8 +40,9 @@ export default function RegisterForm(props) {
   };
   return (
     <section>
+      <section className='form__validation'>{error}</section>
       <form autoComplete='off' onSubmit={(event) => event.preventDefault()}>
-        <label for='first-name'>First Name:</label>
+        <label htmlFor='first-name'>First Name:</label>
         <input
           className='first-name'
           name='first-name'
@@ -41,7 +51,7 @@ export default function RegisterForm(props) {
           value={firstName}
           onChange={(event) => setFirstName(event.target.value)}
         />
-        <label for='last-name'>Last Name:</label>
+        <label htmlFor='last-name'>Last Name:</label>
         <input
           className='last-name'
           name='last-name'
@@ -50,7 +60,7 @@ export default function RegisterForm(props) {
           value={lastName}
           onChange={(event) => setLastName(event.target.value)}
         />
-        <label for='email'>Email:</label>
+        <label htmlFor='email'>Email:</label>
         <input
           className='email'
           name='email'
@@ -59,7 +69,7 @@ export default function RegisterForm(props) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-        <label for='password'>Password:</label>
+        <label htmlFor='password'>Password:</label>
         <input
           className='password'
           name='password'
@@ -67,7 +77,7 @@ export default function RegisterForm(props) {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <label for='password-confirmation'>Password confirmation:</label>
+        <label htmlFor='password-confirmation'>Password confirmation:</label>
         <input
           className='password-confirmation'
           name='password-confirmation'
@@ -76,8 +86,12 @@ export default function RegisterForm(props) {
           onChange={(event) => setPasswordConfirm(event.target.value)}
         />
       </form>
-      <button onClick={save}>Submit</button>
-      <section className='form__validation'>{error}</section>
+      <footer>
+        <span>
+          Already have an account? <Link to='/login'>Sign in here!</Link>
+        </span>
+        <FormButton onClick={save}>Submit</ FormButton>
+      </footer>
     </section>
   );
 }
