@@ -28,23 +28,24 @@ function App() {
     <Router>
       <Nav user={user} logout={logout} />
       <Switch>
-        <Route path='/' exact>
+        <Route path="/" exact>
           <Home />
         </Route>
-        <Route path='/login'>
+        <Route path="/login">
           <Login onSave={login} dispatch={dispatch} />
         </Route>
-        <Route path='/signup'>
+        <Route path="/signup">
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
           <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
         </Route>
-        <Route path='/itineraries' exact>
+        <Route path="/itineraries" exact>
           <ItineraryList itineraries={itineraries} />
-        </Route>        
-        <Route path='/itineraries/:itinerary_id'></Route>
+        </Route>
+        <Route path="/itineraries/:itinerary_id">
           <LeftNav user={user} itinerary={state.itinerary} />
+        </Route>
         <Route path="/dashboard/:user_id">
           <LeftNav user={user} itinerary={state.itinerary} />
           {user.id && <MyItinerariesList myItineraries={myItineraries} />}
