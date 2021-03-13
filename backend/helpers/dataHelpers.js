@@ -27,16 +27,29 @@ const itineraryObj = (resultArr) => {
     days: [],
   };
 
-  resultArr.forEach((day) => {
-    itinerary.days.push({
-      id: day.day_id,
-      day_order: day.day_order,
-      location: { id: day.location_id, name: day.location_name },
-      latitude: day.latitude,
-      longitude: day.longitude,
-      country: day.country,
+  resultArr.forEach((item) => {
+    if (!itinerary.days.some((day) => day.id === item.day_id)) {
+      itinerary.days.push({
+        id: item.day_id,
+        location: { id: item.location_id, name: item.location_name },
+        activities: [],
+      });
+    }
+
+    let activityDay = itinerary.days.find((day) => day.id === item.day_id);
+
+    activityDay.activities.push({
+      id: item.activity_id,
+      start_time: item.activity_start_time,
+      end_time: item.activity_end_time,
+      name: item.attraction_name,
+      image: item.attraction_name,
+      location: item.attraction_location,
+      description: item.attraction_description,
+      category: item.attraction_category,
     });
   });
+
   return itinerary;
 };
 
