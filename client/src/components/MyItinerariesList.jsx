@@ -1,3 +1,11 @@
+import MyItinerariesListItem from './MyItinerariesListItem';
+
 export default function MyItinerariesList(props) {
-  return <h1>Pog</h1>;
+  const parsedItineraries = props.myItineraries.map(itinerary => (
+    <MyItinerariesListItem itinerary={itinerary} />
+  ));
+  return (
+    <h1>My Itineraries</h1>
+    {parsedItineraries}
+  );
 }
