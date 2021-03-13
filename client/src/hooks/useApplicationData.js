@@ -10,6 +10,7 @@ export default function useApplicationData() {
     user: {},
     itineraries: [],
     itinerary: null,
+    myItineraries: [],
   });
 
   useEffect(() => {
@@ -63,6 +64,12 @@ export default function useApplicationData() {
 
   const createItinerary = function (itinerary) {
     return axios.post('/api/itineraries', itinerary);
+  };
+
+  const getMyItineraries = function (user) {
+    return axios.get('/api/users/:user_id/itineraries').then(res => {
+      const myItineraries = res.data;
+    });
   };
 
   return {
