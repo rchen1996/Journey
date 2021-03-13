@@ -3,7 +3,6 @@ import dataReducer, {
   SET_ALL_ITINERARIES,
   SET_USER,
   SET_MY_ITINERARIES,
-  SET_ITINERARY
 } from '../reducers/application';
 import axios from 'axios';
 
@@ -70,11 +69,10 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    if(state.user.id) {
-
+    if (state.user.id) {
       axios.get('/api/users/:user_id/itineraries').then(res => {
         const myItineraries = res.data;
-        
+
         if (myItineraries.length > 0) {
           dispatch({
             type: SET_MY_ITINERARIES,
@@ -84,7 +82,6 @@ export default function useApplicationData() {
       });
     }
   }, [state.user, state.itinerary]);
-  
 
   return {
     state,
