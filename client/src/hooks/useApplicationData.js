@@ -13,6 +13,7 @@ export default function useApplicationData() {
     itineraries: [],
     itinerary: null,
     myItineraries: [],
+    key: Math.random(),
   });
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export default function useApplicationData() {
         itineraries: itineraries,
       });
     });
-  }, [state.itinerary]);
+  }, [state.key]);
 
   const createItinerary = function (itinerary) {
     return axios.post('/api/itineraries', itinerary);

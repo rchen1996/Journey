@@ -1,7 +1,15 @@
 import NavButton from './NavButton';
 import { Link } from 'react-router-dom';
+import { SET_KEY } from '../reducers/application';
 
 export default function Nav(props) {
+  const setKey = () => {
+    props.dispatch({
+      type: SET_KEY,
+      key: Math.random(),
+    });
+  };
+
   return (
     <nav className="w-full h-16 bg-gray-100 flex justify-between items-center shadow-md">
       <div className="h-full flex items-center font-semibold mx-4">
@@ -26,7 +34,9 @@ export default function Nav(props) {
             />
           </svg>
         </Link>
-        <NavButton link="/itineraries">Itineraries</NavButton>
+        <NavButton link="/itineraries" onClick={setKey}>
+          Itineraries
+        </NavButton>
       </div>
       <div className="h-full flex items-center font-semibold mx-6">
         {props.user.id && (
