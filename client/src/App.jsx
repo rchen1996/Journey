@@ -9,7 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import LeftNav from './components/LeftNav';
-import Itinerary from './components/Itinerary';
+import Itinerary from './components/ItineraryOverview/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
 
