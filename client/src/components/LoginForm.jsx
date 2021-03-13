@@ -50,7 +50,7 @@ export default function LoginForm(props) {
           name="email"
           onChange={handleChange}
           type="email"
-          placeholder="email"
+          placeholder="Email"
         />
         <label htmlFor="password">Password</label>
         <input
@@ -58,7 +58,7 @@ export default function LoginForm(props) {
           name="password"
           onChange={handleChange}
           type="password"
-          placeholder="password"
+          placeholder="Password"
         />
         <span>
           Don't have an account? Sign up <a href="/signup">here</a>
