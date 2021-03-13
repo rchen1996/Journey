@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function NavButton(props) {
   return (
-    <Link
+    <NavLink
+      exact
       to={props.link}
       onClick={props.onClick}
-      className='p-2 border-transparent border-b-4 hover:border-teal-600 h-full flex items-center pt-3'
+      className="p-2 border-transparent border-b-4 hover:border-teal-600 h-full flex items-center pt-3"
+      activeClassName="border-teal-600"
     >
       {props.children}
       {/* {props.children === 'Log out' && (
@@ -26,6 +28,6 @@ export default function NavButton(props) {
           />
         </svg>
       )} */}
-    </Link>
+    </NavLink>
   );
 }
