@@ -12,6 +12,7 @@ import LeftNav from './components/LeftNav';
 import Itinerary from './components/ItineraryOverview/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
+import MyGroup from './components/MyGroup';
 
 function App() {
   const {
@@ -29,38 +30,46 @@ function App() {
     <Router>
       <Nav user={user} logout={logout} dispatch={dispatch} />
       <Switch>
-        <Route path="/" exact>
+        <Route path='/' exact>
           <Home />
         </Route>
-        <Route path="/login">
+        <Route path='/login'>
           <Login onSave={login} dispatch={dispatch} />
         </Route>
-        <Route path="/signup">
+        <Route path='/signup'>
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
           {user.id && (
-            <main className="flex">
+            <main className='flex'>
               <LeftNav user={user} />
               <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
             </main>
           )}
         </Route>
-        <Route path="/itineraries" exact>
+        <Route path='/itineraries' exact>
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
-        <Route path="/itineraries/:itinerary_id">
-          <main className="flex">
+        <Route path='/itineraries/:itinerary_id/collaborators'>
+          <main className='flex'>
+            {state.itinerary && (
+              <LeftNav user={user} itinerary={state.itinerary} />
+            )}
+            <MyGroup />
+          </main>
+        </Route>
+        <Route path='/itineraries/:itinerary_id'>
+          <main className='flex'>
             {state.itinerary && (
               <LeftNav user={user} itinerary={state.itinerary} />
             )}
             <Itinerary dispatch={dispatch} itinerary={itinerary} />
           </main>
         </Route>
-        <Route path="/dashboard/:user_id">
+        <Route path='/dashboard/:user_id'>
           {user.id && (
-            <main className="flex">
-              <LeftNav user={user} itinerary={state.itinerary} />
+            <main className='flex'>
+              <LeftNav user={user} />
               <MyItinerariesList myItineraries={myItineraries} user={user} />
             </main>
           )}
