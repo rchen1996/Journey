@@ -27,13 +27,13 @@ function App() {
       </div> */}
       <Nav user={user} logout={logout} />
       <Switch>
-        <Route path="/" exact>
+        <Route path='/' exact>
           <Home />
         </Route>
-        <Route path="/login">
+        <Route path='/login'>
           <Login onSave={login} dispatch={dispatch} />
         </Route>
-        <Route path="/signup">
+        <Route path='/signup'>
           <RegisterForm register={register} />
         </Route>
       </Switch>
