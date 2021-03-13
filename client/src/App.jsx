@@ -42,13 +42,11 @@ function App() {
         </Route>
         <Route path='/itineraries' exact>
           <ItineraryList itineraries={itineraries} />
-        </Route>
-        <Route path='/dashboard'>
-          <LeftNav user={user} itinerary={state.itinerary} />
-        </Route>
+        </Route>        
         <Route path='/itineraries/:itinerary_id'></Route>
           <LeftNav user={user} itinerary={state.itinerary} />
         <Route path="/dashboard/:user_id">
+          <LeftNav user={user} itinerary={state.itinerary} />
           {user.id && <MyItinerariesList myItineraries={myItineraries} />}
         </Route>
       </Switch>
