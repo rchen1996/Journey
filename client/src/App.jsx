@@ -36,7 +36,11 @@ function App() {
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
-          <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
+          <NewItineraryForm
+            user={user}
+            dispatch={dispatch}
+            onSave={createItinerary}
+          />
         </Route>
         <Route path="/itineraries">
           <ItineraryList itineraries={itineraries} />
