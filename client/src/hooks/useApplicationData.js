@@ -2,7 +2,7 @@ import { useEffect, useReducer } from 'react';
 import dataReducer, {
   SET_ALL_ITINERARIES,
   SET_USER,
-  SET_ITINERARY
+  SET_MY_ITINERARIES,
 } from '../reducers/application';
 import axios from 'axios';
 
@@ -11,6 +11,7 @@ export default function useApplicationData() {
     user: {},
     itineraries: [],
     itinerary: null,
+    myItineraries: [],
   });
 
   useEffect(() => {
@@ -65,6 +66,19 @@ export default function useApplicationData() {
   const createItinerary = function (itinerary) {
     return axios.post('/api/itineraries', itinerary);
   };
+
+  useEffect(() => {
+    axios.get('/api/users/:user_id/itineraries').then(res => {
+      const myItineraries = res.data;
+
+      if (myItineraries.length > 0) {
+        dispatch({
+          type: SET_MY_ITINERARIES,
+          myItineraries: myItineraries,
+        });
+      }
+    });
+  }, [state.user, state.itinerary]);
 
   return {
     state,
