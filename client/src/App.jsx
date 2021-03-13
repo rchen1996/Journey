@@ -43,7 +43,7 @@ function App() {
           <ItineraryList itineraries={itineraries} />
         </Route>
         <Route path="/dashboard/:user_id">
-          <MyItinerariesList />
+          {user.id && <MyItinerariesList />}
         </Route>
       </Switch>
     </Router>
