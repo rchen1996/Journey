@@ -8,6 +8,7 @@ module.exports = ({
   getUserByEmail,
   addUser,
   getItinerariesForUser,
+  getItinerariesForGroup,
 }) => {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
@@ -62,7 +63,7 @@ module.exports = ({
     const userId = req.session.userId;
 
     if (userId) {
-      getItinerariesForUser(userId).then(itineraries => {
+      getItinerariesForGroup(userId).then(itineraries => {
         res.send(itineraries);
       });
     } else {
