@@ -44,7 +44,7 @@ const itineraryObj = (resultArr) => {
       start_time: item.activity_start_time,
       end_time: item.activity_end_time,
       name: item.attraction_name,
-      image: item.attraction_name,
+      image: item.attraction_image,
       location: item.attraction_location,
       description: item.attraction_description,
       category: item.attraction_category,
