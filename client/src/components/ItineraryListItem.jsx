@@ -1,7 +1,7 @@
 export default function ItineraryListItem(props) {
   const { name, description, image } = props.itinerary;
   return (
-    <div className='inline-block p-4 m-4 align-top transition duration-500 transform bg-gray-100 shadow-lg w-72 h-100 rounded-xl hover:scale-105'>
+    <div className='w-full h-auto p-4 align-top transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
       <div className='aspect-w-2 aspect-h-1'>
         <img
           src={image}
@@ -32,8 +32,9 @@ export default function ItineraryListItem(props) {
         <span className='mt-1 text-base'>3 Days</span>
       </div>
       <p className='pb-4 text-sm'>
-        {/*description*/} Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        {/*description*/}
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
       </p>
       {/* bookmark button */}
     </div>
