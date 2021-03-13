@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { SET_ITINERARY } from '../../reducers/application';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import ItineraryDays from './ItineraryDays';
 
 export default function Itinerary(props) {
   const { itinerary_id } = useParams();
@@ -46,7 +47,7 @@ export default function Itinerary(props) {
           return (
             <div key={day.id}>
               {location && <h2>{location}</h2>}
-              <p>Day {day.day_order}</p>
+              <ItineraryDays day={day} />
             </div>
           );
         })}
