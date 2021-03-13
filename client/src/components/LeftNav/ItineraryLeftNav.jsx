@@ -1,4 +1,3 @@
-import { SET_ITINERARY } from '../../reducers/application';
 import React, { useState } from 'react';
 
 export default function ItineraryLeftNav(props) {
@@ -6,7 +5,7 @@ export default function ItineraryLeftNav(props) {
 
   const [newLocation, setNewLocation] = useState('');
 
-  const { itinerary, user } = props;
+  const { itinerary } = props;
   const sortedDays =
     itinerary.days &&
     itinerary.days.sort((day1, day2) => {
@@ -16,9 +15,9 @@ export default function ItineraryLeftNav(props) {
       let d2order = day2.day_order;
 
       if (d1Location === d2Location) {
-        return (d1order < d2order) ? -1 : 1
+        return d1order < d2order ? -1 : 1;
       } else {
-        return d1Location - d2Location
+        return d1Location - d2Location;
       }
     });
   const locationArr = [];
@@ -34,7 +33,7 @@ export default function ItineraryLeftNav(props) {
     <div>
       <h1>{itinerary.name}</h1>
       {sortedDays &&
-        sortedDays.map((day) => {
+        sortedDays.map(day => {
           let location = null;
           if (locationArr.slice(-1)[0] !== day.location.id) {
             location = day.location.name;
@@ -52,9 +51,9 @@ export default function ItineraryLeftNav(props) {
       <form onSubmit={handleSubmit}>
         <input
           value={newLocation}
-          name='add-location'
-          onChange={(event) => setNewLocation(event.target.value)}
-          type='text'
+          name="add-location"
+          onChange={event => setNewLocation(event.target.value)}
+          type="text"
         />
       </form>
 

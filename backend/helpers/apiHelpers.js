@@ -46,7 +46,29 @@ module.exports = (db) => {
 
   const getDetailedItinerary = (itineraryId) => {
     const query = {
-      text: `select * , itineraries.name as name, days.id as day_id, locations.name as location_name from itineraries JOIN days ON itineraries.id = itinerary_id JOIN locations ON location_id = locations.id WHERE itineraries.id = $1 GROUP BY itineraries.id, days.id, locations.id;`,
+      text: `select
+      itineraries.* ,
+      days.id as day_id,
+      days.day_order as day_order,
+      locations.name as location_name,
+      locations.id as location_id,
+      activities.id as activity_id,
+      activities.start_time as activity_start_time,
+      activities.end_time as activity_end_time,
+      attractions.name as attraction_name,
+      attractions.image as attraction_image,
+      attractions.location as attraction_location,
+      attractions.visible as attraction_visibility,
+      attractions.category as attraction_category,
+      attractions.description as attraction_description
+
+      from itineraries 
+      JOIN days ON itineraries.id = itinerary_id 
+      JOIN locations ON location_id = locations.id
+      JOIN activities ON days.id = day_id
+      JOIN attractions on attractions.id = attraction_id      
+      WHERE itineraries.id = $1 
+      GROUP BY itineraries.id, days.id, locations.id,activities.id,attractions.id;`,
       values: [itineraryId],
     };
     return db
