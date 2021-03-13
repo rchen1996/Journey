@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SET_ITINERARY } from '../reducers/application';
+import { SET_ITINERARY } from '../../reducers/application';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,6 +17,7 @@ export default function Itinerary(props) {
   }, [itinerary_id, dispatch]);
 
   const sortedDays =
+    itinerary &&
     itinerary.days &&
     itinerary.days.sort((day1, day2) => {
       let d1Location = day1.location.id;
@@ -30,21 +31,25 @@ export default function Itinerary(props) {
         return d1Location - d2Location;
       }
     });
+
   const locationArr = [];
 
-  // sortedDays.map((day) => {
-  //   let location = null;
-  //   if (locationArr.slice(-1)[0] !== day.location.id) {
-  //     location = day.location.name;
-  //     locationArr.push(day.location.id);
-  //   }
-  //   return (
-  //     <div key={day.id}>
-  //       {location && <p>{location}</p>}
-  //       <p>Day {day.day_order}</p>
-  //     </div>
-  //   );
-  // })
-
-  return <div></div>;
+  return (
+    <div>
+      {sortedDays &&
+        sortedDays.map(day => {
+          let location = null;
+          if (locationArr.slice(-1)[0] !== day.location.id) {
+            location = day.location.name;
+            locationArr.push(day.location.id);
+          }
+          return (
+            <div key={day.id}>
+              {location && <h2>{location}</h2>}
+              <p>Day {day.day_order}</p>
+            </div>
+          );
+        })}
+    </div>
+  );
 }
