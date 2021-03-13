@@ -29,11 +29,7 @@ export default function ItineraryListItem(props) {
 
         <span className="text-xs font-bold text-gray-200">7 Days</span>
       </div>
-      <p className="pb-4 text-sm">
-        {/*description*/}
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
+      <p className="pb-4 text-sm">{description}</p>
       {/* bookmark button */}
     </article>
   );
