@@ -63,13 +63,7 @@ export default function useApplicationData() {
   }, []);
 
   const createItinerary = function (itinerary) {
-    return axios.post('/api/itineraries').then(res => {
-      const itinerary = res.data;
-      dispatch({
-        type: SET_ITINERARY,
-        itinerary: itinerary,
-      });
-    });
+    return axios.post('/api/itineraries');
   };
 
   return {
