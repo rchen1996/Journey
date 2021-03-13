@@ -10,7 +10,7 @@ export default function useApplicationData() {
   const [state, dispatch] = useReducer(dataReducer, {
     user: {},
     itineraries: [],
-    itinerary: null
+    itinerary: null,
   });
 
   useEffect(() => {
@@ -62,11 +62,16 @@ export default function useApplicationData() {
     });
   }, []);
 
+  const createItinerary = function (itinerary) {
+    return axios.post('/api/itineraries', itinerary);
+  };
+
   return {
     state,
     dispatch,
     login,
     register,
     logout,
+    createItinerary,
   };
 }

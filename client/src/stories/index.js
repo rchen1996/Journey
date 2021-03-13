@@ -8,6 +8,7 @@ import RegisterForm from '../components/RegisterForm';
 import NavButton from '../components/NavButton';
 import LoginForm from '../components/LoginForm';
 import LeftNav from '../components/LeftNav';
+import NewItineraryForm from '../components/NewItineraryForm';
 
 import '../index.css';
 
@@ -59,3 +60,6 @@ storiesOf('LeftNav', module)
     />
   ))
   .add('Dashboard LeftNav', () => <LeftNav user={user} />);
+storiesOf('NewItineraryForm', module).add('New Itinerary', () => (
+  <NewItineraryForm />
+));

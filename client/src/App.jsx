@@ -9,9 +9,17 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import LeftNav from './components/LeftNav';
+import NewItineraryForm from './components/NewItineraryForm';
 
 function App() {
-  const { state, dispatch, register, login, logout } = useApplicationData();
+  const {
+    state,
+    dispatch,
+    register,
+    login,
+    logout,
+    createItinerary,
+  } = useApplicationData();
 
   const { user, itineraries} = state;
 
@@ -27,6 +35,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <Register register={register} dispatch={dispatch} />
+        </Route>
+        <Route path={`/itineraries/new`}>
+          <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
         </Route>
         <Route path="/itineraries">
           <ItineraryList itineraries={itineraries} />
