@@ -5,14 +5,15 @@ import axios from 'axios';
 
 export default function Itinerary(props) {
   const { itinerary_id } = useParams();
+  const { dispatch } = props;
   useEffect(() => {
     axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
-      props.dispatch({
+      dispatch({
         type: SET_ITINERARY,
         itinerary: res.data,
       });
     });
-  }, []);
+  }, [itinerary_id, dispatch]);
 
   return <div></div>;
 }
