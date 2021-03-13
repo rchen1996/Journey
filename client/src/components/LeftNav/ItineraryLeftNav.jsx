@@ -5,9 +5,11 @@ export default function ItineraryLeftNav(props) {
   const [newLocation, setNewLocation] = useState('');
 
   const { itinerary, user } = props;
-  const sortedDays = itinerary.days.sort((day1, day2) => {
-    return day1.day_order - day2.day_order;
-  });
+  const sortedDays =
+    itinerary.days &&
+    itinerary.days.sort((day1, day2) => {
+      return day1.day_order - day2.day_order;
+    });
   const locationArr = [];
 
   function handleSubmit(event) {
@@ -20,19 +22,20 @@ export default function ItineraryLeftNav(props) {
   return (
     <div>
       <h1>{itinerary.name}</h1>
-      {sortedDays.map((day) => {
-        let location = null;
-        if (locationArr.slice(-1)[0] !== day.location.id) {
-          location = day.location.name;
-          locationArr.push(day.location.id);
-        }
-        return (
-          <>
-            {location && <p>{location}</p>}
-            <p key={day.id}>Day {day.day_order}</p>
-          </>
-        );
-      })}
+      {sortedDays &&
+        sortedDays.map((day) => {
+          let location = null;
+          if (locationArr.slice(-1)[0] !== day.location.id) {
+            location = day.location.name;
+            locationArr.push(day.location.id);
+          }
+          return (
+            <>
+              {location && <p>{location}</p>}
+              <p key={day.id}>Day {day.day_order}</p>
+            </>
+          );
+        })}
 
       <button> +Add Location </button>
       <form onSubmit={handleSubmit}>
@@ -43,6 +46,10 @@ export default function ItineraryLeftNav(props) {
           type='text'
         />
       </form>
+
+      <div>
+        <a href={`/itineraries/${itinerary.id}/collaborators`}>My Group </a>
+      </div>
     </div>
   );
 }

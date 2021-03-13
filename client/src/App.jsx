@@ -10,6 +10,7 @@ import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import LeftNav from './components/LeftNav';
 import NewItineraryForm from './components/NewItineraryForm';
+import MyItinerariesList from './components/MyItinerariesList';
 
 function App() {
   const {
@@ -21,11 +22,11 @@ function App() {
     createItinerary,
   } = useApplicationData();
 
-  const { user, itineraries} = state;
+  const { user, itineraries, myItineraries } = state;
 
   return (
     <Router>
-      <Nav user={user} logout={logout} />      
+      <Nav user={user} logout={logout} />
       <Switch>
         <Route path="/" exact>
           <Home />
@@ -39,11 +40,15 @@ function App() {
         <Route path={`/itineraries/new`}>
           <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
         </Route>
-        <Route path="/itineraries">
+        <Route path="/itineraries" exact>
           <ItineraryList itineraries={itineraries} />
         </Route>
-        <Route path="/dashboard">
-          <LeftNav user={user} itinerary={state.itinerary}/>
+        <Route path="/itineraries/:itinerary_id">
+          <LeftNav user={user} itinerary={state.itinerary} />
+        </Route>
+        <Route path="/dashboard/:user_id">
+          <LeftNav user={user} itinerary={state.itinerary} />
+          {user.id && <MyItinerariesList myItineraries={myItineraries} />}
         </Route>
       </Switch>
     </Router>

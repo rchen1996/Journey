@@ -51,6 +51,13 @@ const itinerary = {
   ],
 };
 
+const newitinerary = {
+  id: 1,
+  name: 'My Switzerland Trip',
+  description: 'Pretty scenery',
+  
+};
+
 storiesOf('LeftNav', module)
   .add('With Itinerary State', () => (
     <LeftNav
@@ -59,7 +66,16 @@ storiesOf('LeftNav', module)
       addLocation={action('adding location')}
     />
   ))
-  .add('Dashboard LeftNav', () => <LeftNav user={user} />);
+  .add('Dashboard LeftNav', () => <LeftNav user={user} />)
+  .add('With new Itinerary',() => (
+    <LeftNav
+    itinerary={newitinerary}
+    user={user}
+    addLocation= {action('adding location')}
+    />
+  ));
+
+
 storiesOf('NewItineraryForm', module).add('New Itinerary', () => (
   <NewItineraryForm />
 ));
