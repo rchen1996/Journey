@@ -30,10 +30,10 @@ export default function ItineraryLeftNav(props) {
             locationArr.push(day.location.id);
           }
           return (
-            <>
+            <div key={day.id}>
               {location && <p>{location}</p>}
-              <p key={day.id}>Day {day.day_order}</p>
-            </>
+              <p>Day {day.day_order}</p>
+            </div>
           );
         })}
 
