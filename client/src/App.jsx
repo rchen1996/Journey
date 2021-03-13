@@ -21,29 +21,33 @@ function App() {
     createItinerary,
   } = useApplicationData();
 
-  const { user, itineraries} = state;
+  const { user, itineraries } = state;
 
   return (
     <Router>
-      <Nav user={user} logout={logout} />      
+      <Nav user={user} logout={logout} />
+
       <Switch>
-        <Route path="/" exact>
+        <Route path='/' exact>
           <Home />
         </Route>
-        <Route path="/login">
+        <Route path='/login'>
           <Login onSave={login} dispatch={dispatch} />
         </Route>
-        <Route path="/signup">
+        <Route path='/signup'>
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
           <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
         </Route>
-        <Route path="/itineraries">
+        <Route path='/itineraries' exact>
           <ItineraryList itineraries={itineraries} />
         </Route>
-        <Route path="/dashboard">
-          <LeftNav user={user} itinerary={state.itinerary}/>
+        <Route path='/dashboard'>
+          <LeftNav user={user} itinerary={state.itinerary} />
+        </Route>
+        <Route path='/itineraries/:itinerary_id'>
+          <LeftNav user={user} itinerary={state.itinerary} />
         </Route>
       </Switch>
     </Router>
