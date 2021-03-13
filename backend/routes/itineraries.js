@@ -6,5 +6,24 @@ module.exports = ({ getAllItineraries }) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
   });
 
+  router.post('/', (req, res) => {
+    const { name, description, tripType, image, startDate, endDate } = req.body;
+    const userId = req.session.userId;
+
+    if (userId) {
+      createNewItinerary(
+        name,
+        description,
+        image,
+        tripType,
+        userId,
+        startDate,
+        endDate
+      ).then(itinerary => res.send(itinerary));
+    } else {
+      res.send({ error: 'cannot create itinerary when user does not exist' });
+    }
+  });
+
   return router;
 };
