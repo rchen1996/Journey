@@ -1,17 +1,18 @@
 import React from 'react';
+import {Link, NavLink} from 'react-router-dom'
 export default function DashboardLeftNav(props) {
  const {user} = props
   return (
     <div>     
         <ul>
             <li>
-              <a href='/itineraries/new'>New Itinerary</a>
+              <NavLink to='/itineraries/new' activeClassName="selected">New Itinerary</NavLink>
             </li>
             <li>
-            <a href={`/dashboard/${user.id}`}>My Itineraries</a>
+            <NavLink to={`/dashboard/${user.id}`}>My Itineraries</NavLink>
             </li>
             <li>
-            <a href={`/dashboard/${user.id}/bookmarks`}>Bookmarks</a>              
+            <NavLink to={`/dashboard/${user.id}/bookmarks`}>Bookmarks</NavLink>              
             </li>
           </ul>           
     </div>
