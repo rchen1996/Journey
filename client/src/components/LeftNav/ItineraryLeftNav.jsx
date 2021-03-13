@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import {NavLink} from 'react-router-dom'
 
 export default function ItineraryLeftNav(props) {
+  
+
   const [newLocation, setNewLocation] = useState('');
 
   const { itinerary } = props;
@@ -56,7 +59,7 @@ export default function ItineraryLeftNav(props) {
       </form>
 
       <div>
-        <a href={`/itineraries/${itinerary.id}/collaborators`}>My Group </a>
+        <NavLink to={`/itineraries/${itinerary.id}/collaborators`}>My Group </NavLink>
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ function App() {
         </Route>
         <Route path={`/itineraries/new`}>
           {user.id && (
-            <main className='flex'>
+            <main className='flex w-full h-full'>
               <LeftNav user={user} />
               <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
             </main>
@@ -57,19 +57,19 @@ function App() {
             )}
             <MyGroup />
           </main>
-        </Route>
+        </Route>        
         <Route path='/itineraries/:itinerary_id'>
-          <main className='flex'>
+          <main className='flex w-full h-full'>
             {state.itinerary && (
               <LeftNav user={user} itinerary={state.itinerary} />
             )}
-            <Itinerary dispatch={dispatch} itinerary={itinerary} />
+            <Itinerary dispatch={dispatch} itinerary={state.itinerary} />
           </main>
         </Route>
         <Route path='/dashboard/:user_id'>
           {user.id && (
-            <main className='flex'>
-              <LeftNav user={user} />
+            <main className='flex w-full h-full'>
+              <LeftNav user={user}/>
               <MyItinerariesList myItineraries={myItineraries} user={user} />
             </main>
           )}
