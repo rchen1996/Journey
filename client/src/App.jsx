@@ -29,35 +29,35 @@ function App() {
     <Router>
       <Nav user={user} logout={logout} dispatch={dispatch} />
       <Switch>
-        <Route path="/" exact>
+        <Route path='/' exact>
           <Home />
         </Route>
-        <Route path="/login">
+        <Route path='/login'>
           <Login onSave={login} dispatch={dispatch} />
         </Route>
-        <Route path="/signup">
+        <Route path='/signup'>
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
           {user.id && (
-            <main className="flex">
+            <main className='flex w-full h-full'>
               <LeftNav user={user} />
               <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
             </main>
           )}
         </Route>
-        <Route path="/itineraries" exact>
+        <Route path='/itineraries' exact>
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
-        <Route path="/itineraries/:itinerary_id">
+        <Route path='/itineraries/:itinerary_id'>
           <Itinerary dispatch={dispatch} />
           {state.itinerary && (
             <LeftNav user={user} itinerary={state.itinerary} />
           )}
         </Route>
-        <Route path="/dashboard/:user_id">
+        <Route path='/dashboard/:user_id'>
           {user.id && (
-            <main className="flex">
+            <main className='flex w-full h-full'>
               <LeftNav user={user} itinerary={state.itinerary} />
               <MyItinerariesList myItineraries={myItineraries} user={user} />
             </main>
