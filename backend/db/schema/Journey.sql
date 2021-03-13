@@ -77,7 +77,7 @@ CREATE TABLE "attractions" (
   "category" attraction_type NOT NULL,
   "image" text,
   "location" point NOT NULL,
-  "visible" boolean NOT NULL DEFAULT false
+  "visible" boolean NOT NULL DEFAULT true
 );
 
 DROP TABLE IF EXISTS activities CASCADE;
