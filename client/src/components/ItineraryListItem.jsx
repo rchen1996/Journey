@@ -1,17 +1,15 @@
 export default function ItineraryListItem(props) {
   const { name, description, image } = props.itinerary;
   return (
-    <div className='w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
-      <div className='mb-0.25 aspect-w-2 aspect-h-1'>
+    <article className='flex flex-col justify-between w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
+      <figure className='mb-0.25 aspect-w-2 aspect-h-1'>
         <img
           src={image}
           alt='itinerary cover'
           className='object-cover rounded-md shadow-lg'
         />
-      </div>
-      <div className='flex items-center justify-between'>
-        <h4 className='pt-2 mb-1 text-xl font-bold'>{name}</h4>
-      </div>
+      </figure>
+      <h4 className='pt-2 mb-1 text-xl font-bold'>{name}</h4>
       <div className='flex items-center justify-center px-2.5 py-2 bg-teal-600 w-min whitespace-nowrap rounded-r-2xl mb-2 shadow-md border-l-4 border-gray-700'>
         <svg
           width='14'
@@ -37,6 +35,6 @@ export default function ItineraryListItem(props) {
         tempor incididunt ut labore et dolore magna aliqua.
       </p>
       {/* bookmark button */}
-    </div>
+    </article>
   );
 }
