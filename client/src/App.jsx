@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import NewItineraryForm from './components/NewItineraryForm';
+import MyItinerariesList from './components/MyItinerariesList';
 
 function App() {
   const {
@@ -40,6 +41,9 @@ function App() {
         </Route>
         <Route path="/itineraries">
           <ItineraryList itineraries={itineraries} />
+        </Route>
+        <Route path="/dashboard/:user_id">
+          <MyItinerariesList />
         </Route>
       </Switch>
     </Router>
