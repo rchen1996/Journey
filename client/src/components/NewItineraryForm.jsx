@@ -37,11 +37,11 @@ export default function NewItineraryForm(props) {
     }
 
     props.onSave(itineraryInfo).then(res => {
-      if (res.data.id) {
+      if (res.data[0].id) {
         setError('');
         props.dispatch({
           type: SET_ITINERARY,
-          itinerary: res.data,
+          itinerary: res.data[0],
         });
       } else if (res.data.error) {
         setError('You must be logged in to create an itinerary');
