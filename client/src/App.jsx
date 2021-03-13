@@ -9,7 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import LeftNav from './components/LeftNav';
-import Itinerary from './components/Itinerary';
+import Itinerary from './components/ItineraryOverview/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
 
@@ -23,7 +23,7 @@ function App() {
     createItinerary,
   } = useApplicationData();
 
-  const { user, itineraries, myItineraries, key } = state;
+  const { user, itineraries, myItineraries, key, itinerary } = state;
 
   return (
     <Router>
@@ -50,10 +50,12 @@ function App() {
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
         <Route path='/itineraries/:itinerary_id'>
-          <Itinerary dispatch={dispatch} />
-          {state.itinerary && (
-            <LeftNav user={user} itinerary={state.itinerary} />
-          )}
+          <main className='flex w-full h-full'>
+            {state.itinerary && (
+              <LeftNav user={user} itinerary={state.itinerary} />
+            )}
+            <Itinerary dispatch={dispatch} itinerary={itinerary} />
+          </main>
         </Route>
         <Route path='/dashboard/:user_id'>
           {user.id && (
