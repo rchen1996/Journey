@@ -39,8 +39,12 @@ function App() {
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
-          <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
-          <LeftNav user={user} />
+          {user.id && (
+            <main className="flex">
+              <LeftNav user={user} />
+              <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
+            </main>
+          )}
         </Route>
         <Route path="/itineraries" exact>
           <ItineraryList key={key} itineraries={itineraries} />
