@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SET_USER } from '../reducers/application';
+import { Link } from 'react-router-dom';
 
 import FormButton from './FormButton';
 
@@ -41,7 +42,7 @@ export default function LoginForm(props) {
   };
 
   return (
-    <div className='w-full shadow-lg bg-gray-50 rounded-xl'>
+    <section className='w-full shadow-lg bg-gray-50 rounded-xl'>
       <div>{error}</div>
       <form
         onSubmit={(event) => event.preventDefault()}
@@ -57,7 +58,7 @@ export default function LoginForm(props) {
             onChange={handleChange}
             type='email'
             placeholder='Email'
-            className='my-2 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+            className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
           <label htmlFor='password' className='font-semibold'>
             Password
@@ -68,19 +69,19 @@ export default function LoginForm(props) {
             onChange={handleChange}
             type='password'
             placeholder='Password'
-            className='mt-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+            className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
         </div>
-        <div className='flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
-          <span className='text-xs font-semibold'>
-            Don't have an account? Sign up{' '}
-            <a href='/signup' className='text-teal-600 hover:underline'>
-              here
-            </a>
-          </span>
-          <FormButton onClick={save}>Log in</FormButton>
-        </div>
       </form>
-    </div>
+      <footer className='flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
+        <span className='text-xs font-semibold'>
+          Don't have an account? Sign up{' '}
+          <Link to='/signup' className='text-teal-600 hover:underline'>
+            here!
+          </Link>
+        </span>
+        <FormButton onClick={save}>Log in</FormButton>
+      </footer>
+    </section>
   );
 }
