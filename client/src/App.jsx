@@ -48,7 +48,9 @@ function App() {
         </Route>
         <Route path="/dashboard/:user_id">
           <LeftNav user={user} itinerary={state.itinerary} />
-          {user.id && <MyItinerariesList myItineraries={myItineraries} />}
+          {user.id && (
+            <MyItinerariesList myItineraries={myItineraries} user={user} />
+          )}
         </Route>
       </Switch>
     </Router>
