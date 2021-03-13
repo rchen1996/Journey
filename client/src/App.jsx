@@ -21,7 +21,7 @@ function App() {
     createItinerary,
   } = useApplicationData();
 
-  const { user, itineraries } = state;
+  const { user, itineraries, myItineraries } = state;
 
   return (
     <Router>
@@ -43,7 +43,7 @@ function App() {
           <ItineraryList itineraries={itineraries} />
         </Route>
         <Route path="/dashboard/:user_id">
-          {user.id && <MyItinerariesList />}
+          {user.id && <MyItinerariesList myItineraries={myItineraries} />}
         </Route>
       </Switch>
     </Router>
