@@ -71,10 +71,12 @@ export default function useApplicationData() {
     axios.get('/api/users/:user_id/itineraries').then(res => {
       const myItineraries = res.data;
 
-      dispatch({
-        type: SET_MY_ITINERARIES,
-        myItineraries: myItineraries,
-      });
+      if (myItineraries.length > 0) {
+        dispatch({
+          type: SET_MY_ITINERARIES,
+          myItineraries: myItineraries,
+        });
+      }
     });
   }, [state.user, state.itinerary]);
 
