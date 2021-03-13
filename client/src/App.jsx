@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import LeftNav from './components/LeftNav';
+import Itinerary from './components/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
 
@@ -28,25 +29,29 @@ function App() {
     <Router>
       <Nav user={user} logout={logout} dispatch={dispatch} />
       <Switch>
-        <Route path="/" exact>
+        <Route path='/' exact>
           <Home />
         </Route>
-        <Route path="/login">
+        <Route path='/login'>
           <Login onSave={login} dispatch={dispatch} />
         </Route>
-        <Route path="/signup">
+        <Route path='/signup'>
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
           <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
+          <LeftNav user={user} />
         </Route>
         <Route path="/itineraries" exact>
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
-        <Route path="/itineraries/:itinerary_id">
-          <LeftNav user={user} itinerary={state.itinerary} />
+        <Route path='/itineraries/:itinerary_id'>
+          <Itinerary dispatch={dispatch} />
+          {state.itinerary && (
+            <LeftNav user={user} itinerary={state.itinerary} />
+          )}
         </Route>
-        <Route path="/dashboard/:user_id">
+        <Route path='/dashboard/:user_id'>
           <LeftNav user={user} itinerary={state.itinerary} />
           {user.id && (
             <MyItinerariesList myItineraries={myItineraries} user={user} />

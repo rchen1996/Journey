@@ -3,6 +3,7 @@ import dataReducer, {
   SET_ALL_ITINERARIES,
   SET_USER,
   SET_MY_ITINERARIES,
+  SET_ITINERARY
 } from '../reducers/application';
 import axios from 'axios';
 
@@ -69,17 +70,21 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    axios.get('/api/users/:user_id/itineraries').then(res => {
-      const myItineraries = res.data;
+    if(state.user.id) {
 
-      if (myItineraries.length > 0) {
-        dispatch({
-          type: SET_MY_ITINERARIES,
-          myItineraries: myItineraries,
-        });
-      }
-    });
+      axios.get('/api/users/:user_id/itineraries').then(res => {
+        const myItineraries = res.data;
+        
+        if (myItineraries.length > 0) {
+          dispatch({
+            type: SET_MY_ITINERARIES,
+            myItineraries: myItineraries,
+          });
+        }
+      });
+    }
   }, [state.user, state.itinerary]);
+  
 
   return {
     state,
