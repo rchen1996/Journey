@@ -22,11 +22,11 @@ function App() {
     createItinerary,
   } = useApplicationData();
 
-  const { user, itineraries, myItineraries } = state;
+  const { user, itineraries, myItineraries, key } = state;
 
   return (
     <Router>
-      <Nav user={user} logout={logout} />
+      <Nav user={user} logout={logout} dispatch={dispatch} />
       <Switch>
         <Route path="/" exact>
           <Home />
@@ -41,7 +41,7 @@ function App() {
           <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
         </Route>
         <Route path="/itineraries" exact>
-          <ItineraryList itineraries={itineraries} />
+          <ItineraryList key={key} itineraries={itineraries} />
         </Route>
         <Route path="/itineraries/:itinerary_id">
           <LeftNav user={user} itinerary={state.itinerary} />
