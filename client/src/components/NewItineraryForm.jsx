@@ -67,14 +67,12 @@ export default function NewItineraryForm(props) {
           status: false,
           message: '',
         });
-
-        console.log(res.data);
         props.dispatch({
           type: SET_ITINERARY,
           itinerary: res.data,
         });
 
-        history.push(`/itineraries/${res.data.id}`);
+        history.push(`/itineraries/${res.data.id}/edit`);
       } else if (res.data.error) {
         setError({
           ...error,
