@@ -159,6 +159,18 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getItinerary = itineraryId => {
+    const query = {
+      text: `SELECT * FROM itineraries WHERE id = $1;`,
+      values: [itineraryId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -169,5 +181,6 @@ module.exports = db => {
     createAttraction,
     addCollaborator,
     createActivity,
+    getItinerary,
   };
 };
