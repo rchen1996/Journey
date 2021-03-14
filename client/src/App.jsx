@@ -24,6 +24,7 @@ function App() {
     login,
     logout,
     createItinerary,
+    removeCollaborator
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary } = state;
@@ -62,9 +63,9 @@ function App() {
             {itinerary &&
               itinerary.users.some(member => member.id === user.id) && (
                 <MyGroup
-                  users={itinerary.users}
-                  creator={itinerary.creator_id}
-                />
+                user={user}
+                  itinerary={itinerary}
+                removeCollaborator={removeCollaborator}/>
               )}
           </main>
         </Route>
