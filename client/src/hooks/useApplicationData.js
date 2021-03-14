@@ -135,7 +135,7 @@ export default function useApplicationData() {
   }
 
   const deleteItinerary = itineraryId => {
-    return axios.delete(`/api/itineraries/${itineraryId}`, itineraryId);
+    return axios.delete(`/api/itineraries/${itineraryId}`);
   };
 
   return {
