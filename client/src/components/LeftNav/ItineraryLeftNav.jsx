@@ -98,6 +98,7 @@ export default function ItineraryLeftNav(props) {
                       key={day.id}
                       activeClassName='bg-gray-200 bg-opacity-25'
                       className='px-4 py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                      replace
                     >
                       Day {day.day_order}
                     </NavLink>
