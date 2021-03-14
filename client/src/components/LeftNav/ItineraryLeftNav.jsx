@@ -19,9 +19,9 @@ export default function ItineraryLeftNav(props) {
     return;
   }
 
-  const handleDropDown = (event) => {
+  const handleDropDown = event => {
     const targetId = event.target.id;
-    setDropDown((prev) => {
+    setDropDown(prev => {
       const isClassHidden =
         prev[targetId]?.dropClass === 'hidden' ||
         prev[targetId]?.dropClass === undefined;
@@ -51,7 +51,7 @@ export default function ItineraryLeftNav(props) {
             return (
               <div key={index} className='flex flex-col'>
                 <div
-                  onClick={(event) => handleDropDown(event)}
+                  onClick={event => handleDropDown(event)}
                   className='flex items-center justify-between px-4 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                   id={index}
                 >
@@ -77,7 +77,7 @@ export default function ItineraryLeftNav(props) {
                   </svg>
                 </div>
                 <div className={dropDown[index]?.dropClass || 'hidden'}>
-                  {locationObj.days.map((day) => {
+                  {locationObj.days.map(day => {
                     return (
                       <NavLink
                         to={`/itineraries/${itinerary.id}/days/${day.day_order}`}
@@ -101,7 +101,7 @@ export default function ItineraryLeftNav(props) {
                 <input
                   value={newLocation}
                   name='add-location'
-                  onChange={(event) => setNewLocation(event.target.value)}
+                  onChange={event => setNewLocation(event.target.value)}
                   type='text'
                 />
               </form>
@@ -113,7 +113,7 @@ export default function ItineraryLeftNav(props) {
               </div>
             </div>
           ) : (
-            itinerary.users.some((member) => member.id === user.id) && (
+            itinerary.users.some(member => member.id === user.id) && (
               <Link to={`/itineraries/${itinerary.id}/edit`}>Edit</Link>
             )
           )}
