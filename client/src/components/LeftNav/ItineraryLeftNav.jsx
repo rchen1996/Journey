@@ -8,20 +8,19 @@ export default function ItineraryLeftNav(props) {
   const [dropDown, setDropDown] = useState({});
   const [itinerary, setItinerary] = useState({});
 
-  const { dispatch ,travelParty} = props;
+  const { dispatch, travelParty } = props;
   const { pathname } = useLocation();
 
   const { itinerary_id } = useParams();
 
   useEffect(() => {
-    axios.get(`/api/itineraries/${itinerary_id}`).then(res => {
-      travelParty(itinerary_id).then(users => {
+    axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
+      travelParty(itinerary_id).then((users) => {
         dispatch({
           type: SET_ITINERARY,
-          itinerary: {...res.data,users:users.data}
+          itinerary: { ...res.data, users: users.data },
         });
-
-      })
+      });
 
       setItinerary(res.data);
     });
@@ -67,7 +66,7 @@ export default function ItineraryLeftNav(props) {
             <div key={index} className='flex flex-col'>
               <div
                 onClick={(event) => handleDropDown(event)}
-                className='flex items-center justify-between px-4 py-2 mb-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                className='flex items-center justify-between px-4 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                 id={index}
               >
                 <h4 className='text-xl font-bold pointer-events-none'>
@@ -81,7 +80,7 @@ export default function ItineraryLeftNav(props) {
                   fill='none'
                   xmlns='http://www.w3.org/2000/svg'
                   className={
-                    dropDown[locationObj.name]?.svgClass ||
+                    dropDown[index]?.svgClass ||
                     'mr-2 transform duration-300 -rotate-90 cursor-pointer pointer-events-none'
                   }
                 >
