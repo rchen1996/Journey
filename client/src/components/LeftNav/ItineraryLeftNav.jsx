@@ -14,19 +14,19 @@ export default function ItineraryLeftNav(props) {
   }
 
   return (
-    <nav className='flex flex-col w-64 h-full px-4 py-6 space-y-4 text-gray-100 bg-gray-600'>
-      <h1 className='text-xl font-bold'>{itinerary.name}</h1>
+    <nav className="flex flex-col w-64 h-full px-4 py-6 space-y-4 text-gray-100 bg-gray-600">
+      <h1 className="text-xl font-bold">{itinerary.name}</h1>
       {itinerary &&
         itinerary.locations &&
         itinerary.locations.map((locationObj, index) => {
           return (
-            <div className='flex items-center justify-between'>
-              <details key={index} className='flex flex-col'>
+            <div className="flex items-center justify-between">
+              <details key={index} className="flex flex-col">
                 <summary>{locationObj.name}</summary>
-                {locationObj.days.map((day) => {
+                {locationObj.days.map(day => {
                   return (
                     <Link
-                      to={`/itineraries/${itinerary.id}/days/${day.id}`}
+                      to={`/itineraries/${itinerary.id}/days/${day.day_order}`}
                       key={day.id}
                     >
                       Day {day.day_order}
@@ -35,14 +35,14 @@ export default function ItineraryLeftNav(props) {
                 })}
               </details>
               <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='14'
-                height='11'
-                fill='currentColor'
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="11"
+                fill="currentColor"
               >
                 <path
-                  fill='#F4F4F5'
-                  d='M7.866 10.5a1 1 0 01-1.732 0l-5.196-9A1 1 0 011.804 0h10.392a1 1 0 01.866 1.5l-5.196 9z'
+                  fill="#F4F4F5"
+                  d="M7.866 10.5a1 1 0 01-1.732 0l-5.196-9A1 1 0 011.804 0h10.392a1 1 0 01.866 1.5l-5.196 9z"
                 ></path>
               </svg>
             </div>
@@ -53,9 +53,9 @@ export default function ItineraryLeftNav(props) {
       <form onSubmit={handleSubmit}>
         <input
           value={newLocation}
-          name='add-location'
-          onChange={(event) => setNewLocation(event.target.value)}
-          type='text'
+          name="add-location"
+          onChange={event => setNewLocation(event.target.value)}
+          type="text"
         />
       </form>
 
