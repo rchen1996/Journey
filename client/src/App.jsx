@@ -58,7 +58,7 @@ function App() {
         <Route path="/itineraries/:itinerary_id/collaborators">
           <main className="flex w-full h-full">
             {itinerary && <LeftNav user={user} itinerary={itinerary} />}
-            <MyGroup />
+            {itinerary && itinerary.users.some((member)=> member.id === user.id) && <MyGroup users={itinerary.users} creator={itinerary.creator_id}/>}            
           </main>
         </Route>
         <Route path="/itineraries/:itinerary_id">

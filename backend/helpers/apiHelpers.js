@@ -58,6 +58,20 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const deleteCollaborator = (itineraryId, userId) => {
+    const query = {
+      text: `delete from travel_parties
+      WHERE itinerary_id = $1 AND user_id = $2
+      RETURNING *;`,
+      values: [itineraryId,userId]
+    };
+
+    return db
+    .query(query)
+    .then(result => result.rows)
+    .catch(err => err);
+  }
+
   const getDetailedItinerary = itineraryId => {
     const query = {
       text: `select
@@ -99,5 +113,6 @@ module.exports = db => {
     createTravelParty,
     getDetailedItinerary,
     getTravelParty,
+    deleteCollaborator
   };
 };

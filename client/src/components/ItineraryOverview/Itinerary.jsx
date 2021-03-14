@@ -10,12 +10,12 @@ export default function Itinerary(props) {
 
   useEffect(() => {
     axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
-        travelParty(itinerary_id).then((users) => {
+      travelParty(itinerary_id).then((users) => {
         dispatch({
           type: SET_ITINERARY,
-          itinerary: {...res.data,users: users.data}
-        })
-      })
+          itinerary: { ...res.data, users: users.data },
+        });
+      });
     });
   }, [itinerary_id, dispatch]);
 
