@@ -63,14 +63,14 @@ module.exports = db => {
       text: `delete from travel_parties
       WHERE itinerary_id = $1 AND user_id = $2
       RETURNING *;`,
-      values: [itineraryId,userId]
+      values: [itineraryId, userId],
     };
 
     return db
-    .query(query)
-    .then(result => result.rows)
-    .catch(err => err);
-  }
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
 
   const getDetailedItinerary = itineraryId => {
     const query = {
@@ -107,12 +107,33 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const createAttraction = attraction => {
+    const query = {
+      text: `INSERT INTO attractions (name, description, category, image, address, location)
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
+      values: [
+        attraction.name,
+        attraction.description,
+        attraction.category,
+        attraction.image,
+        attraction.address,
+        attraction.location,
+      ],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
     createTravelParty,
     getDetailedItinerary,
     getTravelParty,
-    deleteCollaborator
+    deleteCollaborator,
+    createAttraction,
   };
 };
