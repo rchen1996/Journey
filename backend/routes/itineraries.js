@@ -120,32 +120,36 @@ module.exports = ({
             `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
           )
           .then(res => {
-            const coordinatesArr = res.data.features[0].geometry.coordinates;
-            const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
-            createAttraction({
-              name,
-              description,
-              category,
-              image,
-              address,
-              location,
-            }).then(attraction => {
-              const activity = {
-                dayId: day_id,
-                start: start,
-                end: end,
-                attractionId: attraction.id,
-                itineraryId: itinerary_id,
-              };
+            if (res.data.features.length < 1) {
+              response.send({ addressError: 'This is not a valid address' });
+            } else {
+              const coordinatesArr = res.data.features[0].geometry.coordinates;
+              const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
+              createAttraction({
+                name,
+                description,
+                category,
+                image,
+                address,
+                location,
+              }).then(attraction => {
+                const activity = {
+                  dayId: day_id,
+                  start: start,
+                  end: end,
+                  attractionId: attraction.id,
+                  itineraryId: itinerary_id,
+                };
 
-              createActivity(activity).then(activity => {
-                getDetailedItinerary(itinerary_id).then(itinerary => {
-                  const parsed = itineraryObj(itinerary);
+                createActivity(activity).then(activity => {
+                  getDetailedItinerary(itinerary_id).then(itinerary => {
+                    const parsed = itineraryObj(itinerary);
 
-                  response.send(parsed);
+                    response.send(parsed);
+                  });
                 });
               });
-            });
+            }
           });
       } else {
         response.send({

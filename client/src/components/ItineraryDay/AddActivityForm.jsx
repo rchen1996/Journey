@@ -102,7 +102,13 @@ export default function AddActivityForm(props) {
           ...error,
           status: true,
           message:
-            'You do not have permissions to add an activity to this itinerary',
+            'You do not have permissions to add an activity to this itinerary.',
+        });
+      } else if (res.data.addressError) {
+        setError({
+          ...error,
+          status: true,
+          message: 'Please enter a valid address.',
         });
       }
     });
