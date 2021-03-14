@@ -39,19 +39,23 @@ const itineraryObj = (resultArr) => {
         });
       }
 
-      let activityDay = dayObjs.find((day) => day.id === item.day_id);
+      
 
-      activityDay.activities.push({
-        id: item.activity_id,
-        start_time: item.activity_start_time,
-        end_time: item.activity_end_time,
-        name: item.attraction_name,
-        image: item.attraction_image,
-        address: item.attraction_address,
-        location: item.attraction_location,
-        description: item.attraction_description,
-        category: item.attraction_category,
-      });
+      let activityDay = dayObjs.find((day) => day.id === item.day_id);
+      if(item.activity_id){
+
+        activityDay.activities.push({
+          id: item.activity_id,
+          start_time: item.activity_start_time,
+          end_time: item.activity_end_time,
+          name: item.attraction_name,
+          image: item.attraction_image,
+          address: item.attraction_address,
+          location: item.attraction_location,
+          description: item.attraction_description,
+          category: item.attraction_category,
+        });
+      }
     });
     const locationArr = [];
     dayObjs.forEach((day) => {
