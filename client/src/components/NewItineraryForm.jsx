@@ -113,17 +113,6 @@ export default function NewItineraryForm(props) {
                 className="mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
                 placeholder="Itinerary Name"
               />
-              <label htmlFor="description" className="ml-1 font-semibold">
-                Description
-              </label>
-              <input
-                value={itineraryInfo.description}
-                name="description"
-                onChange={handleChange}
-                type="text"
-                className="mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
-                placeholder="Description"
-              />
               <label htmlFor="tripType" className="ml-1 font-semibold">
                 Trip Type
               </label>
@@ -143,17 +132,6 @@ export default function NewItineraryForm(props) {
                 <option value="business">Business</option>
                 <option value="accessibility">Accessibility</option>
               </select>
-              <label htmlFor="image" className="ml-1 font-semibold">
-                Itinerary Cover Image URL
-              </label>
-              <input
-                value={itineraryInfo.image}
-                name="image"
-                onChange={handleChange}
-                type="url"
-                placeholder="Image URL"
-                className="mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
-              />
               <label htmlFor="startDate" className="ml-1 font-semibold">
                 Trip Start Date
               </label>
@@ -173,6 +151,28 @@ export default function NewItineraryForm(props) {
                 onChange={handleChange}
                 type="date"
                 className="border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
+              />
+              <label htmlFor="image" className="ml-1 font-semibold">
+                Itinerary Cover Image
+              </label>
+              <input
+                value={itineraryInfo.image}
+                name="image"
+                onChange={handleChange}
+                type="url"
+                placeholder="Image URL"
+                className="mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
+              />
+              <label htmlFor="description" className="ml-1 font-semibold">
+                Description
+              </label>
+              <textarea
+                value={itineraryInfo.description}
+                name="description"
+                onChange={handleChange}
+                type="text"
+                className="mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600 resize-none"
+                placeholder="Description"
               />
             </div>
             <footer className="flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl">
