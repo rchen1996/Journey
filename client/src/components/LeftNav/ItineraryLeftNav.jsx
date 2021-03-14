@@ -35,7 +35,7 @@ export default function ItineraryLeftNav(props) {
   }
 
   const handleDropDown = (event) => {
-    const targetId = event.target.firstChild.innerText;
+    const targetId = event.target.id;
     setDropDown((prev) => {
       const isClassHidden =
         prev[targetId]?.dropClass === 'hidden' ||
@@ -54,7 +54,12 @@ export default function ItineraryLeftNav(props) {
 
   return (
     <nav className='flex flex-col w-64 h-full px-6 py-6 text-gray-100 bg-gray-600'>
-      <h1 className='mb-4 text-2xl font-bold'>{itinerary.name}</h1>
+      <Link
+        to={`/itineraries/${itinerary.id}/`}
+        className='mb-4 text-2xl font-bold'
+      >
+        {itinerary.name}
+      </Link>
       {itinerary &&
         itinerary.locations &&
         itinerary.locations.map((locationObj, index) => {
@@ -63,6 +68,7 @@ export default function ItineraryLeftNav(props) {
               <div
                 onClick={(event) => handleDropDown(event)}
                 className='flex items-center justify-between px-4 py-2 mb-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                id={index}
               >
                 <h4 className='text-xl font-bold pointer-events-none'>
                   {locationObj.name}
@@ -85,9 +91,7 @@ export default function ItineraryLeftNav(props) {
                   />
                 </svg>
               </div>
-              <div
-                className={dropDown[locationObj.name]?.dropClass || 'hidden'}
-              >
+              <div className={dropDown[index]?.dropClass || 'hidden'}>
                 {locationObj.days.map((day) => {
                   return (
                     <NavLink
