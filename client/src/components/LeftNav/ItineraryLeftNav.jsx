@@ -16,7 +16,7 @@ export default function ItineraryLeftNav(props) {
   }
 
   const handleDropDown = (event) => {
-    const targetId = event.target.innerText;
+    const targetId = event.target.firstChild.innerText;
     setDropDown((prev) => {
       const isClassHidden =
         prev[targetId]?.dropClass === 'hidden' ||
@@ -45,7 +45,10 @@ export default function ItineraryLeftNav(props) {
                 onClick={(event) => handleDropDown(event)}
                 className='flex items-center justify-between px-4 py-2 mb-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
               >
-                <h4 className='text-xl font-bold '>{locationObj.name}</h4>
+                <h4 className='text-xl font-bold pointer-events-none'>
+                  {locationObj.name}
+                </h4>
+
                 <svg
                   width='14'
                   height='14'
@@ -83,7 +86,7 @@ export default function ItineraryLeftNav(props) {
           );
         })}
       {pathname.includes('edit') ? (
-        <>
+        <div>
           <button> Add Location </button>
           <form onSubmit={handleSubmit}>
             <input
@@ -99,7 +102,7 @@ export default function ItineraryLeftNav(props) {
               My Group{' '}
             </NavLink>
           </div>
-        </>
+        </div>
       ) : (
         props.user.id === itinerary.creator_id && (
           <Link to={`/itineraries/${itinerary.id}/edit`}>Edit</Link>
