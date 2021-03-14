@@ -55,7 +55,7 @@ function App() {
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
         <Route path="/itineraries/:itinerary_id/collaborators">
-          <main className="flex">
+          <main className="flex w-full h-full">
             {itinerary && <LeftNav user={user} itinerary={itinerary} />}
             <MyGroup />
           </main>
