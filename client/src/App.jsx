@@ -62,7 +62,7 @@ function App() {
         </Route>
         <Route path="/itineraries/:itinerary_id/collaborators">
           <main className="flex w-full h-full">
-            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
+            <LeftNav user={user} itinerary={itinerary} setItinerary={setItinerary} />
             {itinerary &&
               itinerary.users.some(member => member.id === user.id) && (
                 <MyGroup
@@ -76,7 +76,7 @@ function App() {
         </Route>
         <Route path="/itineraries/:itinerary_id/days/:day_id/activities/new">
           <main className="flex w-full min-h-full">
-            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
+            <LeftNav user={user} itinerary={itinerary} setItinerary={setItinerary} />
             <AddActivityForm
               dispatch={dispatch}
               onSave={createActivity}
@@ -86,13 +86,13 @@ function App() {
         </Route>
         <Route path="/itineraries/:itinerary_id/days/:day_id">
           <main className="flex w-full min-h-full">
-            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
+            <LeftNav user={user} itinerary={itinerary} setItinerary={setItinerary} />
             <ItineraryDay itinerary={itinerary} dispatch={dispatch} />
           </main>
         </Route>
         <Route path="/itineraries/:itinerary_id">
           <main className="flex w-full min-h-full">
-            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} setItinerary={setItinerary}/>
+            <LeftNav user={user} itinerary={itinerary} setItinerary={setItinerary}/>
             <Itinerary dispatch={dispatch} itinerary={itinerary} />
           </main>
         </Route>
