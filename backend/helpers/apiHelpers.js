@@ -78,10 +78,10 @@ module.exports = db => {
       attractions.description as attraction_description
 
       from itineraries 
-      JOIN days ON itineraries.id = itinerary_id 
-      JOIN locations ON location_id = locations.id
-      JOIN activities ON days.id = day_id
-      JOIN attractions on attractions.id = attraction_id      
+      LEFT JOIN days ON itineraries.id = itinerary_id 
+      LEFT JOIN locations ON location_id = locations.id
+      LEFT JOIN activities ON days.id = day_id
+      LEFT JOIN attractions on attractions.id = attraction_id      
       WHERE itineraries.id = $1 
       GROUP BY itineraries.id, days.id, locations.id,activities.id,attractions.id
       ORDER BY days.id;`,
