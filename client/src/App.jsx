@@ -76,7 +76,11 @@ function App() {
         <Route path="/itineraries/:itinerary_id/days/:day_id/activities/new">
           <main className="flex w-full min-h-full">
             <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
-            <AddActivityForm dispatch={dispatch} onSave={createActivity} />
+            <AddActivityForm
+              dispatch={dispatch}
+              onSave={createActivity}
+              itinerary={itinerary}
+            />
           </main>
         </Route>
         <Route path="/itineraries/:itinerary_id/days/:day_id">
