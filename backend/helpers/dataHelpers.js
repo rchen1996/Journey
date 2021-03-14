@@ -1,7 +1,7 @@
 // if need to reformat output of queries for easier manipulation on front end
 // do that in here
 
-const itineraryObj = (resultArr) => {
+const itineraryObj = resultArr => {
   const {
     id,
     name,
@@ -27,8 +27,8 @@ const itineraryObj = (resultArr) => {
     days: [],
   };
 
-  resultArr.forEach((item) => {
-    if (!itinerary.days.some((day) => day.id === item.day_id)) {
+  resultArr.forEach(item => {
+    if (!itinerary.days.some(day => day.id === item.day_id)) {
       itinerary.days.push({
         id: item.day_id,
         location: { id: item.location_id, name: item.location_name },
@@ -37,7 +37,7 @@ const itineraryObj = (resultArr) => {
       });
     }
 
-    let activityDay = itinerary.days.find((day) => day.id === item.day_id);
+    let activityDay = itinerary.days.find(day => day.id === item.day_id);
 
     activityDay.activities.push({
       id: item.activity_id,
@@ -45,6 +45,7 @@ const itineraryObj = (resultArr) => {
       end_time: item.activity_end_time,
       name: item.attraction_name,
       image: item.attraction_image,
+      address: item.attraction_address,
       location: item.attraction_location,
       description: item.attraction_description,
       category: item.attraction_category,

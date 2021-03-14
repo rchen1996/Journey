@@ -1,4 +1,4 @@
-module.exports = (db) => {
+module.exports = db => {
   const getAllItineraries = () => {
     const query = {
       text: 'SELECT * FROM itineraries LIMIT 25;',
@@ -6,11 +6,11 @@ module.exports = (db) => {
 
     return db
       .query(query)
-      .then((result) => result.rows)
-      .catch((err) => err);
+      .then(result => result.rows)
+      .catch(err => err);
   };
 
-  const createNewItinerary = (itinerary) => {
+  const createNewItinerary = itinerary => {
     const query = {
       text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date, end_date) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
@@ -27,8 +27,8 @@ module.exports = (db) => {
 
     return db
       .query(query)
-      .then((result) => result.rows[0])
-      .catch((err) => err);
+      .then(result => result.rows[0])
+      .catch(err => err);
   };
 
   const createTravelParty = (itineraryId, userId) => {
@@ -40,11 +40,11 @@ module.exports = (db) => {
 
     return db
       .query(query)
-      .then((result) => result.rows[0])
-      .catch((err) => err);
+      .then(result => result.rows[0])
+      .catch(err => err);
   };
 
-  const getTravelParty = (itineraryId) => {
+  const getTravelParty = itineraryId => {
     const query = {
       text: `select * from travel_parties 
       JOIN users ON user_id = users.id
@@ -54,11 +54,11 @@ module.exports = (db) => {
 
     return db
       .query(query)
-      .then((result) => result.rows)
-      .catch((err) => err);
+      .then(result => result.rows)
+      .catch(err => err);
   };
 
-  const getDetailedItinerary = (itineraryId) => {
+  const getDetailedItinerary = itineraryId => {
     const query = {
       text: `select
       itineraries.* ,
@@ -71,6 +71,7 @@ module.exports = (db) => {
       activities.end_time as activity_end_time,
       attractions.name as attraction_name,
       attractions.image as attraction_image,
+      attractions.address as attraction_address,
       attractions.location as attraction_location,
       attractions.visible as attraction_visibility,
       attractions.category as attraction_category,
@@ -87,8 +88,8 @@ module.exports = (db) => {
     };
     return db
       .query(query)
-      .then((result) => result.rows)
-      .catch((err) => err);
+      .then(result => result.rows)
+      .catch(err => err);
   };
 
   return {
@@ -96,6 +97,6 @@ module.exports = (db) => {
     createNewItinerary,
     createTravelParty,
     getDetailedItinerary,
-    getTravelParty
+    getTravelParty,
   };
 };
