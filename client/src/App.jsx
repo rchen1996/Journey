@@ -14,6 +14,7 @@ import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
 import MyGroup from './components/MyGroup';
 import ItineraryDay from './components/ItineraryDay/ItineraryDay';
+import AddActivityForm from './components/ItineraryDay/AddActivityForm';
 
 function App() {
   const {
@@ -32,18 +33,18 @@ function App() {
     <Router>
       <Nav user={user} logout={logout} dispatch={dispatch} />
       <Switch>
-        <Route path='/' exact>
+        <Route path="/" exact>
           <Home />
         </Route>
-        <Route path='/login'>
+        <Route path="/login">
           <Login onSave={login} dispatch={dispatch} />
         </Route>
-        <Route path='/signup'>
+        <Route path="/signup">
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
           {user.id && (
-            <main className='flex w-full h-full min-h-full'>
+            <main className="flex w-full h-full min-h-full">
               <LeftNav user={user} dispatch={dispatch} />
               <NewItineraryForm
                 dispatch={dispatch}
@@ -53,11 +54,11 @@ function App() {
             </main>
           )}
         </Route>
-        <Route path='/itineraries' exact>
+        <Route path="/itineraries" exact>
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
-        <Route path='/itineraries/:itinerary_id/collaborators'>
-          <main className='flex w-full h-full'>
+        <Route path="/itineraries/:itinerary_id/collaborators">
+          <main className="flex w-full h-full">
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -65,7 +66,7 @@ function App() {
               travelParty={allowedUsers}
             />
             {itinerary &&
-              itinerary.users.some((member) => member.id === user.id) && (
+              itinerary.users.some(member => member.id === user.id) && (
                 <MyGroup
                   users={itinerary.users}
                   creator={itinerary.creator_id}
@@ -73,8 +74,19 @@ function App() {
               )}
           </main>
         </Route>
-        <Route path='/itineraries/:itinerary_id/days/:day_id'>
-          <main className='flex w-full min-h-full'>
+        <Route path="/itineraries/:itinerary_id/days/:day_id/activities/new">
+          <main className="flex w-full min-h-full">
+            <LeftNav
+              user={user}
+              itinerary={itinerary}
+              dispatch={dispatch}
+              travelParty={allowedUsers}
+            />
+            <AddActivityForm />
+          </main>
+        </Route>
+        <Route path="/itineraries/:itinerary_id/days/:day_id">
+          <main className="flex w-full min-h-full">
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -84,8 +96,8 @@ function App() {
             <ItineraryDay itinerary={itinerary} dispatch={dispatch} />
           </main>
         </Route>
-        <Route path='/itineraries/:itinerary_id'>
-          <main className='flex w-full min-h-full'>
+        <Route path="/itineraries/:itinerary_id">
+          <main className="flex w-full min-h-full">
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -95,9 +107,9 @@ function App() {
             <Itinerary dispatch={dispatch} itinerary={itinerary} />
           </main>
         </Route>
-        <Route path='/dashboard/:user_id'>
+        <Route path="/dashboard/:user_id">
           {user.id && (
-            <main className='flex w-full min-h-full'>
+            <main className="flex w-full min-h-full">
               <LeftNav user={user} dispatch={dispatch} />
               <MyItinerariesList myItineraries={myItineraries} user={user} />
             </main>
