@@ -1,4 +1,4 @@
-module.exports = db => {
+module.exports = (db) => {
   const getAllItineraries = () => {
     const query = {
       text: 'SELECT * FROM itineraries LIMIT 25;',
@@ -6,11 +6,11 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
-  const createNewItinerary = itinerary => {
+  const createNewItinerary = (itinerary) => {
     const query = {
       text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date, end_date) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
@@ -27,8 +27,8 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
   const createTravelParty = (itineraryId, userId) => {
@@ -40,11 +40,11 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
-  const getTravelParty = itineraryId => {
+  const getTravelParty = (itineraryId) => {
     const query = {
       text: `select * from travel_parties 
       JOIN users ON user_id = users.id
@@ -54,8 +54,8 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
   const deleteCollaborator = (itineraryId, userId) => {
@@ -63,16 +63,29 @@ module.exports = db => {
       text: `delete from travel_parties
       WHERE itinerary_id = $1 AND user_id = $2
       RETURNING *;`,
-      values: [itineraryId,userId]
+      values: [itineraryId, userId],
     };
 
     return db
-    .query(query)
-    .then(result => result.rows)
-    .catch(err => err);
-  }
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
 
-  const getDetailedItinerary = itineraryId => {
+  const addCollaborator = (itineraryId, userEmail) => {
+    const query = {
+      text: `INSERT INTO travel_parties (itinerary_id,user_id)
+      VALUES ($1, (SELECT id from users WHERE email= $2))
+      RETURNING *`,
+      values: [itineraryId, `${userEmail}`],
+    };
+    return db
+      .query(query)
+      .then((result) => result.rows[0])
+      .catch((err) => err);
+  };
+
+  const getDetailedItinerary = (itineraryId) => {
     const query = {
       text: `select
       itineraries.* ,
@@ -103,8 +116,8 @@ module.exports = db => {
     };
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
   return {
@@ -113,6 +126,7 @@ module.exports = db => {
     createTravelParty,
     getDetailedItinerary,
     getTravelParty,
-    deleteCollaborator
+    deleteCollaborator,
+    addCollaborator,
   };
 };

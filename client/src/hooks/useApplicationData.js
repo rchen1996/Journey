@@ -89,10 +89,24 @@ export default function useApplicationData() {
     axios.delete(`/api/itineraries/${itineraryId}/users/${userId}`).then(res => {
       dispatch({
         type:SET_ITINERARY,
-        itinerary: {...state.itinerary, user: res.data}
-      })
+        itinerary: {...state.itinerary, users: res.data}
+      })      
     }).catch(err => console.log(err))
   };
+
+  function addCollaborator(itineraryId, email) {
+   return  axios.post(`/api/itineraries/${itineraryId}/users`,{email}).then(res => {
+      if(res.data.error){
+        return {error: 'email does not exist'}
+      } else {
+        dispatch({
+          type:SET_ITINERARY,
+          itinerary: {...state.itinerary, users: res.data}
+        })
+        return {success: 'user added to travel party'}       
+      }
+    }).catch(err => console.log(err))
+  }
 
   return {
     state,
@@ -101,6 +115,7 @@ export default function useApplicationData() {
     register,
     logout,
     createItinerary,
-    removeCollaborator   
+    removeCollaborator,
+    addCollaborator 
   };
 }
