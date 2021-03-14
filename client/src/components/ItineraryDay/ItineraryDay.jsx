@@ -1,9 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import ItineraryDayActivities from './ItineraryDayActivities';
 
 export default function ItineraryDay(props) {
-  const { day_id } = useParams();
+  const { itinerary_id, day_id } = useParams();
 
   const { itinerary } = props;
 
@@ -48,7 +48,9 @@ export default function ItineraryDay(props) {
           {day && day.activities && day.activities.length} Activities Planned
         </h2>
       )}
-      <button>Add Activity</button>
+      <Link to={`/itineraries/${itinerary_id}/days/${day_id}/activities/new`}>
+        Add Activity
+      </Link>
       {day &&
         day.activities &&
         day.activities.map(activity => {
