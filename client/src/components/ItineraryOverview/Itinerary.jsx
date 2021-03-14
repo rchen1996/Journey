@@ -1,34 +1,18 @@
-import React, { useEffect } from 'react';
-import { SET_ITINERARY } from '../../reducers/application';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import ItineraryDays from './ItineraryDays';
 
 export default function Itinerary(props) {
-  const { itinerary_id } = useParams();
-  const { dispatch, itinerary, travelParty } = props;
-
-  useEffect(() => {
-    axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
-        travelParty(itinerary_id).then((users) => {
-        dispatch({
-          type: SET_ITINERARY,
-          itinerary: {...res.data,users: users.data}
-        })
-      })
-    });
-  }, [itinerary_id, dispatch]);
+  const { itinerary } = props;
 
   return (
-    <section className='flex flex-col w-full h-full mx-24 my-8'>
+    <section className="flex flex-col w-full h-full mx-24 my-8">
       {itinerary &&
         itinerary.locations &&
         itinerary.locations.map((location, index) => {
           return (
             <div key={index}>
-              <h2 className='mb-4 ml-2 text-3xl font-bold'>{location.name}</h2>
+              <h2 className="mb-4 ml-2 text-3xl font-bold">{location.name}</h2>
               {location.days &&
-                location.days.map((day) => {
+                location.days.map(day => {
                   return <ItineraryDays key={day.id} day={day} />;
                 })}
             </div>
