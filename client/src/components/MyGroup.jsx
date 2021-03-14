@@ -17,21 +17,13 @@ export default function MyGroup(props) {
     textClass: 'flex items-center mr-2 space-x-2 cursor-pointer',
   });
 
-  const handleRemove = userId => {
+  const handleRemove = (userId) => {
     removeCollaborator(id, userId);
   };
 
-  const handleAdd = () => {
-    const validEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (!validEmailRegex.test(addInput)) {
-      setError({
-        ...error,
-        status: true,
-        message: 'Please enter an email.',
-      });
-      return;
-    }
-    addCollaborator(id, addInput).then(result => {
+  const handleAdd = (event) => {
+    event.preventDefault();
+    addCollaborator(id, addInput).then((result) => {
       if (result.error) {
         setError({
           ...error,
@@ -51,7 +43,7 @@ export default function MyGroup(props) {
   };
 
   const handleDropDown = () => {
-    setDropDown(prev => {
+    setDropDown((prev) => {
       const isClassHidden =
         prev?.formClass === 'items-center self-end hidden' ||
         prev?.formClass === undefined;
@@ -61,7 +53,6 @@ export default function MyGroup(props) {
         status: false,
         message: '',
       });
-
       setAddInput('');
 
       return {
@@ -117,18 +108,16 @@ export default function MyGroup(props) {
                     />
                   </svg>
                 </div>
-                <form
-                  onSubmit={event => event.preventDefault()}
-                  className={dropDown.formClass}
-                >
+                <form onSubmit={handleAdd} className={dropDown.formClass}>
                   <input
                     value={addInput}
-                    onChange={event => setAddInput(event.target.value)}
+                    onChange={(event) => setAddInput(event.target.value)}
                     placeholder='Enter Email'
                     type='email'
                     className='pr-8 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
                   ></input>
                   <button
+                    type='button'
                     onClick={handleDropDown}
                     className='p-2 opacity-75 -ml-9 hover:opacity-100 focus:outline-none'
                   >
@@ -146,7 +135,7 @@ export default function MyGroup(props) {
                     </svg>
                   </button>
                   <button
-                    onClick={handleAdd}
+                    type='Submit'
                     className='px-4 py-3 ml-6 font-semibold leading-none text-gray-200 bg-teal-600 border-2 border-transparent focus:ring-1 focus:ring-teal-600 hover:bg-transparent hover:border-teal-600 hover:text-teal-600 rounded-xl'
                   >
                     Add
@@ -157,7 +146,7 @@ export default function MyGroup(props) {
           </header>
         )}
         <div className='flex flex-col w-full space-y-4'>
-          {users.map(member => {
+          {users.map((member) => {
             return (
               <div
                 key={member.id}
