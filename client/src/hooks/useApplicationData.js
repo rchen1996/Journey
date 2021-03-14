@@ -17,7 +17,7 @@ export default function useApplicationData() {
   });
 
   useEffect(() => {
-    axios.get(`/api/users/${state.user.id}`).then((res) => {
+    axios.get(`/api/users/${state.user.id}`).then(res => {
       const user = res.data[0];
       if (res.data.length > 0) {
         dispatch({
@@ -56,7 +56,7 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    return axios.get('/api/itineraries').then((res) => {
+    return axios.get('/api/itineraries').then(res => {
       const itineraries = res.data;
       dispatch({
         type: SET_ALL_ITINERARIES,
@@ -71,7 +71,7 @@ export default function useApplicationData() {
 
   useEffect(() => {
     if (state.user.id) {
-      axios.get('/api/users/:user_id/itineraries').then((res) => {
+      axios.get('/api/users/:user_id/itineraries').then(res => {
         const myItineraries = res.data;
 
         if (myItineraries.length > 0) {
@@ -84,14 +84,23 @@ export default function useApplicationData() {
     }
   }, [state.user, state.itinerary]);
 
-  
-  function removeCollaborator(itineraryId,userId) {
-    axios.delete(`/api/itineraries/${itineraryId}/users/${userId}`).then(res => {
-      dispatch({
-        type:SET_ITINERARY,
-        itinerary: {...state.itinerary, user: res.data}
+  function removeCollaborator(itineraryId, userId) {
+    axios
+      .delete(`/api/itineraries/${itineraryId}/users/${userId}`)
+      .then(res => {
+        dispatch({
+          type: SET_ITINERARY,
+          itinerary: { ...state.itinerary, user: res.data },
+        });
       })
-    }).catch(err => console.log(err))
+      .catch(err => console.log(err));
+  }
+
+  const createActivity = activity => {
+    return axios.post(
+      '/api/itineraries/:itinerary_id/days/:day_id/activities',
+      activity
+    );
   };
 
   return {
@@ -101,6 +110,7 @@ export default function useApplicationData() {
     register,
     logout,
     createItinerary,
-    removeCollaborator   
+    removeCollaborator,
+    createActivity,
   };
 }
