@@ -51,7 +51,7 @@ module.exports = ({
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
     getDetailedItinerary(itinerary_id).then((resultArr) => {
-      const itinerary = itineraryObj(resultArr);
+      const itinerary = itineraryObj2(resultArr);
 
       res.send(itinerary);
     });

@@ -109,7 +109,7 @@ const itineraryObj2 = resultArr => {
   });
   const locationArr = []
   dayObjs.forEach(day => {
- if(!locationArr.slice(-1)[0] || !locationArr.slice(-1)[0].id === day.location_id){
+ if(!locationArr.slice(-1)[0] || !(locationArr.slice(-1)[0].id === day.location_id)){
    locationArr.push({id:day.location_id, name:day.location_name,days:[]})   
  }
  locationArr.slice(-1)[0].days.push({id:day.id, day_order:day.day_order, activities:day.activities})
