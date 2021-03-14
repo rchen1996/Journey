@@ -11,7 +11,7 @@ module.exports = ({
   deleteCollaborator,
 }) => {
   router.get('/', (req, res) => {
-    getAllItineraries().then((itineraries) => res.send(itineraries));
+    getAllItineraries().then(itineraries => res.send(itineraries));
   });
 
   router.post('/', (req, res) => {
@@ -32,8 +32,8 @@ module.exports = ({
         userId,
         startDate,
         endDate,
-      }).then((itinerary) => {
-        createTravelParty(itinerary.id, userId).then((travelParty) =>
+      }).then(itinerary => {
+        createTravelParty(itinerary.id, userId).then(travelParty =>
           res.send(itinerary)
         );
       });
@@ -44,14 +44,14 @@ module.exports = ({
 
   router.get('/:itinerary_id/collaborators', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getTravelParty(itinerary_id).then((party) => {
+    getTravelParty(itinerary_id).then(party => {
       res.send(parseTravelParty(party));
     });
   });
 
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getDetailedItinerary(itinerary_id).then((resultArr) => {
+    getDetailedItinerary(itinerary_id).then(resultArr => {
       const itinerary = itineraryObj(resultArr);
 
       res.send(itinerary);
@@ -61,11 +61,13 @@ module.exports = ({
   router.delete('/:itinerary_id/users/:user_id', (req, res) => {
     const { itinerary_id, user_id } = req.params;
     deleteCollaborator(itinerary_id, user_id).then(() => {
-      getTravelParty(itinerary_id).then((party) => {
+      getTravelParty(itinerary_id).then(party => {
         res.send(parseTravelParty(party));
       });
     });
   });
+
+  router.post('/:itinerary_id/days/:day_id/activities', (req, res) => {});
 
   return router;
 };
