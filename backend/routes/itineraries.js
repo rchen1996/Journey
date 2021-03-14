@@ -8,6 +8,7 @@ module.exports = ({
   createTravelParty,
   getDetailedItinerary,
   getTravelParty,
+  deleteCollaborator
   
 }) => {
   router.get('/', (req, res) => {
@@ -57,6 +58,13 @@ module.exports = ({
       res.send(itinerary);
     });
   });
+
+  router.delete('/:itinerary_id/users/:user_id', (req, res) => {
+    const {itinerary_id, user_id} = req.params
+    deleteCollaborator(itinerary_id, user_id).then(result => {
+      res.send(result)
+    })
+  })
 
   return router;
 };

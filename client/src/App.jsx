@@ -56,21 +56,22 @@ function App() {
         <Route path='/itineraries' exact>
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
-        <Route path='/itineraries/:itinerary_id/collaborators'>
-          <main className='flex w-full h-full'>
-            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
-            <MyGroup />
+        <Route path="/itineraries/:itinerary_id/collaborators">
+          <main className="flex w-full h-full">            
+            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} travelParty={allowedUsers} />
+            {itinerary && itinerary.users.some((member)=> member.id === user.id) && <MyGroup users={itinerary.users} creator={itinerary.creator_id}/>}            
+            
           </main>
         </Route>
-        <Route path='/itineraries/:itinerary_id/days/:day_id'>
-          <main className='flex w-full min-h-full'>
-            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
+        <Route path="/itineraries/:itinerary_id/days/:day_id">
+          <main className="flex w-full h-full">
+            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} travelParty={allowedUsers}/>
             <ItineraryDay itinerary={itinerary} dispatch={dispatch} />
           </main>
         </Route>
-        <Route path='/itineraries/:itinerary_id'>
-          <main className='flex w-full min-h-full'>
-            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
+        <Route path="/itineraries/:itinerary_id">
+          <main className="flex w-full h-full">
+            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} travelParty={allowedUsers}/>
             <Itinerary dispatch={dispatch} itinerary={itinerary} />
           </main>
         </Route>

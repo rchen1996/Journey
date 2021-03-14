@@ -87,6 +87,10 @@ export default function useApplicationData() {
     return axios.get(`/api/itineraries/${itineraryId}/collaborators`)
   }
 
+  const removeCollaborator = (userId) => {
+    
+  }
+
   return {
     state,
     dispatch,

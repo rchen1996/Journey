@@ -11,7 +11,8 @@ export default function LeftNav(props) {
         <ItineraryLeftNav
           itinerary={props.itinerary}
           user={props.user}
-          dispatch={props.dispatch}  />       
+          dispatch={props.dispatch} 
+          travelParty={props.travelParty}/>       
        : 
         <DashboardLeftNav user={props.user} />
       }
