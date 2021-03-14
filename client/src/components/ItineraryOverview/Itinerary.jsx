@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
 import { SET_ITINERARY } from '../../reducers/application';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -9,7 +9,7 @@ export default function Itinerary(props) {
   const { dispatch, itinerary } = props;
 
   useEffect(() => {
-    axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
+    axios.get(`/api/itineraries/${itinerary_id}`).then(res => {
       dispatch({
         type: SET_ITINERARY,
         itinerary: res.data,
@@ -17,40 +17,19 @@ export default function Itinerary(props) {
     });
   }, [itinerary_id, dispatch]);
 
-  const sortedDays =
-    itinerary &&
-    itinerary.days &&
-    itinerary.days.sort((day1, day2) => {
-      let d1Location = day1.location.id;
-      let d2Location = day2.location.id;
-      let d1order = day1.day_order;
-      let d2order = day2.day_order;
-
-      if (d1Location === d2Location) {
-        return d1order < d2order ? -1 : 1;
-      } else {
-        return d1Location - d2Location;
-      }
-    });
-
-  const locationArr = [];
-
   return (
-    <section className='flex flex-col w-full h-full mx-24 my-8'>
-      {sortedDays &&
-        sortedDays.map((day) => {
-          let location = null;
-          if (locationArr.slice(-1)[0] !== day.location.id) {
-            location = day.location.name;
-            locationArr.push(day.location.id);
-          }
+    <section className="flex flex-col w-full h-full mx-24 my-8">
+      {itinerary &&
+        itinerary.locations &&
+        itinerary.locations.map(location => {
           return (
-            <Fragment key={day.id}>
-              {location && (
-                <h2 className='mb-4 ml-2 text-3xl font-bold'>{location}</h2>
-              )}
-              <ItineraryDays day={day} />
-            </Fragment>
+            <div key={location.id}>
+              <h2 className="mb-4 ml-2 text-3xl font-bold">{location.name}</h2>
+              {location.days &&
+                location.days.map(day => {
+                  return <ItineraryDays key={day.id} day={day} />;
+                })}
+            </div>
           );
         })}
     </section>
