@@ -10,8 +10,7 @@ export default function LeftNav(props) {
       {useParams().itinerary_id ? 
         <ItineraryLeftNav
           itinerary={props.itinerary}
-          user={props.user}
-          dispatch={props.dispatch} 
+          user={props.user}           
           setItinerary={props.setItinerary}/>       
        : 
         <DashboardLeftNav user={props.user} />

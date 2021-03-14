@@ -48,7 +48,7 @@ function App() {
         <Route path={`/itineraries/new`}>
           {user.id && (
             <main className='flex w-full h-full min-h-full'>
-              <LeftNav user={user} dispatch={dispatch} />
+              <LeftNav user={user} setItinerary={setItinerary}/>
               <NewItineraryForm
                 dispatch={dispatch}
                 onSave={createItinerary}
