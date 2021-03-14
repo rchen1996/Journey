@@ -1,28 +1,16 @@
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import axios from 'axios';
-import SET_ITINERARY from '../../reducers/application';
 
 import ItineraryDayActivities from './ItineraryDayActivities';
 
 export default function ItineraryDay(props) {
-  const { itinerary_id, day_id } = useParams();
+  const { day_id } = useParams();
 
-  const { itinerary, dispatch } = props;
+  const { itinerary } = props;
 
   let locations;
   if (itinerary) {
     locations = itinerary.locations;
   }
-
-  useEffect(() => {
-    axios.get(`/api/itineraries/${itinerary_id}`).then(res => {
-      dispatch({
-        type: SET_ITINERARY,
-        itinerary: res.data,
-      });
-    });
-  }, [itinerary_id, dispatch]);
 
   const getCurrentDay = locations => {
     let currentDay;

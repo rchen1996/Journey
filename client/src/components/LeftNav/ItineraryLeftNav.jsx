@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, Link, useLocation, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { SET_ITINERARY } from '../../reducers/application';
 
 export default function ItineraryLeftNav(props) {
   const [newLocation, setNewLocation] = useState('');
+  const [itinerary, setItinerary] = useState({});
 
-  const { itinerary } = props;
+  const { dispatch } = props;
   const { pathname } = useLocation();
+
+  const { itinerary_id } = useParams();
+
+  useEffect(() => {
+    axios.get(`/api/itineraries/${itinerary_id}`).then(res => {
+      dispatch({
+        type: SET_ITINERARY,
+        itinerary: res.data,
+      });
+
+      setItinerary(res.data);
+    });
+  }, [itinerary_id, dispatch]);
 
   function handleSubmit(event) {
     event.preventDefault();
