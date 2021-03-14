@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { SET_ITINERARY } from '../../reducers/application';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -9,7 +9,7 @@ export default function Itinerary(props) {
   const { dispatch, itinerary } = props;
 
   useEffect(() => {
-    axios.get(`/api/itineraries/${itinerary_id}`).then(res => {
+    axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
       dispatch({
         type: SET_ITINERARY,
         itinerary: res.data,
@@ -36,21 +36,23 @@ export default function Itinerary(props) {
   const locationArr = [];
 
   return (
-    <div>
+    <section className='flex flex-col w-full h-full mx-24 my-8'>
       {sortedDays &&
-        sortedDays.map(day => {
+        sortedDays.map((day) => {
           let location = null;
           if (locationArr.slice(-1)[0] !== day.location.id) {
             location = day.location.name;
             locationArr.push(day.location.id);
           }
           return (
-            <div key={day.id}>
-              {location && <h2>{location}</h2>}
+            <Fragment key={day.id}>
+              {location && (
+                <h2 className='mb-4 ml-2 text-3xl font-bold'>{location}</h2>
+              )}
               <ItineraryDays day={day} />
-            </div>
+            </Fragment>
           );
         })}
-    </div>
+    </section>
   );
 }
