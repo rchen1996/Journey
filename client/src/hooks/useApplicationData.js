@@ -90,7 +90,7 @@ export default function useApplicationData() {
       .then(res => {
         dispatch({
           type: SET_ITINERARY,
-          itinerary: { ...state.itinerary, user: res.data },
+          itinerary: { ...state.itinerary, users: res.data },
         });
       })
       .catch(err => console.log(err));
@@ -103,6 +103,23 @@ export default function useApplicationData() {
     );
   };
 
+  function addCollaborator(itineraryId, email) {
+    return axios
+      .post(`/api/itineraries/${itineraryId}/users`, { email })
+      .then(res => {
+        if (res.data.error) {
+          return { error: 'email does not exist' };
+        } else {
+          dispatch({
+            type: SET_ITINERARY,
+            itinerary: { ...state.itinerary, users: res.data },
+          });
+          return { success: 'user added to travel party' };
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
   return {
     state,
     dispatch,
@@ -112,5 +129,6 @@ export default function useApplicationData() {
     createItinerary,
     removeCollaborator,
     createActivity,
+    addCollaborator,
   };
 }

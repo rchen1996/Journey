@@ -26,6 +26,7 @@ function App() {
     createItinerary,
     removeCollaborator,
     createActivity,
+    addCollaborator,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary } = state;
@@ -67,6 +68,7 @@ function App() {
                   user={user}
                   itinerary={itinerary}
                   removeCollaborator={removeCollaborator}
+                  addCollaborator={addCollaborator}
                 />
               )}
           </main>

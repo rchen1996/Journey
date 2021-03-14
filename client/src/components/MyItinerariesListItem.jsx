@@ -35,7 +35,7 @@ export default function MyItinerariesListItem(props) {
 
           <span className='text-xs font-bold text-gray-200'>7 Days</span>
         </div>
-        <p className='pb-4 text-sm'>{description}</p>
+        <p className='pb-4 text-sm line-clamp-3'>{description}</p>
         <footer className='flex flex-row-reverse items-center mr-2'>
           {creator_id === props.user.id && (
             <svg

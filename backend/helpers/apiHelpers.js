@@ -72,6 +72,19 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const addCollaborator = (itineraryId, userEmail) => {
+    const query = {
+      text: `INSERT INTO travel_parties (itinerary_id,user_id)
+      VALUES ($1, (SELECT id from users WHERE email= $2))
+      RETURNING *`,
+      values: [itineraryId, `${userEmail}`],
+    };
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
   const getDetailedItinerary = itineraryId => {
     const query = {
       text: `select
@@ -135,5 +148,6 @@ module.exports = db => {
     getTravelParty,
     deleteCollaborator,
     createAttraction,
+    addCollaborator,
   };
 };

@@ -11,6 +11,7 @@ module.exports = ({
   getTravelParty,
   deleteCollaborator,
   createAttraction,
+  addCollaborator,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -51,6 +52,21 @@ module.exports = ({
     });
   });
 
+  router.post('/:itinerary_id/users', (req, res) => {
+    const { email } = req.body;
+    const { itinerary_id } = req.params;
+    addCollaborator(itinerary_id, email)
+      .then(result => {
+        if (result.message) {
+          res.send({ error: result.message });
+        } else {
+          getTravelParty(itinerary_id).then(party => {
+            res.send(parseTravelParty(party));
+          });
+        }
+      })
+      .catch(err => res.send(err));
+  });
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
     getDetailedItinerary(itinerary_id).then(resultArr => {
