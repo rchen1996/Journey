@@ -15,6 +15,7 @@ module.exports = ({
   createActivity,
   getItinerary,
   deleteItinerary,
+  getItinerariesForGroup,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -108,6 +109,11 @@ module.exports = ({
             error: 'You must be the creator of an itinerary to delete it.',
           });
         } else {
+          deleteItinerary(itineraryId).then(() => {
+            getItinerariesForGroup(userId).then(itineraries => {
+              res.send(itineraries);
+            });
+          });
         }
       });
     }
