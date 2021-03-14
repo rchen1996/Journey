@@ -46,8 +46,8 @@ export default function ItineraryDayActivities(props) {
   return (
     <article className='flex justify-between w-full h-auto p-4 transition duration-300 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
       <div className='flex justify-between w-full space-x-4'>
-        <div className='flex space-x-2 w-min whitespace-nowrap'>
-          <div className='flex flex-col items-center justify-between w-12 py-1.5'>
+        <div className='flex items-center justify-around space-x-4 w-min whitespace-nowrap'>
+          <div className='flex flex-col items-center justify-between w-12 py-1.5 h-full'>
             <p className='text-xs'>{startTime}</p>
             {duration &&
               (duration < 1 ? (
@@ -57,7 +57,7 @@ export default function ItineraryDayActivities(props) {
               ))}
             <p className='text-xs'>{endTime}</p>
           </div>
-          <hr />
+          <div className='w-0.5 h-full bg-gray-600 rounded-xl'></div>
           <figure className='hidden w-48 h-full xl:block aspect-w-3 aspect-w-2'>
             <img
               src={activity.image}
@@ -68,7 +68,7 @@ export default function ItineraryDayActivities(props) {
         </div>
         <div className='flex flex-col space-y-1'>
           <h4 className='text-2xl font-bold'>{activity.name}</h4>
-          <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 whitespace-wrap lg:w-min rounded-r-xl lg:whitespace-nowrap'>
+          <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap lg:w-min rounded-r-xl lg:whitespace-nowrap'>
             {activity.address}
           </p>
           {/* <p className='text-sm'>{activity.description}</p> */}
