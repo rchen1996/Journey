@@ -86,19 +86,19 @@ module.exports = ({
     });
   });
 
-  router.post('/:itinerary_id/days/:day_id/activities', (req, res) => {
+  router.post('/:itinerary_id/days/:day_id/activities', (req, response) => {
     const { itinerary_id, day_id } = req.params;
     const userId = req.session.userId;
 
     getTravelParty(itinerary_id).then(userArr => {
-      let user;
+      let userOfParty;
       for (const user of userArr) {
         if (user.user_id === userId) {
-          user = true;
+          userOfParty = true;
         }
       }
 
-      if (user) {
+      if (userOfParty) {
         const {
           start,
           end,
@@ -139,12 +139,12 @@ module.exports = ({
               };
 
               createActivity(activity).then(activity => {
-                res.send(activity);
+                response.send(activity);
               });
             });
           });
       } else {
-        res.send({
+        response.send({
           error:
             'You do not have permission to add activities to this itinerary',
         });
