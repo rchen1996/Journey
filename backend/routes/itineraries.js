@@ -139,7 +139,11 @@ module.exports = ({
               };
 
               createActivity(activity).then(activity => {
-                response.send(activity);
+                getDetailedItinerary(itinerary_id).then(itinerary => {
+                  const parsed = itineraryObj(itinerary);
+
+                  response.send(parsed);
+                });
               });
             });
           });
