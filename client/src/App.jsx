@@ -27,6 +27,7 @@ function App() {
     removeCollaborator,
     createActivity,
     addCollaborator,
+    setItinerary
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary } = state;
@@ -91,7 +92,7 @@ function App() {
         </Route>
         <Route path="/itineraries/:itinerary_id">
           <main className="flex w-full min-h-full">
-            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
+            <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} setItinerary={setItinerary}/>
             <Itinerary dispatch={dispatch} itinerary={itinerary} />
           </main>
         </Route>

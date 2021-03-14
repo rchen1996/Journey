@@ -1,31 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { SET_ITINERARY } from '../../reducers/application';
-
 export default function ItineraryLeftNav(props) {
   const [newLocation, setNewLocation] = useState('');
   const [dropDown, setDropDown] = useState({});
-  const [itinerary, setItinerary] = useState({});
-
-  const { dispatch } = props;
+  const { setItinerary, itinerary } = props;
   const { pathname } = useLocation();
-
   const { itinerary_id } = useParams();
 
   useEffect(() => {
-    Promise.all([
-      axios.get(`/api/itineraries/${ itinerary_id}`),
-      axios.get(`/api/itineraries/${ itinerary_id}/collaborators`)
-    ]).then(([itinerary,users]) => {
-      dispatch({
-        type: SET_ITINERARY,
-        itinerary: { ...itinerary.data, users: users.data }
-      });
-
-      setItinerary({ ...itinerary.data, users: users.data });
-    });
-  }, [itinerary_id, dispatch]);
+    setItinerary(itinerary_id)
+  }, [])
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -55,15 +39,15 @@ export default function ItineraryLeftNav(props) {
 
   return (
     <nav className='flex flex-col w-64 h-full px-6 py-6 text-gray-100 bg-gray-600'>
+      {itinerary && 
+      <>
       <Link
         to={`/itineraries/${itinerary.id}/`}
         className='mb-4 text-2xl font-bold'
       >
         {itinerary.name}
       </Link>
-      {itinerary &&
-        itinerary.locations &&
-        itinerary.locations.map((locationObj, index) => {
+     {itinerary.locations.map((locationObj, index) => {
           return (
             <div key={index} className='flex flex-col'>
               <div
@@ -129,10 +113,9 @@ export default function ItineraryLeftNav(props) {
           </div>
         </div>
       ) : (
-        props.user.id === itinerary.creator_id && (
-          <Link to={`/itineraries/${itinerary.id}/edit`}>Edit</Link>
-        )
+        itinerary && <Link to={`/itineraries/${itinerary.id}/edit`}>Edit</Link>
       )}
+      </>}
     </nav>
   );
 }

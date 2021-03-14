@@ -9,3 +9,6 @@ VALUES('My Norway Getaway','Northern liiiightsssss','https://cdn.kimkim.com/file
 
 INSERT INTO itineraries (creator_id, name, description, trip_type)
 VALUES (5,'Trip to Nowhere', 'Have not decided where to go but we will get there! Eventually..', 'groups');
+
+INSERT INTO itineraries (creator_id, name, description, trip_type)
+VALUES (5,'Trip to Amsterdam', 'A quick weekend getaway for our little band', 'groups');
