@@ -21,9 +21,9 @@ export default function Itinerary(props) {
     <section className="flex flex-col w-full h-full mx-24 my-8">
       {itinerary &&
         itinerary.locations &&
-        itinerary.locations.map(location => {
+        itinerary.locations.map((location, index) => {
           return (
-            <div key={location.id}>
+            <div key={index}>
               <h2 className="mb-4 ml-2 text-3xl font-bold">{location.name}</h2>
               {location.days &&
                 location.days.map(day => {
