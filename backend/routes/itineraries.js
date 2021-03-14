@@ -12,6 +12,7 @@ module.exports = ({
   deleteCollaborator,
   createAttraction,
   addCollaborator,
+  createActivity,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -86,40 +87,69 @@ module.exports = ({
   });
 
   router.post('/:itinerary_id/days/:day_id/activities', (req, res) => {
-    const {
-      start,
-      end,
-      name,
-      description,
-      image,
-      category,
-      street,
-      city,
-      state,
-      country,
-      postal,
-    } = req.body;
-    const address = `${street} ${city}, ${state}, ${country} ${postal}`;
-    const addressNoPostal = `${street} ${city}, ${state}, ${country}`;
-    const query = addressNoPostal.replace(/\s/g, '+').replace(/,/g, '%2C');
-    axios
-      .get(
-        `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
-      )
-      .then(res => {
-        const coordinatesArr = res.data.features[0].geometry.coordinates;
-        const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
-        createAttraction({
+    const { itinerary_id, day_id } = req.params;
+    const userId = req.session.userId;
+
+    getTravelParty(itinerary_id).then(userArr => {
+      let user;
+      for (const user of userArr) {
+        if (user.user_id === userId) {
+          user = true;
+        }
+      }
+
+      if (user) {
+        const {
+          start,
+          end,
           name,
           description,
-          category,
           image,
-          address,
-          location,
-        }).then(attraction => {
-          console.log(attraction);
+          category,
+          street,
+          city,
+          state,
+          country,
+          postal,
+        } = req.body;
+        const address = `${street} ${city}, ${state}, ${country} ${postal}`;
+        const addressNoPostal = `${street} ${city}, ${state}, ${country}`;
+        const query = addressNoPostal.replace(/\s/g, '+').replace(/,/g, '%2C');
+        axios
+          .get(
+            `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
+          )
+          .then(res => {
+            const coordinatesArr = res.data.features[0].geometry.coordinates;
+            const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
+            createAttraction({
+              name,
+              description,
+              category,
+              image,
+              address,
+              location,
+            }).then(attraction => {
+              const activity = {
+                dayId: day_id,
+                start: start,
+                end: end,
+                attractionId: attraction.id,
+                itineraryId: itinerary_id,
+              };
+
+              createActivity(activity).then(activity => {
+                res.send(activity);
+              });
+            });
+          });
+      } else {
+        res.send({
+          error:
+            'You do not have permission to add activities to this itinerary',
         });
-      });
+      }
+    });
   });
 
   return router;
