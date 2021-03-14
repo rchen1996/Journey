@@ -19,14 +19,14 @@ export default function ItineraryLeftNav(props) {
   return (
     <div>
       <h1>{itinerary.name}</h1>
-      {itinerary.locations.map(locationObj => {
+      {itinerary.locations.map((locationObj,index) => {
         return (
-          <>
+          <div key={index}>
           <div>{locationObj.name}</div>
           {locationObj.days.map(day => {
-            return <div>Day {day.day_order}</div>
+            return <div key={day.id}>Day {day.day_order}</div>
           })}
-          </>
+          </div>
         )
       })}
 
