@@ -28,7 +28,7 @@ export default function ItineraryDayActivities(props) {
   };
 
   return (
-    <div className='py-4 space-y-2'>
+    <div className='px-4 py-4 space-y-2 duration-200 transform hover:bg-opacity-75 hover:bg-gray-600 hover:text-gray-100'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center space-x-2'>
           <svg
@@ -52,7 +52,7 @@ export default function ItineraryDayActivities(props) {
             viewBox='0 0 17 16'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
-            className='text-gray-700 duration-200 transform fill-current hover:text-teal-600 hover:scale-125'
+            className='text-gray-100 duration-200 transform fill-current hover:text-gray-600 hover:scale-125'
           >
             <path d='M14.2398 2.0688C13.9331 1.76885 13.5172 1.60034 13.0835 1.60034C12.6499 1.60034 12.234 1.76885 11.9273 2.0688L5.72412 8.1376V10.4H8.03661L14.2398 4.3312C14.5464 4.03116 14.7186 3.62426 14.7186 3.2C14.7186 2.77574 14.5464 2.36884 14.2398 2.0688Z' />
             <path
@@ -67,7 +67,7 @@ export default function ItineraryDayActivities(props) {
             viewBox='0 0 16 16'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
-            className='ml-2 text-gray-700 duration-200 transform fill-current hover:text-red-600 hover:scale-125'
+            className='ml-2 text-gray-100 duration-200 transform fill-current hover:text-gray-600 hover:scale-125'
           >
             <path
               fillRule='evenodd'

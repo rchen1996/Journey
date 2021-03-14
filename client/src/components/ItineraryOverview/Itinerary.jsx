@@ -9,7 +9,7 @@ export default function Itinerary(props) {
   const { dispatch, itinerary } = props;
 
   useEffect(() => {
-    axios.get(`/api/itineraries/${itinerary_id}`).then(res => {
+    axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
       dispatch({
         type: SET_ITINERARY,
         itinerary: res.data,
@@ -18,15 +18,15 @@ export default function Itinerary(props) {
   }, [itinerary_id, dispatch]);
 
   return (
-    <section className="flex flex-col w-full h-full mx-24 my-8">
+    <section className='flex flex-col w-full h-full mx-24 my-8'>
       {itinerary &&
         itinerary.locations &&
         itinerary.locations.map((location, index) => {
           return (
             <div key={index}>
-              <h2 className="mb-4 ml-2 text-3xl font-bold">{location.name}</h2>
+              <h2 className='mb-4 ml-2 text-3xl font-bold'>{location.name}</h2>
               {location.days &&
-                location.days.map(day => {
+                location.days.map((day) => {
                   return <ItineraryDays key={day.id} day={day} />;
                 })}
             </div>
