@@ -23,6 +23,7 @@ function App() {
     login,
     logout,
     createItinerary,
+    setItinerary,
     allowedUsers,
   } = useApplicationData();
 
@@ -62,7 +63,7 @@ function App() {
               user={user}
               itinerary={itinerary}
               dispatch={dispatch}
-              travelParty={allowedUsers}
+              setItinerary={setItinerary}
             />
             {itinerary &&
               itinerary.users.some((member) => member.id === user.id) && (

@@ -3,6 +3,7 @@ import dataReducer, {
   SET_ALL_ITINERARIES,
   SET_USER,
   SET_MY_ITINERARIES,
+  SET_ITINERARY
 } from '../reducers/application';
 import axios from 'axios';
 
@@ -83,6 +84,18 @@ export default function useApplicationData() {
     }
   }, [state.user, state.itinerary]);
 
+  function setItinerary(itineraryId) {
+    Promise.all([
+      axios.get(`/api/itineraries/${itinerary_id}`),
+      axios.get(`/api/itineraries/${itineraryId}/collaborators`)
+    ]).then(([itinerary,users]) => {
+      dispatch({
+        type: SET_ITINERARY,
+        itinerary: { ...itinerary.data, users: users.data }
+      })
+    })    
+  }
+
   const allowedUsers = (itineraryId) => {
     return axios.get(`/api/itineraries/${itineraryId}/collaborators`)
   }
@@ -98,6 +111,7 @@ export default function useApplicationData() {
     register,
     logout,
     createItinerary,
+    setItinerary,
     allowedUsers
   };
 }

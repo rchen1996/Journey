@@ -13,18 +13,7 @@ export default function ItineraryLeftNav(props) {
 
   const { itinerary_id } = useParams();
 
-  useEffect(() => {
-    axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
-      travelParty(itinerary_id).then((users) => {
-        dispatch({
-          type: SET_ITINERARY,
-          itinerary: { ...res.data, users: users.data },
-        });
-      });
-
-      setItinerary(res.data);
-    });
-  }, [itinerary_id, dispatch, travelParty]);
+  setItinerary(itinerary_id)
 
   function handleSubmit(event) {
     event.preventDefault();
