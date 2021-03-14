@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useState } from 'react';
+import { SET_MY_ITINERARIES } from '../reducers/application';
+import ErrorMessage from './ErrorMessage';
 
 export default function MyItinerariesListItem(props) {
   const {
@@ -15,13 +17,37 @@ export default function MyItinerariesListItem(props) {
     normal: 'mb-0.25 aspect-w-2 aspect-h-1',
   });
 
+  const [error, setError] = useState({
+    staus: false,
+    message: '',
+    show: 'flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
+    hide: 'hidden flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
+  });
+
+  const history = useHistory();
+
   const DEFAULT = 'DEFAULT';
   const DELETE = 'DELETE';
 
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    props.deleteItinerary(id).then(res => {});
+    props.deleteItinerary(id).then(res => {
+      if (res.data.error) {
+        setError({
+          ...error,
+          status: true,
+          message: res.data.error,
+        });
+      } else {
+        props.dispatch({
+          type: SET_MY_ITINERARIES,
+          myItineraries: res.data,
+        });
+
+        history.push(`/dashboard/${props.user.id}`);
+      }
+    });
   };
 
   return (
@@ -106,6 +132,12 @@ export default function MyItinerariesListItem(props) {
 
       {view === DELETE && (
         <div>
+          <ErrorMessage
+            isError={error.status}
+            show={error.show}
+            hide={error.hide}
+            message={error.message}
+          ></ErrorMessage>
           <h4>Are you sure you want to delete this itinerary?</h4>
           <button type="button" onClick={() => setView(DEFAULT)}>
             Cancel
