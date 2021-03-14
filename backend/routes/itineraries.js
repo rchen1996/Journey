@@ -1,3 +1,4 @@
+const axios = require('axios');
 const express = require('express');
 const router = express.Router();
 const { itineraryObj, parseTravelParty } = require('../helpers/dataHelpers');
@@ -9,6 +10,7 @@ module.exports = ({
   getDetailedItinerary,
   getTravelParty,
   deleteCollaborator,
+  createAttraction,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -67,7 +69,42 @@ module.exports = ({
     });
   });
 
-  router.post('/:itinerary_id/days/:day_id/activities', (req, res) => {});
+  router.post('/:itinerary_id/days/:day_id/activities', (req, res) => {
+    const {
+      start,
+      end,
+      name,
+      description,
+      image,
+      category,
+      street,
+      city,
+      state,
+      country,
+      postal,
+    } = req.body;
+    const address = `${street} ${city}, ${state}, ${country} ${postal}`;
+    const addressNoPostal = `${street} ${city}, ${state}, ${country}`;
+    const query = addressNoPostal.replace(/\s/g, '+').replace(/,/g, '%2C');
+    axios
+      .get(
+        `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
+      )
+      .then(res => {
+        const coordinatesArr = res.data.features[0].geometry.coordinates;
+        const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
+        createAttraction({
+          name,
+          description,
+          category,
+          image,
+          address,
+          location,
+        }).then(attraction => {
+          console.log(attraction);
+        });
+      });
+  });
 
   return router;
 };
