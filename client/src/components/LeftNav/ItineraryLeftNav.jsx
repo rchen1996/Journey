@@ -23,7 +23,7 @@ export default function ItineraryLeftNav(props) {
         itinerary: { ...itinerary.data, users: users.data }
       });
 
-      setItinerary(res.data);
+      setItinerary({ ...itinerary.data, users: users.data });
     });
   }, [itinerary_id, dispatch]);
 
