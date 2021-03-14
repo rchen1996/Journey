@@ -61,6 +61,10 @@ function App() {
             <MyGroup />
           </main>
         </Route>
+        <Route path="/itineraries/:itinerary_id/days/:day_id">
+          {itinerary && <LeftNav user={user} itinerary={itinerary} />}
+          <ItineraryDay itinerary={itinerary} />
+        </Route>
         <Route path="/itineraries/:itinerary_id">
           <main className="flex w-full h-full">
             {itinerary && <LeftNav user={user} itinerary={itinerary} />}
@@ -74,9 +78,6 @@ function App() {
               <MyItinerariesList myItineraries={myItineraries} user={user} />
             </main>
           )}
-        </Route>
-        <Route path="/itineraries/:itinerary_id/days/:day_id">
-          <ItineraryDay itinerary={itinerary} />
         </Route>
       </Switch>
     </Router>
