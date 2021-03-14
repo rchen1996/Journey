@@ -93,6 +93,16 @@ module.exports = ({
     });
   });
 
+  router.delete('/:itinerary_id', (req, res) => {
+    const itineraryId = req.params.itinerary_id;
+    const userId = req.session.userId;
+
+    if (!userId) {
+      res.send({ error: 'You must be logged in to delete an itinerary.' });
+    } else {
+    }
+  });
+
   router.delete('/:itinerary_id/users/:user_id', (req, res) => {
     const { itinerary_id, user_id } = req.params;
     deleteCollaborator(itinerary_id, user_id).then(() => {
