@@ -1,20 +1,5 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-
 export default function ItineraryDayActivities(props) {
-  const [location, setLocation] = useState('');
-
   const { activity } = props;
-
-  useEffect(() => {
-    axios
-      .get(
-        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${activity.location.x}&lon=${activity.location.y}`
-      )
-      .then(json => {
-        setLocation(json.data.display_name);
-      });
-  }, [activity.location]);
 
   const tConvert = time => {
     // Check correct time format and split into components
@@ -74,7 +59,7 @@ export default function ItineraryDayActivities(props) {
             fill="#F4F4F5"
           />
         </svg>
-        {location}
+        {activity.address}
       </p>
       <svg
         width="16"
