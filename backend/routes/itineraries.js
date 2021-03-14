@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { itineraryObj, parseTravelParty} = require('../helpers/dataHelpers');
+const { itineraryObj, parseTravelParty } = require('../helpers/dataHelpers');
 
 module.exports = ({
   getAllItineraries,
@@ -8,8 +8,7 @@ module.exports = ({
   createTravelParty,
   getDetailedItinerary,
   getTravelParty,
-  deleteCollaborator
-  
+  deleteCollaborator,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then((itineraries) => res.send(itineraries));
@@ -60,11 +59,13 @@ module.exports = ({
   });
 
   router.delete('/:itinerary_id/users/:user_id', (req, res) => {
-    const {itinerary_id, user_id} = req.params
-    deleteCollaborator(itinerary_id, user_id).then(result => {
-      res.send(result)
-    })
-  })
+    const { itinerary_id, user_id } = req.params;
+    deleteCollaborator(itinerary_id, user_id).then(() => {
+      getTravelParty(itinerary_id).then((party) => {
+        res.send(parseTravelParty(party));
+      });
+    });
+  });
 
   return router;
 };
