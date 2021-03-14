@@ -3,6 +3,7 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 
 export default function ItineraryLeftNav(props) {
   const [newLocation, setNewLocation] = useState('');
+  const [dropDown, setDropDown] = useState({});
 
   const { itinerary } = props;
   const { pathname } = useLocation();
@@ -14,25 +15,70 @@ export default function ItineraryLeftNav(props) {
     return;
   }
 
+  const handleDropDown = (event) => {
+    const targetId = event.target.innerText;
+    setDropDown((prev) => {
+      const isClassHidden =
+        prev[targetId]?.dropClass === 'hidden' ||
+        prev[targetId]?.dropClass === undefined;
+      return {
+        ...prev,
+        [targetId]: {
+          dropClass: isClassHidden ? 'flex flex-col space-y-2 pl-2' : 'hidden',
+          svgClass: isClassHidden
+            ? 'mr-2 transform duration-300 cursor-pointer pointer-events-none'
+            : 'mr-2 transform duration-300 -rotate-90 cursor-pointer pointer-events-none',
+        },
+      };
+    });
+  };
+
   return (
-    <nav className='flex flex-col w-64 h-full px-4 py-6 space-y-4 text-gray-100 bg-gray-600'>
-      <h1 className='text-xl font-bold'>{itinerary.name}</h1>
+    <nav className='flex flex-col w-64 h-full px-6 py-6 text-gray-100 bg-gray-600'>
+      <h1 className='mb-4 text-2xl font-bold'>{itinerary.name}</h1>
       {itinerary &&
         itinerary.locations &&
         itinerary.locations.map((locationObj, index) => {
           return (
             <div key={index} className='flex flex-col'>
-              <h4>{locationObj.name}</h4>
-              {locationObj.days.map((day) => {
-                return (
-                  <Link
-                    to={`/itineraries/${itinerary.id}/days/${day.id}`}
-                    key={day.id}
-                  >
-                    Day {day.day_order}
-                  </Link>
-                );
-              })}
+              <div
+                onClick={(event) => handleDropDown(event)}
+                className='flex items-center justify-between px-4 py-2 mb-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+              >
+                <h4 className='text-xl font-bold '>{locationObj.name}</h4>
+                <svg
+                  width='14'
+                  height='14'
+                  viewBox='0 0 14 11'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                  className={
+                    dropDown[locationObj.name]?.svgClass ||
+                    'mr-2 transform duration-300 -rotate-90 cursor-pointer pointer-events-none'
+                  }
+                >
+                  <path
+                    d='M7.86603 10.5001C7.48112 11.1667 6.51887 11.1667 6.13397 10.5001L0.937822 1.50006C0.552922 0.833392 1.03405 5.98142e-05 1.80385 5.98815e-05L12.1962 6.079e-05C12.966 6.08573e-05 13.4471 0.833394 13.0622 1.50006L7.86603 10.5001Z'
+                    fill='#F4F4F5'
+                  />
+                </svg>
+              </div>
+              <div
+                className={dropDown[locationObj.name]?.dropClass || 'hidden'}
+              >
+                {locationObj.days.map((day) => {
+                  return (
+                    <NavLink
+                      to={`/itineraries/${itinerary.id}/days/${day.id}`}
+                      key={day.id}
+                      activeClassName='bg-gray-200 bg-opacity-25'
+                      className='px-4 py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                    >
+                      Day {day.day_order}
+                    </NavLink>
+                  );
+                })}
+              </div>
             </div>
           );
         })}
