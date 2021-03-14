@@ -56,18 +56,29 @@ module.exports = ({
   router.post('/:itinerary_id/users', (req, res) => {
     const { email } = req.body;
     const { itinerary_id } = req.params;
-    addCollaborator(itinerary_id, email)
-      .then(result => {
-        if (result.message) {
-          res.send({ error: result.message });
-        } else {
-          getTravelParty(itinerary_id).then(party => {
-            res.send(parseTravelParty(party));
-          });
+    getTravelParty(itinerary_id)
+      .then(party => {
+        for (const user of party) {
+          if (user.email === email) {
+            return res.send({ error: 'User already in party.' });
+          }
         }
+
+        addCollaborator(itinerary_id, email)
+          .then(result => {
+            if (result.message) {
+              res.send({ error: 'No user with this email.' });
+            } else {
+              getTravelParty(itinerary_id).then(party => {
+                res.send(parseTravelParty(party));
+              });
+            }
+          })
+          .catch(err => res.send(err));
       })
       .catch(err => res.send(err));
   });
+
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
     getDetailedItinerary(itinerary_id).then(resultArr => {

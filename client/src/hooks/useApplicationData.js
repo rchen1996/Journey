@@ -108,7 +108,7 @@ export default function useApplicationData() {
       .post(`/api/itineraries/${itineraryId}/users`, { email })
       .then(res => {
         if (res.data.error) {
-          return { error: 'email does not exist' };
+          return { error: res.data.error };
         } else {
           dispatch({
             type: SET_ITINERARY,
