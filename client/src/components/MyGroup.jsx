@@ -1,23 +1,52 @@
+import {useState} from 'react'
+import FormButton from './FormButton'
+
 export default function MyGroup(props) {
-  const { users } = props;
-  const handleRemove = (event) => {
-    event.preventDefault();
+  const { user,removeCollaborator } = props;
+  const { users, creator_id, itinerary_id} = props.itinerary
+  const [addInput, setAddInput] = useState('')
+  
+  const handleRemove = (userId) => {
+    removeCollaborator(itinerary_id, userId)
   };
+
+  const handleAdd = () => {
+  
+  }
 
   return (
     <div>
-      {users.map((user) => {
+      {(user.id === creator_id) &&
+      <>
+      <span>{users.length} People</span>
+      <span>Add User</span>
+      <form onSubmit={(event) => event.preventDefault()}>
+        <input
+        value={addInput}
+        onChange={(event) => setAddInput(event.target.value)}
+        placeholder="Enter Email"
+        >
+        </input>
+      <FormButton onClick={handleAdd}>Add to Group
+      </FormButton>
+      </form> 
+      </>
+      }
+      {users.map((member) => {
         return (
-          <div key={user.id}>
-            {`${user.first_name} ${user.last_name}`}
-            {user.id === props.creator ? (
+          <div key={member.id}>
+            {`${member.first_name} ${member.last_name}`}
+            {member.id === creator_id ? (
               ` (host)`
-            ) : (
-              <button onClick={handleRemove}> Remove</button>
-            )}
+            ) : 
+              (user.id === creator_id) && 
+              
+              <button onClick={() => handleRemove(member.id)}> Remove</button>}
+            
           </div>
         );
       })}
+
     </div>
   );
 }

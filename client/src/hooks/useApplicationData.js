@@ -3,6 +3,7 @@ import dataReducer, {
   SET_ALL_ITINERARIES,
   SET_USER,
   SET_MY_ITINERARIES,
+  SET_ITINERARY,
 } from '../reducers/application';
 import axios from 'axios';
 
@@ -84,7 +85,14 @@ export default function useApplicationData() {
   }, [state.user, state.itinerary]);
 
   
-  const removeCollaborator = (userId) => {};
+  function removeCollaborator(itineraryId,userId) {
+    axios.delete(`/api/itineraries/${itineraryId}/users/${userId}`).then(res => {
+      dispatch({
+        type:SET_ITINERARY,
+        itinerary: {...state.itinerary, user: res.data}
+      })
+    }).catch(err => console.log(err))
+  };
 
   return {
     state,
@@ -92,6 +100,7 @@ export default function useApplicationData() {
     login,
     register,
     logout,
-    createItinerary,    
+    createItinerary,
+    removeCollaborator   
   };
 }
