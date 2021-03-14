@@ -74,7 +74,7 @@ function App() {
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id/days/:day_id'>
-          <main className='flex w-full h-full'>
+          <main className='flex w-full min-h-full'>
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -85,7 +85,7 @@ function App() {
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id'>
-          <main className='flex w-full h-full'>
+          <main className='flex w-full min-h-full'>
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -97,7 +97,7 @@ function App() {
         </Route>
         <Route path='/dashboard/:user_id'>
           {user.id && (
-            <main className='flex w-full h-full'>
+            <main className='flex w-full min-h-full'>
               <LeftNav user={user} dispatch={dispatch} />
               <MyItinerariesList myItineraries={myItineraries} user={user} />
             </main>
