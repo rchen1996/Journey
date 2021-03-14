@@ -171,6 +171,18 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const deleteItinerary = itineraryId => {
+    const query = {
+      text: `DELETE FROM itineraries WHERE id = $1 RETURNING *;`,
+      values: [itineraryId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -182,5 +194,6 @@ module.exports = db => {
     addCollaborator,
     createActivity,
     getItinerary,
+    deleteItinerary,
   };
 };

@@ -14,6 +14,7 @@ module.exports = ({
   addCollaborator,
   createActivity,
   getItinerary,
+  deleteItinerary,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
