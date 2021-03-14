@@ -22,6 +22,7 @@ function App() {
     login,
     logout,
     createItinerary,
+    allowedUsers
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary } = state;
@@ -63,7 +64,7 @@ function App() {
         <Route path="/itineraries/:itinerary_id">
           <main className="flex w-full h-full">
             {itinerary && <LeftNav user={user} itinerary={itinerary} />}
-            <Itinerary dispatch={dispatch} itinerary={itinerary} />
+            <Itinerary dispatch={dispatch} itinerary={itinerary} travelParty={allowedUsers}/>
           </main>
         </Route>
         <Route path="/dashboard/:user_id">

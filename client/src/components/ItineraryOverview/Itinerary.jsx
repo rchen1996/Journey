@@ -6,14 +6,16 @@ import ItineraryDays from './ItineraryDays';
 
 export default function Itinerary(props) {
   const { itinerary_id } = useParams();
-  const { dispatch, itinerary } = props;
+  const { dispatch, itinerary, travelParty } = props;
 
   useEffect(() => {
     axios.get(`/api/itineraries/${itinerary_id}`).then((res) => {
-      dispatch({
-        type: SET_ITINERARY,
-        itinerary: res.data,
-      });
+        travelParty(itinerary_id).then((users) => {
+        dispatch({
+          type: SET_ITINERARY,
+          itinerary: {...res.data,users: users.data}
+        })
+      })
     });
   }, [itinerary_id, dispatch]);
 
