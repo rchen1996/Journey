@@ -17,7 +17,7 @@ export default function useApplicationData() {
   });
 
   useEffect(() => {
-    axios.get(`/api/users/${state.user.id}`).then((res) => {
+    axios.get(`/api/users/${state.user.id}`).then(res => {
       const user = res.data[0];
       if (res.data.length > 0) {
         dispatch({
@@ -56,7 +56,7 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    return axios.get('/api/itineraries').then((res) => {
+    return axios.get('/api/itineraries').then(res => {
       const itineraries = res.data;
       dispatch({
         type: SET_ALL_ITINERARIES,
@@ -71,7 +71,7 @@ export default function useApplicationData() {
 
   useEffect(() => {
     if (state.user.id) {
-      axios.get('/api/users/:user_id/itineraries').then((res) => {
+      axios.get('/api/users/:user_id/itineraries').then(res => {
         const myItineraries = res.data;
 
         if (myItineraries.length > 0) {
@@ -84,28 +84,40 @@ export default function useApplicationData() {
     }
   }, [state.user, state.itinerary]);
 
-  
-  function removeCollaborator(itineraryId,userId) {
-    axios.delete(`/api/itineraries/${itineraryId}/users/${userId}`).then(res => {
-      dispatch({
-        type:SET_ITINERARY,
-        itinerary: {...state.itinerary, users: res.data}
-      })      
-    }).catch(err => console.log(err))
+  function removeCollaborator(itineraryId, userId) {
+    axios
+      .delete(`/api/itineraries/${itineraryId}/users/${userId}`)
+      .then(res => {
+        dispatch({
+          type: SET_ITINERARY,
+          itinerary: { ...state.itinerary, users: res.data },
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  const createActivity = (activity, itineraryId, dayId) => {
+    return axios.post(
+      `/api/itineraries/${itineraryId}/days/${dayId}/activities`,
+      activity
+    );
   };
 
   function addCollaborator(itineraryId, email) {
-   return  axios.post(`/api/itineraries/${itineraryId}/users`,{email}).then(res => {
-      if(res.data.error){
-        return {error: 'email does not exist'}
-      } else {
-        dispatch({
-          type:SET_ITINERARY,
-          itinerary: {...state.itinerary, users: res.data}
-        })
-        return {success: 'user added to travel party'}       
-      }
-    }).catch(err => console.log(err))
+    return axios
+      .post(`/api/itineraries/${itineraryId}/users`, { email })
+      .then(res => {
+        if (res.data.error) {
+          return { error: 'email does not exist' };
+        } else {
+          dispatch({
+            type: SET_ITINERARY,
+            itinerary: { ...state.itinerary, users: res.data },
+          });
+          return { success: 'user added to travel party' };
+        }
+      })
+      .catch(err => console.log(err));
   }
 
   return {
@@ -116,6 +128,7 @@ export default function useApplicationData() {
     logout,
     createItinerary,
     removeCollaborator,
-    addCollaborator 
+    createActivity,
+    addCollaborator,
   };
 }

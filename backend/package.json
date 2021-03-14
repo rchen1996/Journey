@@ -8,6 +8,7 @@
     "db:reset": "node ./db/reset.js"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "cookie-session": "^1.4.0",
     "debug": "~2.6.9",

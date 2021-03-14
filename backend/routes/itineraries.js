@@ -1,3 +1,4 @@
+const axios = require('axios');
 const express = require('express');
 const router = express.Router();
 const { itineraryObj, parseTravelParty } = require('../helpers/dataHelpers');
@@ -9,10 +10,12 @@ module.exports = ({
   getDetailedItinerary,
   getTravelParty,
   deleteCollaborator,
+  createAttraction,
   addCollaborator,
+  createActivity,
 }) => {
   router.get('/', (req, res) => {
-    getAllItineraries().then((itineraries) => res.send(itineraries));
+    getAllItineraries().then(itineraries => res.send(itineraries));
   });
 
   router.post('/', (req, res) => {
@@ -33,8 +36,8 @@ module.exports = ({
         userId,
         startDate,
         endDate,
-      }).then((itinerary) => {
-        createTravelParty(itinerary.id, userId).then((travelParty) =>
+      }).then(itinerary => {
+        createTravelParty(itinerary.id, userId).then(travelParty =>
           res.send(itinerary)
         );
       });
@@ -45,7 +48,7 @@ module.exports = ({
 
   router.get('/:itinerary_id/collaborators', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getTravelParty(itinerary_id).then((party) => {
+    getTravelParty(itinerary_id).then(party => {
       res.send(parseTravelParty(party));
     });
   });
@@ -54,20 +57,20 @@ module.exports = ({
     const { email } = req.body;
     const { itinerary_id } = req.params;
     addCollaborator(itinerary_id, email)
-      .then((result) => {        
+      .then(result => {
         if (result.message) {
-          res.send({error :result.message});
+          res.send({ error: result.message });
         } else {
-          getTravelParty(itinerary_id).then((party) => {
+          getTravelParty(itinerary_id).then(party => {
             res.send(parseTravelParty(party));
           });
         }
       })
-      .catch((err) => res.send(err));
+      .catch(err => res.send(err));
   });
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getDetailedItinerary(itinerary_id).then((resultArr) => {
+    getDetailedItinerary(itinerary_id).then(resultArr => {
       const itinerary = itineraryObj(resultArr);
 
       res.send(itinerary);
@@ -77,9 +80,83 @@ module.exports = ({
   router.delete('/:itinerary_id/users/:user_id', (req, res) => {
     const { itinerary_id, user_id } = req.params;
     deleteCollaborator(itinerary_id, user_id).then(() => {
-      getTravelParty(itinerary_id).then((party) => {
+      getTravelParty(itinerary_id).then(party => {
         res.send(parseTravelParty(party));
       });
+    });
+  });
+
+  router.post('/:itinerary_id/days/:day_id/activities', (req, response) => {
+    const { itinerary_id, day_id } = req.params;
+    const userId = req.session.userId;
+
+    getTravelParty(itinerary_id).then(userArr => {
+      let userOfParty;
+      for (const user of userArr) {
+        if (user.user_id === userId) {
+          userOfParty = true;
+        }
+      }
+
+      if (userOfParty) {
+        const {
+          start,
+          end,
+          name,
+          description,
+          image,
+          category,
+          street,
+          city,
+          state,
+          country,
+          postal,
+        } = req.body;
+        const address = `${street} ${city}, ${state}, ${country} ${postal}`;
+        const addressNoPostal = `${street} ${city}, ${state}, ${country}`;
+        const query = addressNoPostal.replace(/\s/g, '+').replace(/,/g, '%2C');
+        axios
+          .get(
+            `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
+          )
+          .then(res => {
+            if (res.data.features.length < 1) {
+              response.send({ addressError: 'This is not a valid address' });
+            } else {
+              const coordinatesArr = res.data.features[0].geometry.coordinates;
+              const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
+              createAttraction({
+                name,
+                description,
+                category,
+                image,
+                address,
+                location,
+              }).then(attraction => {
+                const activity = {
+                  dayId: day_id,
+                  start: start,
+                  end: end,
+                  attractionId: attraction.id,
+                  itineraryId: itinerary_id,
+                };
+
+                createActivity(activity).then(activity => {
+                  getDetailedItinerary(itinerary_id).then(itinerary => {
+                    const parsed = itineraryObj(itinerary);
+
+                    response.send(parsed);
+                  });
+                });
+              });
+            }
+          });
+      } else {
+        response.send({
+          error:
+            'You do not have permission to add activities to this itinerary',
+        });
+      }
     });
   });
 
