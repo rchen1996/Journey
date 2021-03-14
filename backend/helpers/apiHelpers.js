@@ -140,6 +140,25 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const createActivity = activity => {
+    const query = {
+      text: `INSERT INTO activities (day_id, start_time, end_time, attraction_id, itinerary_id)
+      VALUES($1, $2, $3, $4, $5, $6) RETURNING *;`,
+      values: [
+        activity.dayId,
+        activity.start,
+        activity.end,
+        activity.attractionId,
+        activity.itineraryId,
+      ],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -149,5 +168,6 @@ module.exports = db => {
     deleteCollaborator,
     createAttraction,
     addCollaborator,
+    createActivity,
   };
 };
