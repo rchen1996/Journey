@@ -83,7 +83,8 @@ module.exports = db => {
       JOIN activities ON days.id = day_id
       JOIN attractions on attractions.id = attraction_id      
       WHERE itineraries.id = $1 
-      GROUP BY itineraries.id, days.id, locations.id,activities.id,attractions.id;`,
+      GROUP BY itineraries.id, days.id, locations.id,activities.id,attractions.id
+      ORDER BY days.id;`,
       values: [itineraryId],
     };
     return db
