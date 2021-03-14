@@ -13,6 +13,7 @@ import Itinerary from './components/ItineraryOverview/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
 import MyGroup from './components/MyGroup';
+import ItineraryDay from './components/ItineraryDay/ItineraryDay';
 
 function App() {
   const {
@@ -73,6 +74,9 @@ function App() {
               <MyItinerariesList myItineraries={myItineraries} user={user} />
             </main>
           )}
+        </Route>
+        <Route path="/itineraries/:itinerary_id/days/:day_id">
+          <ItineraryDay itinerary={itinerary} />
         </Route>
       </Switch>
     </Router>
