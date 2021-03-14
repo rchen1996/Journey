@@ -64,7 +64,7 @@ function App() {
         <Route path="/itineraries/:itinerary_id/days/:day_id">
           <main className="flex w-full h-full">
             {itinerary && <LeftNav user={user} itinerary={itinerary} />}
-            <ItineraryDay itinerary={itinerary} />
+            <ItineraryDay itinerary={itinerary} dispatch={dispatch} />
           </main>
         </Route>
         <Route path="/itineraries/:itinerary_id">

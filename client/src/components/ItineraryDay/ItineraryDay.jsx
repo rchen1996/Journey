@@ -1,24 +1,43 @@
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
+import SET_ITINERARY from '../../reducers/application';
+
 import ItineraryDayActivities from './ItineraryDayActivities';
 
 export default function ItineraryDay(props) {
-  const { day_id } = useParams();
+  const { itinerary_id, day_id } = useParams();
 
-  const { itinerary } = props;
-  const locations = itinerary.locations;
+  const { itinerary, dispatch } = props;
+
+  let locations;
+  if (itinerary) {
+    locations = itinerary.locations;
+  }
+
+  useEffect(() => {
+    axios.get(`/api/itineraries/${itinerary_id}`).then(res => {
+      dispatch({
+        type: SET_ITINERARY,
+        itinerary: res.data,
+      });
+    });
+  }, [itinerary_id, dispatch]);
 
   const getCurrentDay = locations => {
     let currentDay;
     let currentLocation;
 
-    locations.forEach(location => {
-      location.days.forEach(day => {
-        if (day.day_order === Number(day_id)) {
-          currentLocation = location;
-          currentDay = day;
-        }
+    if (locations) {
+      locations.forEach(location => {
+        location.days.forEach(day => {
+          if (day.day_order === Number(day_id)) {
+            currentLocation = location;
+            currentDay = day;
+          }
+        });
       });
-    });
+    }
 
     return { currentDay, currentLocation };
   };
@@ -31,11 +50,15 @@ export default function ItineraryDay(props) {
   return (
     <div>
       <h1>
-        Day {day.day_order}: {location.name}
+        Day {day && day.day_order}: {location && location.name}
       </h1>
-      {day.activities.length === 1 && <h2>1 Activity Planned</h2>}
-      {day.activities.length !== 1 && (
-        <h2>{day.activities.length} Activities Planned</h2>
+      {day && day.activities && day.activities.length === 1 && (
+        <h2>1 Activity Planned</h2>
+      )}
+      {day && day.activities && day.activities.length !== 1 && (
+        <h2>
+          {day && day.activities && day.activities.length} Activities Planned
+        </h2>
       )}
       <button>Add Activity</button>
       {day &&
