@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import ErrorMessage from '../ErrorMessage';
 import FormButton from '../FormButton';
 
 export default function AddActivityForm(props) {
+  const { itinerary_id, day_id } = useParams();
+
   const [activity, setActivity] = useState({
     start: '',
     end: '',
@@ -78,28 +80,30 @@ export default function AddActivityForm(props) {
       return;
     }
 
-    // props.onSave(userInfo.email, userInfo.password).then(res => {
-    //   if (res.data.email) {
-    //     setError({
-    //       ...error,
-    //       status: false,
-    //       message: '',
-    //     });
+    props.onSave(activity).then(res => {
+      // if (res.data.email) {
+      //   setError({
+      //     ...error,
+      //     status: false,
+      //     message: '',
+      //   });
+      //   props.dispatch({
+      //     type: SET_USER,
+      //     user: res.data,
+      //   });
+      //   history.push(`/dashboard/${res.data.id}`);
+      // } else if (res.data.error) {
+      //   setError({
+      //     ...error,
+      //     status: true,
+      //     message: 'Incorrect email or password.',
+      //   });
+      // }
+    });
+  };
 
-    //     props.dispatch({
-    //       type: SET_USER,
-    //       user: res.data,
-    //     });
-
-    //     history.push(`/dashboard/${res.data.id}`);
-    //   } else if (res.data.error) {
-    //     setError({
-    //       ...error,
-    //       status: true,
-    //       message: 'Incorrect email or password.',
-    //     });
-    //   }
-    // });
+  const cancel = () => {
+    history.push(`/itineraries/${itinerary_id}/days/${day_id}`);
   };
 
   return (
@@ -242,7 +246,9 @@ export default function AddActivityForm(props) {
         </div>
         <footer className="flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl">
           <FormButton type="submit">Save</FormButton>
-          <FormButton type="button">Cancel</FormButton>
+          <FormButton type="button" onClick={cancel}>
+            Cancel
+          </FormButton>
         </footer>
       </form>
     </section>
