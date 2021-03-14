@@ -43,7 +43,11 @@ function App() {
           {user.id && (
             <main className="flex w-full h-full">
               <LeftNav user={user} />
-              <NewItineraryForm dispatch={dispatch} onSave={createItinerary} />
+              <NewItineraryForm
+                dispatch={dispatch}
+                onSave={createItinerary}
+                user={user}
+              />
             </main>
           )}
         </Route>
