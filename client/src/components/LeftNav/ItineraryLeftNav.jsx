@@ -66,7 +66,7 @@ export default function ItineraryLeftNav(props) {
             <div key={index} className='flex flex-col'>
               <div
                 onClick={(event) => handleDropDown(event)}
-                className='flex items-center justify-between px-4 py-2 mb-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                className='flex items-center justify-between px-4 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                 id={index}
               >
                 <h4 className='text-xl font-bold pointer-events-none'>
@@ -80,7 +80,7 @@ export default function ItineraryLeftNav(props) {
                   fill='none'
                   xmlns='http://www.w3.org/2000/svg'
                   className={
-                    dropDown[locationObj.name]?.svgClass ||
+                    dropDown[index]?.svgClass ||
                     'mr-2 transform duration-300 -rotate-90 cursor-pointer pointer-events-none'
                   }
                 >
