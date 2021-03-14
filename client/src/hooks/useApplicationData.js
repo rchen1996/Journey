@@ -96,9 +96,9 @@ export default function useApplicationData() {
       .catch(err => console.log(err));
   }
 
-  const createActivity = activity => {
+  const createActivity = (activity, itineraryId, dayId) => {
     return axios.post(
-      '/api/itineraries/:itinerary_id/days/:day_id/activities',
+      `/api/itineraries/${itineraryId}/days/${dayId}/activities`,
       activity
     );
   };
