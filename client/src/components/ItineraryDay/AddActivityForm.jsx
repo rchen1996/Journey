@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { SET_ITINERARY } from '../../reducers/application';
 
 import ErrorMessage from '../ErrorMessage';
 import FormButton from '../FormButton';
@@ -80,25 +81,30 @@ export default function AddActivityForm(props) {
       return;
     }
 
-    props.onSave(activity).then(res => {
-      // if (res.data.email) {
-      //   setError({
-      //     ...error,
-      //     status: false,
-      //     message: '',
-      //   });
-      //   props.dispatch({
-      //     type: SET_USER,
-      //     user: res.data,
-      //   });
-      //   history.push(`/dashboard/${res.data.id}`);
-      // } else if (res.data.error) {
-      //   setError({
-      //     ...error,
-      //     status: true,
-      //     message: 'Incorrect email or password.',
-      //   });
-      // }
+    props.onSave(activity, itinerary_id, day_id).then(res => {
+      if (res.data.id) {
+        setError({
+          ...error,
+          status: false,
+          message: '',
+        });
+
+        const itinerary = { ...res.data };
+        itinerary.users = [...props.itinerary.users];
+        props.dispatch({
+          type: SET_ITINERARY,
+          itinerary: itinerary,
+        });
+
+        history.push(`/itineraries/${itinerary_id}/days/${day_id}`);
+      } else if (res.data.error) {
+        setError({
+          ...error,
+          status: true,
+          message:
+            'You do not have permissions to add an activity to this itinerary',
+        });
+      }
     });
   };
 
