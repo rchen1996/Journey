@@ -23,8 +23,6 @@ function App() {
     login,
     logout,
     createItinerary,
-    setItinerary,
-    allowedUsers,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary } = state;
@@ -63,7 +61,6 @@ function App() {
               user={user}
               itinerary={itinerary}
               dispatch={dispatch}
-              setItinerary={setItinerary}
             />
             {itinerary &&
               itinerary.users.some((member) => member.id === user.id) && (
@@ -80,7 +77,6 @@ function App() {
               user={user}
               itinerary={itinerary}
               dispatch={dispatch}
-              travelParty={allowedUsers}
             />
             <ItineraryDay itinerary={itinerary} dispatch={dispatch} />
           </main>
@@ -91,7 +87,6 @@ function App() {
               user={user}
               itinerary={itinerary}
               dispatch={dispatch}
-              travelParty={allowedUsers}
             />
             <Itinerary dispatch={dispatch} itinerary={itinerary} />
           </main>

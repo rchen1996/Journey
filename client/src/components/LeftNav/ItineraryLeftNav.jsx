@@ -8,17 +8,29 @@ export default function ItineraryLeftNav(props) {
   const [dropDown, setDropDown] = useState({});
   const [itinerary, setItinerary] = useState({});
 
-  const { dispatch, travelParty } = props;
+  const { dispatch } = props;
   const { pathname } = useLocation();
 
   const { itinerary_id } = useParams();
 
-  setItinerary(itinerary_id)
+  useEffect(() => {
+    Promise.all([
+      axios.get(`/api/itineraries/${ itinerary_id}`),
+      axios.get(`/api/itineraries/${ itinerary_id}/collaborators`)
+    ]).then(([itinerary,users]) => {
+      dispatch({
+        type: SET_ITINERARY,
+        itinerary: { ...itinerary.data, users: users.data }
+      });
+      setItinerary({ ...itinerary.data, users: users.data })
+    }).catch(err => console.log(err))
+  },[itinerary_id, dispatch])
 
   function handleSubmit(event) {
     event.preventDefault();
     props.addLocation(newLocation);
     setNewLocation('');
+
     return;
   }
 
