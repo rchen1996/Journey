@@ -20,31 +20,18 @@ export default function ItineraryLeftNav(props) {
         itinerary.locations &&
         itinerary.locations.map((locationObj, index) => {
           return (
-            <div className='flex items-center justify-between'>
-              <details key={index} className='flex flex-col'>
-                <summary>{locationObj.name}</summary>
-                {locationObj.days.map((day) => {
-                  return (
-                    <Link
-                      to={`/itineraries/${itinerary.id}/days/${day.id}`}
-                      key={day.id}
-                    >
-                      Day {day.day_order}
-                    </Link>
-                  );
-                })}
-              </details>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='14'
-                height='11'
-                fill='currentColor'
-              >
-                <path
-                  fill='#F4F4F5'
-                  d='M7.866 10.5a1 1 0 01-1.732 0l-5.196-9A1 1 0 011.804 0h10.392a1 1 0 01.866 1.5l-5.196 9z'
-                ></path>
-              </svg>
+            <div key={index} className='flex flex-col'>
+              <h4>{locationObj.name}</h4>
+              {locationObj.days.map((day) => {
+                return (
+                  <Link
+                    to={`/itineraries/${itinerary.id}/days/${day.id}`}
+                    key={day.id}
+                  >
+                    Day {day.day_order}
+                  </Link>
+                );
+              })}
             </div>
           );
         })}
