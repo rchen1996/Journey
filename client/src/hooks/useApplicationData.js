@@ -119,20 +119,24 @@ export default function useApplicationData() {
       })
       .catch(err => console.log(err));
   }
- 
 
   function setItinerary(itinerary_id) {
     Promise.all([
-      axios.get(`/api/itineraries/${ itinerary_id}`),
-      axios.get(`/api/itineraries/${ itinerary_id}/collaborators`)
-    ]).then(([itinerary,users]) => {
-      dispatch({
-        type: SET_ITINERARY,
-        itinerary: { ...itinerary.data, users: users.data }
-      })      
-    }).catch(err => console.log(err));
+      axios.get(`/api/itineraries/${itinerary_id}`),
+      axios.get(`/api/itineraries/${itinerary_id}/collaborators`),
+    ])
+      .then(([itinerary, users]) => {
+        dispatch({
+          type: SET_ITINERARY,
+          itinerary: { ...itinerary.data, users: users.data },
+        });
+      })
+      .catch(err => console.log(err));
   }
 
+  const deleteItinerary = itineraryId => {
+    return axios.post(`/api/itineraries/${itineraryId}`, itineraryId);
+  };
 
   return {
     state,
@@ -144,6 +148,7 @@ export default function useApplicationData() {
     removeCollaborator,
     createActivity,
     addCollaborator,
-    setItinerary
+    setItinerary,
+    deleteItinerary,
   };
 }
