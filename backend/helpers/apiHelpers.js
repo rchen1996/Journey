@@ -143,7 +143,7 @@ module.exports = db => {
   const createActivity = activity => {
     const query = {
       text: `INSERT INTO activities (day_id, start_time, end_time, attraction_id, itinerary_id)
-      VALUES($1, $2, $3, $4, $5, $6) RETURNING *;`,
+      VALUES($1, $2, $3, $4, $5) RETURNING *;`,
       values: [
         activity.dayId,
         activity.start,
