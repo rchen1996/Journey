@@ -36,7 +36,7 @@ export default function Itinerary(props) {
   const locationArr = [];
 
   return (
-    <section>
+    <section className='flex flex-col w-full h-full mx-24 my-8'>
       {sortedDays &&
         sortedDays.map((day) => {
           let location = null;
@@ -46,7 +46,9 @@ export default function Itinerary(props) {
           }
           return (
             <Fragment key={day.id}>
-              {location && <h2>{location}</h2>}
+              {location && (
+                <h2 className='mb-4 ml-2 text-3xl font-bold'>{location}</h2>
+              )}
               <ItineraryDays day={day} />
             </Fragment>
           );
