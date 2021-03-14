@@ -10,7 +10,7 @@ module.exports = ({
   getTravelParty,
 }) => {
   router.get('/', (req, res) => {
-    getAllItineraries().then((itineraries) => res.send(itineraries));
+    getAllItineraries().then(itineraries => res.send(itineraries));
   });
 
   router.post('/', (req, res) => {
@@ -31,8 +31,8 @@ module.exports = ({
         userId,
         startDate,
         endDate,
-      }).then((itinerary) => {
-        createTravelParty(itinerary.id, userId).then((travelParty) =>
+      }).then(itinerary => {
+        createTravelParty(itinerary.id, userId).then(travelParty =>
           res.send(itinerary)
         );
       });
@@ -43,14 +43,14 @@ module.exports = ({
 
   router.get('/:itinerary_id/collaborators', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getTravelParty(itinerary_id).then((party) => {
+    getTravelParty(itinerary_id).then(party => {
       res.send(party);
     });
   });
 
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getDetailedItinerary(itinerary_id).then((resultArr) => {
+    getDetailedItinerary(itinerary_id).then(resultArr => {
       const itinerary = itineraryObj2(resultArr);
 
       res.send(itinerary);
