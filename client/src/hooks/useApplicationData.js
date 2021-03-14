@@ -83,6 +83,10 @@ export default function useApplicationData() {
     }
   }, [state.user, state.itinerary]);
 
+  const allowedUsers = (itineraryId) => {
+    return axios.get(`/api/itineraries/${itineraryId}/collaborators`)
+  }
+
   return {
     state,
     dispatch,
@@ -90,5 +94,6 @@ export default function useApplicationData() {
     register,
     logout,
     createItinerary,
+    allowedUsers
   };
 }

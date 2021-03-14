@@ -1,6 +1,6 @@
 INSERT INTO itineraries (name, description, image, trip_type, creator_id)
 VALUES ('My Ireland Trip','Lots of stout and leprechauns in our future', 'https://images.adsttc.com/media/images/5bd6/fd00/f197/ccaa/4a00/027c/newsletter/shutterstock_1116656705.jpg?1540816099', 'groups', 1),
-('Our Honeymoon in Europe','Tu est francais?','https://images.adsttc.com/media/images/5d44/14fa/284d/d1fd/3a00/003d/large_jpg/eiffel-tower-in-paris-151-medium.jpg?1564742900','couples',2),
+('Our Honeymoon in Europe','Oui oui baguette','https://images.adsttc.com/media/images/5d44/14fa/284d/d1fd/3a00/003d/large_jpg/eiffel-tower-in-paris-151-medium.jpg?1564742900','couples',2),
 ('Japan!','Food and Shopping','https://cdn-image.departures.com/sites/default/files/1576002985/header-tokyo-japan-LUXETOKYO1219.jpg','families',3);
 
 INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date, end_date)
