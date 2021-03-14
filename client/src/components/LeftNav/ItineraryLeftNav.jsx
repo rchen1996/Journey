@@ -14,7 +14,7 @@ export default function ItineraryLeftNav(props) {
   }
 
   return (
-    <div>
+    <nav className='w-64 h-full bg-gray-600'>
       <h1>{itinerary.name}</h1>
       {itinerary &&
         itinerary.locations &&
@@ -44,6 +44,6 @@ export default function ItineraryLeftNav(props) {
           My Group{' '}
         </NavLink>
       </div>
-    </div>
+    </nav>
   );
 }
