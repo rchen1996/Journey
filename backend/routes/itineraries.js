@@ -37,9 +37,14 @@ module.exports = ({
         startDate,
         endDate,
       }).then(itinerary => {
-        createTravelParty(itinerary.id, userId).then(travelParty =>
-          res.send(itinerary)
-        );
+        createTravelParty(itinerary.id, userId).then(travelParty => {
+          getTravelParty(itinerary.id).then(users => {
+            getDetailedItinerary(itinerary.id).then(fullItinerary => {
+              const parsed = itineraryObj(fullItinerary);
+              res.send({ ...parsed, users: parseTravelParty(users) });
+            });
+          });
+        });
       });
     } else {
       res.send({ error: 'cannot create itinerary when user does not exist' });
