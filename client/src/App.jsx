@@ -23,6 +23,7 @@ function App() {
     login,
     logout,
     createItinerary,
+    allowedUsers,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary } = state;

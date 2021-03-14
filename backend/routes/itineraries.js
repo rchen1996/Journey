@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { itineraryObj } = require('../helpers/dataHelpers');
+const { itineraryObj, parseTravelParty} = require('../helpers/dataHelpers');
 
 module.exports = ({
   getAllItineraries,
@@ -8,6 +8,7 @@ module.exports = ({
   createTravelParty,
   getDetailedItinerary,
   getTravelParty,
+  
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then((itineraries) => res.send(itineraries));
@@ -44,7 +45,7 @@ module.exports = ({
   router.get('/:itinerary_id/collaborators', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
     getTravelParty(itinerary_id).then((party) => {
-      res.send(party);
+      res.send(parseTravelParty(party));
     });
   });
 
