@@ -171,6 +171,32 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const deleteItinerary = itineraryId => {
+    const query = {
+      text: `DELETE FROM itineraries WHERE id = $1 RETURNING *;`,
+      values: [itineraryId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
+  const getItinerariesForGroup = id => {
+    const query = {
+      text: `SELECT itineraries.* FROM itineraries
+      JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id 
+      WHERE user_id = $1`,
+      values: [id],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -182,5 +208,7 @@ module.exports = db => {
     addCollaborator,
     createActivity,
     getItinerary,
+    deleteItinerary,
+    getItinerariesForGroup,
   };
 };
