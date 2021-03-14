@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ErrorMessage from './ErrorMessage';
 
 export default function MyGroup(props) {
@@ -17,7 +17,7 @@ export default function MyGroup(props) {
     textClass: 'flex items-center mr-2 space-x-2 cursor-pointer',
   });
 
-  const handleRemove = (userId) => {
+  const handleRemove = userId => {
     removeCollaborator(id, userId);
   };
 
@@ -31,12 +31,12 @@ export default function MyGroup(props) {
       });
       return;
     }
-    addCollaborator(id, addInput).then((result) => {
+    addCollaborator(id, addInput).then(result => {
       if (result.error) {
         setError({
           ...error,
           status: true,
-          message: 'No user with this email.',
+          message: result.error,
         });
       } else if (result.success) {
         setError({
@@ -44,21 +44,26 @@ export default function MyGroup(props) {
           status: false,
           message: '',
         });
+        setAddInput('');
         handleDropDown();
       }
     });
   };
 
   const handleDropDown = () => {
-    setDropDown((prev) => {
+    setDropDown(prev => {
       const isClassHidden =
         prev?.formClass === 'items-center self-end hidden' ||
         prev?.formClass === undefined;
+
       setError({
         ...error,
         status: false,
         message: '',
       });
+
+      setAddInput('');
+
       return {
         formClass: isClassHidden
           ? 'items-center self-end flex'
@@ -113,12 +118,12 @@ export default function MyGroup(props) {
                   </svg>
                 </div>
                 <form
-                  onSubmit={(event) => event.preventDefault()}
+                  onSubmit={event => event.preventDefault()}
                   className={dropDown.formClass}
                 >
                   <input
                     value={addInput}
-                    onChange={(event) => setAddInput(event.target.value)}
+                    onChange={event => setAddInput(event.target.value)}
                     placeholder='Enter Email'
                     type='email'
                     className='pr-8 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -152,7 +157,7 @@ export default function MyGroup(props) {
           </header>
         )}
         <div className='flex flex-col w-full space-y-4'>
-          {users.map((member) => {
+          {users.map(member => {
             return (
               <div
                 key={member.id}
