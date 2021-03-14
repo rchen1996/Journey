@@ -24,7 +24,7 @@ export default function ItineraryLeftNav(props) {
 
       setItinerary(res.data);
     });
-  }, [itinerary_id, dispatch, travelParty]);
+  }, [itinerary_id, dispatch]);
 
   function handleSubmit(event) {
     event.preventDefault();
