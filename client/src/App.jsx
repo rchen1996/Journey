@@ -24,7 +24,8 @@ function App() {
     login,
     logout,
     createItinerary,
-    removeCollaborator
+    removeCollaborator,
+    createActivity,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary } = state;
@@ -63,16 +64,17 @@ function App() {
             {itinerary &&
               itinerary.users.some(member => member.id === user.id) && (
                 <MyGroup
-                user={user}
+                  user={user}
                   itinerary={itinerary}
-                removeCollaborator={removeCollaborator}/>
+                  removeCollaborator={removeCollaborator}
+                />
               )}
           </main>
         </Route>
         <Route path="/itineraries/:itinerary_id/days/:day_id/activities/new">
           <main className="flex w-full min-h-full">
             <LeftNav user={user} itinerary={itinerary} dispatch={dispatch} />
-            <AddActivityForm />
+            <AddActivityForm dispatch={dispatch} onSave={createActivity} />
           </main>
         </Route>
         <Route path="/itineraries/:itinerary_id/days/:day_id">
