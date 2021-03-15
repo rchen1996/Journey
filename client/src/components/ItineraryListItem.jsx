@@ -4,7 +4,80 @@ export default function ItineraryListItem(props) {
   const { name, description, image, id } = props.itinerary;
   return (
     <article className='flex flex-col justify-between w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
-      <figure className='mb-0.25 aspect-w-2 aspect-h-1'>
+      <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
+        <div className='z-10 flex items-center justify-center space-x-8 hover:bg-gray-700 hover:bg-opacity-90 group'>
+          {props.user.id && (
+            // <button type='button' onClick={() => setView(DELETE)}>
+            <svg
+              width='48'
+              height='54'
+              viewBox='0 0 48 54'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              className='hidden w-8 h-8 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110'
+            >
+              <g filter='url(#filter0_dd)'>
+                <path
+                  d='M12 9.60005C12 8.32701 12.5057 7.10611 13.4059 6.20594C14.3061 5.30576 15.527 4.80005 16.8 4.80005H31.2C32.473 4.80005 33.6939 5.30576 34.5941 6.20594C35.4943 7.10611 36 8.32701 36 9.60005V43.2L24 37.2L12 43.2V9.60005Z'
+                  fill='#F4F4F5'
+                />
+              </g>
+              <defs>
+                <filter
+                  id='filter0_dd'
+                  x='-6'
+                  y='-2'
+                  width='60'
+                  height='60'
+                  filterUnits='userSpaceOnUse'
+                  colorInterpolationFilters='sRGB'
+                >
+                  <feFlood flood-opacity='0' result='BackgroundImageFix' />
+                  <feColorMatrix
+                    in='SourceAlpha'
+                    type='matrix'
+                    values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+                  />
+                  <feOffset dy='4' />
+                  <feGaussianBlur stdDeviation='3' />
+                  <feColorMatrix
+                    type='matrix'
+                    values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0'
+                  />
+                  <feBlend
+                    mode='normal'
+                    in2='BackgroundImageFix'
+                    result='effect1_dropShadow'
+                  />
+                  <feColorMatrix
+                    in='SourceAlpha'
+                    type='matrix'
+                    values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+                  />
+                  <feOffset dy='2' />
+                  <feGaussianBlur stdDeviation='2' />
+                  <feColorMatrix
+                    type='matrix'
+                    values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'
+                  />
+                  <feBlend
+                    mode='normal'
+                    in2='effect1_dropShadow'
+                    result='effect2_dropShadow'
+                  />
+                  <feBlend
+                    mode='normal'
+                    in='SourceGraphic'
+                    in2='effect2_dropShadow'
+                    result='shape'
+                  />
+                </filter>
+              </defs>
+            </svg>
+
+            // </button>
+          )}
+        </div>
         <img
           src={image}
           alt='itinerary cover'
