@@ -114,7 +114,7 @@ function App() {
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id'>
-          <main className='flex w-full min-h-screen'>
+          <main className='relative flex w-full min-h-screen'>
             <LeftNav
               user={user}
               itinerary={itinerary}
