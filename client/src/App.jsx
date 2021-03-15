@@ -32,6 +32,7 @@ function App() {
     addDayWithLocation,
     deleteItinerary,
     deleteBookmark,
+    addBookmark,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
@@ -62,7 +63,12 @@ function App() {
           )}
         </Route>
         <Route path='/itineraries' exact>
-          <ItineraryList key={key} itineraries={itineraries} user={user} />
+          <ItineraryList
+            key={key}
+            itineraries={itineraries}
+            user={user}
+            addBookmark={addBookmark}
+          />
         </Route>
         <Route path='/itineraries/:itinerary_id/collaborators'>
           <main className='flex w-full min-h-screen'>
