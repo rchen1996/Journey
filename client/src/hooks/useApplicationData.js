@@ -19,15 +19,17 @@ export default function useApplicationData() {
   });
 
   useEffect(() => {
-    axios.get(`/api/users/${state.user.id}`).then(res => {
-      const user = res.data[0];
-      if (res.data.length > 0) {
-        dispatch({
-          type: SET_USER,
-          user: user,
-        });
-      }
-    });
+    if (state.user.id) {
+      axios.get(`/api/users/${state.user.id}`).then(res => {
+        const user = res.data[0];
+        if (res.data.length > 0) {
+          dispatch({
+            type: SET_USER,
+            user: user,
+          });
+        }
+      });
+    }
   }, [state.user.id]);
 
   const login = function (email, password) {
