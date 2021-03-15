@@ -11,9 +11,14 @@ export default function ItineraryLeftNav(props) {
     setItinerary(itinerary_id);
   }, []);
 
-  function handleSubmit(event, locationName) {
+  function handleSubmit(event, last_day_order, locationName) {
     event.preventDefault();
-    addDayWithLocation(itinerary_id, locationName || newLocation);
+    addDayWithLocation(
+      itinerary_id,
+      locationName || newLocation,
+      last_day_order + 1
+    );
+
     setNewLocation('');
 
     return;
@@ -39,33 +44,46 @@ export default function ItineraryLeftNav(props) {
     });
   };
 
+  let inTravelParty = false;
+  if (itinerary) {
+    const travelParty = itinerary.users;
+
+    travelParty.forEach(member => {
+      if (member.id === user.id) {
+        inTravelParty = true;
+      }
+    });
+  }
+
   return (
-    <nav className='flex flex-col w-64 h-full px-6 py-4 text-gray-100 bg-gray-600 divide-y divide-gray-100 divide-opacity-50'>
+    <nav className='fixed w-64 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar'>
       {itinerary && (
-        <>
+        <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
           <div className='flex flex-col mb-2 '>
             <NavLink
-              to={`/itineraries/${itinerary.id}/`}
+              to={`/itineraries/${itinerary.id}/${pathname.includes('edit') ? 'edit' : ''}`}
               className='px-3 py-2 text-2xl font-bold '
             >
               {itinerary.name}
             </NavLink>
             <div>
-              <NavLink
-                to={`/itineraries/${itinerary.id}/collaborators`}
-                className='flex justify-between px-3 py-1 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
-                activeClassName='bg-gray-200 bg-opacity-25 rounded-xl'
-              >
-                My Group{' '}
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                  className='w-5 h-5'
+              {inTravelParty && (
+                <NavLink
+                  to={`/itineraries/${itinerary.id}/collaborators`}
+                  className='flex justify-between px-3 py-1 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                  activeClassName='bg-gray-200 bg-opacity-25 rounded-xl'
                 >
-                  <path d='M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z' />
-                </svg>
-              </NavLink>
+                  My Group{' '}
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    className='w-5 h-5'
+                  >
+                    <path d='M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z' />
+                  </svg>
+                </NavLink>
+              )}
             </div>
           </div>
           <div>
@@ -119,7 +137,11 @@ export default function ItineraryLeftNav(props) {
                         <div>
                           <button
                             onClick={event =>
-                              handleSubmit(event, locationObj.name)
+                              handleSubmit(
+                                event,
+                                locationObj.days.slice(-1)[0].day_order,
+                                locationObj.name
+                              )
                             }
                             className='ml-6 transform'
                           >
@@ -204,7 +226,7 @@ export default function ItineraryLeftNav(props) {
               </div>
             )
           )}
-        </>
+        </div>
       )}
     </nav>
   );

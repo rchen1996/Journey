@@ -88,7 +88,7 @@ export default function NewItineraryForm(props) {
   };
 
   return (
-    <section className='flex flex-col items-center w-full h-full'>
+    <section className='flex flex-col items-center w-full h-full mt-16'>
       <div className='flex flex-col w-3/4 py-8 2xl:w-1/2'>
         <h1 className='mb-4 ml-1 text-2xl font-bold'>
           Let's Go on an Adventure!

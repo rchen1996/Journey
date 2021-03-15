@@ -49,9 +49,11 @@ module.exports = db => {
 
   const getItinerariesForGroup = id => {
     const query = {
-      text: `SELECT itineraries.* FROM itineraries
-      JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id 
-      WHERE user_id = $1`,
+      text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+      JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id
+      JOIN days ON itineraries.id = days.itinerary_id 
+      WHERE user_id = $1
+      GROUP BY itineraries.id`,
       values: [id],
     };
 
@@ -63,9 +65,11 @@ module.exports = db => {
 
   const getBookmarksForUser = userId => {
     const query = {
-      text: `SELECT itineraries.*, bookmarks.id AS bookmark_id FROM itineraries
+      text: `SELECT itineraries.*, bookmarks.id AS bookmark_id, COUNT(days.id) AS days FROM itineraries
       JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
-      WHERE user_id = $1;`,
+      JOIN days ON itineraries.id = days.itinerary_id
+      WHERE user_id = $1
+      GROUP BY itineraries.id, bookmarks.id;`,
       values: [userId],
     };
 
@@ -99,6 +103,32 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const addBookmark = (itineraryId, userId) => {
+    const query = {
+      text: `INSERT INTO bookmarks (itinerary_id, user_id)
+      VALUES ($1, $2) RETURNING *;`,
+      values: [itineraryId, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
+  const getBookmarkByItineraryId = (itineraryId, userId) => {
+    const query = {
+      text: `SELECT * FROM bookmarks
+      WHERE itinerary_id = $1 AND user_id = $2;`,
+      values: [itineraryId, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
@@ -108,5 +138,7 @@ module.exports = db => {
     getBookmarksForUser,
     deleteBookmark,
     getBookmark,
+    addBookmark,
+    getBookmarkByItineraryId,
   };
 };
