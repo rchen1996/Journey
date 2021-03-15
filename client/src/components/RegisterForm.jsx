@@ -161,8 +161,14 @@ export default function RegisterForm(props) {
             onChange={event => setPasswordConfirm(event.target.value)}
           />
         </div>
-        <footer className='flex items-start justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
+        <footer className='flex flex-col items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 sm:items-center sm:flex-row rounded-b-xl'>
           <FormButton type='submit'>Sign up</FormButton>
+          <span className='mt-2 ml-1.5 text-xs font-semibold'>
+            Already have an account? Sign in{' '}
+            <Link to='/login' className='text-teal-600 hover:underline'>
+              here!
+            </Link>
+          </span>
         </footer>
       </form>
     </section>

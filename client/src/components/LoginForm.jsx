@@ -103,8 +103,14 @@ export default function LoginForm(props) {
             className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
         </div>
-        <footer className='flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
+        <footer className='flex flex-col items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 sm:items-center sm:flex-row rounded-b-xl'>
           <FormButton type='submit'>Log in</FormButton>
+          <span className='mt-2 ml-1.5 text-xs font-semibold'>
+            Don't have an account? Sign up{' '}
+            <Link to='/signup' className='text-teal-600 hover:underline'>
+              here!
+            </Link>
+          </span>
         </footer>
       </form>
     </section>
