@@ -13,8 +13,6 @@ export default function MyItinerariesListItem(props) {
     trip_type,
   } = props.itinerary;
 
-  console.log(props.itinerary);
-
   const [error, setError] = useState({
     staus: false,
     message: '',
