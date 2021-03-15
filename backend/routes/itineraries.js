@@ -17,6 +17,7 @@ module.exports = ({
   getItinerary,
   deleteItinerary,
   getItinerariesForGroup,
+  deleteDayFromItinerary,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then((itineraries) => res.send(itineraries));
@@ -104,14 +105,14 @@ module.exports = ({
     if (!userId) {
       res.send({ error: 'You must be logged in to delete an itinerary.' });
     } else {
-      getItinerary(itineraryId).then(itinerary => {
+      getItinerary(itineraryId).then((itinerary) => {
         if (itinerary.creator_id !== userId) {
           res.send({
             error: 'You must be the creator of an itinerary to delete it.',
           });
         } else {
           deleteItinerary(itineraryId).then(() => {
-            getItinerariesForGroup(userId).then(itineraries => {
+            getItinerariesForGroup(userId).then((itineraries) => {
               res.send(itineraries);
             });
           });
@@ -216,6 +217,18 @@ module.exports = ({
       }
     });
   });
+
+  // router.delete('/:itinerary_id/days/:day_id', (req, res)=> {
+  //   const {itinerary_id, day_id} = req.params;
+  //   deleteDayFromItinerary(day_id).then(result=>{
+  //     if(result.message){
+  //       res.send({error: there was an error})
+  //     } else {
+
+  //     }
+  //   })
+
+  // })
 
   return router;
 };

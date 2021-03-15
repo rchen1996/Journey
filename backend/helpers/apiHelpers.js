@@ -213,6 +213,17 @@ const addDayWithLocation = (itineraryId,locationName) => {
       .catch(err => err);
   };
 
+  const deleteDayFromItinerary = (day_id) => {
+    const query = {
+      text: `DELETE from days WHERE id = $1 RETURNING *`,
+      values: [day_id]
+    };
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  }
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -227,5 +238,6 @@ const addDayWithLocation = (itineraryId,locationName) => {
     getItinerary,
     deleteItinerary,
     getItinerariesForGroup,
+    deleteDayFromItinerary
   };
 };
