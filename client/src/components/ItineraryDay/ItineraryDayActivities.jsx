@@ -1,7 +1,7 @@
 export default function ItineraryDayActivities(props) {
   const { activity } = props;
 
-  const tConvert = (time) => {
+  const tConvert = time => {
     // Check correct time format and split into components
     time = time
       .toString()
