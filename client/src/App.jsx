@@ -33,7 +33,7 @@ function App() {
     deleteItinerary,
   } = useApplicationData();
 
-  const { user, itineraries, myItineraries, key, itinerary } = state;
+  const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
 
   return (
     <Router>
@@ -127,7 +127,7 @@ function App() {
           {user.id && (
             <main className='flex w-full min-h-full'>
               <LeftNav user={user} dispatch={dispatch} />
-              <Bookmarks />
+              <Bookmarks bookmarks={bookmarks} />
             </main>
           )}
         </Route>
