@@ -28,6 +28,7 @@ export default function DashboardLeftNav(props) {
         </li>
         <li className='mb-4'>
           <NavLink
+            exact
             to={`/dashboard/${user.id}`}
             activeClassName='selected bg-gray-200 bg-opacity-25'
             className='flex items-center justify-between p-4 sm:px-4 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
@@ -46,6 +47,7 @@ export default function DashboardLeftNav(props) {
         <li className='mb-4'>
           <NavLink
             to={`/dashboard/${user.id}/bookmarks`}
+            activeClassName='selected bg-gray-200 bg-opacity-25'
             className='flex items-center justify-between p-4 sm:px-4 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
           >
             <span className='hidden sm:flex'>Bookmarks</span>
