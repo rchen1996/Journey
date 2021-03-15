@@ -259,7 +259,7 @@ module.exports = (db) => {
     getItinerary,
     deleteItinerary,
     getItinerariesForGroup,
-    deleteDayFromItinerary
+    deleteDayFromItinerary,
     reorderDays,
   };
 };

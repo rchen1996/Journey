@@ -33,6 +33,7 @@ function App() {
     deleteItinerary,
     deleteBookmark,
     addBookmark,
+    deleteDayFromItinerary
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
@@ -119,6 +120,7 @@ function App() {
               itinerary={itinerary}
               dispatch={dispatch}
               user={user}
+              deleteDayFromItinerary={deleteDayFromItinerary}
             />
           </main>
         </Route>
@@ -130,7 +132,7 @@ function App() {
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
             />
-            <Itinerary dispatch={dispatch} itinerary={itinerary} user={user} />
+            <Itinerary dispatch={dispatch} itinerary={itinerary} user={user} deleteDayFromItinerary={deleteDayFromItinerary}/>
           </main>
         </Route>
         <Route path='/dashboard/:user_id/bookmarks'>
