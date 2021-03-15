@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { SET_BOOKMARKS } from '../reducers/application';
 
 export default function ItineraryListItem(props) {
-  const { name, description, image, id } = props.itinerary;
+  const { name, description, image, id, days } = props.itinerary;
 
   const [message, setMessage] = useState('');
 
@@ -134,10 +134,11 @@ export default function ItineraryListItem(props) {
           />
         </svg>
 
-        <span className='text-xs font-bold text-gray-200'>7 Days</span>
+        <span className='text-xs font-bold text-gray-200'>
+          {days === '1' ? '1 Day' : `${days} Days`}
+        </span>
       </div>
       <p className='pb-4 text-sm'>{description}</p>
-      {/* bookmark button */}
     </article>
   );
 }
