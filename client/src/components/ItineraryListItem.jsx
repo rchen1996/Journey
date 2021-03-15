@@ -7,6 +7,8 @@ export default function ItineraryListItem(props) {
 
   const [message, setMessage] = useState('');
 
+  const isBookmarked = props.bookmarks.includes(id);
+
   const addBookmark = () => {
     if (props.user.id) {
       props.addBookmark(id).then(res => {
@@ -32,11 +34,27 @@ export default function ItineraryListItem(props) {
 
   return (
     <article className='flex flex-col w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
+      {props.user.id && isBookmarked && (
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 20 20'
+          fill='currentColor'
+          className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform shadow-xl transiton -top-1'
+        >
+          <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
+        </svg>
+      )}
       <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
-        <div className='z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'>
-          {props.user.id && (
+        <div
+          className={
+            props.user.id && !isBookmarked
+              ? 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'
+              : 'z-10 flex items-center justify-center space-x-8'
+          }
+        >
+          {props.user.id && !isBookmarked && (
             <div className='flex items-center justify-center w-full h-full'>
-              {message && <p>{message}</p>}
+              {/* {message && <p>{message}</p>} */}
               <button
                 type='button'
                 onClick={addBookmark}
