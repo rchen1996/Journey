@@ -175,7 +175,7 @@ export default function useApplicationData() {
   };
 
   const addBookmark = itineraryId => {
-    return axios.post(`/api/users/${state.user.id}/bookmarks`, itineraryId);
+    return axios.post(`/api/users/${state.user.id}/bookmarks`, { itineraryId });
   };
 
   return {
