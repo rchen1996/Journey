@@ -56,9 +56,9 @@ export default function ItineraryLeftNav(props) {
   }
 
   return (
-    <nav className='w-64 h-full px-6 py-4 mt-16 text-gray-100 bg-gray-600'>
+    <nav className='fixed w-64 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar'>
       {itinerary && (
-        <div className='sticky flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
+        <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
           <div className='flex flex-col mb-2 '>
             <NavLink
               to={`/itineraries/${itinerary.id}/`}

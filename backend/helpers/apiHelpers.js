@@ -237,6 +237,17 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const deleteDayFromItinerary = (day_id) => {
+    const query = {
+      text: `DELETE from days WHERE id = $1 RETURNING *`,
+      values: [day_id]
+    };
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  }
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -251,6 +262,7 @@ module.exports = db => {
     getItinerary,
     deleteItinerary,
     getItinerariesForGroup,
+    deleteDayFromItinerary,
     reorderDays,
   };
 };

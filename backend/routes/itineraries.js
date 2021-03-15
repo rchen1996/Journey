@@ -17,6 +17,7 @@ module.exports = ({
   getItinerary,
   deleteItinerary,
   getItinerariesForGroup,
+  deleteDayFromItinerary,
   reorderDays,
 }) => {
   router.get('/', (req, res) => {
@@ -237,6 +238,37 @@ module.exports = ({
               }
             });
           } else res.send(newItinerary);
+        });
+      }
+    });
+  });
+
+  router.delete('/:itinerary_id/days/:day_id', (req, res) => {
+    const { itinerary_id, day_id } = req.params;
+    deleteDayFromItinerary(day_id).then((result) => {
+      if (result.message) {
+        res.send({ error: 'there was an error' });
+      } else {
+        getDetailedItinerary(itinerary_id).then((resultArr) => {
+          const bufferItinerary = itineraryObj(resultArr);
+          const daysIdArr = [];
+          const daysOrderArr = [];
+          bufferItinerary.locations.forEach((location) => {
+            location.days.forEach((day) => {
+              daysIdArr.push(day.id);
+              daysOrderArr.push(day.day_order);
+            });
+          });
+          const newOrderArr = daysOrderArr.map((i, index) => index + 1);
+          reorderDays(daysIdArr, newOrderArr).then((result) => {
+            if (result.message) {
+              res.send({ error: `error with reorderDays: ${result.message}` });
+            } else {
+              getDetailedItinerary(itinerary_id).then((resultArr) => {
+                res.send(itineraryObj(resultArr));
+              });
+            }
+          });
         });
       }
     });
