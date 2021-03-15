@@ -13,7 +13,13 @@ export default function Itinerary(props) {
               <h2 className="mb-4 ml-2 text-3xl font-bold">{location.name}</h2>
               {location.days &&
                 location.days.map(day => {
-                  return <ItineraryDays key={day.id} day={day} />;
+                  return (
+                    <ItineraryDays
+                      key={day.id}
+                      day={day}
+                      itinerary={itinerary}
+                    />
+                  );
                 })}
             </div>
           );
