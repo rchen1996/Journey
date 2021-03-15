@@ -13,7 +13,7 @@ export default function ItineraryDays(props) {
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    deleteDayFromItinerary(itinerary.id, day.id).then((res) => {
+    deleteDayFromItinerary(itinerary.id, day.id).then(res => {
       if (res.error) console.log('error: ', res.error);
       // if (res.success) console.log('success: ', res.success);
     });
@@ -26,7 +26,7 @@ export default function ItineraryDays(props) {
           Day {day.day_order}
         </h2>
         {pathname.includes('edit') &&
-          itinerary.users.some((member) => member.id === user.id) && (
+          itinerary.users.some(member => member.id === user.id) && (
             <div className='flex space-x-3'>
               <Link to={`/itineraries/${itinerary.id}/days/${day.id}/edit`}>
                 <svg
@@ -90,7 +90,7 @@ export default function ItineraryDays(props) {
           )}
       </div>
       {day.activities &&
-        day.activities.map((activity) => {
+        day.activities.map(activity => {
           return (
             <ItineraryDayActivities key={activity.id} activity={activity} />
           );

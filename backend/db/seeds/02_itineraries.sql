@@ -7,8 +7,8 @@ INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_
 VALUES('My Norway Getaway','Northern liiiightsssss','https://cdn.kimkim.com/files/a/content_articles/featured_photos/91f73b325868f65a810731f7277b731a553db51f/big-1e3cac6bb208d30558f1623b379e121a.jpg','solo',1, '2021-10-10','2021-10-16'),
 ('Aspen','Skiing and shopping in the village','https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5d1573f34c687b00085b1145%2F0x0.jpg','luxury',4,'2021-12-20','2021-12-28');
 
-INSERT INTO itineraries (creator_id, name, description, trip_type)
-VALUES (5,'Trip to Nowhere', 'Have not decided where to go but we will get there! Eventually..', 'groups');
+INSERT INTO itineraries (creator_id, name, description, image, trip_type)
+VALUES (5,'Trip to Nowhere', 'Have not decided where to go but we will get there! Eventually..', 'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80','groups');
 
-INSERT INTO itineraries (creator_id, name, description, trip_type)
-VALUES (5,'Trip to Amsterdam', 'A quick weekend getaway for our little band', 'groups');
+INSERT INTO itineraries (creator_id, name, description, image, trip_type)
+VALUES (5,'Trip to Amsterdam', 'A quick weekend getaway for our little band', 'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80','groups');
