@@ -50,7 +50,7 @@ export default function ItineraryLeftNav(props) {
         <div className='sticky flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
           <div className='flex flex-col mb-2 '>
             <NavLink
-              to={`/itineraries/${itinerary.id}/`}
+              to={`/itineraries/${itinerary.id}/${pathname.includes('edit') ? 'edit' : ''}`}
               className='px-3 py-2 text-2xl font-bold '
             >
               {itinerary.name}
