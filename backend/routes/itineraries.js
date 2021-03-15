@@ -217,7 +217,17 @@ module.exports = ({
           const last_day_order = newItinerary.locations
             .slice(-1)[0]
             .days.slice(-1)[0].day_order;
-          if (last_day_order !== new_day_order) {
+
+          console.log(
+            'new_day_order:',
+            new_day_order,
+            'last day order:',
+            last_day_order,
+            'newItinerary:',
+            newItinerary
+          );
+          if (new_day_order && last_day_order !== new_day_order) {
+            console.log('does reorder');
             const daysIdArr = [];
             const daysOrderArr = [];
             newItinerary.locations.forEach((location) => {
