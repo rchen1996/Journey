@@ -134,17 +134,18 @@ export default function useApplicationData() {
       .catch((err) => console.log(err));
   }
 
-  function addDayWithLocation(itinerary_id, location_name) {
-    axios
-      .post(`/api/itineraries/${itinerary_id}`, { location_name })
+  function addDayWithLocation(itinerary_id, location_name, new_day_order) {
+    return axios
+      .post(`/api/itineraries/${itinerary_id}`, { location_name, new_day_order })
       .then((res) => {
         if (res.data.error) {
-          console.log(res.data.error);
+          return {error: res.data.error}
         } else {
           dispatch({
             type: SET_ITINERARY,
             itinerary: { ...state.itinerary, ...res.data },
           });
+          return {itinerary: res.data}
         }
       });
   }

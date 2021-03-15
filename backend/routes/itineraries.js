@@ -17,6 +17,7 @@ module.exports = ({
   getItinerary,
   deleteItinerary,
   getItinerariesForGroup,
+  reorderDays,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then((itineraries) => res.send(itineraries));
@@ -104,14 +105,14 @@ module.exports = ({
     if (!userId) {
       res.send({ error: 'You must be logged in to delete an itinerary.' });
     } else {
-      getItinerary(itineraryId).then(itinerary => {
+      getItinerary(itineraryId).then((itinerary) => {
         if (itinerary.creator_id !== userId) {
           res.send({
             error: 'You must be the creator of an itinerary to delete it.',
           });
         } else {
           deleteItinerary(itineraryId).then(() => {
-            getItinerariesForGroup(userId).then(itineraries => {
+            getItinerariesForGroup(userId).then((itineraries) => {
               res.send(itineraries);
             });
           });
@@ -205,13 +206,43 @@ module.exports = ({
 
   router.post('/:itinerary_id', (req, res) => {
     const { itinerary_id } = req.params;
-    const { location_name } = req.body;
+    const { location_name, new_day_order } = req.body;
     addDayWithLocation(itinerary_id, location_name).then((result) => {
       if (result.message) {
         res.send({ error: 'No such location in database' });
       } else {
         getDetailedItinerary(itinerary_id).then((resultArr) => {
-          res.send(itineraryObj(resultArr));
+          let newItinerary = itineraryObj(resultArr);
+          const last_day_order = newItinerary.locations
+            .slice(-1)[0]
+            .days.slice(-1)[0].day_order;
+          if (last_day_order !== new_day_order) {
+            const daysIdArr = [];
+            const daysOrderArr = [];
+            newItinerary.locations.forEach((location) => {
+              location.days.forEach((day) => {
+                daysIdArr.push(day.id);
+                daysOrderArr.push(day.day_order);
+              });
+              console.log('after push, daysOrderArr', daysOrderArr);
+            });
+            daysIdArr.splice(new_day_order - 1, 0, daysIdArr.pop());
+            console.log(
+              'newdaysIdArr: ',
+              daysIdArr,
+              'daysOrderArr',
+              daysOrderArr
+            );
+            reorderDays(daysIdArr, daysOrderArr).then((result) => {
+              if (result.message) {
+                res.send({ error: result.message });
+              } else {
+                getDetailedItinerary(itinerary_id).then((resultArr) => {
+                  res.send(itineraryObj(resultArr));
+                });
+              }
+            });
+          } else res.send(newItinerary);
         });
       }
     });
