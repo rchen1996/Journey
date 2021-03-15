@@ -1,10 +1,18 @@
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { SET_BOOKMARKS } from '../reducers/application';
 
 import ErrorMessage from './ErrorMessage';
 
 export default function BookmarksItem(props) {
-  const { name, description, image, id, trip_type } = props.bookmark;
+  const {
+    name,
+    description,
+    image,
+    id,
+    trip_type,
+    bookmark_id,
+  } = props.bookmark;
 
   const [error, setError] = useState({
     staus: false,
@@ -21,21 +29,21 @@ export default function BookmarksItem(props) {
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    // props.deleteItinerary(id).then(res => {
-    //   if (res.data.error) {
-    //     setError({
-    //       ...error,
-    //       status: true,
-    //       message: res.data.error,
-    //     });
-    //   } else {
-    //     props.dispatch({
-    //       type: SET_MY_ITINERARIES,
-    //       myItineraries: res.data,
-    //     });
-    //     history.push(`/dashboard/${props.user.id}`);
-    //   }
-    // });
+    props.deleteBookmark(bookmark_id).then(res => {
+      if (res.data.error) {
+        setError({
+          ...error,
+          status: true,
+          message: res.data.error,
+        });
+      } else {
+        props.dispatch({
+          type: SET_BOOKMARKS,
+          bookmarks: res.data,
+        });
+        history.push(`/dashboard/${props.user.id}/bookmarks`);
+      }
+    });
   };
 
   return (
@@ -63,7 +71,7 @@ export default function BookmarksItem(props) {
             </div>
           )}
           {view === DELETE && (
-            <div className='z-10 flex space-x-8 bg-gray-700 pointer-events-none bg-opacity-90'>
+            <div className='z-10 flex space-x-8 bg-gray-700 bg-opacity-90'>
               <article className='flex flex-col items-center justify-center w-full h-full'>
                 <ErrorMessage
                   isError={error.status}
