@@ -1,47 +1,68 @@
-// import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+
+import ErrorMessage from './ErrorMessage';
 
 export default function BookmarksItem(props) {
   const { name, description, image, id, trip_type } = props.bookmark;
 
-  // const [error, setError] = useState({
-  //   staus: false,
-  //   message: '',
-  //   show: 'flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
-  //   hide: 'hidden flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
-  // });
+  const [error, setError] = useState({
+    staus: false,
+    message: '',
+    show: 'flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
+    hide: 'hidden flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
+  });
 
-  // const history = useHistory();
+  const history = useHistory();
 
-  // const DEFAULT = 'DEFAULT';
-  // const DELETE = 'DELETE';
+  const DEFAULT = 'DEFAULT';
+  const DELETE = 'DELETE';
 
-  // const [view, setView] = useState(DEFAULT);
+  const [view, setView] = useState(DEFAULT);
 
-  // const handleDelete = () => {
-  //   props.deleteItinerary(id).then(res => {
-  //     if (res.data.error) {
-  //       setError({
-  //         ...error,
-  //         status: true,
-  //         message: res.data.error,
-  //       });
-  //     } else {
-  //       props.dispatch({
-  //         type: SET_MY_ITINERARIES,
-  //         myItineraries: res.data,
-  //       });
-
-  //       history.push(`/dashboard/${props.user.id}`);
-  //     }
-  //   });
-  // };
+  const handleDelete = () => {
+    // props.deleteItinerary(id).then(res => {
+    //   if (res.data.error) {
+    //     setError({
+    //       ...error,
+    //       status: true,
+    //       message: res.data.error,
+    //     });
+    //   } else {
+    //     props.dispatch({
+    //       type: SET_MY_ITINERARIES,
+    //       myItineraries: res.data,
+    //     });
+    //     history.push(`/dashboard/${props.user.id}`);
+    //   }
+    // });
+  };
 
   return (
     <div className='flex flex-col justify-between w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
       <article>
         <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
-          {/* {view === DELETE && (
+          {view === DEFAULT && (
+            <div className='z-10 flex items-center justify-center space-x-8 hover:bg-gray-700 hover:bg-opacity-90 group'>
+              {props.user.id && (
+                <button type='button' onClick={() => setView(DELETE)}>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    className='hidden w-8 h-8 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110 hover:text-red-600'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                </button>
+              )}
+            </div>
+          )}
+          {view === DELETE && (
             <div className='z-10 flex space-x-8 bg-gray-700 pointer-events-none bg-opacity-90'>
               <article className='flex flex-col items-center justify-center w-full h-full'>
                 <ErrorMessage
@@ -51,7 +72,7 @@ export default function BookmarksItem(props) {
                   message={error.message}
                 ></ErrorMessage>
                 <h4 className='p-2 text-base font-bold text-gray-100 shadow-md whitespace-nowrap lg:text-base'>
-                  Delete This Itinerary?
+                  Delete This Bookmark?
                 </h4>
                 <div className='flex space-x-4'>
                   <button
@@ -71,7 +92,7 @@ export default function BookmarksItem(props) {
                 </div>
               </article>
             </div>
-          )} */}
+          )}
           <img
             src={image}
             alt='itinerary cover'
