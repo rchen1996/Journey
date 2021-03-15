@@ -75,6 +75,18 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const deleteBookmark = bookmarkId => {
+    const query = {
+      text: `DELETE FROM bookmarks WHERE id = $1 RETURNING *;`,
+      values: [bookmarkId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
@@ -82,5 +94,6 @@ module.exports = db => {
     getItinerariesForUser,
     getItinerariesForGroup,
     getBookmarksForUser,
+    deleteBookmark,
   };
 };
