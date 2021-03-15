@@ -11,7 +11,7 @@ export default function MyItinerariesList(props) {
     />
   ));
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex flex-col w-full pt-16'>
       <h1 className='pl-4 mt-8 ml-10 text-2xl font-bold border-l-8 border-teal-600'>
         My Itineraries
       </h1>

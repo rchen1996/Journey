@@ -231,7 +231,7 @@ export default function ItineraryLeftNav(props) {
               <div className=''>
                 <div>
                   <Link
-                    to={`/itineraries/${itinerary.id}/edit`}
+                    to={`${pathname}/edit`}
                     className='flex items-center justify-between px-3 py-2 my-2 text-xl font-bold cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                   >
                     Edit

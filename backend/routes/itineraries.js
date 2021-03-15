@@ -150,7 +150,7 @@ module.exports = ({
       }
 
       if (userOfParty) {
-        const {
+        let {
           start,
           end,
           name,
@@ -176,6 +176,12 @@ module.exports = ({
             } else {
               const coordinatesArr = res.data.features[0].geometry.coordinates;
               const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
+
+              if (image === '') {
+                image =
+                  'https://images.unsplash.com/photo-1523496922380-91d5afba98a3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1789&q=80';
+              }
+
               createAttraction({
                 name,
                 description,
@@ -184,6 +190,14 @@ module.exports = ({
                 address,
                 location,
               }).then(attraction => {
+                if (start === '') {
+                  start = null;
+                }
+
+                if (end === '') {
+                  end = null;
+                }
+
                 const activity = {
                   dayId: day_id,
                   start: start,
@@ -191,7 +205,6 @@ module.exports = ({
                   attractionId: attraction.id,
                   itineraryId: itinerary_id,
                 };
-
                 createActivity(activity).then(activity => {
                   getDetailedItinerary(itinerary_id).then(itinerary => {
                     const parsed = itineraryObj(itinerary);

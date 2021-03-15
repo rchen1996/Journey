@@ -1,6 +1,11 @@
 import NavButton from './NavButton';
 import { Link } from 'react-router-dom';
-import { SET_ITINERARY, SET_KEY } from '../reducers/application';
+import {
+  SET_BOOKMARKS,
+  SET_ITINERARY,
+  SET_KEY,
+  SET_MY_ITINERARIES,
+} from '../reducers/application';
 
 export default function Nav(props) {
   const setKey = () => {
@@ -14,6 +19,20 @@ export default function Nav(props) {
     props.dispatch({
       type: SET_ITINERARY,
       itinerary: null,
+    });
+  };
+
+  const clearMyItinerariesState = () => {
+    props.dispatch({
+      type: SET_MY_ITINERARIES,
+      myItineraries: [],
+    });
+  };
+
+  const clearBookmarksState = () => {
+    props.dispatch({
+      type: SET_BOOKMARKS,
+      bookmarks: [],
     });
   };
 
@@ -66,6 +85,8 @@ export default function Nav(props) {
             onClick={() => {
               props.logout();
               clearItineraryState();
+              clearMyItinerariesState();
+              clearBookmarksState();
             }}
           >
             Log out
