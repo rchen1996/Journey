@@ -7,8 +7,8 @@ module.exports = ({
   getUser,
   getUserByEmail,
   addUser,
-  getItinerariesForUser,
   getItinerariesForGroup,
+  getBookmarksForUser,
 }) => {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
@@ -68,6 +68,18 @@ module.exports = ({
       });
     } else {
       res.send({ error: 'You must be logged in to get itineraries' });
+    }
+  });
+
+  router.get('/:user_id/bookmarks', (req, res) => {
+    const userId = req.session.userId;
+
+    if (userId) {
+      getBookmarksForUser(userId).then(bookmarks => {
+        res.send(bookmarks);
+      });
+    } else {
+      res.send({ error: 'You must be logged in to get bookmarks' });
     }
   });
 
