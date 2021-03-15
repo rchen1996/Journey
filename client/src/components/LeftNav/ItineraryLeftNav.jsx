@@ -10,20 +10,15 @@ export default function ItineraryLeftNav(props) {
   useEffect(() => {
     setItinerary(itinerary_id);
   }, []);
-  let daysIdArr = [];
-  let daysOrderArr = [];
-  
-  function swapPosition(arr, oldIndex, newIndex){
-    console.log('old index:',oldIndex,'newindex:', newIndex)
-    if(oldIndex !== newIndex){
-      [arr[oldIndex], arr[newIndex]] = [arr[newIndex], arr[oldIndex]];
-    }
-    return arr;
-  }
-  function handleSubmit(event,last_day_order, locationName) {
+
+  function handleSubmit(event, last_day_order, locationName) {
     event.preventDefault();
-    addDayWithLocation(itinerary_id, locationName || newLocation, last_day_order +1)
-    
+    addDayWithLocation(
+      itinerary_id,
+      locationName || newLocation,
+      last_day_order + 1
+    );
+
     setNewLocation('');
 
     return;
@@ -131,7 +126,11 @@ export default function ItineraryLeftNav(props) {
                         <div>
                           <button
                             onClick={(event) =>
-                              handleSubmit(event,locationObj.days.slice(-1)[0].day_order,locationObj.name)
+                              handleSubmit(
+                                event,
+                                locationObj.days.slice(-1)[0].day_order,
+                                locationObj.name
+                              )
                             }
                             className='ml-6 transform'
                           >

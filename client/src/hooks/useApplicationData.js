@@ -19,17 +19,15 @@ export default function useApplicationData() {
   });
 
   useEffect(() => {
-    if (state.user.id) {
-      axios.get(`/api/users/${state.user.id}`).then(res => {
-        const user = res.data[0];
-        if (res.data.length > 0) {
-          dispatch({
-            type: SET_USER,
-            user: user,
-          });
-        }
-      });
-    }
+    axios.get(`/api/users/:user_id`).then(res => {
+      const user = res.data[0];
+      if (res.data.length > 0) {
+        dispatch({
+          type: SET_USER,
+          user: user,
+        });
+      }
+    });
   }, [state.user.id]);
 
   const login = function (email, password) {
@@ -140,16 +138,19 @@ export default function useApplicationData() {
 
   function addDayWithLocation(itinerary_id, location_name, new_day_order) {
     return axios
-      .post(`/api/itineraries/${itinerary_id}`, { location_name, new_day_order })
-      .then((res) => {
+      .post(`/api/itineraries/${itinerary_id}`, {
+        location_name,
+        new_day_order,
+      })
+      .then(res => {
         if (res.data.error) {
-          return {error: res.data.error}
+          return { error: res.data.error };
         } else {
           dispatch({
             type: SET_ITINERARY,
             itinerary: { ...state.itinerary, ...res.data },
           });
-          return {itinerary: res.data}
+          return { itinerary: res.data };
         }
       });
   }

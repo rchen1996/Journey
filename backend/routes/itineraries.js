@@ -224,15 +224,9 @@ module.exports = ({
                 daysIdArr.push(day.id);
                 daysOrderArr.push(day.day_order);
               });
-              console.log('after push, daysOrderArr', daysOrderArr);
             });
             daysIdArr.splice(new_day_order - 1, 0, daysIdArr.pop());
-            console.log(
-              'newdaysIdArr: ',
-              daysIdArr,
-              'daysOrderArr',
-              daysOrderArr
-            );
+
             reorderDays(daysIdArr, daysOrderArr).then((result) => {
               if (result.message) {
                 res.send({ error: result.message });
