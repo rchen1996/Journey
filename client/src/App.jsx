@@ -15,7 +15,7 @@ import MyItinerariesList from './components/MyItinerariesList';
 import MyGroup from './components/MyGroup';
 import ItineraryDay from './components/ItineraryDay/ItineraryDay';
 import AddActivityForm from './components/ItineraryDay/AddActivityForm';
-import MyBookmarks from './components/MyBookmarks';
+import Bookmarks from './components/Bookmarks';
 
 function App() {
   const {
@@ -127,7 +127,7 @@ function App() {
           {user.id && (
             <main className='flex w-full min-h-full'>
               <LeftNav user={user} dispatch={dispatch} />
-              <MyBookmarks />
+              <Bookmarks />
             </main>
           )}
         </Route>
