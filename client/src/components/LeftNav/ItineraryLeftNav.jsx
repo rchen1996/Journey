@@ -90,12 +90,14 @@ export default function ItineraryLeftNav(props) {
                       </NavLink>
                     );
                   })}
+                  {pathname.includes('edit') && 
                   <button
                     onClick={event => handleSubmit(event, locationObj.name)}
                   >
                     {' '}
                     Add Day{' '}
                   </button>
+                  }
                 </div>
               </div>
             );
