@@ -51,7 +51,7 @@ export default function ItineraryLeftNav(props) {
             return (
               <div key={index} className='flex flex-col'>
                 <div
-                  onClick={(event) => handleDropDown(event)}
+                  onClick={event => handleDropDown(event)}
                   className='flex items-center justify-between px-4 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                   id={index}
                 >
@@ -90,26 +90,28 @@ export default function ItineraryLeftNav(props) {
                       </NavLink>
                     );
                   })}
-                  {pathname.includes('edit') && (
-                    <button
-                      onClick={(event) => handleSubmit(event, locationObj.name)}
-                    >
-                      {' '}
-                      Add Day{' '}
-                    </button>
-                  )}
+                  {pathname.includes('edit') &&
+                    itinerary.users.some(member => member.id === user.id) && (
+                      <button
+                        onClick={event => handleSubmit(event, locationObj.name)}
+                      >
+                        {' '}
+                        Add Day{' '}
+                      </button>
+                    )}
                 </div>
               </div>
             );
           })}
-          {pathname.includes('edit') ? (
+          {pathname.includes('edit') &&
+          itinerary.users.some(member => member.id === user.id) ? (
             <div>
               <button> Add Location </button>
               <form onSubmit={handleSubmit}>
                 <input
                   value={newLocation}
                   name='add-location'
-                  onChange={(event) => setNewLocation(event.target.value)}
+                  onChange={event => setNewLocation(event.target.value)}
                 />
               </form>
 

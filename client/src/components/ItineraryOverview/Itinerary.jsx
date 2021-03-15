@@ -1,7 +1,7 @@
 import ItineraryDays from './ItineraryDays';
 
 export default function Itinerary(props) {
-  const { itinerary } = props;
+  const { itinerary, user } = props;
 
   return (
     <section className="flex flex-col w-full h-full mx-24 my-8">
@@ -18,6 +18,7 @@ export default function Itinerary(props) {
                       key={day.id}
                       day={day}
                       itinerary={itinerary}
+                      user={user}
                     />
                   );
                 })}
