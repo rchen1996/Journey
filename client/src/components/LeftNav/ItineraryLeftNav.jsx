@@ -80,7 +80,7 @@ export default function ItineraryLeftNav(props) {
                   {locationObj.days.map((day) => {
                     return (
                       <NavLink
-                        to={`/itineraries/${itinerary.id}/days/${day.day_order}`}
+                        to={`/itineraries/${itinerary.id}/days/${day.day_order}/${pathname.includes('edit') && 'edit'}`}
                         key={day.id}
                         activeClassName='bg-gray-200 bg-opacity-25'
                         className='px-4 py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
