@@ -148,6 +148,10 @@ export default function useApplicationData() {
         }
       });
   }
+      
+  const deleteItinerary = itineraryId => {
+    return axios.delete(`/api/itineraries/${itineraryId}`);
+  };
 
   return {
     state,
@@ -161,5 +165,6 @@ export default function useApplicationData() {
     addCollaborator,
     setItinerary,
     addDayWithLocation,
+    deleteItinerary,
   };
 }

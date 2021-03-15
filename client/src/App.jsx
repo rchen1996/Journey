@@ -28,7 +28,8 @@ function App() {
     createActivity,
     addCollaborator,
     setItinerary,
-    addDayWithLocation
+    addDayWithLocation,
+    deleteItinerary,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary } = state;
@@ -37,19 +38,19 @@ function App() {
     <Router>
       <Nav user={user} logout={logout} dispatch={dispatch} />
       <Switch>
-        <Route path='/' exact>
+        <Route path="/" exact>
           <Home />
         </Route>
-        <Route path='/login'>
+        <Route path="/login">
           <Login onSave={login} dispatch={dispatch} />
         </Route>
-        <Route path='/signup'>
+        <Route path="/signup">
           <Register register={register} dispatch={dispatch} />
         </Route>
         <Route path={`/itineraries/new`}>
           {user.id && (
-            <main className='flex w-full h-full min-h-full'>
-              <LeftNav user={user} setItinerary={setItinerary}/>
+            <main className="flex w-full h-full min-h-full">
+              <LeftNav user={user} setItinerary={setItinerary} />
               <NewItineraryForm
                 dispatch={dispatch}
                 onSave={createItinerary}
@@ -58,11 +59,11 @@ function App() {
             </main>
           )}
         </Route>
-        <Route path='/itineraries' exact>
+        <Route path="/itineraries" exact>
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
-        <Route path='/itineraries/:itinerary_id/collaborators'>
-          <main className='flex w-full min-h-full'>
+        <Route path="/itineraries/:itinerary_id/collaborators">
+          <main className="flex w-full min-h-full">
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -80,8 +81,8 @@ function App() {
               )}
           </main>
         </Route>
-        <Route path='/itineraries/:itinerary_id/days/:day_id/activities/new'>
-          <main className='flex w-full min-h-full'>
+        <Route path="/itineraries/:itinerary_id/days/:day_id/activities/new">
+          <main className="flex w-full min-h-full">
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -95,8 +96,8 @@ function App() {
             />
           </main>
         </Route>
-        <Route path='/itineraries/:itinerary_id/days/:day_id'>
-          <main className='flex w-full min-h-full'>
+        <Route path="/itineraries/:itinerary_id/days/:day_id">
+          <main className="flex w-full min-h-full">
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -106,8 +107,8 @@ function App() {
             <ItineraryDay itinerary={itinerary} dispatch={dispatch} />
           </main>
         </Route>
-        <Route path='/itineraries/:itinerary_id'>
-          <main className='flex w-full min-h-full'>
+        <Route path="/itineraries/:itinerary_id">
+          <main className="flex w-full min-h-full">
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -117,11 +118,16 @@ function App() {
             <Itinerary dispatch={dispatch} itinerary={itinerary} />
           </main>
         </Route>
-        <Route path='/dashboard/:user_id'>
+        <Route path="/dashboard/:user_id">
           {user.id && (
-            <main className='flex w-full min-h-full'>
+            <main className="flex w-full min-h-full">
               <LeftNav user={user} dispatch={dispatch} />
-              <MyItinerariesList myItineraries={myItineraries} user={user} />
+              <MyItinerariesList
+                myItineraries={myItineraries}
+                user={user}
+                dispatch={dispatch}
+                deleteItinerary={deleteItinerary}
+              />
             </main>
           )}
         </Route>
