@@ -39,11 +39,8 @@ const itineraryObj = (resultArr) => {
         });
       }
 
-      
-
       let activityDay = dayObjs.find((day) => day.id === item.day_id);
-      if(item.activity_id){
-
+      if (item.activity_id) {
         activityDay.activities.push({
           id: item.activity_id,
           start_time: item.activity_start_time,
@@ -69,23 +66,27 @@ const itineraryObj = (resultArr) => {
           days: [],
         });
       }
-      locationArr
-        .slice(-1)[0]
-        .days.push({
-          id: day.id,
-          day_order: day.day_order,
-          activities: day.activities,
-        });
+      locationArr.slice(-1)[0].days.push({
+        id: day.id,
+        day_order: day.day_order,
+        activities: day.activities,
+      });
     });
 
     itinerary.locations = [...locationArr];
   }
 
-
   return itinerary;
 };
 const parseTravelParty = (party) => {
-  return party.map((user) => ({id: user.user_id, email: user.email, first_name: user.first_name, last_name: user.last_name}))
-}
+  return party.map((user) => ({
+    id: user.user_id,
+    email: user.email,
+    first_name: user.first_name,
+    last_name: user.last_name,
+  }));
+};
 
-module.exports = { itineraryObj, parseTravelParty};
+
+
+module.exports = { itineraryObj, parseTravelParty };

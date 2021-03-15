@@ -1,6 +1,6 @@
 import NavButton from './NavButton';
 import { Link } from 'react-router-dom';
-import { SET_KEY } from '../reducers/application';
+import { SET_ITINERARY, SET_KEY } from '../reducers/application';
 
 export default function Nav(props) {
   const setKey = () => {
@@ -10,10 +10,17 @@ export default function Nav(props) {
     });
   };
 
+  const clearItineraryState = () => {
+    props.dispatch({
+      type: SET_ITINERARY,
+      itinerary: null,
+    });
+  };
+
   return (
     <nav className='fixed z-10 flex items-center justify-between w-full h-16 px-4 bg-gray-100 shadow-md'>
       <div className='flex items-center h-full mx-4 font-semibold'>
-        <Link to='/'>
+        <Link to='/' onClick={props.user.id && clearItineraryState}>
           <svg
             width='148'
             height='80'
@@ -34,21 +41,46 @@ export default function Nav(props) {
             />
           </svg>
         </Link>
-        <NavButton link='/itineraries' onClick={setKey}>
+        <NavButton
+          link='/itineraries'
+          onClick={() => {
+            setKey();
+            clearItineraryState();
+          }}
+        >
           Itineraries
         </NavButton>
       </div>
       <div className='flex items-center h-full mx-6 font-semibold'>
         {props.user.id && (
-          <NavButton link={`/dashboard/${props.user.id}`}>Dashboard</NavButton>
+          <NavButton
+            link={`/dashboard/${props.user.id}`}
+            onClick={clearItineraryState}
+          >
+            Dashboard
+          </NavButton>
         )}
         {props.user.id && (
-          <NavButton link='/' onClick={props.logout}>
+          <NavButton
+            link='/'
+            onClick={() => {
+              props.logout();
+              clearItineraryState();
+            }}
+          >
             Log out
           </NavButton>
         )}
-        {!props.user.id && <NavButton link='/login'>Log in</NavButton>}
-        {!props.user.id && <NavButton link='/signup'>Sign up</NavButton>}
+        {!props.user.id && (
+          <NavButton link='/login' onClick={clearItineraryState}>
+            Log in
+          </NavButton>
+        )}
+        {!props.user.id && (
+          <NavButton link='/signup' onClick={clearItineraryState}>
+            Sign up
+          </NavButton>
+        )}
       </div>
     </nav>
   );

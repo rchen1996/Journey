@@ -99,6 +99,32 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const addBookmark = (itineraryId, userId) => {
+    const query = {
+      text: `INSERT INTO bookmarks (itinerary_id, user_id)
+      VALUES ($1, $2) RETURNING *;`,
+      values: [itineraryId, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
+  const getBookmarkByItineraryId = (itineraryId, userId) => {
+    const query = {
+      text: `SELECT * FROM bookmarks
+      WHERE itinerary_id = $1 AND user_id = $2;`,
+      values: [itineraryId, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
@@ -108,5 +134,7 @@ module.exports = db => {
     getBookmarksForUser,
     deleteBookmark,
     getBookmark,
+    addBookmark,
+    getBookmarkByItineraryId,
   };
 };

@@ -19,15 +19,17 @@ export default function useApplicationData() {
   });
 
   useEffect(() => {
-    axios.get(`/api/users/${state.user.id}`).then(res => {
-      const user = res.data[0];
-      if (res.data.length > 0) {
-        dispatch({
-          type: SET_USER,
-          user: user,
-        });
-      }
-    });
+    if (state.user.id) {
+      axios.get(`/api/users/${state.user.id}`).then(res => {
+        const user = res.data[0];
+        if (res.data.length > 0) {
+          dispatch({
+            type: SET_USER,
+            user: user,
+          });
+        }
+      });
+    }
   }, [state.user.id]);
 
   const login = function (email, password) {
@@ -136,17 +138,18 @@ export default function useApplicationData() {
       .catch(err => console.log(err));
   }
 
-  function addDayWithLocation(itinerary_id, location_name) {
-    axios
-      .post(`/api/itineraries/${itinerary_id}`, { location_name })
-      .then(res => {
+  function addDayWithLocation(itinerary_id, location_name, new_day_order) {
+    return axios
+      .post(`/api/itineraries/${itinerary_id}`, { location_name, new_day_order })
+      .then((res) => {
         if (res.data.error) {
-          console.log(res.data.error);
+          return {error: res.data.error}
         } else {
           dispatch({
             type: SET_ITINERARY,
             itinerary: { ...state.itinerary, ...res.data },
           });
+          return {itinerary: res.data}
         }
       });
   }
@@ -174,6 +177,10 @@ export default function useApplicationData() {
     return axios.delete(`/api/users/${state.user.id}/bookmarks/${bookmarkId}`);
   };
 
+  const addBookmark = itineraryId => {
+    return axios.post(`/api/users/${state.user.id}/bookmarks`, { itineraryId });
+  };
+
   return {
     state,
     dispatch,
@@ -188,5 +195,6 @@ export default function useApplicationData() {
     addDayWithLocation,
     deleteItinerary,
     deleteBookmark,
+    addBookmark,
   };
 }
