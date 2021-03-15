@@ -159,6 +159,22 @@ module.exports = db => {
       .catch(err => err);
   };
 
+const addDayWithLocation = (itineraryId,locationName) => {
+  const query={
+    text:`INSERT INTO days (itinerary_id,location_id,day_order )
+    VALUES($1,
+      (select id from locations where name = $2), 
+      (select coalesce(max(day_order),0) from days where itinerary_id = $1)+1)
+    RETURNING *;`,
+    values: [itineraryId,locationName]
+  };
+  return db
+      .query(query)
+      .then(result => {
+        console.log(result.rows[0])
+        return result.rows[0]})
+      .catch(err => err);
+}
   const getItinerary = itineraryId => {
     const query = {
       text: `SELECT * FROM itineraries WHERE id = $1;`,
@@ -207,6 +223,7 @@ module.exports = db => {
     createAttraction,
     addCollaborator,
     createActivity,
+    addDayWithLocation,
     getItinerary,
     deleteItinerary,
     getItinerariesForGroup,
