@@ -119,148 +119,170 @@ export default function AddActivityForm(props) {
   };
 
   return (
-    <section className="w-full shadow-lg bg-gray-50 rounded-xl">
+    <section className='w-1/2 mx-auto my-6 shadow-lg lg:w-2/3 h-5/6 bg-gray-50 rounded-xl'>
       <ErrorMessage
         isError={error.status}
         show={error.show}
         hide={error.hide}
         message={error.message}
       ></ErrorMessage>
-      <form onSubmit={event => save(event)} className="flex flex-col">
-        <div className="flex flex-col mx-8 my-6">
-          <label htmlFor="name" className="font-semibold">
-            Activity Name
-          </label>
-          <input
-            value={activity.name}
-            name="name"
-            onChange={event => handleChange(event)}
-            type="text"
-            placeholder="Climb Mt. Everest"
-            className="mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
-          />
-          <label htmlFor="category" className="font-semibold">
-            Category
-          </label>
-          <select
-            name="category"
-            value={activity.category}
-            onChange={event => handleChange(event)}
-            className="mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
-          >
-            <option defaultValue></option>
-            <option value="adult">Adult</option>
-            <option value="amusement">Amusement</option>
-            <option value="accomodation">Accomodation</option>
-            <option value="landmark">Landmark</option>
-            <option value="sport">Sport</option>
-            <option value="food">Food</option>
-            <option value="cultural">Cultural</option>
-            <option value="nature">Nature</option>
-          </select>
-          <label htmlFor="street" className="font-semibold">
+      <form onSubmit={event => save(event)} className='flex flex-col h-full'>
+        <div className='flex flex-col h-full mx-8 my-6'>
+          <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
+            <div className='flex flex-col lg:w-1/2'>
+              <label htmlFor='name' className='font-semibold'>
+                Activity Name
+              </label>
+              <input
+                value={activity.name}
+                name='name'
+                onChange={event => handleChange(event)}
+                type='text'
+                placeholder='Climb Mt. Everest'
+                className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+              />
+            </div>
+            <div className='flex flex-col lg:w-1/2'>
+              <label htmlFor='category' className='font-semibold'>
+                Category
+              </label>
+              <select
+                name='category'
+                value={activity.category}
+                onChange={event => handleChange(event)}
+                className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+              >
+                <option defaultValue></option>
+                <option value='adult'>Adult</option>
+                <option value='amusement'>Amusement</option>
+                <option value='accomodation'>Accomodation</option>
+                <option value='landmark'>Landmark</option>
+                <option value='sport'>Sport</option>
+                <option value='food'>Food</option>
+                <option value='cultural'>Cultural</option>
+                <option value='nature'>Nature</option>
+              </select>
+            </div>
+          </div>
+          <label htmlFor='street' className='font-semibold'>
             Street Address
           </label>
           <input
             value={activity.street}
-            name="street"
+            name='street'
             onChange={event => handleChange(event)}
-            type="text"
-            placeholder="123 Main Street"
-            className="mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600 resize-none"
+            type='text'
+            placeholder='123 Main Street'
+            className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
-          <label htmlFor="city" className="font-semibold">
+          <label htmlFor='city' className='font-semibold'>
             City
           </label>
           <input
             value={activity.city}
-            name="city"
+            name='city'
             onChange={event => handleChange(event)}
-            type="text"
-            placeholder="New York City"
-            className="mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600 resize-none"
+            type='text'
+            placeholder='New York City'
+            className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
-          <label htmlFor="state" className="font-semibold">
-            State / Province
-          </label>
-          <input
-            value={activity.state}
-            name="state"
-            onChange={event => handleChange(event)}
-            type="text"
-            placeholder="New York"
-            className="mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600 resize-none"
-          />
-          <label htmlFor="country" className="font-semibold">
+          <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
+            <div className='flex flex-col lg:w-1/2'>
+              <label htmlFor='state' className='font-semibold'>
+                State / Province
+              </label>
+              <input
+                value={activity.state}
+                name='state'
+                onChange={event => handleChange(event)}
+                type='text'
+                placeholder='New York'
+                className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+              />
+            </div>
+            <div className='flex flex-col lg:w-1/2'>
+              <label htmlFor='postal' className='font-semibold'>
+                Zip / Postal Code
+              </label>
+              <input
+                value={activity.postal}
+                name='postal'
+                onChange={event => handleChange(event)}
+                type='text'
+                placeholder='12345'
+                className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+              />
+            </div>
+          </div>
+          <label htmlFor='country' className='font-semibold'>
             Country
           </label>
           <input
             value={activity.country}
-            name="country"
+            name='country'
             onChange={event => handleChange(event)}
-            type="text"
-            placeholder="USA"
-            className="mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600 resize-none"
+            type='text'
+            placeholder='USA'
+            className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
-          <label htmlFor="postal" className="font-semibold">
-            Zip / Postal Code
-          </label>
-          <input
-            value={activity.postal}
-            name="postal"
-            onChange={event => handleChange(event)}
-            type="text"
-            placeholder="12345"
-            className="mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600 resize-none"
-          />
-          <label htmlFor="image" className="font-semibold">
+          <label htmlFor='image' className='font-semibold'>
             Image
           </label>
           <input
             value={activity.image}
-            name="image"
+            name='image'
             onChange={event => handleChange(event)}
-            type="url"
-            placeholder="Image URL"
-            className="mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600 resize-none"
+            type='url'
+            placeholder='Image URL'
+            className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
-          <label htmlFor="description" className="font-semibold">
+          <label htmlFor='description' className='font-semibold'>
             Description
           </label>
           <textarea
             value={activity.description}
-            name="description"
+            name='description'
             onChange={event => handleChange(event)}
-            type="text"
+            type='text'
             placeholder="Let's climb Mt. Everest in one day!"
-            className="mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600 resize-none"
+            className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
           />
-          <label htmlFor="start" className="font-semibold">
-            Start Time
-          </label>
-          <input
-            value={activity.start}
-            name="start"
-            onChange={event => handleChange(event)}
-            type="time"
-            className="mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
-          />
-          <label htmlFor="end" className="font-semibold">
-            End Time
-          </label>
-          <input
-            value={activity.end}
-            name="end"
-            onChange={event => handleChange(event)}
-            type="time"
-            className="mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600"
-          />
+          <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
+            <div className='flex flex-col lg:w-1/2'>
+              <label htmlFor='start' className='font-semibold'>
+                Start Time
+              </label>
+              <input
+                value={activity.start}
+                name='start'
+                onChange={event => handleChange(event)}
+                type='time'
+                className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+              />
+            </div>
+            <div className='flex flex-col lg:w-1/2'>
+              <label htmlFor='end' className='font-semibold'>
+                End Time
+              </label>
+              <input
+                value={activity.end}
+                name='end'
+                onChange={event => handleChange(event)}
+                type='time'
+                className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+              />
+            </div>
+          </div>
         </div>
-        <footer className="flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl">
-          <FormButton type="submit">Save</FormButton>
-          <FormButton type="button" onClick={cancel}>
+        <footer className='flex items-center px-8 py-3 space-x-4 bg-gray-300 bg-opacity-50 rounded-b-xl'>
+          <FormButton type='submit'>Save</FormButton>
+          <button
+            type='button'
+            onClick={cancel}
+            className='hover:underline hover:text-teal-600 focus:outline-none'
+          >
             Cancel
-          </FormButton>
+          </button>
         </footer>
       </form>
     </section>
