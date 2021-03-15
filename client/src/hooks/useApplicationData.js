@@ -170,6 +170,10 @@ export default function useApplicationData() {
     }
   }, [state.user]);
 
+  const deleteBookmark = bookmarkId => {
+    return axios.delete(`/api/users/${state.user.id}/bookmarks/${bookmarkId}`);
+  };
+
   return {
     state,
     dispatch,
@@ -183,5 +187,6 @@ export default function useApplicationData() {
     setItinerary,
     addDayWithLocation,
     deleteItinerary,
+    deleteBookmark,
   };
 }
