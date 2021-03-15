@@ -112,6 +112,19 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getBookmarkByItineraryId = (itineraryId, userId) => {
+    const query = {
+      text: `SELECT * FROM bookmarks
+      WHERE itinerary_id = $1 AND user_id = $2;`,
+      values: [itineraryId, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
@@ -122,5 +135,6 @@ module.exports = db => {
     deleteBookmark,
     getBookmark,
     addBookmark,
+    getBookmarkByItineraryId,
   };
 };

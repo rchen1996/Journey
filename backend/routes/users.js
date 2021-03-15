@@ -12,6 +12,7 @@ module.exports = ({
   deleteBookmark,
   getBookmark,
   addBookmark,
+  getBookmarkByItineraryId,
 }) => {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
@@ -90,10 +91,16 @@ module.exports = ({
     const userId = req.session.userId;
 
     if (userId) {
-      addBookmark(req.body.itineraryId, userId).then(() => {
-        getBookmarksForUser(userId).then(bookmarks => {
-          res.send(bookmarks);
-        });
+      getBookmarkByItineraryId(req.body.itineraryId, userId).then(result => {
+        if (result.length < 1) {
+          addBookmark(req.body.itineraryId, userId).then(() => {
+            getBookmarksForUser(userId).then(bookmarks => {
+              res.send(bookmarks);
+            });
+          });
+        } else {
+          res.send({ error: 'Itinerary is already bookmarked' });
+        }
       });
     } else {
       res.send({ error: 'You must be logged in to add a bookmark' });
