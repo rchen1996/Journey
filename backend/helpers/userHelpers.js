@@ -61,11 +61,26 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getBookmarksForUser = userId => {
+    const query = {
+      text: `SELECT itineraries.* FROM itineraries
+      JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
+      WHERE user_id = $1;`,
+      values: [userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
     addUser,
     getItinerariesForUser,
     getItinerariesForGroup,
+    getBookmarksForUser,
   };
 };
