@@ -29,11 +29,11 @@ export default function ItineraryLeftNav(props) {
         ...prev,
         [targetId]: {
           dropClass: isClassHidden
-            ? 'flex flex-col space-y-2 pl-2 last:mb-2'
+            ? 'flex flex-col space-y-2 pl-2 last:mb-4'
             : 'hidden',
           svgClass: isClassHidden
-            ? 'transform duration-300 cursor-pointer pointer-events-none mr-0.5'
-            : 'transform duration-300 -rotate-90 cursor-pointer pointer-events-none mr-0.5',
+            ? 'transform duration-300 cursor-pointer pointer-events-none mr-1'
+            : 'transform duration-300 -rotate-90 cursor-pointer pointer-events-none mr-1',
         },
       };
     });
@@ -127,7 +127,7 @@ export default function ItineraryLeftNav(props) {
                               xmlns='http://www.w3.org/2000/svg'
                               viewBox='0 0 20 20'
                               fill='currentColor'
-                              className='w-7 h-7'
+                              className='w-6 h-6'
                             >
                               <path
                                 fillRule='evenodd'
@@ -154,7 +154,7 @@ export default function ItineraryLeftNav(props) {
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'
                   fill='currentColor'
-                  className='w-5 h-5'
+                  className='w-6 h-6'
                 >
                   <path
                     fillRule='evenodd'
@@ -190,7 +190,7 @@ export default function ItineraryLeftNav(props) {
                       xmlns='http://www.w3.org/2000/svg'
                       viewBox='0 0 20 20'
                       fill='currentColor'
-                      className='w-5 h-5'
+                      className='w-5 h-5 mr-0.5'
                     >
                       <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
                       <path
