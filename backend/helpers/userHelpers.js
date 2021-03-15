@@ -63,7 +63,7 @@ module.exports = db => {
 
   const getBookmarksForUser = userId => {
     const query = {
-      text: `SELECT itineraries.* FROM itineraries
+      text: `SELECT itineraries.*, bookmarks.id AS bookmark_id FROM itineraries
       JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
       WHERE user_id = $1;`,
       values: [userId],
