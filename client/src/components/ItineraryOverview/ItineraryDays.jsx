@@ -14,7 +14,8 @@ export default function ItineraryDays(props) {
 
   const handleDelete = () => {
     deleteDayFromItinerary(itinerary.id, day.id).then((res) => {
-      console.log(res.error);
+      if (res.error) console.log('error: ', res.error);
+      // if (res.success) console.log('success: ', res.success);
     });
   };
 

@@ -24,9 +24,9 @@ export default function ItineraryLeftNav(props) {
     return;
   }
 
-  const handleDropDown = (event) => {
+  const handleDropDown = event => {
     const targetId = event.target.id;
-    setDropDown((prev) => {
+    setDropDown(prev => {
       const isClassHidden =
         prev[targetId]?.dropClass === 'hidden' ||
         prev[targetId]?.dropClass === undefined;
@@ -44,10 +44,21 @@ export default function ItineraryLeftNav(props) {
     });
   };
 
+  let inTravelParty = false;
+  if (itinerary) {
+    const travelParty = itinerary.users;
+
+    travelParty.forEach(member => {
+      if (member.id === user.id) {
+        inTravelParty = true;
+      }
+    });
+  }
+
   return (
-    <nav className='w-64 h-full px-6 py-4 mt-16 text-gray-100 bg-gray-600'>
+    <nav className='fixed w-64 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar'>
       {itinerary && (
-        <div className='sticky flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
+        <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
           <div className='flex flex-col mb-2 '>
             <NavLink
               to={`/itineraries/${itinerary.id}/${pathname.includes('edit') ? 'edit' : ''}`}
@@ -56,21 +67,23 @@ export default function ItineraryLeftNav(props) {
               {itinerary.name}
             </NavLink>
             <div>
-              <NavLink
-                to={`/itineraries/${itinerary.id}/collaborators`}
-                className='flex justify-between px-3 py-1 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
-                activeClassName='bg-gray-200 bg-opacity-25 rounded-xl'
-              >
-                My Group{' '}
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                  className='w-5 h-5'
+              {inTravelParty && (
+                <NavLink
+                  to={`/itineraries/${itinerary.id}/collaborators`}
+                  className='flex justify-between px-3 py-1 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                  activeClassName='bg-gray-200 bg-opacity-25 rounded-xl'
                 >
-                  <path d='M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z' />
-                </svg>
-              </NavLink>
+                  My Group{' '}
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    className='w-5 h-5'
+                  >
+                    <path d='M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z' />
+                  </svg>
+                </NavLink>
+              )}
             </div>
           </div>
           <div>
@@ -78,7 +91,7 @@ export default function ItineraryLeftNav(props) {
               return (
                 <div key={index} className='flex flex-col'>
                   <div
-                    onClick={(event) => handleDropDown(event)}
+                    onClick={event => handleDropDown(event)}
                     className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                     id={index}
                   >
@@ -104,7 +117,7 @@ export default function ItineraryLeftNav(props) {
                     </svg>
                   </div>
                   <div className={dropDown[index]?.dropClass || 'hidden'}>
-                    {locationObj.days.map((day) => {
+                    {locationObj.days.map(day => {
                       return (
                         <NavLink
                           to={`/itineraries/${itinerary.id}/days/${
@@ -120,12 +133,10 @@ export default function ItineraryLeftNav(props) {
                       );
                     })}
                     {pathname.includes('edit') &&
-                      itinerary.users.some(
-                        (member) => member.id === user.id
-                      ) && (
+                      itinerary.users.some(member => member.id === user.id) && (
                         <div>
                           <button
-                            onClick={(event) =>
+                            onClick={event =>
                               handleSubmit(
                                 event,
                                 locationObj.days.slice(-1)[0].day_order,
@@ -155,7 +166,7 @@ export default function ItineraryLeftNav(props) {
             })}
           </div>
           {pathname.includes('edit') &&
-          itinerary.users.some((member) => member.id === user.id) ? (
+          itinerary.users.some(member => member.id === user.id) ? (
             <div>
               <div className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'>
                 <button className='text-xl font-bold pointer-events-none'>
@@ -181,7 +192,7 @@ export default function ItineraryLeftNav(props) {
                 <input
                   value={newLocation}
                   name='add-location'
-                  onChange={(event) => setNewLocation(event.target.value)}
+                  onChange={event => setNewLocation(event.target.value)}
                   type='text'
                   placeholder='Location'
                   className='mx-3 text-gray-600 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:ring-offset-2 focus:ring-offset-transparent focus:border-transparent'
@@ -189,7 +200,7 @@ export default function ItineraryLeftNav(props) {
               </form>
             </div>
           ) : (
-            itinerary.users.some((member) => member.id === user.id) && (
+            itinerary.users.some(member => member.id === user.id) && (
               <div className=''>
                 <div>
                   <Link
