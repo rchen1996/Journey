@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { SET_BOOKMARKS } from '../reducers/application';
 
 export default function ItineraryListItem(props) {
   const { name, description, image, id } = props.itinerary;
@@ -8,7 +9,22 @@ export default function ItineraryListItem(props) {
 
   const addBookmark = () => {
     if (props.user.id) {
-      props.addBookmark(id);
+      props.addBookmark(id).then(res => {
+        if (res.data.error) {
+          setMessage(res.data.error);
+        } else {
+          props.dispatch({
+            type: SET_BOOKMARKS,
+            bookmarks: res.data,
+          });
+
+          setMessage('Itinerary added to bookmarks!');
+
+          setTimeout(() => {
+            setMessage('');
+          }, 2000);
+        }
+      });
     } else {
       setMessage('You must be logged in to bookmark an itinerary');
     }
@@ -46,7 +62,7 @@ export default function ItineraryListItem(props) {
                       filterUnits='userSpaceOnUse'
                       colorInterpolationFilters='sRGB'
                     >
-                      <feFlood flood-opacity='0' result='BackgroundImageFix' />
+                      <feFlood floodOpacity='0' result='BackgroundImageFix' />
                       <feColorMatrix
                         in='SourceAlpha'
                         type='matrix'
