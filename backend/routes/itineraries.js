@@ -17,14 +17,16 @@ module.exports = ({
   getItinerary,
   deleteItinerary,
   getItinerariesForGroup,
+  deleteDayFromItinerary,
+  reorderDays,
 }) => {
   router.get('/', (req, res) => {
-    getAllItineraries().then((itineraries) => res.send(itineraries));
+    getAllItineraries().then(itineraries => res.send(itineraries));
   });
 
   router.post('/', (req, res) => {
     const userId = req.session.userId;
-    let { startDate, endDate } = req.body;
+    let { startDate, endDate, image } = req.body;
 
     if (startDate === '') {
       startDate = null;
@@ -34,16 +36,22 @@ module.exports = ({
       endDate = null;
     }
 
+    if (image === '') {
+      image =
+        'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80';
+    }
+
     if (userId) {
       createNewItinerary({
         ...req.body,
         userId,
         startDate,
         endDate,
-      }).then((itinerary) => {
-        createTravelParty(itinerary.id, userId).then((travelParty) => {
-          getTravelParty(itinerary.id).then((users) => {
-            getDetailedItinerary(itinerary.id).then((fullItinerary) => {
+        image,
+      }).then(itinerary => {
+        createTravelParty(itinerary.id, userId).then(travelParty => {
+          getTravelParty(itinerary.id).then(users => {
+            getDetailedItinerary(itinerary.id).then(fullItinerary => {
               const parsed = itineraryObj(fullItinerary);
               res.send({ ...parsed, users: parseTravelParty(users) });
             });
@@ -57,7 +65,7 @@ module.exports = ({
 
   router.get('/:itinerary_id/collaborators', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getTravelParty(itinerary_id).then((party) => {
+    getTravelParty(itinerary_id).then(party => {
       res.send(parseTravelParty(party));
     });
   });
@@ -66,7 +74,7 @@ module.exports = ({
     const { email } = req.body;
     const { itinerary_id } = req.params;
     getTravelParty(itinerary_id)
-      .then((party) => {
+      .then(party => {
         for (const user of party) {
           if (user.email === email) {
             return res.send({ error: 'User already in party.' });
@@ -74,23 +82,23 @@ module.exports = ({
         }
 
         addCollaborator(itinerary_id, email)
-          .then((result) => {
+          .then(result => {
             if (result.message) {
               res.send({ error: 'No user with this email.' });
             } else {
-              getTravelParty(itinerary_id).then((party) => {
+              getTravelParty(itinerary_id).then(party => {
                 res.send(parseTravelParty(party));
               });
             }
           })
-          .catch((err) => res.send(err));
+          .catch(err => res.send(err));
       })
-      .catch((err) => res.send(err));
+      .catch(err => res.send(err));
   });
 
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getDetailedItinerary(itinerary_id).then((resultArr) => {
+    getDetailedItinerary(itinerary_id).then(resultArr => {
       const itinerary = itineraryObj(resultArr);
 
       res.send(itinerary);
@@ -123,7 +131,7 @@ module.exports = ({
   router.delete('/:itinerary_id/users/:user_id', (req, res) => {
     const { itinerary_id, user_id } = req.params;
     deleteCollaborator(itinerary_id, user_id).then(() => {
-      getTravelParty(itinerary_id).then((party) => {
+      getTravelParty(itinerary_id).then(party => {
         res.send(parseTravelParty(party));
       });
     });
@@ -133,7 +141,7 @@ module.exports = ({
     const { itinerary_id, day_id } = req.params;
     const userId = req.session.userId;
 
-    getTravelParty(itinerary_id).then((userArr) => {
+    getTravelParty(itinerary_id).then(userArr => {
       let userOfParty;
       for (const user of userArr) {
         if (user.user_id === userId) {
@@ -162,7 +170,7 @@ module.exports = ({
           .get(
             `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
           )
-          .then((res) => {
+          .then(res => {
             if (res.data.features.length < 1) {
               response.send({ addressError: 'This is not a valid address' });
             } else {
@@ -175,7 +183,7 @@ module.exports = ({
                 image,
                 address,
                 location,
-              }).then((attraction) => {
+              }).then(attraction => {
                 const activity = {
                   dayId: day_id,
                   start: start,
@@ -184,8 +192,8 @@ module.exports = ({
                   itineraryId: itinerary_id,
                 };
 
-                createActivity(activity).then((activity) => {
-                  getDetailedItinerary(itinerary_id).then((itinerary) => {
+                createActivity(activity).then(activity => {
+                  getDetailedItinerary(itinerary_id).then(itinerary => {
                     const parsed = itineraryObj(itinerary);
 
                     response.send(parsed);
@@ -205,13 +213,78 @@ module.exports = ({
 
   router.post('/:itinerary_id', (req, res) => {
     const { itinerary_id } = req.params;
-    const { location_name } = req.body;
-    addDayWithLocation(itinerary_id, location_name).then((result) => {
+    const { location_name, new_day_order } = req.body;
+    addDayWithLocation(itinerary_id, location_name).then(result => {
       if (result.message) {
         res.send({ error: 'No such location in database' });
       } else {
-        getDetailedItinerary(itinerary_id).then((resultArr) => {
-          res.send(itineraryObj(resultArr));
+        getDetailedItinerary(itinerary_id).then(resultArr => {
+          let newItinerary = itineraryObj(resultArr);
+          const last_day_order = newItinerary.locations
+            .slice(-1)[0]
+            .days.slice(-1)[0].day_order;
+
+          console.log(
+            'new_day_order:',
+            new_day_order,
+            'last day order:',
+            last_day_order,
+            'newItinerary:',
+            newItinerary
+          );
+          if (new_day_order && last_day_order !== new_day_order) {
+            console.log('does reorder');
+            const daysIdArr = [];
+            const daysOrderArr = [];
+            newItinerary.locations.forEach(location => {
+              location.days.forEach(day => {
+                daysIdArr.push(day.id);
+                daysOrderArr.push(day.day_order);
+              });
+            });
+            daysIdArr.splice(new_day_order - 1, 0, daysIdArr.pop());
+
+            reorderDays(daysIdArr, daysOrderArr).then(result => {
+              if (result.message) {
+                res.send({ error: result.message });
+              } else {
+                getDetailedItinerary(itinerary_id).then(resultArr => {
+                  res.send(itineraryObj(resultArr));
+                });
+              }
+            });
+          } else res.send(newItinerary);
+        });
+      }
+    });
+  });
+
+  router.delete('/:itinerary_id/days/:day_id', (req, res) => {
+    const { itinerary_id, day_id } = req.params;
+    deleteDayFromItinerary(day_id).then(result => {
+      if (result.message) {
+        res.send({ error: 'there was an error' });
+      } else {
+        getDetailedItinerary(itinerary_id).then(resultArr => {
+          const bufferItinerary = itineraryObj(resultArr);
+          const daysIdArr = [];
+          const daysOrderArr = [];
+          bufferItinerary.locations.forEach(location => {
+            location.days.forEach(day => {
+              daysIdArr.push(day.id);
+              daysOrderArr.push(day.day_order);
+            });
+          });
+          const newOrderArr = daysOrderArr.map((i, index) => index + 1);
+          reorderDays(daysIdArr, newOrderArr).then(result => {
+            if (result.message) {
+              res.send({ error: `error with reorderDays: ${result.message}` });
+            } else {
+              getDetailedItinerary(itinerary_id).then(resultArr => {
+                res.send(itineraryObj(resultArr));
+              });
+            }
+          });
         });
       }
     });

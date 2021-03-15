@@ -49,9 +49,11 @@ module.exports = db => {
 
   const getItinerariesForGroup = id => {
     const query = {
-      text: `SELECT itineraries.* FROM itineraries
-      LEFT JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id 
-      WHERE user_id = $1`,
+      text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+      LEFT JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id
+      LEFT JOIN days ON itineraries.id = days.itinerary_id 
+      WHERE user_id = $1
+      GROUP BY itineraries.id`,
       values: [id],
     };
 
@@ -63,9 +65,11 @@ module.exports = db => {
 
   const getBookmarksForUser = userId => {
     const query = {
-      text: `SELECT itineraries.*, bookmarks.id AS bookmark_id FROM itineraries
+      text: `SELECT itineraries.*, bookmarks.id AS bookmark_id, COUNT(days.id) AS days FROM itineraries
       JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
-      WHERE user_id = $1;`,
+      JOIN days ON itineraries.id = days.itinerary_id
+      WHERE user_id = $1
+      GROUP BY itineraries.id, bookmarks.id;`,
       values: [userId],
     };
 

@@ -12,6 +12,7 @@ export default function BookmarksItem(props) {
     id,
     trip_type,
     bookmark_id,
+    days,
   } = props.bookmark;
 
   const [error, setError] = useState({
@@ -125,7 +126,9 @@ export default function BookmarksItem(props) {
               />
             </svg>
 
-            <span className='text-xs font-bold text-gray-200'>7 Days</span>
+            <span className='text-xs font-bold text-gray-200'>
+              {days === '1' ? '1 Day' : `${days} Days`}
+            </span>
           </div>
           <div className='flex items-center justify-center px-2.5 py-2 bg-teal-600 w-min whitespace-nowrap rounded-2xl my-2 shadow-md'>
             <span className='text-xs font-bold text-gray-200 pl-0.5'>
