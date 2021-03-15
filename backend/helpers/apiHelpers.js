@@ -2,7 +2,7 @@ module.exports = db => {
   const getAllItineraries = () => {
     const query = {
       text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
-      JOIN days ON itineraries.id = days.itinerary_id
+      LEFT JOIN days ON itineraries.id = days.itinerary_id
       GROUP BY itineraries.id
       LIMIT 25;`,
     };
@@ -237,16 +237,16 @@ module.exports = db => {
       .catch(err => err);
   };
 
-  const deleteDayFromItinerary = (day_id) => {
+  const deleteDayFromItinerary = day_id => {
     const query = {
       text: `DELETE from days WHERE id = $1 RETURNING *`,
-      values: [day_id]
+      values: [day_id],
     };
     return db
       .query(query)
       .then(result => result.rows)
       .catch(err => err);
-  }
+  };
 
   return {
     getAllItineraries,
