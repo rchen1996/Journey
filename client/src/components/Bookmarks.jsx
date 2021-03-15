@@ -6,7 +6,7 @@ export default function Bookmarks(props) {
       key={bookmark.id}
       bookmark={bookmark}
       user={props.user}
-      deleteBookmark={deleteBookmark}
+      deleteBookmark={props.deleteBookmark}
     />
   ));
   return (
