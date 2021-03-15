@@ -182,11 +182,15 @@ export default function NewItineraryForm(props) {
                 rows='3'
               />
             </div>
-            <footer className='flex items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 rounded-b-xl'>
+            <footer className='flex items-center px-8 py-3 space-x-4 bg-gray-300 bg-opacity-50 rounded-b-xl'>
               <FormButton type='submit'>Create Itinerary</FormButton>
-              <FormButton type='button' onClick={cancel}>
+              <button
+                type='button'
+                onClick={cancel}
+                className='hover:underline hover:text-teal-600 focus:outline-none'
+              >
                 Cancel
-              </FormButton>
+              </button>
             </footer>
           </form>
         </div>

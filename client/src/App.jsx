@@ -51,7 +51,7 @@ function App() {
         </Route>
         <Route path={`/itineraries/new`}>
           {user.id && (
-            <main className='flex w-full h-full min-h-full'>
+            <main className='flex w-full h-full min-h-screen'>
               <LeftNav user={user} setItinerary={setItinerary} />
               <NewItineraryForm
                 dispatch={dispatch}
@@ -65,7 +65,7 @@ function App() {
           <ItineraryList key={key} itineraries={itineraries} />
         </Route>
         <Route path='/itineraries/:itinerary_id/collaborators'>
-          <main className='flex w-full min-h-full'>
+          <main className='flex w-full min-h-screen'>
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -84,7 +84,7 @@ function App() {
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id/days/:day_id/activities/new'>
-          <main className='flex w-full min-h-full'>
+          <main className='flex w-full min-h-screen'>
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -99,7 +99,7 @@ function App() {
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id/days/:day_id'>
-          <main className='flex w-full min-h-full'>
+          <main className='flex w-full min-h-screen'>
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -114,7 +114,7 @@ function App() {
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id'>
-          <main className='flex w-full min-h-full'>
+          <main className='flex w-full min-h-screen'>
             <LeftNav
               user={user}
               itinerary={itinerary}
@@ -126,7 +126,7 @@ function App() {
         </Route>
         <Route path='/dashboard/:user_id/bookmarks'>
           {user.id && (
-            <main className='flex w-full min-h-full'>
+            <main className='flex w-full min-h-screen'>
               <LeftNav user={user} dispatch={dispatch} />
               <Bookmarks
                 bookmarks={bookmarks}
@@ -138,7 +138,7 @@ function App() {
         </Route>
         <Route path='/dashboard/:user_id'>
           {user.id && (
-            <main className='flex w-full min-h-full'>
+            <main className='flex w-full min-h-screen'>
               <LeftNav user={user} dispatch={dispatch} />
               <MyItinerariesList
                 myItineraries={myItineraries}

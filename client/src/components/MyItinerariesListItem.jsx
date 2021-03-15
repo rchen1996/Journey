@@ -86,7 +86,7 @@ export default function MyItinerariesListItem(props) {
             </div>
           )}
           {view === DELETE && (
-            <div className='z-10 flex space-x-8 bg-gray-700 pointer-events-none bg-opacity-90'>
+            <div className='z-10 flex space-x-8 bg-gray-700 bg-opacity-90'>
               <article className='flex flex-col items-center justify-center w-full h-full'>
                 <ErrorMessage
                   isError={error.status}
