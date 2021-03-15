@@ -9,6 +9,8 @@ module.exports = ({
   addUser,
   getItinerariesForGroup,
   getBookmarksForUser,
+  deleteBookmark,
+  getBookmark,
 }) => {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
@@ -80,6 +82,27 @@ module.exports = ({
       });
     } else {
       res.send({ error: 'You must be logged in to get bookmarks' });
+    }
+  });
+
+  router.delete('/:user_id/bookmarks/:bookmark_id', (req, res) => {
+    const userId = req.session.userId;
+    const bookmarkId = req.params.bookmark_id;
+
+    if (!userId) {
+      res.send({ error: 'You must be logged in to delete a bookmark.' });
+    } else {
+      getBookmark(bookmarkId).then(bookmark => {
+        if (bookmark.user_id !== userId) {
+          res.send({ error: "You cannot delete another user's bookmark" });
+        } else {
+          deleteBookmark(bookmarkId).then(() => {
+            getBookmarksForUser(userId).then(bookmarks => {
+              res.send(bookmarks);
+            });
+          });
+        }
+      });
     }
   });
 
