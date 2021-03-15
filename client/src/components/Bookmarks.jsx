@@ -2,7 +2,7 @@ import BookmarksItem from './BookmarksItem';
 
 export default function Bookmarks(props) {
   const parsedBookmarks = props.bookmarks.map(bookmark => (
-    <BookmarksItem key={bookmark.id} bookmark={bookmark} />
+    <BookmarksItem key={bookmark.id} bookmark={bookmark} user={props.user} />
   ));
   return (
     <div className='flex flex-col w-full'>
