@@ -7,6 +7,7 @@ export default function ItineraryList(props) {
       itinerary={itinerary}
       user={props.user}
       addBookmark={props.addBookmark}
+      dispatch={props.dispatch}
     />
   ));
 

@@ -68,6 +68,7 @@ function App() {
             itineraries={itineraries}
             user={user}
             addBookmark={addBookmark}
+            dispatch={dispatch}
           />
         </Route>
         <Route path='/itineraries/:itinerary_id/collaborators'>
