@@ -11,6 +11,7 @@ module.exports = ({
   getBookmarksForUser,
   deleteBookmark,
   getBookmark,
+  addBookmark,
 }) => {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
@@ -82,6 +83,18 @@ module.exports = ({
       });
     } else {
       res.send({ error: 'You must be logged in to get bookmarks' });
+    }
+  });
+
+  router.post('/:user_id/bookmarks', (req, res) => {
+    const userId = req.session.userId;
+
+    if (userId) {
+      addBookmark(req.body.itineraryId, userId).then(bookmark => {
+        res.send(bookmark);
+      });
+    } else {
+      res.send({ error: 'You must be logged in to add a bookmark' });
     }
   });
 
