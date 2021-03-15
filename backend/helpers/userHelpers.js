@@ -49,9 +49,11 @@ module.exports = db => {
 
   const getItinerariesForGroup = id => {
     const query = {
-      text: `SELECT itineraries.* FROM itineraries
-      JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id 
-      WHERE user_id = $1`,
+      text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+      JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id
+      JOIN days ON itineraries.id = days.itinerary_id 
+      WHERE user_id = $1
+      GROUP BY itineraries.id`,
       values: [id],
     };
 
