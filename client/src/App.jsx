@@ -127,7 +127,7 @@ function App() {
           {user.id && (
             <main className='flex w-full min-h-full'>
               <LeftNav user={user} dispatch={dispatch} />
-              <Bookmarks bookmarks={bookmarks} />
+              <Bookmarks bookmarks={bookmarks} user={user} />
             </main>
           )}
         </Route>
