@@ -1,3 +1,4 @@
+import Bookmarks from './Bookmarks';
 import ItineraryListItem from './ItineraryListItem';
 
 export default function ItineraryList(props) {
@@ -8,6 +9,7 @@ export default function ItineraryList(props) {
       user={props.user}
       addBookmark={props.addBookmark}
       dispatch={props.dispatch}
+      bookmarks={props.bookmarks.map(bookmark => bookmark.id)}
     />
   ));
 

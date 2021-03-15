@@ -52,7 +52,7 @@ export default function MyItinerariesListItem(props) {
       <article>
         <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
           {view === DEFAULT && (
-            <div className='z-10 flex items-center justify-center space-x-8 hover:bg-gray-700 hover:bg-opacity-90 group'>
+            <div className='z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'>
               <Link to={`/itineraries/${id}/edit`} className='group'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
