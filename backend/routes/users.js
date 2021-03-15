@@ -90,8 +90,10 @@ module.exports = ({
     const userId = req.session.userId;
 
     if (userId) {
-      addBookmark(req.body.itineraryId, userId).then(bookmark => {
-        res.send(bookmark);
+      addBookmark(req.body.itineraryId, userId).then(() => {
+        getBookmarksForUser(userId).then(bookmarks => {
+          res.send(bookmarks);
+        });
       });
     } else {
       res.send({ error: 'You must be logged in to add a bookmark' });
