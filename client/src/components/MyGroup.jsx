@@ -17,13 +17,13 @@ export default function MyGroup(props) {
     textClass: 'flex items-center mr-2 space-x-2 cursor-pointer',
   });
 
-  const handleRemove = (userId) => {
+  const handleRemove = userId => {
     removeCollaborator(id, userId);
   };
 
-  const handleAdd = (event) => {
+  const handleAdd = event => {
     event.preventDefault();
-    addCollaborator(id, addInput).then((result) => {
+    addCollaborator(id, addInput).then(result => {
       if (result.error) {
         setError({
           ...error,
@@ -43,7 +43,7 @@ export default function MyGroup(props) {
   };
 
   const handleDropDown = () => {
-    setDropDown((prev) => {
+    setDropDown(prev => {
       const isClassHidden =
         prev?.formClass === 'items-center self-end hidden' ||
         prev?.formClass === undefined;
@@ -67,7 +67,7 @@ export default function MyGroup(props) {
   };
 
   return (
-    <section className='w-1/2 h-full mx-auto my-8'>
+    <section className='w-1/2 h-full pt-16 mx-auto my-8'>
       <div className='flex flex-col items-center w-full h-full space-y-4'>
         {user.id === creator_id && (
           <header className='flex flex-col w-full space-y-2'>
@@ -111,7 +111,7 @@ export default function MyGroup(props) {
                 <form onSubmit={handleAdd} className={dropDown.formClass}>
                   <input
                     value={addInput}
-                    onChange={(event) => setAddInput(event.target.value)}
+                    onChange={event => setAddInput(event.target.value)}
                     placeholder='Enter Email'
                     type='email'
                     className='pr-8 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -146,7 +146,7 @@ export default function MyGroup(props) {
           </header>
         )}
         <div className='flex flex-col w-full space-y-4'>
-          {users.map((member) => {
+          {users.map(member => {
             return (
               <div
                 key={member.id}
