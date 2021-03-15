@@ -91,6 +91,13 @@ CREATE TABLE "activities" (
   "itinerary_id" int NOT NULL
 );
 
+DROP TABLE IF EXISTS bookmarks CASCADE;
+CREATE TABLE "bookmarks" (
+  "id" serial PRIMARY KEY NOT NULL,
+  "itinerary_id" int NOT NULL,
+  "user_id" int NOT NULL
+);
+
 ALTER TABLE "travel_parties" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE "travel_parties" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -106,3 +113,7 @@ ALTER TABLE "activities" ADD FOREIGN KEY ("attraction_id") REFERENCES "attractio
 ALTER TABLE "activities" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE "activities" ADD FOREIGN KEY ("day_id") REFERENCES "days" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "bookmarks" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "bookmarks" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;

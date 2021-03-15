@@ -4,6 +4,7 @@ import dataReducer, {
   SET_USER,
   SET_MY_ITINERARIES,
   SET_ITINERARY,
+  SET_BOOKMARKS,
 } from '../reducers/application';
 import axios from 'axios';
 
@@ -14,18 +15,21 @@ export default function useApplicationData() {
     itinerary: null,
     myItineraries: [],
     key: Math.random(),
+    bookmarks: [],
   });
 
   useEffect(() => {
-    axios.get(`/api/users/${state.user.id}`).then((res) => {
-      const user = res.data[0];
-      if (res.data.length > 0) {
-        dispatch({
-          type: SET_USER,
-          user: user,
-        });
-      }
-    });
+    if (state.user.id) {
+      axios.get(`/api/users/${state.user.id}`).then(res => {
+        const user = res.data[0];
+        if (res.data.length > 0) {
+          dispatch({
+            type: SET_USER,
+            user: user,
+          });
+        }
+      });
+    }
   }, [state.user.id]);
 
   const login = function (email, password) {
@@ -56,7 +60,7 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    return axios.get('/api/itineraries').then((res) => {
+    return axios.get('/api/itineraries').then(res => {
       const itineraries = res.data;
       dispatch({
         type: SET_ALL_ITINERARIES,
@@ -71,10 +75,10 @@ export default function useApplicationData() {
 
   useEffect(() => {
     if (state.user.id) {
-      axios.get('/api/users/:user_id/itineraries').then((res) => {
+      axios.get(`/api/users/${state.user.id}/itineraries`).then(res => {
         const myItineraries = res.data;
 
-        if (myItineraries.length > 0) {
+        if (Array.isArray(myItineraries) && myItineraries.length > 0) {
           dispatch({
             type: SET_MY_ITINERARIES,
             myItineraries: myItineraries,
@@ -87,13 +91,13 @@ export default function useApplicationData() {
   function removeCollaborator(itineraryId, userId) {
     axios
       .delete(`/api/itineraries/${itineraryId}/users/${userId}`)
-      .then((res) => {
+      .then(res => {
         dispatch({
           type: SET_ITINERARY,
           itinerary: { ...state.itinerary, users: res.data },
         });
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }
 
   const createActivity = (activity, itineraryId, dayId) => {
@@ -106,7 +110,7 @@ export default function useApplicationData() {
   function addCollaborator(itineraryId, email) {
     return axios
       .post(`/api/itineraries/${itineraryId}/users`, { email })
-      .then((res) => {
+      .then(res => {
         if (res.data.error) {
           return { error: res.data.error };
         } else {
@@ -117,7 +121,7 @@ export default function useApplicationData() {
           return { success: 'user added to travel party' };
         }
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }
 
   function setItinerary(itinerary_id) {
@@ -131,7 +135,7 @@ export default function useApplicationData() {
           itinerary: { ...itinerary.data, users: users.data },
         });
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }
 
   function addDayWithLocation(itinerary_id, location_name, new_day_order) {
@@ -149,9 +153,32 @@ export default function useApplicationData() {
         }
       });
   }
-      
+
   const deleteItinerary = itineraryId => {
     return axios.delete(`/api/itineraries/${itineraryId}`);
+  };
+
+  useEffect(() => {
+    if (state.user.id) {
+      axios.get(`/api/users/${state.user.id}/bookmarks`).then(res => {
+        const bookmarks = res.data;
+
+        if (Array.isArray(bookmarks) && bookmarks.length > 0) {
+          dispatch({
+            type: SET_BOOKMARKS,
+            bookmarks: bookmarks,
+          });
+        }
+      });
+    }
+  }, [state.user]);
+
+  const deleteBookmark = bookmarkId => {
+    return axios.delete(`/api/users/${state.user.id}/bookmarks/${bookmarkId}`);
+  };
+
+  const addBookmark = itineraryId => {
+    return axios.post(`/api/users/${state.user.id}/bookmarks`, { itineraryId });
   };
 
   return {
@@ -167,5 +194,7 @@ export default function useApplicationData() {
     setItinerary,
     addDayWithLocation,
     deleteItinerary,
+    deleteBookmark,
+    addBookmark,
   };
 }

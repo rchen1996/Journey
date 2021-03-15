@@ -1,17 +1,18 @@
-import { Link, useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import { SET_MY_ITINERARIES } from '../reducers/application';
+import { Link, useHistory } from 'react-router-dom';
+import { SET_BOOKMARKS } from '../reducers/application';
+
 import ErrorMessage from './ErrorMessage';
 
-export default function MyItinerariesListItem(props) {
+export default function BookmarksItem(props) {
   const {
     name,
     description,
     image,
-    creator_id,
     id,
     trip_type,
-  } = props.itinerary;
+    bookmark_id,
+  } = props.bookmark;
 
   const [error, setError] = useState({
     staus: false,
@@ -28,7 +29,7 @@ export default function MyItinerariesListItem(props) {
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    props.deleteItinerary(id).then(res => {
+    props.deleteBookmark(bookmark_id).then(res => {
       if (res.data.error) {
         setError({
           ...error,
@@ -37,11 +38,10 @@ export default function MyItinerariesListItem(props) {
         });
       } else {
         props.dispatch({
-          type: SET_MY_ITINERARIES,
-          myItineraries: res.data,
+          type: SET_BOOKMARKS,
+          bookmarks: res.data,
         });
-
-        history.push(`/dashboard/${props.user.id}`);
+        history.push(`/dashboard/${props.user.id}/bookmarks`);
       }
     });
   };
@@ -52,22 +52,7 @@ export default function MyItinerariesListItem(props) {
         <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
           {view === DEFAULT && (
             <div className='z-10 flex items-center justify-center space-x-8 hover:bg-gray-700 hover:bg-opacity-90 group'>
-              <Link to={`/itineraries/${id}/edit`} className='group'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                  className='hidden w-8 h-8 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110'
-                >
-                  <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
-                  <path
-                    fillRule='evenodd'
-                    d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'
-                    clipRule='evenodd'
-                  />
-                </svg>
-              </Link>
-              {creator_id === props.user.id && (
+              {props.user.id && (
                 <button type='button' onClick={() => setView(DELETE)}>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -95,7 +80,7 @@ export default function MyItinerariesListItem(props) {
                   message={error.message}
                 ></ErrorMessage>
                 <h4 className='p-2 text-base font-bold text-gray-100 shadow-md whitespace-nowrap lg:text-base'>
-                  Delete This Itinerary?
+                  Delete This Bookmark?
                 </h4>
                 <div className='flex space-x-4'>
                   <button

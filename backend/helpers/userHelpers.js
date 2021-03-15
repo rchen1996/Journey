@@ -61,11 +61,80 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getBookmarksForUser = userId => {
+    const query = {
+      text: `SELECT itineraries.*, bookmarks.id AS bookmark_id FROM itineraries
+      JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
+      WHERE user_id = $1;`,
+      values: [userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
+
+  const deleteBookmark = bookmarkId => {
+    const query = {
+      text: `DELETE FROM bookmarks WHERE id = $1 RETURNING *;`,
+      values: [bookmarkId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
+  const getBookmark = bookmarkId => {
+    const query = {
+      text: `SELECT * FROM bookmarks WHERE id = $1;`,
+      values: [bookmarkId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
+  const addBookmark = (itineraryId, userId) => {
+    const query = {
+      text: `INSERT INTO bookmarks (itinerary_id, user_id)
+      VALUES ($1, $2) RETURNING *;`,
+      values: [itineraryId, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
+  const getBookmarkByItineraryId = (itineraryId, userId) => {
+    const query = {
+      text: `SELECT * FROM bookmarks
+      WHERE itinerary_id = $1 AND user_id = $2;`,
+      values: [itineraryId, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows)
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
     addUser,
     getItinerariesForUser,
     getItinerariesForGroup,
+    getBookmarksForUser,
+    deleteBookmark,
+    getBookmark,
+    addBookmark,
+    getBookmarkByItineraryId,
   };
 };
