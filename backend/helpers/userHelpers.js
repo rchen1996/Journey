@@ -99,6 +99,19 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const addBookmark = (itineraryId, userId) => {
+    const query = {
+      text: `INSERT INTO bookmarks (itinerary_id, user_id)
+      VALUES ($1, $2) RETURNING *;`,
+      values: [itineraryId, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
@@ -108,5 +121,6 @@ module.exports = db => {
     getBookmarksForUser,
     deleteBookmark,
     getBookmark,
+    addBookmark,
   };
 };
