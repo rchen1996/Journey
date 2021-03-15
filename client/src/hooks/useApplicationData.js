@@ -76,7 +76,7 @@ export default function useApplicationData() {
       axios.get(`/api/users/${state.user.id}/itineraries`).then(res => {
         const myItineraries = res.data;
 
-        if (myItineraries.length > 0) {
+        if (Array.isArray(myItineraries) && myItineraries.length > 0) {
           dispatch({
             type: SET_MY_ITINERARIES,
             myItineraries: myItineraries,
@@ -168,7 +168,7 @@ export default function useApplicationData() {
         }
       });
     }
-  }, [state.user, state.bookmarks]);
+  }, [state.user]);
 
   return {
     state,
