@@ -28,6 +28,7 @@ function App() {
     createActivity,
     addCollaborator,
     setItinerary,
+    addDayWithLocation,
     deleteItinerary,
   } = useApplicationData();
 
@@ -67,6 +68,7 @@ function App() {
               user={user}
               itinerary={itinerary}
               setItinerary={setItinerary}
+              addDayWithLocation={addDayWithLocation}
             />
             {itinerary &&
               itinerary.users.some(member => member.id === user.id) && (
@@ -85,6 +87,7 @@ function App() {
               user={user}
               itinerary={itinerary}
               setItinerary={setItinerary}
+              addDayWithLocation={addDayWithLocation}
             />
             <AddActivityForm
               dispatch={dispatch}
@@ -99,6 +102,7 @@ function App() {
               user={user}
               itinerary={itinerary}
               setItinerary={setItinerary}
+              addDayWithLocation={addDayWithLocation}
             />
             <ItineraryDay itinerary={itinerary} dispatch={dispatch} />
           </main>
@@ -109,6 +113,7 @@ function App() {
               user={user}
               itinerary={itinerary}
               setItinerary={setItinerary}
+              addDayWithLocation={addDayWithLocation}
             />
             <Itinerary dispatch={dispatch} itinerary={itinerary} />
           </main>
