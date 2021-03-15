@@ -104,7 +104,7 @@ function App() {
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
             />
-            <ItineraryDay itinerary={itinerary} dispatch={dispatch} />
+            <ItineraryDay itinerary={itinerary} dispatch={dispatch} user={user}/>
           </main>
         </Route>
         <Route path="/itineraries/:itinerary_id">
@@ -115,7 +115,7 @@ function App() {
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
             />
-            <Itinerary dispatch={dispatch} itinerary={itinerary} />
+            <Itinerary dispatch={dispatch} itinerary={itinerary} user={user} />
           </main>
         </Route>
         <Route path="/dashboard/:user_id">

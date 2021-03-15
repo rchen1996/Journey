@@ -90,7 +90,7 @@ export default function ItineraryLeftNav(props) {
                       </NavLink>
                     );
                   })}
-                  {pathname.includes('edit') && 
+                  {(pathname.includes('edit') && itinerary.users.some(member => member.id === user.id)) && 
                   <button
                     onClick={event => handleSubmit(event, locationObj.name)}
                   >
@@ -102,7 +102,7 @@ export default function ItineraryLeftNav(props) {
               </div>
             );
           })}
-          {pathname.includes('edit') ? (
+          {(pathname.includes('edit') && itinerary.users.some(member => member.id === user.id)) ? (
             <div>
               <button> Add Location </button>
               <form onSubmit={handleSubmit}>

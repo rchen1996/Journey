@@ -3,10 +3,9 @@ import { useLocation } from 'react-router-dom';
 import ItineraryDayActivities from './ItineraryDayActivities';
 
 export default function ItineraryDays(props) {
-  const { day, itinerary } = props;
+  const { day, itinerary, user } = props;
 
-  const location = useLocation();
-  const url = location.pathname;
+ const {pathname} = useLocation()
 
   return (
     <article className="py-4 mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl">
@@ -14,7 +13,7 @@ export default function ItineraryDays(props) {
         <h2 className="px-4 py-1.5 mb-2 text-lg font-bold text-gray-100 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl">
           Day {day.day_order}
         </h2>
-        {url === `/itineraries/${itinerary.id}/edit` && (
+        {pathname.includes('edit') && itinerary.users.some(member => member.id === user.id) && (
           <div className="flex space-x-3">
             <svg
               width="20"
@@ -56,6 +55,7 @@ export default function ItineraryDays(props) {
               activity={activity}
               itinerary={itinerary}
               day={day}
+              user={user}
             />
           );
         })}

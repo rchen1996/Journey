@@ -2,10 +2,10 @@ import { useLocation } from 'react-router-dom';
 import { Fragment } from 'react';
 
 export default function ItineraryDayActivities(props) {
-  const { activity, itinerary, day } = props;
+  const { activity, itinerary, day , user} = props;
 
-  const location = useLocation();
-  const url = location.pathname;
+  const { pathname } = useLocation();
+  
 
   const tConvert = time => {
     // Check correct time format and split into components
@@ -49,7 +49,7 @@ export default function ItineraryDayActivities(props) {
           </svg>
           <h4 className="font-bold">{activity.name}</h4>
         </div>
-        {url === `/itineraries/${itinerary.id}/edit` && (
+        {pathname.includes('edit') && itinerary.users.some(member => member.id === user.id) && (
           <div className="flex space-x-3">
             <svg
               width="20"
