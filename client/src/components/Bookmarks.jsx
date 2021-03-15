@@ -7,6 +7,7 @@ export default function Bookmarks(props) {
       bookmark={bookmark}
       user={props.user}
       deleteBookmark={props.deleteBookmark}
+      dispatch={props.dispatch}
     />
   ));
   return (

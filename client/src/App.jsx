@@ -132,6 +132,7 @@ function App() {
                 bookmarks={bookmarks}
                 user={user}
                 deleteBookmark={deleteBookmark}
+                dispatch={dispatch}
               />
             </main>
           )}
