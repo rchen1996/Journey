@@ -71,13 +71,7 @@ export default function ItineraryDayActivities(props) {
           <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap lg:w-min rounded-r-xl lg:whitespace-nowrap'>
             {activity.address}
           </p>
-          {/* <p className='text-sm'>{activity.description}</p> */}
-          <p className='text-sm line-clamp-3'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto sequi
-            hic quibusdam explicabo distinctio, inventore maxime eius quo?
-            Facilis nostrum amet cum necessitatibus vel et autem est esse dolore
-            sit.
-          </p>
+          <p className='text-sm'>{activity.description}</p>
         </div>
         <div className='flex pt-2 space-x-3'>
           <svg
