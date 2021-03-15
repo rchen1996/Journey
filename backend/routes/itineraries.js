@@ -150,7 +150,7 @@ module.exports = ({
       }
 
       if (userOfParty) {
-        const {
+        let {
           start,
           end,
           name,
@@ -184,6 +184,14 @@ module.exports = ({
                 address,
                 location,
               }).then(attraction => {
+                if (start === '') {
+                  start = null;
+                }
+
+                if (end === '') {
+                  end = null;
+                }
+
                 const activity = {
                   dayId: day_id,
                   start: start,
@@ -191,7 +199,6 @@ module.exports = ({
                   attractionId: attraction.id,
                   itineraryId: itinerary_id,
                 };
-
                 createActivity(activity).then(activity => {
                   getDetailedItinerary(itinerary_id).then(itinerary => {
                     const parsed = itineraryObj(itinerary);
