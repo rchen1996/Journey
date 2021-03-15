@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 
 import ItineraryDayActivities from './ItineraryDayActivities';
 
@@ -6,6 +6,8 @@ export default function ItineraryDay(props) {
   const { itinerary_id, day_id } = useParams();
 
   const { itinerary, deleteDayFromItinerary } = props;
+
+  const url = useLocation().pathname;
 
   let locations;
   if (itinerary) {
@@ -53,26 +55,28 @@ export default function ItineraryDay(props) {
               </h2>
             )}
           </div>
-          <Link
-            to={`/itineraries/${itinerary_id}/days/${day_id}/activities/new`}
-            type='button'
-            className='flex items-center px-4 py-2.5 text-gray-100 bg-teal-600 h-1/2 rounded-3xl border-2 border-transparent hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
-            day={dayInfo}
-          >
-            Add Activity
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 20 20'
-              fill='currentColor'
-              className='w-6 h-6 ml-2'
+          {url.includes('edit') && (
+            <Link
+              to={`/itineraries/${itinerary_id}/days/${day_id}/activities/new`}
+              type='button'
+              className='flex items-center px-4 py-2.5 text-gray-100 bg-teal-600 h-1/2 rounded-3xl border-2 border-transparent hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+              day={dayInfo}
             >
-              <path
-                fillRule='evenodd'
-                d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
-                clipRule='evenodd'
-              />
-            </svg>
-          </Link>
+              Add Activity
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 20 20'
+                fill='currentColor'
+                className='w-6 h-6 ml-2'
+              >
+                <path
+                  fillRule='evenodd'
+                  d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
+                  clipRule='evenodd'
+                />
+              </svg>
+            </Link>
+          )}
         </header>
         {day &&
           day.activities &&
