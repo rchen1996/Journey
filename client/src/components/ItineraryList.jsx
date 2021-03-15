@@ -1,4 +1,3 @@
-import Bookmarks from './Bookmarks';
 import ItineraryListItem from './ItineraryListItem';
 
 export default function ItineraryList(props) {
