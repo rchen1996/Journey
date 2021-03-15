@@ -3,6 +3,7 @@ export const SET_ALL_ITINERARIES = 'SET_ALL_ITINERARIES';
 export const SET_ITINERARY = 'SET_ITINERARY';
 export const SET_MY_ITINERARIES = 'SET_MY_ITINERARIES';
 export const SET_KEY = 'SET_KEY';
+export const SET_BOOKMARKS = 'SET_BOOKMARKS';
 
 const dataReducer = (state, action) => {
   switch (action.type) {
@@ -30,6 +31,11 @@ const dataReducer = (state, action) => {
       return {
         ...state,
         key: action.key,
+      };
+    case SET_BOOKMARKS:
+      return {
+        ...state,
+        bookmarks: action.bookmarks,
       };
     default:
       return state;

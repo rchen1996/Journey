@@ -18,6 +18,8 @@ module.exports = {
   variants: {
     extend: {
       borderWidth: ['hover', 'focus'],
+      display: ['group-hover'],
+      margin: ['last'],
     },
   },
   plugins: [

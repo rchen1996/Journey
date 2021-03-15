@@ -18,6 +18,7 @@ module.exports = ({
   deleteItinerary,
   getItinerariesForGroup,
   deleteDayFromItinerary,
+  reorderDays,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then((itineraries) => res.send(itineraries));
@@ -206,13 +207,37 @@ module.exports = ({
 
   router.post('/:itinerary_id', (req, res) => {
     const { itinerary_id } = req.params;
-    const { location_name } = req.body;
+    const { location_name, new_day_order } = req.body;
     addDayWithLocation(itinerary_id, location_name).then((result) => {
       if (result.message) {
         res.send({ error: 'No such location in database' });
       } else {
         getDetailedItinerary(itinerary_id).then((resultArr) => {
-          res.send(itineraryObj(resultArr));
+          let newItinerary = itineraryObj(resultArr);
+          const last_day_order = newItinerary.locations
+            .slice(-1)[0]
+            .days.slice(-1)[0].day_order;
+          if (last_day_order !== new_day_order) {
+            const daysIdArr = [];
+            const daysOrderArr = [];
+            newItinerary.locations.forEach((location) => {
+              location.days.forEach((day) => {
+                daysIdArr.push(day.id);
+                daysOrderArr.push(day.day_order);
+              });
+            });
+            daysIdArr.splice(new_day_order - 1, 0, daysIdArr.pop());
+
+            reorderDays(daysIdArr, daysOrderArr).then((result) => {
+              if (result.message) {
+                res.send({ error: result.message });
+              } else {
+                getDetailedItinerary(itinerary_id).then((resultArr) => {
+                  res.send(itineraryObj(resultArr));
+                });
+              }
+            });
+          } else res.send(newItinerary);
         });
       }
     });
