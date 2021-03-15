@@ -3,7 +3,7 @@ import { NavLink, Link, useLocation, useParams } from 'react-router-dom';
 export default function ItineraryLeftNav(props) {
   const [newLocation, setNewLocation] = useState('');
   const [dropDown, setDropDown] = useState({});
-  const { setItinerary, itinerary, user } = props;
+  const { setItinerary, itinerary, user, addDayWithLocation } = props;
   const { pathname } = useLocation();
   const { itinerary_id } = useParams();
 
@@ -11,9 +11,9 @@ export default function ItineraryLeftNav(props) {
     setItinerary(itinerary_id);
   }, []);
 
-  function handleSubmit(event) {
+  function handleSubmit(event, locationName) {
     event.preventDefault();
-    props.addLocation(newLocation);
+    addDayWithLocation(itinerary_id, locationName || newLocation);
     setNewLocation('');
 
     return;
@@ -90,6 +90,7 @@ export default function ItineraryLeftNav(props) {
                       </NavLink>
                     );
                   })}
+                <button onClick={(event) => handleSubmit(event,locationObj.name)}> Add Day </button>
                 </div>
               </div>
             );
@@ -102,7 +103,6 @@ export default function ItineraryLeftNav(props) {
                   value={newLocation}
                   name='add-location'
                   onChange={(event) => setNewLocation(event.target.value)}
-                  type='text'
                 />
               </form>
 

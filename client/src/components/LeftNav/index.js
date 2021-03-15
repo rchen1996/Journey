@@ -10,6 +10,7 @@ export default function LeftNav(props) {
           itinerary={props.itinerary}
           user={props.user}
           setItinerary={props.setItinerary}
+          addDayWithLocation ={props.addDayWithLocation}
         />
       ) : (
         <DashboardLeftNav user={props.user} />
