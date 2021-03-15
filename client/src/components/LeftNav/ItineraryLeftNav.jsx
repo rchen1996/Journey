@@ -90,7 +90,12 @@ export default function ItineraryLeftNav(props) {
                       </NavLink>
                     );
                   })}
-                <button onClick={(event) => handleSubmit(event,locationObj.name)}> Add Day </button>
+                  <button
+                    onClick={event => handleSubmit(event, locationObj.name)}
+                  >
+                    {' '}
+                    Add Day{' '}
+                  </button>
                 </div>
               </div>
             );
@@ -101,14 +106,8 @@ export default function ItineraryLeftNav(props) {
               <form onSubmit={handleSubmit}>
                 <input
                   value={newLocation}
-<<<<<<< HEAD
                   name="add-location"
                   onChange={event => setNewLocation(event.target.value)}
-                  type="text"
-=======
-                  name='add-location'
-                  onChange={(event) => setNewLocation(event.target.value)}
->>>>>>> main
                 />
               </form>
 
