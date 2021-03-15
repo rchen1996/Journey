@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link} from 'react-router-dom';
 
 import ItineraryDayActivities from './ItineraryDayActivities';
 
@@ -15,7 +15,9 @@ export default function ItineraryDays(props) {
         </h2>
         {pathname.includes('edit') &&
           itinerary.users.some(member => member.id === user.id) && (
+       <Link to={`/itineraries/${itinerary.id}/days/${day.id}/edit`}> 
             <div className="flex space-x-3">
+
               <svg
                 width="20"
                 height="20"
@@ -46,6 +48,7 @@ export default function ItineraryDays(props) {
                 />
               </svg>
             </div>
+              </Link>
           )}
       </div>
       {day.activities &&
