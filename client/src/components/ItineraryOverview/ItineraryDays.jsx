@@ -51,7 +51,12 @@ export default function ItineraryDays(props) {
       {day.activities &&
         day.activities.map(activity => {
           return (
-            <ItineraryDayActivities key={activity.id} activity={activity} />
+            <ItineraryDayActivities
+              key={activity.id}
+              activity={activity}
+              itinerary={itinerary}
+              day={day}
+            />
           );
         })}
     </article>
