@@ -62,7 +62,9 @@ function App() {
           )}
         </Route>
         <Route path='/itineraries' exact>
-          <ItineraryList key={key} itineraries={itineraries} />
+          <main className='flex w-full min-h-full'>
+            <ItineraryList key={key} itineraries={itineraries} />
+          </main>
         </Route>
         <Route path='/itineraries/:itinerary_id/collaborators'>
           <main className='flex w-full min-h-screen'>

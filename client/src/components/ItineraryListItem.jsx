@@ -5,7 +5,7 @@ export default function ItineraryListItem(props) {
   return (
     <Link
       to={`/itineraries/${id}`}
-      className='flex flex-col justify-between w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'
+      className='flex flex-col justify-between w-full p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'
     >
       <article>
         <figure className='mb-0.25 aspect-w-2 aspect-h-1'>
