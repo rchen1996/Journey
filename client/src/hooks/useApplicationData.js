@@ -160,7 +160,7 @@ export default function useApplicationData() {
       axios.get(`/api/users/${state.user.id}/bookmarks`).then(res => {
         const bookmarks = res.data;
 
-        if (bookmarks.length > 0) {
+        if (Array.isArray(bookmarks) && bookmarks.length > 0) {
           dispatch({
             type: SET_BOOKMARKS,
             bookmarks: bookmarks,
