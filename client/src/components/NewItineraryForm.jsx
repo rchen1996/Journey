@@ -89,7 +89,7 @@ export default function NewItineraryForm(props) {
 
   return (
     <section className='flex flex-col items-center w-full h-full'>
-      <div className='flex flex-col w-1/2 py-8'>
+      <div className='flex flex-col w-3/4 py-8 2xl:w-1/2'>
         <h1 className='mb-4 ml-1 text-2xl font-bold'>
           Let's Go on an Adventure!
         </h1>
@@ -132,8 +132,8 @@ export default function NewItineraryForm(props) {
                 <option value='business'>Business</option>
                 <option value='accessibility'>Accessibility</option>
               </select>
-              <div className='flex justify-between space-x-8'>
-                <div className='flex flex-col w-1/2'>
+              <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
+                <div className='flex flex-col lg:w-1/2'>
                   <label htmlFor='startDate' className='ml-1 font-semibold'>
                     Trip Start Date
                   </label>
@@ -145,7 +145,7 @@ export default function NewItineraryForm(props) {
                     className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
                   />
                 </div>
-                <div className='flex flex-col w-1/2'>
+                <div className='flex flex-col lg:w-1/2'>
                   <label htmlFor='endDate' className='ml-1 font-semibold'>
                     Trip End Date
                   </label>
