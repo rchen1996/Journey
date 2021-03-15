@@ -1,8 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.blur {
-  -webkit-filter: blur(5px);
-  filter: blur(5px);
-}

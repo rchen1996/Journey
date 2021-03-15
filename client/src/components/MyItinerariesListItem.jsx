@@ -49,7 +49,7 @@ export default function MyItinerariesListItem(props) {
   return (
     <div className='flex flex-col justify-between w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
       <article>
-        <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1'>
+        <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
           {view === DEFAULT && (
             <div className='z-10 flex items-center justify-center space-x-8 hover:bg-gray-700 hover:bg-opacity-90 group'>
               <Link to={`/itineraries/${id}/edit`} className='group'>
@@ -57,7 +57,7 @@ export default function MyItinerariesListItem(props) {
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'
                   fill='currentColor'
-                  className='hidden w-12 h-12 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110'
+                  className='hidden w-8 h-8 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110'
                 >
                   <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
                   <path
@@ -73,7 +73,7 @@ export default function MyItinerariesListItem(props) {
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'
                     fill='currentColor'
-                    className='hidden w-12 h-12 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110 hover:text-red-600'
+                    className='hidden w-8 h-8 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110 hover:text-red-600'
                   >
                     <path
                       fillRule='evenodd'
@@ -86,7 +86,7 @@ export default function MyItinerariesListItem(props) {
             </div>
           )}
           {view === DELETE && (
-            <div className='z-10 flex space-x-8 bg-gray-700 bg-opacity-90'>
+            <div className='z-10 flex space-x-8 bg-gray-700 pointer-events-none bg-opacity-90'>
               <article className='flex flex-col items-center justify-center w-full h-full'>
                 <ErrorMessage
                   isError={error.status}
