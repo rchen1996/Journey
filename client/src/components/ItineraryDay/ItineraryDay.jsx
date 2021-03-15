@@ -19,7 +19,7 @@ export default function ItineraryDay(props) {
     if (locations) {
       locations.forEach(location => {
         location.days.forEach(day => {
-          if (day.day_order === Number(day_id)) {
+          if (day.id === Number(day_id)) {
             currentLocation = location;
             currentDay = day;
           }
@@ -57,6 +57,7 @@ export default function ItineraryDay(props) {
             to={`/itineraries/${itinerary_id}/days/${day_id}/activities/new`}
             type='button'
             className='flex items-center px-4 py-2.5 text-gray-100 bg-teal-600 h-1/2 rounded-3xl border-2 border-transparent hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+            day={dayInfo}
           >
             Add Activity
             <svg
