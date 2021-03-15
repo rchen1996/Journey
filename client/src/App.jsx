@@ -31,6 +31,7 @@ function App() {
     setItinerary,
     addDayWithLocation,
     deleteItinerary,
+    deleteBookmark,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
@@ -127,7 +128,11 @@ function App() {
           {user.id && (
             <main className='flex w-full min-h-full'>
               <LeftNav user={user} dispatch={dispatch} />
-              <Bookmarks bookmarks={bookmarks} user={user} />
+              <Bookmarks
+                bookmarks={bookmarks}
+                user={user}
+                deleteBookmark={deleteBookmark}
+              />
             </main>
           )}
         </Route>
