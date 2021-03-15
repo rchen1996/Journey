@@ -5,7 +5,7 @@ import ItineraryDayActivities from './ItineraryDayActivities';
 export default function ItineraryDay(props) {
   const { itinerary_id, day_id } = useParams();
 
-  const { itinerary } = props;
+  const { itinerary, deleteDayFromItinerary } = props;
 
   let locations;
   if (itinerary) {

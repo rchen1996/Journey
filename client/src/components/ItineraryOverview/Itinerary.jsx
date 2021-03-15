@@ -1,11 +1,11 @@
 import ItineraryDays from './ItineraryDays';
 
 export default function Itinerary(props) {
-  const { itinerary, user } = props;
+  const { itinerary, user, deleteDayFromItinerary } = props;
 
   return (
     <div className='flex w-full ml-64'>
-      <section className='sticky flex flex-col w-full h-full mx-24 my-8 mt-24'>
+      <section className='flex flex-col w-full h-full mx-24 my-8 mt-24'>
         {itinerary &&
           itinerary.locations &&
           itinerary.locations.map((location, index) => {
@@ -22,6 +22,7 @@ export default function Itinerary(props) {
                         day={day}
                         itinerary={itinerary}
                         user={user}
+                        deleteDayFromItinerary={deleteDayFromItinerary}
                       />
                     );
                   })}
