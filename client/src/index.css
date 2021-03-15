@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 .blur {
-  filter: blur(4px);
-  -webkit-filter: blur(4px);
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
 }
