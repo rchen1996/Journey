@@ -32,7 +32,7 @@ export default function Itinerary(props) {
 
   return (
     <div className='flex flex-col w-full pt-16 lg:ml-64'>
-      <section className='flex flex-col w-full h-full my-8 space-y-4 divide-y divide-gray-300'>
+      <section className='flex flex-col w-full h-full my-8 space-y-6 divide-y divide-gray-300'>
         <div>
           <h2 className='pl-4 mx-8 mb-4 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
             Itinerary Overview
@@ -120,7 +120,7 @@ export default function Itinerary(props) {
           itinerary.locations.map((location, index) => {
             return (
               <div key={index} className='mx-8 lg:mx-16'>
-                <h2 className='my-2 ml-2 text-3xl font-bold'>
+                <h2 className='mt-4 mb-2 ml-2 text-3xl font-bold'>
                   {location.name}
                 </h2>
                 {location.days &&

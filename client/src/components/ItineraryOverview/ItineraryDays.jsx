@@ -32,7 +32,7 @@ export default function ItineraryDays(props) {
   };
 
   return (
-    <article className='py-4 mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
+    <article className='pt-4 mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
       <div className='flex items-center justify-between px-4 pb-2'>
         <h2 className='px-4 py-1.5 mb-2 text-lg font-bold text-gray-100 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'>
           Day {day.day_order}

@@ -28,7 +28,7 @@ export default function ItineraryDayActivities(props) {
   };
 
   return (
-    <div className='px-4 py-4 space-y-2 duration-200 transform hover:bg-opacity-75 hover:bg-gray-600 hover:text-gray-100'>
+    <div className='px-4 py-4 space-y-2 duration-200 transform hover:bg-opacity-75 hover:bg-gray-600 hover:text-gray-100 last:rounded-b-xl'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center space-x-2'>
           <svg
