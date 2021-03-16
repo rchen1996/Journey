@@ -38,6 +38,7 @@ function App() {
     deleteDayFromItinerary,
     updateMenuState,
     deleteActivity,
+    editActivity,
     changePassword,
   } = useApplicationData();
 
@@ -94,7 +95,7 @@ function App() {
               isMenuOpen={state.isMenuOpen}
             ></MenuOpener>
             {itinerary &&
-              itinerary.users.some(member => member.id === user.id) && (
+              itinerary.users.some((member) => member.id === user.id) && (
                 <MyGroup
                   user={user}
                   itinerary={itinerary}
@@ -146,6 +147,7 @@ function App() {
               deleteDayFromItinerary={deleteDayFromItinerary}
               deleteActivity={deleteActivity}
               isMenuOpen={state.isMenuOpen}
+              editActivity={editActivity}
             />
           </main>
         </Route>

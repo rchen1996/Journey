@@ -20,6 +20,7 @@ module.exports = ({
   deleteDayFromItinerary,
   reorderDays,
   deleteActivity,
+  updateActivity,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then((itineraries) => res.send(itineraries));
@@ -342,6 +343,22 @@ module.exports = ({
             });
           }
         });
+      }
+    });
+  });
+
+  router.put('/:itinerary_id/activities/:activity_id', (req, res) => {
+    const { itinerary_id, activity_id } = req.params;
+    let { start_time, end_time, notes } = req.body;    
+    if (start_time === '') start_time = null;
+    if (end_time === '') end_time = null;
+    updateActivity(start_time, end_time, notes, activity_id).then((result) => {
+      if (result.message) {
+        res.send({ error: `apiHelpers: ${result.message}` });
+      } else {
+        getDetailedItinerary(itinerary_id).then((resultArr) => [
+          res.send(itineraryObj(resultArr)),
+        ]);
       }
     });
   });

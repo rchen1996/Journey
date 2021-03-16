@@ -6,7 +6,12 @@ import ItineraryDayActivities from './ItineraryDayActivities';
 export default function ItineraryDay(props) {
   const { itinerary_id, day_id } = useParams();
 
-  const { itinerary, deleteDayFromItinerary, deleteActivity } = props;
+  const {
+    itinerary,
+    deleteDayFromItinerary,
+    deleteActivity,
+    editActivity,
+  } = props;
 
   const url = useLocation().pathname;
 
@@ -15,13 +20,13 @@ export default function ItineraryDay(props) {
     locations = itinerary.locations;
   }
 
-  const getCurrentDay = locations => {
+  const getCurrentDay = (locations) => {
     let currentDay;
     let currentLocation;
 
     if (locations) {
-      locations.forEach(location => {
-        location.days.forEach(day => {
+      locations.forEach((location) => {
+        location.days.forEach((day) => {
           if (day.id === Number(day_id)) {
             currentLocation = location;
             currentDay = day;
@@ -38,19 +43,18 @@ export default function ItineraryDay(props) {
   const day = dayInfo.currentDay;
   const location = dayInfo.currentLocation;
 
-  const getTimeValue = timeString => {
-    const parsedTime = timeString || "23:59:59"
-    const timeValue = new Date('1970-01-01T' + parsedTime + 'Z')
-    return timeValue
-  }
+  const getTimeValue = (timeString) => {
+    const parsedTime = timeString || '23:59:59';
+    const timeValue = new Date('1970-01-01T' + parsedTime + 'Z');
+    return timeValue;
+  };
 
-  const sortActivities = activities => {
-    const sortedActivities = activities.sort((a,b) => {      
-      return getTimeValue(a.start_time) - getTimeValue(b.start_time)
-    })
-    return sortedActivities
-  }
-
+  const sortActivities = (activities) => {
+    const sortedActivities = activities.sort((a, b) => {
+      return getTimeValue(a.start_time) - getTimeValue(b.start_time);
+    });
+    return sortedActivities;
+  };
 
   const DEFAULT = 'DEFAULT';
   const DELETE = 'DELETE';
@@ -59,7 +63,7 @@ export default function ItineraryDay(props) {
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    deleteDayFromItinerary(itinerary_id, day_id).then(res => {
+    deleteDayFromItinerary(itinerary_id, day_id).then((res) => {
       if (res.error) {
         console.log(res.error);
       } else {
@@ -67,6 +71,19 @@ export default function ItineraryDay(props) {
       }
     });
   };
+
+  const activitiesTimeSlots = [];
+  if (day && day.activities) {
+    day.activities.forEach((activity) => {
+      if (activity.start_time) {
+        activitiesTimeSlots.push({
+          activity_id: activity.id,
+          start_time: activity.start_time,
+          end_time: activity.end_time,
+        });
+      }
+    });
+  }
 
   return (
     <div className='flex w-full mt-16 lg:ml-64'>
@@ -173,12 +190,14 @@ export default function ItineraryDay(props) {
         </header>
         {day &&
           day.activities &&
-          sortActivities(day.activities).map(activity => {
+          sortActivities(day.activities).map((activity) => {
             return (
               <ItineraryDayActivities
                 key={activity.id}
                 activity={activity}
                 deleteActivity={deleteActivity}
+                editActivity={editActivity}
+                timeSlots={activitiesTimeSlots}
               />
             );
           })}
