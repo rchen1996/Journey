@@ -249,8 +249,9 @@ export default function useApplicationData() {
   const editActivity = (itinerary_id, activity_id, activityForm) => {
     console.log('from useapplicationdata ', activityForm);
     return axios
-      .put(`/api/itineraries/${itinerary_id}/activities/${activity_id}`, 
-        activityForm,
+      .put(
+        `/api/itineraries/${itinerary_id}/activities/${activity_id}`,
+        activityForm
       )
       .then((res) => {
         if (res.data.error) {
@@ -262,6 +263,10 @@ export default function useApplicationData() {
         });
         return { success: 'Activity Updated' };
       });
+  };
+
+  const editItinerary = (itinerary) => {
+    return axios.put(`/api/itineraries/${itinerary.id}`, itinerary);
   };
 
   return {
@@ -284,5 +289,6 @@ export default function useApplicationData() {
     deleteActivity,
     changePassword,
     editActivity,
+    editItinerary,
   };
 }

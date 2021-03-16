@@ -3,16 +3,19 @@ import { useHistory } from 'react-router-dom';
 
 import { SET_ITINERARY } from '../reducers/application';
 
-import FormButton from './FormButton';
 import AlertMessage from './AlertMessage';
+import FormButton from './FormButton';
 
-export default function NewItineraryForm(props) {
+export default function EditItineraryForm(props) {
+  const { itinerary, dispatch, onSave } = props;
+
   const [itineraryInfo, setItineraryInfo] = useState({
-    name: '',
-    description: "My group's itinerary",
-    tripType: '',
-    image: '',
-    startDate: '',
+    id: itinerary.id,
+    name: itinerary.name,
+    description: itinerary.description,
+    tripType: itinerary.trip_type,
+    image: itinerary.image,
+    startDate: itinerary.start_date || '',
   });
 
   const [error, setError] = useState({
@@ -59,14 +62,14 @@ export default function NewItineraryForm(props) {
       return;
     }
 
-    props.onSave(itineraryInfo).then(res => {
+    onSave(itineraryInfo).then(res => {
       if (res.data.id) {
         setError({
           ...error,
           status: false,
           message: '',
         });
-        props.dispatch({
+        dispatch({
           type: SET_ITINERARY,
           itinerary: res.data,
         });
@@ -76,21 +79,21 @@ export default function NewItineraryForm(props) {
         setError({
           ...error,
           status: true,
-          message: 'You must be logged in to create an itinerary.',
+          message: res.data.error,
         });
       }
     });
   };
 
   const cancel = () => {
-    history.push(`/dashboard/${props.user.id}`);
+    history.push(`/itineraries/${itinerary.id}/edit`);
   };
 
   return (
     <section className='flex flex-col items-center w-full h-full mt-16'>
       <div className='flex flex-col w-3/4 py-8 2xl:w-1/2'>
         <h1 className='mb-4 ml-1 text-2xl font-bold'>
-          Let's Go on an Adventure!
+          Edit Itinerary Information
         </h1>
         <div className='w-full shadow-lg bg-gray-50 rounded-xl'>
           <AlertMessage
@@ -170,7 +173,7 @@ export default function NewItineraryForm(props) {
               />
             </div>
             <footer className='flex items-center px-8 py-3 space-x-4 bg-gray-300 bg-opacity-50 rounded-b-xl'>
-              <FormButton type='submit'>Create Itinerary</FormButton>
+              <FormButton type='submit'>Save</FormButton>
               <button
                 type='button'
                 onClick={cancel}

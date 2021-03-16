@@ -43,13 +43,13 @@ export default function ItineraryDay(props) {
   const day = dayInfo.currentDay;
   const location = dayInfo.currentLocation;
 
-  const getTimeValue = (timeString) => {
+  const getTimeValue = timeString => {
     const parsedTime = timeString || '23:59:59';
     const timeValue = new Date('1970-01-01T' + parsedTime + 'Z');
     return timeValue;
   };
 
-  const sortActivities = (activities) => {
+  const sortActivities = activities => {
     const sortedActivities = activities.sort((a, b) => {
       return getTimeValue(a.start_time) - getTimeValue(b.start_time);
     });
@@ -104,7 +104,10 @@ export default function ItineraryDay(props) {
               )}
               {view === DELETE && (
                 <h1 className='text-xl font-bold text-gray-200'>
-                  Delete This Day?
+                  {dayInfo.currentLocation &&
+                  dayInfo.currentLocation.days.length > 1
+                    ? 'Delete This Day?'
+                    : 'There is only one day for this location. Delete this section of the trip?'}
                 </h1>
               )}
               {url.includes('edit') && (

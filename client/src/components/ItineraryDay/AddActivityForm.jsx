@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { SET_ITINERARY } from '../../reducers/application';
 
-import ErrorMessage from '../ErrorMessage';
+import AlertMessage from '../AlertMessage';
 import FormButton from '../FormButton';
 
 export default function AddActivityForm(props) {
@@ -29,12 +29,12 @@ export default function AddActivityForm(props) {
 
   const history = useHistory();
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     let { value, name } = event.target;
     setActivity({ ...activity, [name]: value });
   };
 
-  const save = (event) => {
+  const save = event => {
     event.preventDefault();
 
     if (activity.name === '') {
@@ -79,7 +79,7 @@ export default function AddActivityForm(props) {
       return;
     }
 
-    props.onSave(activity, itinerary_id, day_id).then((res) => {
+    props.onSave(activity, itinerary_id, day_id).then(res => {
       if (res.data.id) {
         setError({
           ...error,
@@ -119,16 +119,13 @@ export default function AddActivityForm(props) {
   return (
     <div className='w-full h-full mt-16 lg:ml-64'>
       <section className='w-5/6 mx-auto my-8 shadow-lg lg:w-2/3 h-5/6 bg-gray-50 rounded-xl'>
-        <ErrorMessage
+        <AlertMessage
           isError={error.status}
           show={error.show}
           hide={error.hide}
           message={error.message}
-        ></ErrorMessage>
-        <form
-          onSubmit={(event) => save(event)}
-          className='flex flex-col h-full'
-        >
+        ></AlertMessage>
+        <form onSubmit={event => save(event)} className='flex flex-col h-full'>
           <div className='flex flex-col h-full mx-8 my-6'>
             <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
               <div className='flex flex-col lg:w-1/2'>
@@ -138,7 +135,7 @@ export default function AddActivityForm(props) {
                 <input
                   value={activity.name}
                   name='name'
-                  onChange={(event) => handleChange(event)}
+                  onChange={event => handleChange(event)}
                   type='text'
                   placeholder='Climb Mt. Everest'
                   className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -151,7 +148,7 @@ export default function AddActivityForm(props) {
                 <select
                   name='category'
                   value={activity.category}
-                  onChange={(event) => handleChange(event)}
+                  onChange={event => handleChange(event)}
                   className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
                 >
                   <option defaultValue></option>
@@ -172,7 +169,7 @@ export default function AddActivityForm(props) {
             <input
               value={activity.street}
               name='street'
-              onChange={(event) => handleChange(event)}
+              onChange={event => handleChange(event)}
               type='text'
               placeholder='123 Main Street'
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -183,7 +180,7 @@ export default function AddActivityForm(props) {
             <input
               value={activity.city}
               name='city'
-              onChange={(event) => handleChange(event)}
+              onChange={event => handleChange(event)}
               type='text'
               placeholder='New York City'
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -196,7 +193,7 @@ export default function AddActivityForm(props) {
                 <input
                   value={activity.state}
                   name='state'
-                  onChange={(event) => handleChange(event)}
+                  onChange={event => handleChange(event)}
                   type='text'
                   placeholder='New York'
                   className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -209,7 +206,7 @@ export default function AddActivityForm(props) {
                 <input
                   value={activity.postal}
                   name='postal'
-                  onChange={(event) => handleChange(event)}
+                  onChange={event => handleChange(event)}
                   type='text'
                   placeholder='12345'
                   className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -222,7 +219,7 @@ export default function AddActivityForm(props) {
             <input
               value={activity.country}
               name='country'
-              onChange={(event) => handleChange(event)}
+              onChange={event => handleChange(event)}
               type='text'
               placeholder='USA'
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -233,7 +230,7 @@ export default function AddActivityForm(props) {
             <input
               value={activity.image}
               name='image'
-              onChange={(event) => handleChange(event)}
+              onChange={event => handleChange(event)}
               type='url'
               placeholder='Image URL'
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -244,7 +241,7 @@ export default function AddActivityForm(props) {
             <textarea
               value={activity.description}
               name='description'
-              onChange={(event) => handleChange(event)}
+              onChange={event => handleChange(event)}
               type='text'
               placeholder="Let's climb Mt. Everest in one day!"
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'

@@ -21,21 +21,18 @@ module.exports = ({
   reorderDays,
   deleteActivity,
   updateActivity,
+  editItinerary,
 }) => {
   router.get('/', (req, res) => {
-    getAllItineraries().then((itineraries) => res.send(itineraries));
+    getAllItineraries().then(itineraries => res.send(itineraries));
   });
 
   router.post('/', (req, res) => {
     const userId = req.session.userId;
-    let { startDate, endDate, image } = req.body;
+    let { startDate, image } = req.body;
 
     if (startDate === '') {
       startDate = null;
-    }
-
-    if (endDate === '') {
-      endDate = null;
     }
 
     if (image === '') {
@@ -48,12 +45,11 @@ module.exports = ({
         ...req.body,
         userId,
         startDate,
-        endDate,
         image,
-      }).then((itinerary) => {
-        createTravelParty(itinerary.id, userId).then((travelParty) => {
-          getTravelParty(itinerary.id).then((users) => {
-            getDetailedItinerary(itinerary.id).then((fullItinerary) => {
+      }).then(itinerary => {
+        createTravelParty(itinerary.id, userId).then(travelParty => {
+          getTravelParty(itinerary.id).then(users => {
+            getDetailedItinerary(itinerary.id).then(fullItinerary => {
               const parsed = itineraryObj(fullItinerary);
               res.send({ ...parsed, users: parseTravelParty(users) });
             });
@@ -65,9 +61,50 @@ module.exports = ({
     }
   });
 
+  router.put('/:itinerary_id', (req, res) => {
+    const userId = req.session.userId;
+    let { startDate, image } = req.body;
+
+    if (startDate === '') {
+      startDate = null;
+    }
+
+    if (image === '') {
+      image =
+        'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80';
+    }
+
+    if (userId) {
+      getTravelParty(req.body.id).then(travelParty => {
+        let allowed = false;
+
+        travelParty.forEach(member => {
+          if (member.user_id === userId) {
+            allowed = true;
+          }
+        });
+
+        if (allowed) {
+          editItinerary({ ...req.body, startDate, image }).then(() => {
+            getDetailedItinerary(req.body.id).then(fullItinerary => {
+              const parsed = itineraryObj(fullItinerary);
+              res.send({ ...parsed, users: parseTravelParty(travelParty) });
+            });
+          });
+        } else {
+          res.send({
+            error: 'You do not have permissions to edit this itinerary',
+          });
+        }
+      });
+    } else {
+      res.send({ error: 'You must be logged in to edit an itinerary' });
+    }
+  });
+
   router.get('/:itinerary_id/collaborators', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getTravelParty(itinerary_id).then((party) => {
+    getTravelParty(itinerary_id).then(party => {
       res.send(parseTravelParty(party));
     });
   });
@@ -76,7 +113,7 @@ module.exports = ({
     const { email } = req.body;
     const { itinerary_id } = req.params;
     getTravelParty(itinerary_id)
-      .then((party) => {
+      .then(party => {
         for (const user of party) {
           if (user.email === email) {
             return res.send({ error: 'User already in party.' });
@@ -84,23 +121,23 @@ module.exports = ({
         }
 
         addCollaborator(itinerary_id, email)
-          .then((result) => {
+          .then(result => {
             if (result.message) {
               res.send({ error: 'No user with this email.' });
             } else {
-              getTravelParty(itinerary_id).then((party) => {
+              getTravelParty(itinerary_id).then(party => {
                 res.send(parseTravelParty(party));
               });
             }
           })
-          .catch((err) => res.send(err));
+          .catch(err => res.send(err));
       })
-      .catch((err) => res.send(err));
+      .catch(err => res.send(err));
   });
 
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getDetailedItinerary(itinerary_id).then((resultArr) => {
+    getDetailedItinerary(itinerary_id).then(resultArr => {
       const itinerary = itineraryObj(resultArr);
 
       res.send(itinerary);
@@ -114,14 +151,14 @@ module.exports = ({
     if (!userId) {
       res.send({ error: 'You must be logged in to delete an itinerary.' });
     } else {
-      getItinerary(itineraryId).then((itinerary) => {
+      getItinerary(itineraryId).then(itinerary => {
         if (itinerary.creator_id !== userId) {
           res.send({
             error: 'You must be the creator of an itinerary to delete it.',
           });
         } else {
           deleteItinerary(itineraryId).then(() => {
-            getItinerariesForGroup(userId).then((itineraries) => {
+            getItinerariesForGroup(userId).then(itineraries => {
               res.send(itineraries);
             });
           });
@@ -133,7 +170,7 @@ module.exports = ({
   router.delete('/:itinerary_id/users/:user_id', (req, res) => {
     const { itinerary_id, user_id } = req.params;
     deleteCollaborator(itinerary_id, user_id).then(() => {
-      getTravelParty(itinerary_id).then((party) => {
+      getTravelParty(itinerary_id).then(party => {
         res.send(parseTravelParty(party));
       });
     });
@@ -148,9 +185,9 @@ module.exports = ({
       if (!userId) {
         res.send({ error: 'You must be logged in to delete an activity' });
       } else {
-        getTravelParty(itinerary_id).then((travelParty) => {
+        getTravelParty(itinerary_id).then(travelParty => {
           let allowed = false;
-          travelParty.forEach((member) => {
+          travelParty.forEach(member => {
             if (member.id === userId) {
               allowed = true;
             }
@@ -162,7 +199,7 @@ module.exports = ({
             });
           } else {
             deleteActivity(activity_id).then(() => {
-              getDetailedItinerary(itinerary_id).then((result) => {
+              getDetailedItinerary(itinerary_id).then(result => {
                 const itinerary = itineraryObj(result);
 
                 res.send(itinerary);
@@ -178,7 +215,7 @@ module.exports = ({
     const { itinerary_id, day_id } = req.params;
     const userId = req.session.userId;
 
-    getTravelParty(itinerary_id).then((userArr) => {
+    getTravelParty(itinerary_id).then(userArr => {
       let userOfParty;
       for (const user of userArr) {
         if (user.user_id === userId) {
@@ -207,7 +244,7 @@ module.exports = ({
           .get(
             `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
           )
-          .then((res) => {
+          .then(res => {
             if (res.data.features.length < 1) {
               response.send({ addressError: 'This is not a valid address' });
             } else {
@@ -226,7 +263,7 @@ module.exports = ({
                 image,
                 address,
                 location,
-              }).then((attraction) => {
+              }).then(attraction => {
                 if (start === '') {
                   start = null;
                 }
@@ -242,8 +279,8 @@ module.exports = ({
                   attractionId: attraction.id,
                   itineraryId: itinerary_id,
                 };
-                createActivity(activity).then((activity) => {
-                  getDetailedItinerary(itinerary_id).then((itinerary) => {
+                createActivity(activity).then(activity => {
+                  getDetailedItinerary(itinerary_id).then(itinerary => {
                     const parsed = itineraryObj(itinerary);
 
                     response.send(parsed);
@@ -264,11 +301,11 @@ module.exports = ({
   router.post('/:itinerary_id', (req, res) => {
     const { itinerary_id } = req.params;
     const { location_name, new_day_order } = req.body;
-    addDayWithLocation(itinerary_id, location_name).then((result) => {
+    addDayWithLocation(itinerary_id, location_name).then(result => {
       if (result.message) {
         res.send({ error: 'No such location in database' });
       } else {
-        getDetailedItinerary(itinerary_id).then((resultArr) => {
+        getDetailedItinerary(itinerary_id).then(resultArr => {
           let newItinerary = itineraryObj(resultArr);
           const last_day_order = newItinerary.locations
             .slice(-1)[0]
@@ -286,19 +323,19 @@ module.exports = ({
             console.log('does reorder');
             const daysIdArr = [];
             const daysOrderArr = [];
-            newItinerary.locations.forEach((location) => {
-              location.days.forEach((day) => {
+            newItinerary.locations.forEach(location => {
+              location.days.forEach(day => {
                 daysIdArr.push(day.id);
                 daysOrderArr.push(day.day_order);
               });
             });
             daysIdArr.splice(new_day_order - 1, 0, daysIdArr.pop());
 
-            reorderDays(daysIdArr, daysOrderArr).then((result) => {
+            reorderDays(daysIdArr, daysOrderArr).then(result => {
               if (result.message) {
                 res.send({ error: result.message });
               } else {
-                getDetailedItinerary(itinerary_id).then((resultArr) => {
+                getDetailedItinerary(itinerary_id).then(resultArr => {
                   res.send(itineraryObj(resultArr));
                 });
               }
@@ -311,16 +348,16 @@ module.exports = ({
 
   router.delete('/:itinerary_id/days/:day_id', (req, res) => {
     const { itinerary_id, day_id } = req.params;
-    deleteDayFromItinerary(day_id).then((result) => {
+    deleteDayFromItinerary(day_id).then(result => {
       if (result.message) {
         res.send({ error: 'there was an error' });
       } else {
-        getDetailedItinerary(itinerary_id).then((resultArr) => {
+        getDetailedItinerary(itinerary_id).then(resultArr => {
           const bufferItinerary = itineraryObj(resultArr);
           const daysIdArr = [];
           const daysOrderArr = [];
-          bufferItinerary.locations.forEach((location) => {
-            location.days.forEach((day) => {
+          bufferItinerary.locations.forEach(location => {
+            location.days.forEach(day => {
               daysIdArr.push(day.id);
               daysOrderArr.push(day.day_order);
             });
@@ -330,13 +367,13 @@ module.exports = ({
           if (newOrderArr.length === 0) {
             res.send(bufferItinerary);
           } else {
-            reorderDays(daysIdArr, newOrderArr).then((result) => {
+            reorderDays(daysIdArr, newOrderArr).then(result => {
               if (result.message) {
                 res.send({
                   error: `error with reorderDays: ${result.message}`,
                 });
               } else {
-                getDetailedItinerary(itinerary_id).then((resultArr) => {
+                getDetailedItinerary(itinerary_id).then(resultArr => {
                   res.send(itineraryObj(resultArr));
                 });
               }
