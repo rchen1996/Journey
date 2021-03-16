@@ -9,7 +9,13 @@ import {
 export default function ItineraryLeftNav(props) {
   const [newLocation, setNewLocation] = useState('');
   const [dropDown, setDropDown] = useState({});
-  const { setItinerary, itinerary, user, addDayWithLocation } = props;
+  const {
+    setItinerary,
+    itinerary,
+    user,
+    addDayWithLocation,
+    isMenuOpen,
+  } = props;
   const pathname = useLocation().pathname;
   const location = useLocation();
   const { itinerary_id } = useParams();
@@ -75,7 +81,13 @@ export default function ItineraryLeftNav(props) {
   }
 
   return (
-    <nav className='fixed w-64 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar'>
+    <nav
+      className={
+        isMenuOpen
+          ? 'fixed z-40 lg:w-64 w-2/3 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar'
+          : 'hidden'
+      }
+    >
       {itinerary && (
         <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
           <div className='flex flex-col mb-2 '>

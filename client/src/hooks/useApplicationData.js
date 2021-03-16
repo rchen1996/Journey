@@ -5,6 +5,7 @@ import dataReducer, {
   SET_MY_ITINERARIES,
   SET_ITINERARY,
   SET_BOOKMARKS,
+  SHOW_MENU,
 } from '../reducers/application';
 import axios from 'axios';
 
@@ -16,6 +17,7 @@ export default function useApplicationData() {
     myItineraries: [],
     key: Math.random(),
     bookmarks: [],
+    isMenuOpen: false,
   });
 
   useEffect(() => {
@@ -197,6 +199,14 @@ export default function useApplicationData() {
       });
   }
 
+  function updateMenuState(breakpointTrigger) {
+    dispatch({
+      type: SHOW_MENU,
+      isMenuOpen:
+        breakpointTrigger === null ? !state.isMenuOpen : breakpointTrigger,
+    });
+  }
+
   const deleteActivity = (itineraryId, dayId, activityId) => {
     return axios
       .delete(
@@ -232,6 +242,7 @@ export default function useApplicationData() {
     deleteBookmark,
     addBookmark,
     deleteDayFromItinerary,
+    updateMenuState,
     deleteActivity,
   };
 }
