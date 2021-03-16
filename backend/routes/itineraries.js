@@ -19,6 +19,7 @@ module.exports = ({
   getItinerariesForGroup,
   deleteDayFromItinerary,
   reorderDays,
+  deleteActivity,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -136,6 +137,41 @@ module.exports = ({
       });
     });
   });
+
+  router.delete(
+    '/:itinerary_id/days/:day_id/activities/:activity_id',
+    (req, res) => {
+      const { itinerary_id, activity_id } = req.params;
+      const userId = req.session.userId;
+
+      if (!userId) {
+        res.send({ error: 'You must be logged in to delete an activity' });
+      } else {
+        getTravelParty(itinerary_id).then(travelParty => {
+          let allowed = false;
+          travelParty.forEach(member => {
+            if (member.id === userId) {
+              allowed = true;
+            }
+          });
+
+          if (!allowed) {
+            res.send({
+              error: "You don't have permissions to delete this activity",
+            });
+          } else {
+            deleteActivity(activity_id).then(() => {
+              getDetailedItinerary(itinerary_id).then(result => {
+                const itinerary = itineraryObj(result);
+
+                res.send(itinerary);
+              });
+            });
+          }
+        });
+      }
+    }
+  );
 
   router.post('/:itinerary_id/days/:day_id/activities', (req, response) => {
     const { itinerary_id, day_id } = req.params;
