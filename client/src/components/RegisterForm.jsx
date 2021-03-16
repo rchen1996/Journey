@@ -62,7 +62,7 @@ export default function RegisterForm(props) {
     }
 
     if (password === passwordConfirm) {
-      props.register(firstName, lastName, email, password).then((res) => {
+      props.register(firstName, lastName, email.trim().toLowerCase(), password).then((res) => {
         if (res.data.error) {
           setError({
             ...error,
