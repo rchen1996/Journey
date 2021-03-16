@@ -37,6 +37,21 @@ export default function ItineraryDay(props) {
 
   const day = dayInfo.currentDay;
   const location = dayInfo.currentLocation;
+
+  const getTimeValue = timeString => {
+    const parsedTime = timeString || "23:59:59"
+    const timeValue = new Date('1970-01-01T' + parsedTime + 'Z')
+    return timeValue
+  }
+
+  const sortActivities = activities => {
+    const sortedActivities = activities.sort((a,b) => {      
+      return getTimeValue(a.start_time) - getTimeValue(b.start_time)
+    })
+    return sortedActivities
+  }
+
+
   const DEFAULT = 'DEFAULT';
   const DELETE = 'DELETE';
   const history = useHistory();
@@ -158,7 +173,7 @@ export default function ItineraryDay(props) {
         </header>
         {day &&
           day.activities &&
-          day.activities.map(activity => {
+          sortActivities(day.activities).map(activity => {
             return (
               <ItineraryDayActivities
                 key={activity.id}

@@ -20,7 +20,7 @@ module.exports = ({
   });
 
   router.post('/login', (req, res) => {
-    getUserByEmail(req.body.email).then((user) => {
+    getUserByEmail(req.body.email).then(user => {
       if (user && bcrypt.compareSync(req.body.password, user.password)) {
         req.session.userId = user.id;
         const { id, email, first_name, last_name } = user;
@@ -35,7 +35,7 @@ module.exports = ({
   router.get('/:user_id', (req, res) => {
     getUser(req.session.userId)
       .then(user => {
-        const { id, email, first_name, last_name } = user;
+        const { id, email, first_name, last_name } = user[0];
         const parsed = { id, email, first_name, last_name };
         res.send(parsed);
       })
@@ -50,13 +50,13 @@ module.exports = ({
     const { first_name, last_name, email, password } = req.body;
     const hash = bcrypt.hashSync(password, saltRounds);
     getUserByEmail(email)
-      .then((user) => {
+      .then(user => {
         if (user) {
           res.json({
             error: 'Sorry, a user account with this email already exists',
           });
         } else {
-          return addUser(first_name, last_name, email, hash).then((user) => {
+          return addUser(first_name, last_name, email, hash).then(user => {
             req.session.userId = user.id;
             const { id, email, first_name, last_name } = user;
             const parsed = { id, email, first_name, last_name };
@@ -64,7 +64,7 @@ module.exports = ({
           });
         }
       })
-      .catch((err) =>
+      .catch(err =>
         res.json({
           error: err.message,
         })
@@ -75,7 +75,7 @@ module.exports = ({
     const userId = req.session.userId;
 
     if (userId) {
-      getItinerariesForGroup(userId).then((itineraries) => {
+      getItinerariesForGroup(userId).then(itineraries => {
         res.send(itineraries);
       });
     } else {
@@ -87,7 +87,7 @@ module.exports = ({
     const userId = req.session.userId;
 
     if (userId) {
-      getBookmarksForUser(userId).then((bookmarks) => {
+      getBookmarksForUser(userId).then(bookmarks => {
         res.send(bookmarks);
       });
     } else {
@@ -99,10 +99,10 @@ module.exports = ({
     const userId = req.session.userId;
 
     if (userId) {
-      getBookmarkByItineraryId(req.body.itineraryId, userId).then((result) => {
+      getBookmarkByItineraryId(req.body.itineraryId, userId).then(result => {
         if (result.length < 1) {
           addBookmark(req.body.itineraryId, userId).then(() => {
-            getBookmarksForUser(userId).then((bookmarks) => {
+            getBookmarksForUser(userId).then(bookmarks => {
               res.send(bookmarks);
             });
           });
@@ -122,12 +122,12 @@ module.exports = ({
     if (!userId) {
       res.send({ error: 'You must be logged in to delete a bookmark.' });
     } else {
-      getBookmark(bookmarkId).then((bookmark) => {
+      getBookmark(bookmarkId).then(bookmark => {
         if (bookmark.user_id !== userId) {
           res.send({ error: "You cannot delete another user's bookmark" });
         } else {
           deleteBookmark(bookmarkId).then(() => {
-            getBookmarksForUser(userId).then((bookmarks) => {
+            getBookmarksForUser(userId).then(bookmarks => {
               res.send(bookmarks);
             });
           });

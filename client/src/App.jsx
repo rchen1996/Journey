@@ -17,6 +17,7 @@ import ItineraryDay from './components/ItineraryDay/ItineraryDay';
 import AddActivityForm from './components/ItineraryDay/AddActivityForm';
 import Bookmarks from './components/Bookmarks';
 import MenuOpener from './components/MenuOpener';
+import ManageAccount from './components/ManageAccount';
 
 function App() {
   const {
@@ -179,6 +180,14 @@ function App() {
                 deleteBookmark={deleteBookmark}
                 dispatch={dispatch}
               />
+            </main>
+          )}
+        </Route>
+        <Route path='/dashboard/:user_id/edit'>
+          {user.id && (
+            <main className='flex w-full min-h-screen'>
+              <LeftNav user={user} dispatch={dispatch} />
+              <ManageAccount user={user}></ManageAccount>
             </main>
           )}
         </Route>
