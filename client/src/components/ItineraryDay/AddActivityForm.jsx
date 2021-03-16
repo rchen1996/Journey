@@ -9,8 +9,6 @@ export default function AddActivityForm(props) {
   const { itinerary_id, day_id } = useParams();
 
   const [activity, setActivity] = useState({
-    start: '',
-    end: '',
     name: '',
     description: '',
     image: '',
@@ -31,12 +29,12 @@ export default function AddActivityForm(props) {
 
   const history = useHistory();
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     let { value, name } = event.target;
     setActivity({ ...activity, [name]: value });
   };
 
-  const save = event => {
+  const save = (event) => {
     event.preventDefault();
 
     if (activity.name === '') {
@@ -81,7 +79,7 @@ export default function AddActivityForm(props) {
       return;
     }
 
-    props.onSave(activity, itinerary_id, day_id).then(res => {
+    props.onSave(activity, itinerary_id, day_id).then((res) => {
       if (res.data.id) {
         setError({
           ...error,
@@ -127,7 +125,10 @@ export default function AddActivityForm(props) {
           hide={error.hide}
           message={error.message}
         ></ErrorMessage>
-        <form onSubmit={event => save(event)} className='flex flex-col h-full'>
+        <form
+          onSubmit={(event) => save(event)}
+          className='flex flex-col h-full'
+        >
           <div className='flex flex-col h-full mx-8 my-6'>
             <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
               <div className='flex flex-col lg:w-1/2'>
@@ -137,7 +138,7 @@ export default function AddActivityForm(props) {
                 <input
                   value={activity.name}
                   name='name'
-                  onChange={event => handleChange(event)}
+                  onChange={(event) => handleChange(event)}
                   type='text'
                   placeholder='Climb Mt. Everest'
                   className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -150,7 +151,7 @@ export default function AddActivityForm(props) {
                 <select
                   name='category'
                   value={activity.category}
-                  onChange={event => handleChange(event)}
+                  onChange={(event) => handleChange(event)}
                   className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
                 >
                   <option defaultValue></option>
@@ -171,7 +172,7 @@ export default function AddActivityForm(props) {
             <input
               value={activity.street}
               name='street'
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
               type='text'
               placeholder='123 Main Street'
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -182,7 +183,7 @@ export default function AddActivityForm(props) {
             <input
               value={activity.city}
               name='city'
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
               type='text'
               placeholder='New York City'
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -195,7 +196,7 @@ export default function AddActivityForm(props) {
                 <input
                   value={activity.state}
                   name='state'
-                  onChange={event => handleChange(event)}
+                  onChange={(event) => handleChange(event)}
                   type='text'
                   placeholder='New York'
                   className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -208,7 +209,7 @@ export default function AddActivityForm(props) {
                 <input
                   value={activity.postal}
                   name='postal'
-                  onChange={event => handleChange(event)}
+                  onChange={(event) => handleChange(event)}
                   type='text'
                   placeholder='12345'
                   className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -221,7 +222,7 @@ export default function AddActivityForm(props) {
             <input
               value={activity.country}
               name='country'
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
               type='text'
               placeholder='USA'
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -232,7 +233,7 @@ export default function AddActivityForm(props) {
             <input
               value={activity.image}
               name='image'
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
               type='url'
               placeholder='Image URL'
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
@@ -243,37 +244,11 @@ export default function AddActivityForm(props) {
             <textarea
               value={activity.description}
               name='description'
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
               type='text'
               placeholder="Let's climb Mt. Everest in one day!"
               className='mb-4 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
             />
-            <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
-              <div className='flex flex-col lg:w-1/2'>
-                <label htmlFor='start' className='font-semibold'>
-                  Start Time
-                </label>
-                <input
-                  value={activity.start}
-                  name='start'
-                  onChange={event => handleChange(event)}
-                  type='time'
-                  className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-                />
-              </div>
-              <div className='flex flex-col lg:w-1/2'>
-                <label htmlFor='end' className='font-semibold'>
-                  End Time
-                </label>
-                <input
-                  value={activity.end}
-                  name='end'
-                  onChange={event => handleChange(event)}
-                  type='time'
-                  className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-                />
-              </div>
-            </div>
           </div>
           <footer className='flex items-center px-8 py-3 space-x-4 bg-gray-300 bg-opacity-50 rounded-b-xl'>
             <FormButton type='submit'>Save</FormButton>

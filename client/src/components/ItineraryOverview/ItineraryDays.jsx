@@ -7,6 +7,18 @@ export default function ItineraryDays(props) {
   const { day, itinerary, user, deleteDayFromItinerary } = props;
 
   const { pathname } = useLocation();
+  const getTimeValue = timeString => {
+    const parsedTime = timeString || "23:59:59"
+    const timeValue = new Date('1970-01-01T' + parsedTime + 'Z')
+    return timeValue
+  }
+
+  const sortActivities = activities => {
+    const sortedActivities = activities.sort((a,b) => {      
+      return getTimeValue(a.start_time) - getTimeValue(b.start_time)
+    })
+    return sortedActivities
+  }
 
   const DEFAULT = 'DEFAULT';
   const DELETE = 'DELETE';
@@ -95,7 +107,7 @@ export default function ItineraryDays(props) {
           )}
       </div>
       {day.activities &&
-        day.activities.map(activity => {
+        sortActivities(day.activities).map(activity => {
           return (
             <ItineraryDayActivities key={activity.id} activity={activity} />
           );
