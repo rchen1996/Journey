@@ -34,7 +34,11 @@ module.exports = ({
 
   router.get('/:user_id', (req, res) => {
     getUser(req.session.userId)
-      .then(user => res.send(user))
+      .then(user => {
+        const { id, email, first_name, last_name } = user;
+        const parsed = { id, email, first_name, last_name };
+        res.send(parsed);
+      })
       .catch(err =>
         res.send({
           error: err.message,
