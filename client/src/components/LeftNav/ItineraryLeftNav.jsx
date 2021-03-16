@@ -76,6 +76,12 @@ export default function ItineraryLeftNav(props) {
     });
   }
 
+  const addDays = (date, days) => {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
+
   return (
     <nav
       className={
@@ -161,7 +167,7 @@ export default function ItineraryLeftNav(props) {
                           className='px-4 py-2 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                           replace
                         >
-                          Day {day.day_order}
+                          Day {day.day_order} {itinerary.start_date && `(${addDays(itinerary.start_date, day.day_order -1).toDateString().substring(4,10)})`}
                         </NavLink>
                       );
                     })}

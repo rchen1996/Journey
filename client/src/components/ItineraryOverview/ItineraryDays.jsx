@@ -7,13 +7,13 @@ export default function ItineraryDays(props) {
   const { day, itinerary, user, deleteDayFromItinerary, days } = props;
 
   const { pathname } = useLocation();
-  const getTimeValue = timeString => {
+  const getTimeValue = (timeString) => {
     const parsedTime = timeString || '23:59:59';
     const timeValue = new Date('1970-01-01T' + parsedTime + 'Z');
     return timeValue;
   };
 
-  const sortActivities = activities => {
+  const sortActivities = (activities) => {
     const sortedActivities = activities.sort((a, b) => {
       return getTimeValue(a.start_time) - getTimeValue(b.start_time);
     });
@@ -25,20 +25,27 @@ export default function ItineraryDays(props) {
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    deleteDayFromItinerary(itinerary.id, day.id).then(res => {
+    deleteDayFromItinerary(itinerary.id, day.id).then((res) => {
       if (res.error) console.log('error: ', res.error);
       // if (res.success) console.log('success: ', res.success);
     });
+  };
+  const addDays = (date, days) => {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   };
 
   return (
     <article className='pt-4 mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
       <div className='flex items-center justify-between px-4 pb-2'>
         <h2 className='px-4 py-1.5 mb-2 text-lg font-bold text-gray-100 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'>
-          Day {day.day_order}
+          Day {day.day_order}{' '}
+          {itinerary.start_date &&
+            ` - ${addDays(itinerary.start_date, day.day_order - 1).toDateString().substring(0,10)}`}
         </h2>
         {pathname.includes('edit') &&
-          itinerary.users.some(member => member.id === user.id) && (
+          itinerary.users.some((member) => member.id === user.id) && (
             <div className='flex items-center justify-center space-x-3'>
               <div
                 className={view === DELETE ? 'hidden' : 'flex space-x-4 mr-2'}
@@ -109,7 +116,7 @@ export default function ItineraryDays(props) {
           )}
       </div>
       {day.activities &&
-        sortActivities(day.activities).map(activity => {
+        sortActivities(day.activities).map((activity) => {
           return (
             <ItineraryDayActivities key={activity.id} activity={activity} />
           );
