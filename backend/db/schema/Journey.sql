@@ -40,7 +40,7 @@ CREATE TABLE "itineraries" (
   "trip_type" traveler_type,
   "visible" boolean NOT NULL DEFAULT false,
   "creator_id" int NOT NULL,
-  "start_date" date,
+  "start_date" date
 );
 
 DROP TABLE IF EXISTS travel_parties CASCADE;
