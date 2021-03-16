@@ -15,7 +15,7 @@ module.exports = db => {
 
   const createNewItinerary = itinerary => {
     const query = {
-      text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date, end_date) 
+      text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
       values: [
         itinerary.name,
@@ -24,7 +24,6 @@ module.exports = db => {
         itinerary.tripType,
         itinerary.userId,
         itinerary.startDate,
-        itinerary.endDate,
       ],
     };
 
@@ -261,6 +260,28 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const editItinerary = itinerary => {
+    const query = {
+      text: `UPDATE itineraries
+      SET name = $1, description = $2, image = $3, trip_type = $4, start_date = $5
+      WHERE id = $6
+      RETURNING *;`,
+      values: [
+        itinerary.name,
+        itinerary.description,
+        itinerary.image,
+        itinerary.tripType,
+        itinerary.startDate,
+        itinerary.id,
+      ],
+    };
+
+    return db
+      .query(query)
+      .then(res => res.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -278,5 +299,6 @@ module.exports = db => {
     deleteDayFromItinerary,
     reorderDays,
     deleteActivity,
+    editItinerary,
   };
 };
