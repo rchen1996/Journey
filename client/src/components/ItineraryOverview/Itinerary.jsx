@@ -1,9 +1,16 @@
 import { useLocation, Link } from 'react-router-dom';
+import { useState } from 'react';
 
 import ItineraryDays from './ItineraryDays';
+import Confirm from '../Confirm';
 
 export default function Itinerary(props) {
   const { itinerary, user, deleteDayFromItinerary } = props;
+
+  const [showConfirm, setShowConfirm] = useState({
+    isDisplayed: false,
+    dayToDelete: null,
+  });
 
   const url = useLocation().pathname;
 
@@ -34,8 +41,19 @@ export default function Itinerary(props) {
     );
   }
 
+  const handleDelete = () => {
+    deleteDayFromItinerary(itinerary.id, showConfirm.dayToDelete).then(res => {
+      if (res.error) console.log('error: ', res.error);
+    });
+  };
+
   return (
     <div className='flex flex-col w-full pt-16 lg:ml-64'>
+      <Confirm
+        show={showConfirm.isDisplayed}
+        showConfirm={setShowConfirm}
+        delete={handleDelete}
+      ></Confirm>
       <section className='flex flex-col w-full h-full my-8 space-y-6 divide-y divide-gray-300'>
         <div>
           <h2 className='pl-4 mx-8 mb-4 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
@@ -159,6 +177,7 @@ export default function Itinerary(props) {
                         user={user}
                         deleteDayFromItinerary={deleteDayFromItinerary}
                         days={location.days}
+                        showConfirm={setShowConfirm}
                       />
                     );
                   })}

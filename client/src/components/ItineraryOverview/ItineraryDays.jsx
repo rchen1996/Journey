@@ -4,7 +4,14 @@ import { useState } from 'react';
 import ItineraryDayActivities from './ItineraryDayActivities';
 
 export default function ItineraryDays(props) {
-  const { day, itinerary, user, deleteDayFromItinerary, days } = props;
+  const {
+    day,
+    itinerary,
+    user,
+    deleteDayFromItinerary,
+    days,
+    showConfirm,
+  } = props;
 
   const { pathname } = useLocation();
   const getTimeValue = timeString => {
@@ -32,14 +39,26 @@ export default function ItineraryDays(props) {
   };
 
   return (
-    <article className='pt-4 mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
-      <div className='flex items-center justify-between px-4 pb-2'>
-        <h2 className='px-4 py-1.5 mb-2 text-lg font-bold text-gray-100 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'>
+    <article className='mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
+      <div
+        className={
+          view !== DELETE
+            ? 'flex items-center justify-between px-4 pt-4 pb-2 rounded-xl'
+            : 'flex items-center justify-between px-4 pt-4 pb-2 bg-gray-600 rounded-t-xl'
+        }
+      >
+        <h2
+          className={
+            view !== DELETE
+              ? 'px-4 py-1.5 mb-2 text-lg font-bold text-gray-100 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'
+              : 'hidden'
+          }
+        >
           Day {day.day_order}
         </h2>
         {pathname.includes('edit') &&
           itinerary.users.some(member => member.id === user.id) && (
-            <div className='flex items-center justify-center space-x-3'>
+            <div className='flex flex-wrap items-center justify-center space-x-3'>
               <div
                 className={view === DELETE ? 'hidden' : 'flex space-x-4 mr-2'}
               >
@@ -81,12 +100,13 @@ export default function ItineraryDays(props) {
                 </button>
               </div>
               {view === DELETE && (
-                <div className='flex p-2 space-x-8 bg-gray-700 bg-opacity-90 rounded-xl'>
-                  <h4 className='px-2 py-2 text-base font-bold text-gray-100 whitespace-nowrap lg:text-base'>
+                <div className='flex flex-col p-2 text-gray-600 bg-opacity-90 rounded-xl'>
+                  <h4 className='text-xl font-bold lg:text-base'>Delete Day</h4>
+                  <p className='text-gray-200'>
                     {days.length > 1
                       ? 'Delete This Day?'
                       : 'There is only one day for this location. Delete this section of the trip?'}
-                  </h4>
+                  </p>
                   <div className='flex space-x-4'>
                     <button
                       type='button'
