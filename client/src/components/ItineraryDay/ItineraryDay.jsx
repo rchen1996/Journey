@@ -1,4 +1,5 @@
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useHistory } from 'react-router-dom';
+import { useState } from 'react';
 
 import ItineraryDayActivities from './ItineraryDayActivities';
 
@@ -14,13 +15,13 @@ export default function ItineraryDay(props) {
     locations = itinerary.locations;
   }
 
-  const getCurrentDay = locations => {
+  const getCurrentDay = (locations) => {
     let currentDay;
     let currentLocation;
 
     if (locations) {
-      locations.forEach(location => {
-        location.days.forEach(day => {
+      locations.forEach((location) => {
+        location.days.forEach((day) => {
           if (day.id === Number(day_id)) {
             currentLocation = location;
             currentDay = day;
@@ -36,6 +37,21 @@ export default function ItineraryDay(props) {
 
   const day = dayInfo.currentDay;
   const location = dayInfo.currentLocation;
+  const DEFAULT = 'DEFAULT';
+  const DELETE = 'DELETE';
+  const history = useHistory()
+
+  const [view, setView] = useState(DEFAULT);
+
+  const handleDelete = () => {
+    deleteDayFromItinerary(itinerary_id,day_id).then(res => {
+      if(res.error){
+        console.log(res.error)
+      } else {
+        history.push(`/itineraries/${itinerary_id}/edit`)
+      }
+    })
+  };
 
   return (
     <div className='flex w-full mt-16 ml-64'>
@@ -56,31 +72,50 @@ export default function ItineraryDay(props) {
             )}
           </div>
           {url.includes('edit') && (
-            <Link
-              to={`/itineraries/${itinerary_id}/days/${day_id}/activities/new`}
-              type='button'
-              className='flex items-center px-4 py-2.5 text-gray-100 bg-teal-600 h-1/2 rounded-3xl border-2 border-transparent hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
-              day={dayInfo}
-            >
-              Add Activity
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 20 20'
-                fill='currentColor'
-                className='w-6 h-6 ml-2'
+            <>
+              {view === DEFAULT && (
+                <div>
+                  <button type='button' onClick={() => setView(DELETE)}>
+                    Delete
+                  </button>
+                </div>
+              )}
+              {view === DELETE && (
+                <div>
+                  <button type='button' onClick={() => setView(DEFAULT)}>
+                    Cancel
+                  </button>
+                  <button type='button' onClick={handleDelete}>
+                    Confirm
+                  </button>
+                </div>
+              )}
+              <Link
+                to={`/itineraries/${itinerary_id}/days/${day_id}/activities/new`}
+                type='button'
+                className='flex items-center px-4 py-2.5 text-gray-100 bg-teal-600 h-1/2 rounded-3xl border-2 border-transparent hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+                day={dayInfo}
               >
-                <path
-                  fillRule='evenodd'
-                  d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
-                  clipRule='evenodd'
-                />
-              </svg>
-            </Link>
+                Add Activity
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                  className='w-6 h-6 ml-2'
+                >
+                  <path
+                    fillRule='evenodd'
+                    d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
+                    clipRule='evenodd'
+                  />
+                </svg>
+              </Link>
+            </>
           )}
         </header>
         {day &&
           day.activities &&
-          day.activities.map(activity => {
+          day.activities.map((activity) => {
             return (
               <ItineraryDayActivities key={activity.id} activity={activity} />
             );
