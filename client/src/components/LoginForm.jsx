@@ -20,12 +20,12 @@ export default function LoginForm(props) {
 
   const history = useHistory();
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { value, name } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  const save = event => {
+  const save = (event) => {
     event.preventDefault();
 
     if (userInfo.email === '') {
@@ -46,28 +46,30 @@ export default function LoginForm(props) {
       return;
     }
 
-    props.onSave(userInfo.email, userInfo.password).then(res => {
-      if (res.data.email) {
-        setError({
-          ...error,
-          status: false,
-          message: '',
-        });
+    props
+      .onSave(userInfo.email.trim().toLowerCase(), userInfo.password)
+      .then((res) => {
+        if (res.data.email) {
+          setError({
+            ...error,
+            status: false,
+            message: '',
+          });
 
-        props.dispatch({
-          type: SET_USER,
-          user: res.data,
-        });
+          props.dispatch({
+            type: SET_USER,
+            user: res.data,
+          });
 
-        history.push(`/dashboard/${res.data.id}`);
-      } else if (res.data.error) {
-        setError({
-          ...error,
-          status: true,
-          message: 'Incorrect email or password.',
-        });
-      }
-    });
+          history.push(`/dashboard/${res.data.id}`);
+        } else if (res.data.error) {
+          setError({
+            ...error,
+            status: true,
+            message: 'Incorrect email or password.',
+          });
+        }
+      });
   };
 
   return (
@@ -78,7 +80,7 @@ export default function LoginForm(props) {
         hide={error.hide}
         message={error.message}
       ></ErrorMessage>
-      <form onSubmit={event => save(event)} className='flex flex-col'>
+      <form onSubmit={(event) => save(event)} className='flex flex-col'>
         <div className='flex flex-col mx-8 my-4'>
           <label htmlFor='email' className='font-semibold'>
             Email
