@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ErrorMessage from './ErrorMessage';
+import AlertMessage from './AlertMessage';
 
 export default function MyGroup(props) {
   const { user, removeCollaborator, addCollaborator } = props;
@@ -73,12 +73,12 @@ export default function MyGroup(props) {
           <header className='flex flex-col w-full space-y-2'>
             <div className='flex items-center justify-between'>
               <h1 className='text-2xl font-bold'>My Group</h1>
-              <ErrorMessage
+              <AlertMessage
                 isError={error.status}
                 show={error.show}
                 hide={error.hide}
                 message={error.message}
-              ></ErrorMessage>
+              ></AlertMessage>
             </div>
             <div className='flex items-center justify-between'>
               <div className='flex space-x-2'>

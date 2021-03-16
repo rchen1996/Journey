@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { SET_ITINERARY } from '../reducers/application';
 
 import FormButton from './FormButton';
-import ErrorMessage from './ErrorMessage';
+import AlertMessage from './AlertMessage';
 
 export default function NewItineraryForm(props) {
   const [itineraryInfo, setItineraryInfo] = useState({
@@ -93,12 +93,12 @@ export default function NewItineraryForm(props) {
           Let's Go on an Adventure!
         </h1>
         <div className='w-full shadow-lg bg-gray-50 rounded-xl'>
-          <ErrorMessage
+          <AlertMessage
             isError={error.status}
             show={error.show}
             hide={error.hide}
             message={error.message}
-          ></ErrorMessage>
+          ></AlertMessage>
           <form onSubmit={event => save(event)} className='flex flex-col'>
             <div className='flex flex-col mx-8 my-6'>
               <label htmlFor='name' className='ml-1 font-semibold'>

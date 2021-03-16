@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { SET_BOOKMARKS } from '../reducers/application';
 
-import ErrorMessage from './ErrorMessage';
+import AlertMessage from './AlertMessage';
 
 export default function BookmarksItem(props) {
   const {
@@ -74,12 +74,12 @@ export default function BookmarksItem(props) {
           {view === DELETE && (
             <div className='z-10 flex space-x-8 bg-gray-700 bg-opacity-90'>
               <article className='flex flex-col items-center justify-center w-full h-full'>
-                <ErrorMessage
+                <AlertMessage
                   isError={error.status}
                   show={error.show}
                   hide={error.hide}
                   message={error.message}
-                ></ErrorMessage>
+                ></AlertMessage>
                 <h4 className='p-2 text-base font-bold text-gray-100 shadow-md whitespace-nowrap lg:text-base'>
                   Delete This Bookmark?
                 </h4>
