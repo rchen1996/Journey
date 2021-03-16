@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ErrorMessage from './ErrorMessage';
+import AlertMessage from './AlertMessage';
 import FormButton from './FormButton';
 
 export default function ManageAccount(props) {
@@ -115,19 +115,18 @@ export default function ManageAccount(props) {
           </div>
 
           <h4 className='ml-1 text-2xl font-bold'>Change Account Password</h4>
-          <ErrorMessage
+          <AlertMessage
             isError={!error.status}
             show={'flex p-3 mt-4 bg-teal-600 rounded-xl'}
             hide={'hidden'}
             message={error.message}
-          ></ErrorMessage>
-
-          <ErrorMessage
+          ></AlertMessage>
+          <AlertMessage
             isError={error.status}
             show={error.show}
             hide={error.hide}
             message={error.message}
-          ></ErrorMessage>
+          ></AlertMessage>
           <div className='w-full mt-4 shadow-lg bg-gray-50 rounded-xl'>
             <form onSubmit={save} className='flex flex-col'>
               <fieldset className='flex flex-col mx-8 mt-6 mb-2'>

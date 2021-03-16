@@ -3,7 +3,7 @@ import { SET_USER } from '../reducers/application';
 import { Link, useHistory } from 'react-router-dom';
 
 import FormButton from './FormButton';
-import ErrorMessage from './ErrorMessage';
+import AlertMessage from './AlertMessage';
 
 export default function LoginForm(props) {
   const [userInfo, setUserInfo] = useState({
@@ -20,12 +20,12 @@ export default function LoginForm(props) {
 
   const history = useHistory();
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { value, name } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  const save = (event) => {
+  const save = event => {
     event.preventDefault();
 
     if (userInfo.email === '') {
@@ -48,7 +48,7 @@ export default function LoginForm(props) {
 
     props
       .onSave(userInfo.email.trim().toLowerCase(), userInfo.password)
-      .then((res) => {
+      .then(res => {
         if (res.data.email) {
           setError({
             ...error,
@@ -74,13 +74,13 @@ export default function LoginForm(props) {
 
   return (
     <section className='w-full shadow-lg bg-gray-50 rounded-xl'>
-      <ErrorMessage
+      <AlertMessage
         isError={error.status}
         show={error.show}
         hide={error.hide}
         message={error.message}
-      ></ErrorMessage>
-      <form onSubmit={(event) => save(event)} className='flex flex-col'>
+      ></AlertMessage>
+      <form onSubmit={event => save(event)} className='flex flex-col'>
         <div className='flex flex-col mx-8 my-4'>
           <label htmlFor='email' className='font-semibold'>
             Email

@@ -1,4 +1,4 @@
-export default function ErrorMessage(props) {
+export default function AlertMessage(props) {
   return (
     <div className={props.isError ? props.show : props.hide}>
       <svg
