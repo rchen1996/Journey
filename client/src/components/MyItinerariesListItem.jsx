@@ -2,6 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { SET_MY_ITINERARIES } from '../reducers/application';
 import AlertMessage from './AlertMessage';
+import Confirm from './Confirm';
 
 export default function MyItinerariesListItem(props) {
   const {
