@@ -56,33 +56,39 @@ export default function RegisterForm(props) {
       default:
         setError({
           ...error,
-          status: true,
-          message: 'Fields cannot be blank.',
+          status: false,
+          message: '',
         });
     }
 
     if (password === passwordConfirm) {
-      props.register(firstName, lastName, email, password).then(res => {
-        props.dispatch({
-          type: SET_USER,
-          user: res.data,
-        });
+      props.register(firstName, lastName, email, password).then((res) => {
+        if (res.data.error) {
+          setError({
+            ...error,
+            status: true,
+            message: res.data.error,
+          });
+        } else {
+          props.dispatch({
+            type: SET_USER,
+            user: res.data,
+          });
 
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('');
-        setPasswordConfirm('');
-        setError({
-          ...error,
-          status: false,
-          message: '',
-        });
-
-        history.push(`/dashboard/${res.data.id}`);
-
-        return;
+          setFirstName('');
+          setLastName('');
+          setEmail('');
+          setPassword('');
+          setPasswordConfirm('');
+          setError({
+            ...error,
+            status: false,
+            message: '',
+          });
+          history.push(`/dashboard/${res.data.id}`);
+        }
       });
+      return;
     }
     setError({
       ...error,
@@ -101,7 +107,7 @@ export default function RegisterForm(props) {
       ></ErrorMessage>
       <form
         autoComplete='off'
-        onSubmit={event => save(event)}
+        onSubmit={(event) => save(event)}
         className='flex flex-col'
       >
         <div className='flex flex-col mx-8 my-6'>
@@ -114,7 +120,7 @@ export default function RegisterForm(props) {
             type='text'
             placeholder='First Name'
             value={firstName}
-            onChange={event => setFirstName(event.target.value)}
+            onChange={(event) => setFirstName(event.target.value)}
           />
           <label htmlFor='last-name' className='ml-1 font-semibold'>
             Last Name
@@ -125,7 +131,7 @@ export default function RegisterForm(props) {
             type='text'
             placeholder='Last Name'
             value={lastName}
-            onChange={event => setLastName(event.target.value)}
+            onChange={(event) => setLastName(event.target.value)}
           />
           <label htmlFor='email' className='ml-1 font-semibold'>
             Email
@@ -136,7 +142,7 @@ export default function RegisterForm(props) {
             type='email'
             placeholder='Email'
             value={email}
-            onChange={event => setEmail(event.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
           />
           <label htmlFor='password' className='ml-1 font-semibold'>
             Password
@@ -147,7 +153,7 @@ export default function RegisterForm(props) {
             type='password'
             value={password}
             placeholder='Password'
-            onChange={event => setPassword(event.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
           />
           <label htmlFor='password-confirmation' className='ml-1 font-semibold'>
             Confirm Password
@@ -158,7 +164,7 @@ export default function RegisterForm(props) {
             type='password'
             placeholder='Confirm Password'
             value={passwordConfirm}
-            onChange={event => setPasswordConfirm(event.target.value)}
+            onChange={(event) => setPasswordConfirm(event.target.value)}
           />
         </div>
         <footer className='flex flex-col items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 sm:items-center sm:flex-row rounded-b-xl'>

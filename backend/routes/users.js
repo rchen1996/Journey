@@ -47,7 +47,7 @@ module.exports = ({
       .then((user) => {
         if (user) {
           res.json({
-            msg: 'Sorry, a user account with this email already exists',
+            error: 'Sorry, a user account with this email already exists',
           });
         } else {
           return addUser(first_name, last_name, email, hash).then((user) => {
