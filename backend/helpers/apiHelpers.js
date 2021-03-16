@@ -99,6 +99,7 @@ module.exports = db => {
       activities.id as activity_id,
       activities.start_time as activity_start_time,
       activities.end_time as activity_end_time,
+      activities.notes as activity_notes,
       attractions.name as attraction_name,
       attractions.image as attraction_image,
       attractions.address as attraction_address,

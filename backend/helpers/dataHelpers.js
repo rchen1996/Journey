@@ -45,6 +45,7 @@ const itineraryObj = (resultArr) => {
           id: item.activity_id,
           start_time: item.activity_start_time,
           end_time: item.activity_end_time,
+          notes: item.activity_notes,
           name: item.attraction_name,
           image: item.attraction_image,
           address: item.attraction_address,
@@ -86,7 +87,5 @@ const parseTravelParty = (party) => {
     last_name: user.last_name,
   }));
 };
-
-
 
 module.exports = { itineraryObj, parseTravelParty };
