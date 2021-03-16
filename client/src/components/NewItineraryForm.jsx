@@ -13,7 +13,6 @@ export default function NewItineraryForm(props) {
     tripType: '',
     image: '',
     startDate: '',
-    endDate: '',
   });
 
   const [error, setError] = useState({
@@ -140,18 +139,6 @@ export default function NewItineraryForm(props) {
                   <input
                     value={itineraryInfo.startDate}
                     name='startDate'
-                    onChange={handleChange}
-                    type='date'
-                    className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-                  />
-                </div>
-                <div className='flex flex-col lg:w-1/2'>
-                  <label htmlFor='endDate' className='ml-1 font-semibold'>
-                    Trip End Date
-                  </label>
-                  <input
-                    value={itineraryInfo.endDate}
-                    name='endDate'
                     onChange={handleChange}
                     type='date'
                     className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
