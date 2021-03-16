@@ -28,14 +28,14 @@ export default function ItineraryDayActivities(props) {
   };
 
   return (
-    <div className='px-4 py-4 space-y-2 duration-200 transform hover:bg-opacity-75 hover:bg-gray-600 hover:text-gray-100'>
+    <div className='px-4 py-4 space-y-2 duration-200 transform hover:bg-opacity-75 hover:bg-gray-600 hover:text-gray-100 last:rounded-b-xl'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center space-x-2'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 20 20'
             fill='currentColor'
-            className='w-5 h-5'
+            className='flex-shrink-0 w-5 h-5'
           >
             <path
               fillRule='evenodd'
@@ -51,7 +51,7 @@ export default function ItineraryDayActivities(props) {
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 20 20'
           fill='currentColor'
-          className='w-5 h-5'
+          className='flex-shrink-0 w-5 h-5'
         >
           <path
             fillRule='evenodd'
@@ -68,7 +68,7 @@ export default function ItineraryDayActivities(props) {
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 20 20'
               fill='currentColor'
-              className='w-5 h-5'
+              className='flex-shrink-0 w-5 h-5'
             >
               <path
                 fillRule='evenodd'

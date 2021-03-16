@@ -18,6 +18,7 @@ import AddActivityForm from './components/ItineraryDay/AddActivityForm';
 import Bookmarks from './components/Bookmarks';
 import MenuOpener from './components/MenuOpener';
 import ManageAccount from './components/ManageAccount';
+import EditItineraryForm from './components/EditItineraryForm';
 
 function App() {
   const {
@@ -38,7 +39,9 @@ function App() {
     deleteDayFromItinerary,
     updateMenuState,
     deleteActivity,
+    editActivity,
     changePassword,
+    editItinerary,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
@@ -94,7 +97,7 @@ function App() {
               isMenuOpen={state.isMenuOpen}
             ></MenuOpener>
             {itinerary &&
-              itinerary.users.some(member => member.id === user.id) && (
+              itinerary.users.some((member) => member.id === user.id) && (
                 <MyGroup
                   user={user}
                   itinerary={itinerary}
@@ -146,6 +149,27 @@ function App() {
               deleteDayFromItinerary={deleteDayFromItinerary}
               deleteActivity={deleteActivity}
               isMenuOpen={state.isMenuOpen}
+              editActivity={editActivity}
+            />
+          </main>
+        </Route>
+        <Route path='/itineraries/:itinerary_id/overview/edit'>
+          <main className='relative flex w-full min-h-screen'>
+            <LeftNav
+              user={user}
+              itinerary={itinerary}
+              setItinerary={setItinerary}
+              addDayWithLocation={addDayWithLocation}
+              isMenuOpen={state.isMenuOpen}
+            />
+            <MenuOpener
+              updateMenuState={updateMenuState}
+              isMenuOpen={state.isMenuOpen}
+            ></MenuOpener>
+            <EditItineraryForm
+              dispatch={dispatch}
+              itinerary={itinerary}
+              onSave={editItinerary}
             />
           </main>
         </Route>
