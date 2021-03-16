@@ -20,6 +20,7 @@ module.exports = ({
   deleteDayFromItinerary,
   reorderDays,
   deleteActivity,
+  editItinerary,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -33,8 +34,6 @@ module.exports = ({
       startDate = null;
     }
 
-    const endDate = null;
-
     if (image === '') {
       image =
         'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80';
@@ -45,7 +44,6 @@ module.exports = ({
         ...req.body,
         userId,
         startDate,
-        endDate,
         image,
       }).then(itinerary => {
         createTravelParty(itinerary.id, userId).then(travelParty => {
@@ -59,6 +57,47 @@ module.exports = ({
       });
     } else {
       res.send({ error: 'cannot create itinerary when user does not exist' });
+    }
+  });
+
+  router.put('/:itinerary_id', (req, res) => {
+    const userId = req.session.userId;
+    let { startDate, image } = req.body;
+
+    if (startDate === '') {
+      startDate = null;
+    }
+
+    if (image === '') {
+      image =
+        'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80';
+    }
+
+    if (userId) {
+      getTravelParty(req.body.id).then(travelParty => {
+        let allowed = false;
+
+        travelParty.forEach(member => {
+          if (member.user_id === userId) {
+            allowed = true;
+          }
+        });
+
+        if (allowed) {
+          editItinerary({ ...req.body, startDate, image }).then(() => {
+            getDetailedItinerary(req.body.id).then(fullItinerary => {
+              const parsed = itineraryObj(fullItinerary);
+              res.send({ ...parsed, users: parseTravelParty(travelParty) });
+            });
+          });
+        } else {
+          res.send({
+            error: 'You do not have permissions to edit this itinerary',
+          });
+        }
+      });
+    } else {
+      res.send({ error: 'You must be logged in to edit an itinerary' });
     }
   });
 
