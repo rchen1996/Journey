@@ -17,7 +17,7 @@ export default function ItineraryLeftNav(props) {
 
   useEffect(() => {
     if (
-      pathname.includes('edit') ||
+      pathname.includes('edit') || pathname.includes('activities/new') ||
       (location.previous && location.previous.edit === 'true')
     ) {
       setEditMode('true');
