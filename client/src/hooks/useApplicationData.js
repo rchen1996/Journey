@@ -208,7 +208,7 @@ export default function useApplicationData() {
         } else {
           dispatch({
             type: SET_ITINERARY,
-            itinerary: res.data,
+            itinerary: { ...state.itinerary, ...res.data },
           });
 
           return { success: 'Activity Deleted' };
