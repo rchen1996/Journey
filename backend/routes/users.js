@@ -23,7 +23,9 @@ module.exports = ({
     getUserByEmail(req.body.email).then(user => {
       if (user && bcrypt.compareSync(req.body.password, user.password)) {
         req.session.userId = user.id;
-        res.send(user);
+        const { id, email, first_name, last_name } = user;
+        const parsed = { id, email, first_name, last_name };
+        res.send(parsed);
       } else {
         res.send({ error: 'Error' });
       }
