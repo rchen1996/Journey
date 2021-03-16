@@ -22,8 +22,8 @@ export default function useApplicationData() {
 
   useEffect(() => {
     axios.get(`/api/users/:user_id`).then(res => {
-      const user = res.data[0];
-      if (res.data.length > 0) {
+      const user = res.data;
+      if (res.data.id) {
         dispatch({
           type: SET_USER,
           user: user,
