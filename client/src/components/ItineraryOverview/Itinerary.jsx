@@ -38,7 +38,7 @@ export default function Itinerary(props) {
     <div className='flex flex-col w-full lg:ml-64 pt-16'>
       <h1>{itinerary && itinerary.name}</h1>
       {url.includes('edit') && (
-        <Link to={`/itineraries/${itinerary.id}/overview/edit`}>
+        <Link to={itinerary && `/itineraries/${itinerary.id}/overview/edit`}>
           Edit Itinerary
         </Link>
       )}
