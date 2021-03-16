@@ -115,7 +115,7 @@ export default function AddActivityForm(props) {
   };
 
   const cancel = () => {
-    history.push(`/itineraries/${itinerary_id}/days/${day_id}`);
+    history.push(`/itineraries/${itinerary_id}/days/${day_id}/edit`);
   };
 
   return (
