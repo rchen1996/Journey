@@ -13,6 +13,7 @@ module.exports = ({
   getBookmark,
   addBookmark,
   getBookmarkByItineraryId,
+  updateUserPassword,
 }) => {
   router.post('/logout', (req, res) => {
     req.session.userId = null;
@@ -44,6 +45,30 @@ module.exports = ({
           error: err.message,
         })
       );
+  });
+
+  router.put('/:user_id', (req, res) => {
+    const userId = req.session.userId;
+
+    if (!userId) {
+      res.send({ error: 'You must be logged in to change your password' });
+    } else {
+      getUser(userId).then(userArr => {
+        const user = userArr[0];
+
+        if (!bcrypt.compareSync(req.body.oldPassword, user.password)) {
+          res.send({
+            error:
+              'The current password you provided does not match the one on record',
+          });
+        } else {
+          const hashedPass = bcrypt.hashSync(req.body.newPassword, saltRounds);
+          updateUserPassword(hashedPass, userId).then(() => {
+            res.send({ success: 'password update success' });
+          });
+        }
+      });
+    }
   });
 
   router.post('/', (req, res) => {
