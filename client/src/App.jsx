@@ -38,6 +38,7 @@ function App() {
     deleteDayFromItinerary,
     updateMenuState,
     deleteActivity,
+    changePassword,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
@@ -175,7 +176,11 @@ function App() {
           {user.id && (
             <main className='flex w-full min-h-screen'>
               <LeftNav user={user} dispatch={dispatch} />
-              <ManageAccount user={user}></ManageAccount>
+              <ManageAccount
+                user={user}
+                changePassword={changePassword}
+                dispatch={dispatch}
+              ></ManageAccount>
             </main>
           )}
         </Route>
