@@ -58,7 +58,9 @@ module.exports = ({
         } else {
           return addUser(first_name, last_name, email, hash).then(user => {
             req.session.userId = user.id;
-            res.send(user);
+            const { id, email, first_name, last_name } = user;
+            const parsed = { id, email, first_name, last_name };
+            res.send(parsed);
           });
         }
       })
