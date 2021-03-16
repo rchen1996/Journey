@@ -93,7 +93,7 @@ export default function ItineraryLeftNav(props) {
         <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
           <div className='flex flex-col mb-2 '>
             <NavLink
-              to={`/itineraries/${itinerary.id}/${editMode ? 'edit' : ''}`}
+              to={`/itineraries/${itinerary.id}${editMode ? '/edit' : ''}`}
               className='px-3 py-2 text-2xl font-bold '
               state='test'
             >
@@ -158,8 +158,8 @@ export default function ItineraryLeftNav(props) {
                     {locationObj.days.map(day => {
                       return (
                         <NavLink
-                          to={`/itineraries/${itinerary.id}/days/${day.id}/${
-                            editMode ? 'edit' : ''
+                          to={`/itineraries/${itinerary.id}/days/${day.id}${
+                            editMode ? '/edit' : ''
                           }`}
                           key={day.id}
                           activeClassName='bg-gray-200 bg-opacity-25'

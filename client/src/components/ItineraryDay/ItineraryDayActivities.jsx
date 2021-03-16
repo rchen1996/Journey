@@ -108,7 +108,8 @@ export default function ItineraryDayActivities(props) {
             <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap lg:w-min rounded-r-xl lg:whitespace-nowrap'>
               {activity.address}
             </p>
-            <p className='text-sm line-clamp-3'>{activity.description}</p>
+            <p className='text-sm line-clamp-3'>Description: {activity.description}</p>
+            <p className='text-sm line-clamp-3'>{activity.notes && `Notes: ${activity.notes}`}</p>
           </div>
           {url.includes('edit') && (
             <div className='flex items-center space-x-3'>

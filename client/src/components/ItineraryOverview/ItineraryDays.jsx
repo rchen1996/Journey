@@ -4,21 +4,21 @@ import { useState } from 'react';
 import ItineraryDayActivities from './ItineraryDayActivities';
 
 export default function ItineraryDays(props) {
-  const { day, itinerary, user, deleteDayFromItinerary } = props;
+  const { day, itinerary, user, deleteDayFromItinerary, days } = props;
 
   const { pathname } = useLocation();
   const getTimeValue = timeString => {
-    const parsedTime = timeString || "23:59:59"
-    const timeValue = new Date('1970-01-01T' + parsedTime + 'Z')
-    return timeValue
-  }
+    const parsedTime = timeString || '23:59:59';
+    const timeValue = new Date('1970-01-01T' + parsedTime + 'Z');
+    return timeValue;
+  };
 
   const sortActivities = activities => {
-    const sortedActivities = activities.sort((a,b) => {      
-      return getTimeValue(a.start_time) - getTimeValue(b.start_time)
-    })
-    return sortedActivities
-  }
+    const sortedActivities = activities.sort((a, b) => {
+      return getTimeValue(a.start_time) - getTimeValue(b.start_time);
+    });
+    return sortedActivities;
+  };
 
   const DEFAULT = 'DEFAULT';
   const DELETE = 'DELETE';
@@ -82,8 +82,10 @@ export default function ItineraryDays(props) {
               </div>
               {view === DELETE && (
                 <div className='flex p-2 space-x-8 bg-gray-700 bg-opacity-90 rounded-xl'>
-                  <h4 className='px-2 py-2 text-base font-bold text-gray-100 shadow-md whitespace-nowrap lg:text-base'>
-                    Delete This Day?
+                  <h4 className='px-2 py-2 text-base font-bold text-gray-100 whitespace-nowrap lg:text-base'>
+                    {day.length > 1
+                      ? 'Delete This Day?'
+                      : 'There is only one day for this location. Delete this section of the trip?'}
                   </h4>
                   <div className='flex space-x-4'>
                     <button

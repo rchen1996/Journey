@@ -23,6 +23,7 @@ export default function Itinerary(props) {
                         itinerary={itinerary}
                         user={user}
                         deleteDayFromItinerary={deleteDayFromItinerary}
+                        days={location.days}
                       />
                     );
                   })}

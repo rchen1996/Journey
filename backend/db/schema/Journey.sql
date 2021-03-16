@@ -87,6 +87,7 @@ CREATE TABLE "activities" (
   "day_id" int,
   "start_time" time,
   "end_time" time,
+  "notes" text NOT NULL DEFAULT '',
   "attraction_id" int NOT NULL,
   "itinerary_id" int NOT NULL
 );
