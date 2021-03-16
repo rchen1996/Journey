@@ -9,6 +9,23 @@ export default function Itinerary(props) {
     }
   };
 
+  let tripDuration = 0;
+  let endDate;
+
+  const addDays = (date, days) => {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
+
+  if (itinerary && itinerary.start_date) {
+    itinerary.locations.forEach(location => {
+      tripDuration += location.days.length;
+    });
+
+    endDate = addDays(itinerary.start_date, tripDuration).toDateString();
+  }
+
   return (
     <div className='flex flex-col w-full lg:ml-64 pt-16'>
       <h1>{itinerary && itinerary.name}</h1>
@@ -16,10 +33,10 @@ export default function Itinerary(props) {
       <p>
         {itinerary &&
           itinerary.start_date &&
-          `${formatDate(itinerary.start_date)} - ${formatDate(
-            itinerary.end_date
-          )}`}
+          `${formatDate(itinerary.start_date)} - ${endDate}`}
       </p>
+      <h4>Trip Duration</h4>
+      <p>{tripDuration === 1 ? '1 Day' : `${tripDuration} Days`}</p>
       <h4>Itinerary Description</h4>
       <p>{itinerary && itinerary.description}</p>
       <h2>Itinerary Overview</h2>
