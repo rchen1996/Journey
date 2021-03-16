@@ -1,7 +1,11 @@
+import { useLocation, Link } from 'react-router-dom';
+
 import ItineraryDays from './ItineraryDays';
 
 export default function Itinerary(props) {
   const { itinerary, user, deleteDayFromItinerary } = props;
+
+  const url = useLocation().pathname;
 
   const formatDate = dateString => {
     if (dateString) {
@@ -33,6 +37,11 @@ export default function Itinerary(props) {
   return (
     <div className='flex flex-col w-full lg:ml-64 pt-16'>
       <h1>{itinerary && itinerary.name}</h1>
+      {url.includes('edit') && (
+        <Link to={`/itineraries/${itinerary.id}/overview/edit`}>
+          Edit Itinerary
+        </Link>
+      )}
       {itinerary && itinerary.start_date && <h4>Trip Dates</h4>}
       <p>
         {itinerary &&
