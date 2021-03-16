@@ -1,4 +1,4 @@
-module.exports = db => {
+module.exports = (db) => {
   const getAllItineraries = () => {
     const query = {
       text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
@@ -9,11 +9,11 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
-  const createNewItinerary = itinerary => {
+  const createNewItinerary = (itinerary) => {
     const query = {
       text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
@@ -29,8 +29,8 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
   const createTravelParty = (itineraryId, userId) => {
@@ -42,11 +42,11 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
-  const getTravelParty = itineraryId => {
+  const getTravelParty = (itineraryId) => {
     const query = {
       text: `select * from travel_parties 
       JOIN users ON user_id = users.id
@@ -56,8 +56,8 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
   const deleteCollaborator = (itineraryId, userId) => {
@@ -70,8 +70,8 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
   const addCollaborator = (itineraryId, userEmail) => {
@@ -83,11 +83,11 @@ module.exports = db => {
     };
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
-  const getDetailedItinerary = itineraryId => {
+  const getDetailedItinerary = (itineraryId) => {
     const query = {
       text: `select
       itineraries.* ,
@@ -119,11 +119,11 @@ module.exports = db => {
     };
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
-  const createAttraction = attraction => {
+  const createAttraction = (attraction) => {
     const query = {
       text: `INSERT INTO attractions (name, description, category, image, address, location)
       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
@@ -139,11 +139,11 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
-  const createActivity = activity => {
+  const createActivity = (activity) => {
     const query = {
       text: `INSERT INTO activities (day_id, start_time, end_time, attraction_id, itinerary_id)
       VALUES($1, $2, $3, $4, $5) RETURNING *;`,
@@ -158,8 +158,8 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
   const addDayWithLocation = (itineraryId, locationName) => {
@@ -173,13 +173,13 @@ module.exports = db => {
     };
     return db
       .query(query)
-      .then(result => {
+      .then((result) => {
         console.log('add Day to itinerary:', result.rows[0]);
         return result.rows[0];
       })
-      .catch(err => err);
+      .catch((err) => err);
   };
-  const getItinerary = itineraryId => {
+  const getItinerary = (itineraryId) => {
     const query = {
       text: `SELECT * FROM itineraries WHERE id = $1;`,
       values: [itineraryId],
@@ -187,11 +187,11 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
-  const deleteItinerary = itineraryId => {
+  const deleteItinerary = (itineraryId) => {
     const query = {
       text: `DELETE FROM itineraries WHERE id = $1 RETURNING *;`,
       values: [itineraryId],
@@ -199,11 +199,11 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows[0])
-      .catch(err => err);
+      .then((result) => result.rows[0])
+      .catch((err) => err);
   };
 
-  const getItinerariesForGroup = id => {
+  const getItinerariesForGroup = (id) => {
     const query = {
       text: `SELECT itineraries.* FROM itineraries
       JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id 
@@ -213,8 +213,8 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
   const reorderDays = (daysIdArr, daysOrderArr) => {
@@ -233,22 +233,22 @@ module.exports = db => {
     };
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
-  const deleteDayFromItinerary = day_id => {
+  const deleteDayFromItinerary = (day_id) => {
     const query = {
       text: `DELETE from days WHERE id = $1 RETURNING *`,
       values: [day_id],
     };
     return db
       .query(query)
-      .then(result => result.rows)
-      .catch(err => err);
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
-  const deleteActivity = activityId => {
+  const deleteActivity = (activityId) => {
     const query = {
       text: `DELETE FROM activities WHERE id = $1 RETURNING *;`,
       values: [activityId],
@@ -256,8 +256,34 @@ module.exports = db => {
 
     return db
       .query(query)
-      .then(res => res.rows[0])
-      .catch(err => err);
+      .then((res) => res.rows[0])
+      .catch((err) => err);
+  };
+
+  const updateActivity = (start_time, end_time, notes, activity_id) => {
+    if (start_time && start_time.length < 8) {
+      start_time += ':00';
+    }
+    if (end_time && start_time.length < 8) {
+      end_time += ':00';
+    }
+    if (!notes) {
+      notes = '';
+    }
+   
+    const query = {
+      text: `UPDATE activities SET 
+      start_time = $1,
+      end_time = $2,
+      notes = $3 
+      WHERE id = $4
+      RETURNING *`,
+      values: [start_time, end_time, notes, activity_id],
+    };
+    return db
+      .query(query)
+      .then((res) => res.rows[0])
+      .catch((err) => err);
   };
 
   const editItinerary = itinerary => {
@@ -299,6 +325,7 @@ module.exports = db => {
     deleteDayFromItinerary,
     reorderDays,
     deleteActivity,
+    updateActivity,
     editItinerary,
   };
 };
