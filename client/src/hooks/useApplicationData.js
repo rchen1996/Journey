@@ -17,7 +17,7 @@ export default function useApplicationData() {
     myItineraries: [],
     key: Math.random(),
     bookmarks: [],
-    isMenuOpen: false,
+    isMenuOpen: window.innerWidth >= 1024 ? true : false,
   });
 
   useEffect(() => {
