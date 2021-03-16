@@ -18,6 +18,7 @@ import AddActivityForm from './components/ItineraryDay/AddActivityForm';
 import Bookmarks from './components/Bookmarks';
 import MenuOpener from './components/MenuOpener';
 import ManageAccount from './components/ManageAccount';
+import EditItineraryForm from './components/EditItineraryForm';
 
 function App() {
   const {
@@ -146,6 +147,26 @@ function App() {
               deleteDayFromItinerary={deleteDayFromItinerary}
               deleteActivity={deleteActivity}
               isMenuOpen={state.isMenuOpen}
+            />
+          </main>
+        </Route>
+        <Route path='/itineraries/:itinerary_id/overview/edit'>
+          <main className='relative flex w-full min-h-screen'>
+            <LeftNav
+              user={user}
+              itinerary={itinerary}
+              setItinerary={setItinerary}
+              addDayWithLocation={addDayWithLocation}
+              isMenuOpen={state.isMenuOpen}
+            />
+            <MenuOpener
+              updateMenuState={updateMenuState}
+              isMenuOpen={state.isMenuOpen}
+            ></MenuOpener>
+            <EditItineraryForm
+              dispatch={dispatch}
+              user={user}
+              itinerary={itinerary}
             />
           </main>
         </Route>
