@@ -207,6 +207,25 @@ export default function useApplicationData() {
     });
   }
 
+  const deleteActivity = (itineraryId, dayId, activityId) => {
+    return axios
+      .delete(
+        `/api/itineraries/${itineraryId}/days/${dayId}/activities/${activityId}`
+      )
+      .then(res => {
+        if (res.data.error) {
+          return { error: res.data.error };
+        } else {
+          dispatch({
+            type: SET_ITINERARY,
+            itinerary: { ...state.itinerary, ...res.data },
+          });
+
+          return { success: 'Activity Deleted' };
+        }
+      });
+  };
+
   return {
     state,
     dispatch,
@@ -224,5 +243,6 @@ export default function useApplicationData() {
     addBookmark,
     deleteDayFromItinerary,
     updateMenuState,
+    deleteActivity,
   };
 }
