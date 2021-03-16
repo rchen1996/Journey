@@ -67,7 +67,7 @@ export default function MyGroup(props) {
   };
 
   return (
-    <section className='flex justify-center w-full h-full mt-16 ml-64'>
+    <section className='flex justify-center w-full h-full mt-16 lg:ml-64'>
       <div className='flex flex-col items-center w-3/4 h-full mt-8 space-y-4'>
         {user.id === creator_id && (
           <header className='flex flex-col w-full space-y-2'>

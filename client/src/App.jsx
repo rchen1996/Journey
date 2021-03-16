@@ -85,7 +85,9 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
+              isMenuOpen={state.isMenuOpen}
             />
+            <MenuOpener updateMenuState={updateMenuState}></MenuOpener>
             {itinerary &&
               itinerary.users.some(member => member.id === user.id) && (
                 <MyGroup
@@ -93,6 +95,7 @@ function App() {
                   itinerary={itinerary}
                   removeCollaborator={removeCollaborator}
                   addCollaborator={addCollaborator}
+                  isMenuOpen={state.isMenuOpen}
                 />
               )}
           </main>
