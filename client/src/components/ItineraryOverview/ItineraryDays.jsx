@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ItineraryDayActivities from './ItineraryDayActivities';
 
 export default function ItineraryDays(props) {
-  const { day, itinerary, user, deleteDayFromItinerary } = props;
+  const { day, itinerary, user, deleteDayFromItinerary, days } = props;
 
   const { pathname } = useLocation();
   const getTimeValue = timeString => {
@@ -83,7 +83,9 @@ export default function ItineraryDays(props) {
               {view === DELETE && (
                 <div className='flex p-2 space-x-8 bg-gray-700 bg-opacity-90 rounded-xl'>
                   <h4 className='px-2 py-2 text-base font-bold text-gray-100 whitespace-nowrap lg:text-base'>
-                    Delete This Day?
+                    {day.length > 1
+                      ? 'Delete This Day?'
+                      : 'There is only one day for this location. Delete this section of the trip?'}
                   </h4>
                   <div className='flex space-x-4'>
                     <button
