@@ -20,12 +20,6 @@ export default function ItineraryLeftNav(props) {
   const location = useLocation();
   const { itinerary_id } = useParams();
   const [editMode, setEditMode] = useState(null);
-  // const [showMenu, setShowMenu] = useState({
-  //   sideNav:
-  //     'fixed z-40 hidden w-64 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar',
-  //   main: '',
-  //   svg: '',
-  // });
 
   useEffect(() => {
     if (
