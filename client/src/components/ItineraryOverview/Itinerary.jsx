@@ -12,9 +12,10 @@ export default function Itinerary(props) {
   return (
     <div className='flex flex-col w-full lg:ml-64 pt-16'>
       <h1>{itinerary && itinerary.name}</h1>
-      <h4>Trip Dates</h4>
+      {itinerary && itinerary.start_date && <h4>Trip Dates</h4>}
       <p>
         {itinerary &&
+          itinerary.start_date &&
           `${formatDate(itinerary.start_date)} - ${formatDate(
             itinerary.end_date
           )}`}
