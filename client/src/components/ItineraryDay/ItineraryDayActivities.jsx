@@ -4,7 +4,7 @@ export default function ItineraryDayActivities(props) {
   const { activity } = props;
 
   const url = useLocation().pathname;
-  const { itinerary_id, day_id } = useParams;
+  const { itinerary_id, day_id } = useParams();
 
   const tConvert = time => {
     // Check correct time format and split into components
