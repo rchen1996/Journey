@@ -96,7 +96,7 @@ export default function AddActivityForm(props) {
           itinerary: itinerary,
         });
 
-        history.push(`/itineraries/${itinerary_id}/days/${day_id}`);
+        history.push(`/itineraries/${itinerary_id}/days/${day_id}/edit`);
       } else if (res.data.error) {
         setError({
           ...error,
