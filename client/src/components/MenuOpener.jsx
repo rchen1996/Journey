@@ -1,11 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 export default function MenuOpener(props) {
-  // const [menuOpen, setMenuOpen] = useState(false)
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 1024;
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      if (window.innerWidth >= 1024) {
+        props.updateMenuState(true);
+        return;
+      } else {
+        props.updateMenuState(false);
+      }
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    // Return a function from the effect that removes the event listener
+    return () => window.removeEventListener('resize', handleWindowResize);
+  }, []);
+
   return (
     <button
       type='button'
       className='fixed z-50 flex items-center justify-center w-16 h-16 text-white bg-gray-600 rounded-full bottom-4 right-4 lg:hidden'
-      onClick={props.updateMenuState}
+      onClick={() => props.updateMenuState(null)}
     >
       <svg
         xmlns='http://www.w3.org/2000/svg'

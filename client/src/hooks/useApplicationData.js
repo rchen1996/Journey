@@ -199,10 +199,11 @@ export default function useApplicationData() {
       });
   }
 
-  function updateMenuState() {
+  function updateMenuState(breakpointTrigger) {
     dispatch({
       type: SHOW_MENU,
-      isMenuOpen: !state.isMenuOpen,
+      isMenuOpen:
+        breakpointTrigger === null ? !state.isMenuOpen : breakpointTrigger,
     });
   }
 
