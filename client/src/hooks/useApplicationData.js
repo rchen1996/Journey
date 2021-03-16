@@ -200,12 +200,28 @@ export default function useApplicationData() {
   }
 
   function updateMenuState(breakpointTrigger) {
+    console.log('this');
     dispatch({
       type: SHOW_MENU,
       isMenuOpen:
         breakpointTrigger === null ? !state.isMenuOpen : breakpointTrigger,
     });
   }
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      if (window.innerWidth >= 1024) {
+        dispatch({
+          type: SHOW_MENU,
+          isMenuOpen: true,
+        });
+      }
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => window.removeEventListener('resize', handleWindowResize);
+  }, []);
 
   const deleteActivity = (itineraryId, dayId, activityId) => {
     return axios

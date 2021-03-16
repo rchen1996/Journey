@@ -87,7 +87,10 @@ function App() {
               addDayWithLocation={addDayWithLocation}
               isMenuOpen={state.isMenuOpen}
             />
-            <MenuOpener updateMenuState={updateMenuState}></MenuOpener>
+            <MenuOpener
+              updateMenuState={updateMenuState}
+              isMenuOpen={state.isMenuOpen}
+            ></MenuOpener>
             {itinerary &&
               itinerary.users.some(member => member.id === user.id) && (
                 <MyGroup
@@ -109,7 +112,10 @@ function App() {
               addDayWithLocation={addDayWithLocation}
               isMenuOpen={state.isMenuOpen}
             />
-            <MenuOpener updateMenuState={updateMenuState}></MenuOpener>
+            <MenuOpener
+              updateMenuState={updateMenuState}
+              isMenuOpen={state.isMenuOpen}
+            ></MenuOpener>
             <AddActivityForm
               dispatch={dispatch}
               onSave={createActivity}
@@ -127,7 +133,10 @@ function App() {
               addDayWithLocation={addDayWithLocation}
               isMenuOpen={state.isMenuOpen}
             />
-            <MenuOpener updateMenuState={updateMenuState}></MenuOpener>
+            <MenuOpener
+              updateMenuState={updateMenuState}
+              isMenuOpen={state.isMenuOpen}
+            ></MenuOpener>
             <ItineraryDay
               itinerary={itinerary}
               dispatch={dispatch}
@@ -147,7 +156,10 @@ function App() {
               addDayWithLocation={addDayWithLocation}
               isMenuOpen={state.isMenuOpen}
             />
-            <MenuOpener updateMenuState={updateMenuState}></MenuOpener>
+            <MenuOpener
+              updateMenuState={updateMenuState}
+              isMenuOpen={state.isMenuOpen}
+            ></MenuOpener>
             <Itinerary
               dispatch={dispatch}
               itinerary={itinerary}

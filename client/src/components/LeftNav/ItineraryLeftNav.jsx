@@ -23,7 +23,8 @@ export default function ItineraryLeftNav(props) {
 
   useEffect(() => {
     if (
-      pathname.includes('edit') || pathname.includes('activities/new') ||
+      pathname.includes('edit') ||
+      pathname.includes('activities/new') ||
       (location.previous && location.previous.edit === 'true')
     ) {
       setEditMode('true');
@@ -84,7 +85,7 @@ export default function ItineraryLeftNav(props) {
     <nav
       className={
         isMenuOpen
-          ? 'fixed z-40 lg:w-64 w-2/3 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar'
+          ? 'fixed z-40 lg:w-64 md:w-5/6 w-2/3 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block '
           : 'hidden'
       }
     >
