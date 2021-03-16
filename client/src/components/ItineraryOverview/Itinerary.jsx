@@ -4,7 +4,7 @@ export default function Itinerary(props) {
   const { itinerary, user, deleteDayFromItinerary } = props;
 
   return (
-    <div className='flex w-full ml-64'>
+    <div className='flex w-full md:ml-64'>
       <section className='flex flex-col w-full h-full mx-24 my-8 mt-24'>
         {itinerary &&
           itinerary.locations &&

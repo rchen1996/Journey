@@ -16,6 +16,7 @@ import MyGroup from './components/MyGroup';
 import ItineraryDay from './components/ItineraryDay/ItineraryDay';
 import AddActivityForm from './components/ItineraryDay/AddActivityForm';
 import Bookmarks from './components/Bookmarks';
+import MenuOpener from './components/MenuOpener';
 
 function App() {
   const {
@@ -34,6 +35,7 @@ function App() {
     deleteBookmark,
     addBookmark,
     deleteDayFromItinerary,
+    updateMenuState,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
@@ -132,12 +134,15 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
+              isMenuOpen={state.isMenuOpen}
             />
+            <MenuOpener updateMenuState={updateMenuState}></MenuOpener>
             <Itinerary
               dispatch={dispatch}
               itinerary={itinerary}
               user={user}
               deleteDayFromItinerary={deleteDayFromItinerary}
+              isMenuOpen={state.isMenuOpen}
             />
           </main>
         </Route>
