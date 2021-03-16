@@ -18,7 +18,7 @@ export default function ManageAccount(props) {
     hide: 'hidden flex p-3 mt-4 bg-red-700 bg-opacity-50 rounded-xl',
   });
 
-  const [message, setMessage] = useState('');
+  const [success, setSucces] = useState(false);
 
   const handleChange = event => {
     const { value, name } = event.target;
@@ -73,6 +73,10 @@ export default function ManageAccount(props) {
           status: false,
           message: 'Password update success!',
         });
+
+        setSucces(true);
+
+        setTimeout(() => setSucces(false), 3000);
       }
     });
   };
@@ -116,7 +120,7 @@ export default function ManageAccount(props) {
 
           <h4 className='ml-1 text-2xl font-bold'>Change Account Password</h4>
           <AlertMessage
-            isError={!error.status}
+            isError={success}
             show={'flex p-3 mt-4 bg-teal-600 rounded-xl'}
             hide={'hidden'}
             message={error.message}
