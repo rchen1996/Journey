@@ -175,7 +175,7 @@ function App() {
           {user.id && (
             <main className='flex w-full min-h-screen'>
               <LeftNav user={user} dispatch={dispatch} />
-              <ManageAccount></ManageAccount>
+              <ManageAccount user={user}></ManageAccount>
             </main>
           )}
         </Route>
