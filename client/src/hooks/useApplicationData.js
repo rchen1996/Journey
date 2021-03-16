@@ -200,7 +200,6 @@ export default function useApplicationData() {
   }
 
   function updateMenuState(breakpointTrigger) {
-    console.log('this');
     dispatch({
       type: SHOW_MENU,
       isMenuOpen:
