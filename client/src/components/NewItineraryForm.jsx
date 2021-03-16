@@ -45,7 +45,7 @@ export default function NewItineraryForm(props) {
       setError({
         ...error,
         status: true,
-        message: 'Please enter an description name.',
+        message: 'Please enter a description.',
       });
       return;
     }
