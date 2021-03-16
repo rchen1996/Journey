@@ -24,6 +24,10 @@ export default function Itinerary(props) {
     });
 
     endDate = addDays(itinerary.start_date, tripDuration).toDateString();
+  } else if (itinerary) {
+    itinerary.locations.forEach(
+      location => (tripDuration += location.days.length)
+    );
   }
 
   return (
