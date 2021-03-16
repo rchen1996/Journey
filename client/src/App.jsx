@@ -163,11 +163,7 @@ function App() {
               updateMenuState={updateMenuState}
               isMenuOpen={state.isMenuOpen}
             ></MenuOpener>
-            <EditItineraryForm
-              dispatch={dispatch}
-              user={user}
-              itinerary={itinerary}
-            />
+            <EditItineraryForm dispatch={dispatch} itinerary={itinerary} />
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id'>
