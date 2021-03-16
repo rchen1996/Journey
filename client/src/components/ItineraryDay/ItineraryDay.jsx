@@ -15,13 +15,13 @@ export default function ItineraryDay(props) {
     locations = itinerary.locations;
   }
 
-  const getCurrentDay = (locations) => {
+  const getCurrentDay = locations => {
     let currentDay;
     let currentLocation;
 
     if (locations) {
-      locations.forEach((location) => {
-        location.days.forEach((day) => {
+      locations.forEach(location => {
+        location.days.forEach(day => {
           if (day.id === Number(day_id)) {
             currentLocation = location;
             currentDay = day;
@@ -39,22 +39,22 @@ export default function ItineraryDay(props) {
   const location = dayInfo.currentLocation;
   const DEFAULT = 'DEFAULT';
   const DELETE = 'DELETE';
-  const history = useHistory()
+  const history = useHistory();
 
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    deleteDayFromItinerary(itinerary_id,day_id).then(res => {
-      if(res.error){
-        console.log(res.error)
+    deleteDayFromItinerary(itinerary_id, day_id).then(res => {
+      if (res.error) {
+        console.log(res.error);
       } else {
-        history.push(`/itineraries/${itinerary_id}/edit`)
+        history.push(`/itineraries/${itinerary_id}/edit`);
       }
-    })
+    });
   };
 
   return (
-    <div className='flex w-full mt-16 ml-64'>
+    <div className='flex w-full mt-16 lg:ml-64'>
       <section className='flex flex-col justify-start w-5/6 h-full mx-auto my-8 mt-8 space-y-4'>
         <header className='flex items-center justify-between'>
           <div className='px-8 py-2 bg-gray-100 border-l-8 border-gray-700 shadow-md rounded-r-xl'>
@@ -115,7 +115,7 @@ export default function ItineraryDay(props) {
         </header>
         {day &&
           day.activities &&
-          day.activities.map((activity) => {
+          day.activities.map(activity => {
             return (
               <ItineraryDayActivities
                 key={activity.id}

@@ -119,7 +119,7 @@ export default function AddActivityForm(props) {
   };
 
   return (
-    <div className='w-full h-full mt-16 ml-64'>
+    <div className='w-full h-full mt-16 lg:ml-64'>
       <section className='w-5/6 mx-auto my-8 shadow-lg lg:w-2/3 h-5/6 bg-gray-50 rounded-xl'>
         <ErrorMessage
           isError={error.status}
