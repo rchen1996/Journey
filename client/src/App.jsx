@@ -179,7 +179,6 @@ function App() {
               <ManageAccount
                 user={user}
                 changePassword={changePassword}
-                dispatch={dispatch}
               ></ManageAccount>
             </main>
           )}
