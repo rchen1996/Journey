@@ -129,6 +129,21 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const updateUserPassword = (newPassword, userId) => {
+    const query = {
+      text: `UPDATE users
+      SET password = $1
+      WHERE id = $2
+      RETURNING *;`,
+      values: [newPassword, userId],
+    };
+
+    return db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getUser,
     getUserByEmail,
@@ -140,5 +155,6 @@ module.exports = db => {
     getBookmark,
     addBookmark,
     getBookmarkByItineraryId,
+    updateUserPassword,
   };
 };
