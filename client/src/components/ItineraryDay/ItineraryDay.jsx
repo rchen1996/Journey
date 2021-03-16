@@ -86,7 +86,8 @@ export default function ItineraryDay(props) {
               )}
               {view === DELETE && (
                 <h1 className='text-xl font-bold text-gray-200'>
-                  {dayInfo.currentLocation.days.length > 1
+                  {dayInfo.currentLocation &&
+                  dayInfo.currentLocation.days.length > 1
                     ? 'Delete This Day?'
                     : 'There is only one day for this location. Delete this section of the trip?'}
                 </h1>
