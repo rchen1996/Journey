@@ -6,7 +6,7 @@ import ItineraryDayActivities from './ItineraryDayActivities';
 export default function ItineraryDay(props) {
   const { itinerary_id, day_id } = useParams();
 
-  const { itinerary, deleteDayFromItinerary } = props;
+  const { itinerary, deleteDayFromItinerary, deleteActivity } = props;
 
   const url = useLocation().pathname;
 
@@ -117,7 +117,11 @@ export default function ItineraryDay(props) {
           day.activities &&
           day.activities.map((activity) => {
             return (
-              <ItineraryDayActivities key={activity.id} activity={activity} />
+              <ItineraryDayActivities
+                key={activity.id}
+                activity={activity}
+                deleteActivity={deleteActivity}
+              />
             );
           })}
       </section>

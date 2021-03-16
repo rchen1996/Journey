@@ -96,7 +96,7 @@ export default function AddActivityForm(props) {
           itinerary: itinerary,
         });
 
-        history.push(`/itineraries/${itinerary_id}/days/${day_id}`);
+        history.push(`/itineraries/${itinerary_id}/days/${day_id}/edit`);
       } else if (res.data.error) {
         setError({
           ...error,
@@ -115,7 +115,7 @@ export default function AddActivityForm(props) {
   };
 
   const cancel = () => {
-    history.push(`/itineraries/${itinerary_id}/days/${day_id}`);
+    history.push(`/itineraries/${itinerary_id}/days/${day_id}/edit`);
   };
 
   return (
