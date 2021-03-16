@@ -10,6 +10,7 @@ export default function EditItineraryForm(props) {
   const { itinerary, dispatch, onSave } = props;
 
   const [itineraryInfo, setItineraryInfo] = useState({
+    id: itinerary.id,
     name: itinerary.name,
     description: itinerary.description,
     tripType: itinerary.trip_type,
@@ -172,7 +173,7 @@ export default function EditItineraryForm(props) {
               />
             </div>
             <footer className='flex items-center px-8 py-3 space-x-4 bg-gray-300 bg-opacity-50 rounded-b-xl'>
-              <FormButton type='submit'>Create Itinerary</FormButton>
+              <FormButton type='submit'>Save</FormButton>
               <button
                 type='button'
                 onClick={cancel}

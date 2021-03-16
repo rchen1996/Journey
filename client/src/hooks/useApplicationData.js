@@ -246,6 +246,10 @@ export default function useApplicationData() {
     return axios.put(`/api/users/:user_id`, password);
   };
 
+  const editItinerary = itinerary => {
+    return axios.put(`/api/itineraries/${itinerary.id}`, itinerary);
+  };
+
   return {
     state,
     dispatch,
@@ -265,5 +269,6 @@ export default function useApplicationData() {
     updateMenuState,
     deleteActivity,
     changePassword,
+    editItinerary,
   };
 }

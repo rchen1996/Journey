@@ -40,6 +40,7 @@ function App() {
     updateMenuState,
     deleteActivity,
     changePassword,
+    editItinerary,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
@@ -163,7 +164,11 @@ function App() {
               updateMenuState={updateMenuState}
               isMenuOpen={state.isMenuOpen}
             ></MenuOpener>
-            <EditItineraryForm dispatch={dispatch} itinerary={itinerary} />
+            <EditItineraryForm
+              dispatch={dispatch}
+              itinerary={itinerary}
+              onSave={editItinerary}
+            />
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id'>
