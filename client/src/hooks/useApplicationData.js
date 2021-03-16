@@ -242,6 +242,10 @@ export default function useApplicationData() {
       });
   };
 
+  const changePassword = password => {
+    return axios.put(`/api/users/:user_id`, password);
+  };
+
   return {
     state,
     dispatch,
@@ -260,5 +264,6 @@ export default function useApplicationData() {
     deleteDayFromItinerary,
     updateMenuState,
     deleteActivity,
+    changePassword,
   };
 }
