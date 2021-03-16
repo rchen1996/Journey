@@ -104,11 +104,14 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
+              isMenuOpen={state.isMenuOpen}
             />
+            <MenuOpener updateMenuState={updateMenuState}></MenuOpener>
             <AddActivityForm
               dispatch={dispatch}
               onSave={createActivity}
               itinerary={itinerary}
+              isMenuOpen={state.isMenuOpen}
             />
           </main>
         </Route>
@@ -119,13 +122,16 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
+              isMenuOpen={state.isMenuOpen}
             />
+            <MenuOpener updateMenuState={updateMenuState}></MenuOpener>
             <ItineraryDay
               itinerary={itinerary}
               dispatch={dispatch}
               user={user}
               deleteDayFromItinerary={deleteDayFromItinerary}
               deleteActivity={deleteActivity}
+              isMenuOpen={state.isMenuOpen}
             />
           </main>
         </Route>
