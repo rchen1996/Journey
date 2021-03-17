@@ -287,7 +287,7 @@ export default function useApplicationData() {
       });
     });
     return () => socket.disconnect();
-  }, []);
+  }, [state.itinerary]);
 
   return {
     state,
