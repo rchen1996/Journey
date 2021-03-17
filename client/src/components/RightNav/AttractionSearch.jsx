@@ -19,7 +19,7 @@ export default function AttractionSearch(props) {
 
   const [searchTerms, setSearchTerms] = useState({
     location: currentLocation,
-    category: 'auto',
+    category: '',
     name: '',
   });
 
@@ -68,7 +68,7 @@ export default function AttractionSearch(props) {
           onChange={handleChange}
           className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
         >
-          <option value='auto'>Auto Suggest</option>
+          <option defaultValue></option>
           <option value='adult'>Adult</option>
           <option value='amusement'>Amusement</option>
           <option value='accomodation'>Accomodation</option>
