@@ -25,10 +25,6 @@ module.exports = ({
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
-
-    const io = req.app.get('socketio');
-
-    io.emit('message', 'hello');
   });
 
   router.post('/', (req, res) => {
@@ -92,7 +88,15 @@ module.exports = ({
           editItinerary({ ...req.body, startDate, image }).then(() => {
             getDetailedItinerary(req.body.id).then(fullItinerary => {
               const parsed = itineraryObj(fullItinerary);
-              res.send({ ...parsed, users: parseTravelParty(travelParty) });
+
+              const io = req.app.get('socketio');
+
+              io.emit('itinerary', {
+                ...parsed,
+                users: parseTravelParty(travelParty),
+              });
+
+              // res.send({ ...parsed, users: parseTravelParty(travelParty) });
             });
           });
         } else {
