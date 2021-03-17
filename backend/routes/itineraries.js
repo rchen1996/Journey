@@ -91,7 +91,7 @@ module.exports = ({
 
               const io = req.app.get('socketio');
 
-              io.emit('itinerary', {
+              io.sockets.in(parsed.id).emit('itinerary', {
                 ...parsed,
                 users: parseTravelParty(travelParty),
               });
