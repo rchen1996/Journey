@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import AttractionSearch from './AttractionSearch';
+import MyLocations from './MyLocations';
 
 export default function ActivitiesRightNav(props) {
   const MY_LOCATIONS = 'MY_LOCATIONS';
   const ATTRACTION_SEARCH = 'ACTIVITIES_SEARCH';
+
+  const { itinerary } = props;
 
   const [view, setView] = useState(MY_LOCATIONS);
 
@@ -26,6 +30,10 @@ export default function ActivitiesRightNav(props) {
           </button>
         </div>
       </div>
+      {view === MY_LOCATIONS && itinerary && (
+        <MyLocations itinerary={itinerary} />
+      )}
+      {view === ATTRACTION_SEARCH && <AttractionSearch />}
     </nav>
   );
 }
