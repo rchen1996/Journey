@@ -1,5 +1,6 @@
 import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { useState } from 'react';
+import DeleteConfirmation from '../DeleteConfirmation';
 
 export default function ItineraryDayActivities(props) {
   const { activity, editActivity, timeSlots } = props;
@@ -27,7 +28,7 @@ export default function ItineraryDayActivities(props) {
     notes: activity.notes,
   });
 
-  const getTimeValue = (timeString) => {
+  const getTimeValue = timeString => {
     const timeValue = new Date('1970-01-01T' + timeString + 'Z');
     return timeValue;
   };
@@ -35,7 +36,7 @@ export default function ItineraryDayActivities(props) {
   const ifAvailable = (start_time, end_time) => {
     let available = true;
     const sortedTimeSlots = timeSlots.filter(
-      (slot) => slot.activity_id !== activity.id
+      slot => slot.activity_id !== activity.id
     );
     sortedTimeSlots.push({ activity_id: activity.id, start_time, end_time });
     sortedTimeSlots.sort(
@@ -82,13 +83,13 @@ export default function ItineraryDayActivities(props) {
     }
 
     if (ifAvailable(activityForm.start_time, activityForm.end_time)) {
-      editActivity(itinerary_id, activity.id, activityForm).then((res) => {
+      editActivity(itinerary_id, activity.id, activityForm).then(res => {
         if (res.error) {
           console.log('error:', res.error);
           return;
         }
       });
-      setEditMode(BASE)
+      setEditMode(BASE);
       setError({
         ...error,
         status: false,
@@ -106,18 +107,18 @@ export default function ItineraryDayActivities(props) {
         ...activityForm,
         start_time: '',
         end_time: '',
-      }).then((res) => {
+      }).then(res => {
         if (res.error) {
           console.log('error:', res.error);
           return;
         }
         setActivityForm({ ...activityForm, start_time: '', end_time: '' });
-        setEditMode(BASE)
+        setEditMode(BASE);
       });
     }
   }
 
-  const tConvert = (time) => {
+  const tConvert = time => {
     // Check correct time format and split into components
     time = time
       .toString()
@@ -164,8 +165,8 @@ export default function ItineraryDayActivities(props) {
     history.push(url);
   };
 
-  const removeActivity = (activityId) => {
-    props.deleteActivity(itinerary_id, day_id, activityId).then((res) => {
+  const removeActivity = activityId => {
+    props.deleteActivity(itinerary_id, day_id, activityId).then(res => {
       if (res.error) {
       }
     });
@@ -175,44 +176,51 @@ export default function ItineraryDayActivities(props) {
     <article
       className={
         view === DELETE
-          ? 'flex justify-between w-full h-auto p-4 bg-gray-600 shadow-lg rounded-xl bg-opacity-100'
+          ? 'flex justify-between w-full h-auto p-4 bg-gray-600 shadow-lg rounded-xl bg-opacity-75'
           : 'flex justify-between w-full h-auto p-4 duration-300 transform transition-transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'
       }
     >
       {error.status === true && <p>{error.message}</p>}
-      {editMode === EDIT && <div>
-        <form onSubmit={(event) => event.preventDefault()}>
-        <label htmlFor='start-time'>From :</label>
-        <input
-          name='start-time'
-          value={activityForm.start_time || ''}
-          type='time'
-          onChange={(event) =>
-            setActivityForm({ ...activityForm, start_time: event.target.value })
-          }
-        ></input>
-        <label htmlFor='end-time'>To :</label>
-        <input
-          name='end-time'
-          value={activityForm.end_time || ''}
-          type='time'
-          onChange={(event) =>
-            setActivityForm({ ...activityForm, end_time: event.target.value })
-          }
-        ></input>
-        <label htmlFor='notes'>Notes:</label>
-        <textarea
-          name='notes'
-          type='textarea'
-          value={activityForm.notes || ''}
-          onChange={(event) =>
-            setActivityForm({ ...activityForm, notes: event.target.value })
-          }
-        ></textarea>
-        <button onClick={handleEdit}>Save Changes</button>
-      </form>
-        </div>}
-      
+      {editMode === EDIT && (
+        <div>
+          <form onSubmit={event => event.preventDefault()}>
+            <label htmlFor='start-time'>From :</label>
+            <input
+              name='start-time'
+              value={activityForm.start_time || ''}
+              type='time'
+              onChange={event =>
+                setActivityForm({
+                  ...activityForm,
+                  start_time: event.target.value,
+                })
+              }
+            ></input>
+            <label htmlFor='end-time'>To :</label>
+            <input
+              name='end-time'
+              value={activityForm.end_time || ''}
+              type='time'
+              onChange={event =>
+                setActivityForm({
+                  ...activityForm,
+                  end_time: event.target.value,
+                })
+              }
+            ></input>
+            <label htmlFor='notes'>Notes:</label>
+            <textarea
+              name='notes'
+              type='textarea'
+              value={activityForm.notes || ''}
+              onChange={event =>
+                setActivityForm({ ...activityForm, notes: event.target.value })
+              }
+            ></textarea>
+            <button onClick={handleEdit}>Save Changes</button>
+          </form>
+        </div>
+      )}
 
       {view === DEFAULT && (
         <div className='flex justify-between w-full space-x-4'>
@@ -256,8 +264,11 @@ export default function ItineraryDayActivities(props) {
           </div>
           {url.includes('edit') && (
             <div className='flex items-center space-x-3'>
-              <button type='button' className='h-5'
-              onClick={()=> setEditMode(EDIT)}>
+              <button
+                type='button'
+                className='h-5'
+                onClick={() => setEditMode(EDIT)}
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'
@@ -295,27 +306,13 @@ export default function ItineraryDayActivities(props) {
         </div>
       )}
       {view === DELETE && (
-        <div>
-          <p className='text-xl font-bold text-gray-200'>
-            Are you sure you want to delete this activity?
-          </p>
-          <div className='mt-2 space-x-3'>
-            <button
-              type='button'
-              onClick={cancel}
-              className='px-3 font-semibold text-gray-200 bg-teal-600 rounded-xl'
-            >
-              Cancel
-            </button>
-            <button
-              type='button'
-              onClick={() => removeActivity(activity.id)}
-              className='px-3 font-semibold text-gray-200 bg-red-600 rounded-xl bg-opacity-80'
-            >
-              Confirm
-            </button>
-          </div>
-        </div>
+        <DeleteConfirmation
+          removeItem={() => removeActivity(activity.id)}
+          setView={setView}
+          DEFAULT={DEFAULT}
+          title={'Delete Activity'}
+          message={'Are you sure you want to delete this activity?'}
+        ></DeleteConfirmation>
       )}
     </article>
   );
