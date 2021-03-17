@@ -70,7 +70,17 @@ export default function AttractionSearch(props) {
           <option value='cultural'>Cultural</option>
           <option value='nature'>Nature</option>
         </select>
-        {/* search bar for attraction name */}
+        <label htmlFor='name' className='font-semibold text-white'>
+          Attraction Name
+        </label>
+        <input
+          value={searchTerms.name}
+          name='name'
+          onChange={handleChange}
+          type='text'
+          placeholder='Landmark name, Restaurant name, etc.'
+          className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+        ></input>
         {/* submit button - icon */}
       </form>
     </div>
