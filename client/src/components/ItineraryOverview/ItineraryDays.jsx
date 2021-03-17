@@ -7,13 +7,13 @@ export default function ItineraryDays(props) {
   const { day, itinerary, user, deleteDayFromItinerary, days } = props;
 
   const { pathname } = useLocation();
-  const getTimeValue = (timeString) => {
+  const getTimeValue = timeString => {
     const parsedTime = timeString || '23:59:59';
     const timeValue = new Date('1970-01-01T' + parsedTime + 'Z');
     return timeValue;
   };
 
-  const sortActivities = (activities) => {
+  const sortActivities = activities => {
     const sortedActivities = activities.sort((a, b) => {
       return getTimeValue(a.start_time) - getTimeValue(b.start_time);
     });
@@ -25,7 +25,7 @@ export default function ItineraryDays(props) {
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    deleteDayFromItinerary(itinerary.id, day.id).then((res) => {
+    deleteDayFromItinerary(itinerary.id, day.id).then(res => {
       if (res.error) console.log('error: ', res.error);
       // if (res.success) console.log('success: ', res.success);
     });
@@ -36,17 +36,35 @@ export default function ItineraryDays(props) {
     return result;
   };
 
+  const isActivitiesZero =
+    day.activities.length === 0 ? 'rounded-b-xl' : 'rounded-t-xl';
+
   return (
-    <article className='pt-4 mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
-      <div className='flex items-center justify-between px-4 pb-2'>
-        <h2 className='px-4 py-1.5 mb-2 text-lg font-bold text-gray-100 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'>
+    <article className='mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
+      <div
+        className={
+          view !== DELETE
+            ? 'flex items-center justify-between px-4 pt-4 pb-2 rounded-xl'
+            : 'flex items-center justify-between px-4 pt-4 pb-4 bg-gray-600 bg-opacity-75 ' +
+              isActivitiesZero
+        }
+      >
+        <h2
+          className={
+            view !== DELETE
+              ? 'px-4 py-1.5 mb-2 text-lg font-bold text-gray-100 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'
+              : 'hidden'
+          }
+        >
           Day {day.day_order}{' '}
           {itinerary.start_date &&
-            ` - ${addDays(itinerary.start_date, day.day_order - 1).toDateString().substring(0,10)}`}
+            ` - ${addDays(itinerary.start_date, day.day_order - 1)
+              .toDateString()
+              .substring(0, 10)}`}
         </h2>
         {pathname.includes('edit') &&
-          itinerary.users.some((member) => member.id === user.id) && (
-            <div className='flex items-center justify-center space-x-3'>
+          itinerary.users.some(member => member.id === user.id) && (
+            <div className='flex flex-wrap items-center space-x-3'>
               <div
                 className={view === DELETE ? 'hidden' : 'flex space-x-4 mr-2'}
               >
@@ -88,24 +106,25 @@ export default function ItineraryDays(props) {
                 </button>
               </div>
               {view === DELETE && (
-                <div className='flex p-2 space-x-8 bg-gray-700 bg-opacity-90 rounded-xl'>
-                  <h4 className='px-2 py-2 text-base font-bold text-gray-100 whitespace-nowrap lg:text-base'>
+                <div className='flex flex-col px-2 text-gray-100 bg-opacity-90 rounded-xl'>
+                  <h4 className='text-xl font-bold '>Delete Day</h4>
+                  <p className=''>
                     {days.length > 1
-                      ? 'Delete This Day?'
-                      : 'There is only one day for this location. Delete this section of the trip?'}
-                  </h4>
-                  <div className='flex space-x-4'>
+                      ? 'Are you sure you want to delete this day?'
+                      : 'There is only one day for this location. Are you sure you want to delete this section of the trip?'}
+                  </p>
+                  <div className='flex pt-2 space-x-3'>
                     <button
                       type='button'
                       onClick={() => setView(DEFAULT)}
-                      className='px-2 font-semibold leading-none text-gray-200 transition duration-300 transform bg-teal-600 border-2 border-transparent focus:ring-1 focus:ring-teal-600 hover:scale-110 rounded-xl'
+                      className='p-2 font-semibold leading-none text-gray-100 transition duration-300 transform bg-transparent border-2 border-gray-100 rounded-lg focus:ring-1 focus:ring-red-600 hover:scale-110'
                     >
                       Cancel
                     </button>
                     <button
                       type='button'
                       onClick={handleDelete}
-                      className='px-2 font-semibold leading-none text-gray-200 transition duration-300 transform bg-red-600 border-2 border-transparent bg-opacity-90 focus:ring-1 focus:ring-red-600 hover:scale-110 rounded-xl'
+                      className='px-2 py-2 font-semibold leading-none text-gray-200 transition duration-300 transform bg-red-600 border-2 border-transparent rounded-md bg-opacity-80 focus:ring-1 focus:ring-red-600 hover:scale-110'
                     >
                       Delete
                     </button>
@@ -116,7 +135,7 @@ export default function ItineraryDays(props) {
           )}
       </div>
       {day.activities &&
-        sortActivities(day.activities).map((activity) => {
+        sortActivities(day.activities).map(activity => {
           return (
             <ItineraryDayActivities key={activity.id} activity={activity} />
           );
