@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import FormButton from '../FormButton';
 import Checkbox from './Checkbox';
 
 export default function AttractionSearch(props) {
@@ -133,9 +132,10 @@ export default function AttractionSearch(props) {
             </svg>
           </div>
           <div className={dropDown.subMenuOpen ? 'space-y-1' : 'hidden'}>
-            {categories.map(categoryName => {
+            {categories.map((categoryName, index) => {
               return (
                 <Checkbox
+                  key={index}
                   name={categoryName}
                   category={category}
                   handleCategoryChange={handleCategoryChange}
