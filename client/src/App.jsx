@@ -154,7 +154,7 @@ function App() {
             />
             {itinerary &&
               itinerary.users.some(member => member.id === user.id) && (
-                <RightNav />
+                <RightNav itinerary={itinerary} />
               )}
           </main>
         </Route>
