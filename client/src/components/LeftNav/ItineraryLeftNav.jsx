@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation, useParams } from 'react-router-dom';
 export default function ItineraryLeftNav(props) {
   const [newLocation, setNewLocation] = useState('');
@@ -34,9 +34,20 @@ export default function ItineraryLeftNav(props) {
 
   function handleSubmit(event, last_day_order, locationName) {
     event.preventDefault();
+    const titleCase = (str) => {
+      const result = str
+        .toLowerCase()
+        .split(' ')
+        .map((word) => {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(' ');
+      return result;
+    };
+
     addDayWithLocation(
       itinerary_id,
-      locationName || newLocation,
+      locationName || titleCase(newLocation),
       last_day_order + 1
     );
 
@@ -167,7 +178,11 @@ export default function ItineraryLeftNav(props) {
                           className='px-4 py-2 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                           replace
                         >
-                          Day {day.day_order} {itinerary.start_date && `(${addDays(itinerary.start_date, day.day_order -1).toDateString().substring(4,10)})`}
+                          Day {day.day_order}{' '}
+                          {itinerary.start_date &&
+                            `(${addDays(itinerary.start_date, day.day_order - 1)
+                              .toDateString()
+                              .substring(4, 10)})`}
                         </NavLink>
                       );
                     })}
