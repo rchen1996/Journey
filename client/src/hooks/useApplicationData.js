@@ -278,7 +278,10 @@ export default function useApplicationData() {
       console.log(data);
     });
     socket.on('itinerary', (data) => {
-      console.log(data);
+      dispatch({
+        type: SET_ITINERARY,
+        itinerary: { ...state.itinerary, ...data },
+      });
     });
   }, []);
 
