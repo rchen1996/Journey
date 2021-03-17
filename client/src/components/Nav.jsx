@@ -93,13 +93,13 @@ export default function Nav(props) {
           </NavButton>
         )}
         {!props.user.id && (
-          <NavButton link='/login' onClick={clearItineraryState}>
-            Log in
+          <NavButton link='/signup' onClick={clearItineraryState}>
+            Sign up
           </NavButton>
         )}
         {!props.user.id && (
-          <NavButton link='/signup' onClick={clearItineraryState}>
-            Sign up
+          <NavButton link='/login' onClick={clearItineraryState}>
+            Log in
           </NavButton>
         )}
       </div>

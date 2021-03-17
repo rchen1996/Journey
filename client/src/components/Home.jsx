@@ -1,15 +1,35 @@
+import bgPhoto from '../images/fuji-2.jpg';
+import Register from './Register';
 export default function Home(props) {
   return (
-    <div className='pt-20'>
-      <h1 className='px-20 text-3xl font-bold text-teal-600'>
-        Go on an adventure!
-      </h1>
-      <p className='px-20'>
-        Journey is a group trip planning app, that allows users to create
-        itineraries with the other members in their group, in real time. Pick a
-        location, search for some attractions, and easily add them to your
-        itinerary!
-      </p>
+    <div className='w-full min-h-full pt-16'>
+      <div className='inset-0 z-0 w-full'>
+        <img
+          src={bgPhoto}
+          alt='Mt Fuji'
+          className='w-full h-full bg-fill top-16 horizontal'
+        />
+      </div>
+      <div className='fixed inset-0 hidden pt-16 lg:ml-44 lg:-mr-60 xl:ml-72 xl:-mr-72 lg:block'>
+        <div className='absolute inset-0'>
+          <Register hide={true}></Register>
+        </div>
+      </div>
+      <div className='absolute inset-0 pt-16'>
+        <h1 className='w-full px-8 pt-20 text-6xl font-bold text-gray-100 whitespace-wrap lg:w-5/12'>
+          Explore the world
+        </h1>
+        <div className='w-full'>
+          <p className='mt-4 ml-8 text-xl leading-tight text-gray-100 lg:w-1/3'>
+            Journey is a group trip planning app, that allows users to create
+            itineraries with the other members in their group, in real time.
+          </p>
+          <p className='w-1/3 mt-4 ml-8 text-xl leading-tight text-gray-100'>
+            Pick a location, search for some attractions, and easily add them to
+            your itinerary!
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
