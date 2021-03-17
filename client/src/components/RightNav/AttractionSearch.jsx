@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import FormButton from '../FormButton';
 import Checkbox from './Checkbox';
 
 export default function AttractionSearch(props) {
