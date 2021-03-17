@@ -18,7 +18,7 @@ export default function AttractionSearch(props) {
 
   const [searchTerms, setSearchTerms] = useState({
     location: currentLocation,
-    category: '',
+    category: 'auto',
     name: '',
   });
 
@@ -41,13 +41,35 @@ export default function AttractionSearch(props) {
           name='location'
           value={searchTerms.location}
           onChange={handleChange}
-          className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+          className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
         >
           {itinerary.locations.map(location => {
-            return <option value={location.name}>{location.name}</option>;
+            return (
+              <option key={location.id} value={location.name}>
+                {location.name}
+              </option>
+            );
           })}
         </select>
-        {/* selector for kinds/categories */}
+        <label htmlFor='category' className='font-semibold text-white'>
+          Attraction Type
+        </label>
+        <select
+          name='category'
+          value={searchTerms.category}
+          onChange={handleChange}
+          className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+        >
+          <option value='auto'>Auto Suggest</option>
+          <option value='adult'>Adult</option>
+          <option value='amusement'>Amusement</option>
+          <option value='accomodation'>Accomodation</option>
+          <option value='landmark'>Landmark</option>
+          <option value='sport'>Sport</option>
+          <option value='food'>Food</option>
+          <option value='cultural'>Cultural</option>
+          <option value='nature'>Nature</option>
+        </select>
         {/* search bar for attraction name */}
         {/* submit button - icon */}
       </form>
