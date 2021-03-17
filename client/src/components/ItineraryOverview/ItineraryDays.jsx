@@ -38,13 +38,17 @@ export default function ItineraryDays(props) {
     });
   };
 
+  const isActivitiesZero =
+    day.activities.length === 0 ? 'rounded-b-xl' : 'rounded-t-xl';
+
   return (
     <article className='mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
       <div
         className={
           view !== DELETE
             ? 'flex items-center justify-between px-4 pt-4 pb-2 rounded-xl'
-            : 'flex items-center justify-between px-4 pt-4 pb-2 bg-gray-600 rounded-t-xl'
+            : 'flex items-center justify-between px-4 pt-4 pb-4 bg-gray-600 bg-opacity-75 ' +
+              isActivitiesZero
         }
       >
         <h2
@@ -58,7 +62,7 @@ export default function ItineraryDays(props) {
         </h2>
         {pathname.includes('edit') &&
           itinerary.users.some(member => member.id === user.id) && (
-            <div className='flex flex-wrap items-center justify-center space-x-3'>
+            <div className='flex flex-wrap items-center space-x-3'>
               <div
                 className={view === DELETE ? 'hidden' : 'flex space-x-4 mr-2'}
               >
@@ -100,25 +104,25 @@ export default function ItineraryDays(props) {
                 </button>
               </div>
               {view === DELETE && (
-                <div className='flex flex-col p-2 text-gray-600 bg-opacity-90 rounded-xl'>
-                  <h4 className='text-xl font-bold lg:text-base'>Delete Day</h4>
-                  <p className='text-gray-200'>
+                <div className='flex flex-col px-2 text-gray-100 bg-opacity-90 rounded-xl'>
+                  <h4 className='text-xl font-bold '>Delete Day</h4>
+                  <p className=''>
                     {days.length > 1
-                      ? 'Delete This Day?'
-                      : 'There is only one day for this location. Delete this section of the trip?'}
+                      ? 'Are you sure you want to delete this day?'
+                      : 'There is only one day for this location. Are you sure you want to delete this section of the trip?'}
                   </p>
-                  <div className='flex space-x-4'>
+                  <div className='flex pt-2 space-x-3'>
                     <button
                       type='button'
                       onClick={() => setView(DEFAULT)}
-                      className='px-2 font-semibold leading-none text-gray-200 transition duration-300 transform bg-teal-600 border-2 border-transparent focus:ring-1 focus:ring-teal-600 hover:scale-110 rounded-xl'
+                      className='p-2 font-semibold leading-none text-gray-100 transition duration-300 transform bg-transparent border-2 border-gray-100 rounded-lg focus:ring-1 focus:ring-red-600 hover:scale-110'
                     >
                       Cancel
                     </button>
                     <button
                       type='button'
                       onClick={handleDelete}
-                      className='px-2 font-semibold leading-none text-gray-200 transition duration-300 transform bg-red-600 border-2 border-transparent bg-opacity-90 focus:ring-1 focus:ring-red-600 hover:scale-110 rounded-xl'
+                      className='px-2 py-2 font-semibold leading-none text-gray-200 transition duration-300 transform bg-red-600 border-2 border-transparent rounded-md bg-opacity-80 focus:ring-1 focus:ring-red-600 hover:scale-110'
                     >
                       Delete
                     </button>
