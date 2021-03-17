@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import FormButton from '../FormButton';
 
@@ -6,6 +6,10 @@ export default function AttractionSearch(props) {
   const { itinerary } = props;
 
   const { day_id } = useParams();
+
+  useEffect(() => {
+    //default on load will get autosuggestions
+  }, []);
 
   let currentLocation;
 
@@ -19,8 +23,18 @@ export default function AttractionSearch(props) {
 
   const [searchTerms, setSearchTerms] = useState({
     location: currentLocation,
-    category: '',
     name: '',
+  });
+
+  const [category, setCategory] = useState({
+    adult: false,
+    amusement: false,
+    accomodation: false,
+    landmark: false,
+    sport: false,
+    food: false,
+    cultural: false,
+    nature: false,
   });
 
   const LOADING = 'LOADING';
@@ -31,6 +45,11 @@ export default function AttractionSearch(props) {
   const handleChange = event => {
     const { value, name } = event.target;
     setSearchTerms({ ...searchTerms, [name]: value });
+  };
+
+  const handleCategoryChange = event => {
+    const { checked, name } = event.target;
+    setCategory({ ...category, [name]: checked });
   };
 
   const search = event => {
@@ -59,25 +78,113 @@ export default function AttractionSearch(props) {
             );
           })}
         </select>
-        <label htmlFor='category' className='font-semibold text-white'>
-          Attraction Type
-        </label>
-        <select
-          name='category'
-          value={searchTerms.category}
-          onChange={handleChange}
-          className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-        >
-          <option defaultValue></option>
-          <option value='adult'>Adult</option>
-          <option value='amusement'>Amusement</option>
-          <option value='accomodation'>Accomodation</option>
-          <option value='landmark'>Landmark</option>
-          <option value='sport'>Sport</option>
-          <option value='food'>Food</option>
-          <option value='cultural'>Cultural</option>
-          <option value='nature'>Nature</option>
-        </select>
+        <div>
+          <p className='font-semibold text-white'>Filter by Attraction Type:</p>
+          <div>
+            <input
+              type='checkbox'
+              id='adult'
+              name='adult'
+              value='adult'
+              checked={category.adult}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor='adult' className='text-white'>
+              Adult
+            </label>
+          </div>
+          <div>
+            <input
+              type='checkbox'
+              id='amusement'
+              name='amusement'
+              value='amusement'
+              checked={category.amusement}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor='amusement' className='text-white'>
+              Amusement
+            </label>
+          </div>
+          <div>
+            <input
+              type='checkbox'
+              id='accomodation'
+              name='accomodation'
+              value='accomodation'
+              checked={category.accomodation}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor='accomodation' className='text-white'>
+              Accomodation
+            </label>
+          </div>
+          <div>
+            <input
+              type='checkbox'
+              id='landmark'
+              name='landmark'
+              value='landmark'
+              checked={category.landmark}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor='landmark' className='text-white'>
+              Landmark
+            </label>
+          </div>
+          <div>
+            <input
+              type='checkbox'
+              id='sport'
+              name='sport'
+              value='sport'
+              checked={category.sport}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor='sport' className='text-white'>
+              Sport
+            </label>
+          </div>
+          <div>
+            <input
+              type='checkbox'
+              id='food'
+              name='food'
+              value='food'
+              checked={category.food}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor='food' className='text-white'>
+              Food
+            </label>
+          </div>
+          <div>
+            <input
+              type='checkbox'
+              id='cultural'
+              name='cultural'
+              value='cultural'
+              checked={category.cultural}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor='cultural' className='text-white'>
+              Cultural
+            </label>
+          </div>
+          <div>
+            <input
+              type='checkbox'
+              id='nature'
+              name='nature'
+              value='nature'
+              checked={category.nature}
+              onChange={handleCategoryChange}
+            />
+            <label htmlFor='nature' className='text-white'>
+              Nature
+            </label>
+          </div>
+        </div>
         <label htmlFor='name' className='font-semibold text-white'>
           Attraction Name
         </label>
