@@ -118,14 +118,20 @@ export default function AddActivityForm(props) {
 
   return (
     <div className='w-full h-full mt-16 lg:ml-64'>
-      <section className='w-5/6 mx-auto my-8 shadow-lg lg:w-2/3 h-5/6 bg-gray-50 rounded-xl'>
+      <section className='w-5/6 mx-auto my-8 lg:w-2/3 h-5/6'>
+        <h1 className='pl-4 mb-4 text-2xl font-bold border-l-8 border-teal-600'>
+          Add Activity
+        </h1>
         <AlertMessage
           isError={error.status}
           show={error.show}
           hide={error.hide}
           message={error.message}
         ></AlertMessage>
-        <form onSubmit={event => save(event)} className='flex flex-col h-full'>
+        <form
+          onSubmit={event => save(event)}
+          className='flex flex-col h-full shadow-md bg-gray-50 rounded-xl'
+        >
           <div className='flex flex-col h-full mx-8 my-6'>
             <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
               <div className='flex flex-col lg:w-1/2'>
