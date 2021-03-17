@@ -1,7 +1,8 @@
 // if need to reformat output of queries for easier manipulation on front end
 // do that in here
 
-const itineraryObj = (resultArr) => {
+const itineraryObj = (resultObj) => {
+  const resultArr = resultObj.main;
   const {
     id,
     name,
@@ -76,7 +77,7 @@ const itineraryObj = (resultArr) => {
 
     itinerary.locations = [...locationArr];
   }
-
+itinerary.my_locations = resultObj.my_locations;
   return itinerary;
 };
 const parseTravelParty = (party) => {

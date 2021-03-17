@@ -22,6 +22,7 @@ module.exports = ({
   deleteActivity,
   updateActivity,
   editItinerary,
+  getMyLocations,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -155,11 +156,13 @@ module.exports = ({
 
   router.get('/:itinerary_id', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getDetailedItinerary(itinerary_id).then(resultArr => {
-      const itinerary = itineraryObj(resultArr);
-
-      res.send(itinerary);
-    });
+    Promise.all([
+      getDetailedItinerary(itinerary_id),
+      getMyLocations(itinerary_id)
+    ]).then(([resultArr,myLocations]) => {
+       const itinerary = itineraryObj({main: resultArr,my_locations: myLocations})
+       res.send(itinerary);
+    })      
   });
 
   router.delete('/:itinerary_id', (req, res) => {

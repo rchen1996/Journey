@@ -123,6 +123,20 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const getMyLocations = (itineraryId) => {
+    const query = {
+      text: `select activities.id as activity_id, attractions.* from activities
+      JOIN attractions ON attractions.id = attraction_id
+      WHERE itinerary_id = $1 
+      AND day_id is null;`,
+      values: [itineraryId],
+    };
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
   const createAttraction = (attraction) => {
     const query = {
       text: `INSERT INTO attractions (name, description, category, image, address, location)
@@ -270,7 +284,7 @@ module.exports = (db) => {
     if (!notes) {
       notes = '';
     }
-   
+
     const query = {
       text: `UPDATE activities SET 
       start_time = $1,
@@ -286,7 +300,7 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
-  const editItinerary = itinerary => {
+  const editItinerary = (itinerary) => {
     const query = {
       text: `UPDATE itineraries
       SET name = $1, description = $2, image = $3, trip_type = $4, start_date = $5
@@ -304,8 +318,8 @@ module.exports = (db) => {
 
     return db
       .query(query)
-      .then(res => res.rows[0])
-      .catch(err => err);
+      .then((res) => res.rows[0])
+      .catch((err) => err);
   };
 
   return {
@@ -327,5 +341,6 @@ module.exports = (db) => {
     deleteActivity,
     updateActivity,
     editItinerary,
+    getMyLocations,
   };
 };
