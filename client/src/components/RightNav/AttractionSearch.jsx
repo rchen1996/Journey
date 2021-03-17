@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import FormButton from '../FormButton';
 
 export default function AttractionSearch(props) {
   const { itinerary } = props;
@@ -81,7 +82,19 @@ export default function AttractionSearch(props) {
           placeholder='Landmark name, Restaurant name, etc.'
           className='mb-2 border-gray-300 rounded-md focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
         ></input>
-        {/* submit button - icon */}
+        <FormButton type='submit'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 20 20'
+            fill='currentColor'
+          >
+            <path
+              fillRule='evenodd'
+              d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
+              clipRule='evenodd'
+            />
+          </svg>
+        </FormButton>
       </form>
     </div>
   );
