@@ -14,6 +14,7 @@ export default function ItineraryLeftNav(props) {
   const location = useLocation();
   const { itinerary_id } = useParams();
   const [editMode, setEditMode] = useState(null);
+  const [showLocation, setShowLocation] = useState(false);
 
   useEffect(() => {
     if (
@@ -33,12 +34,13 @@ export default function ItineraryLeftNav(props) {
   }, [itinerary_id]);
 
   function handleSubmit(event, last_day_order, locationName) {
+    console.log('Hello');
     event.preventDefault();
-    const titleCase = (str) => {
+    const titleCase = str => {
       const result = str
         .toLowerCase()
         .split(' ')
-        .map((word) => {
+        .map(word => {
           return word.charAt(0).toUpperCase() + word.slice(1);
         })
         .join(' ');
@@ -56,9 +58,9 @@ export default function ItineraryLeftNav(props) {
     return;
   }
 
-  const handleDropDown = (event) => {
+  const handleDropDown = event => {
     const targetId = event.target.id;
-    setDropDown((prev) => {
+    setDropDown(prev => {
       const isClassHidden =
         prev[targetId]?.dropClass === 'hidden' ||
         prev[targetId]?.dropClass === undefined;
@@ -80,7 +82,7 @@ export default function ItineraryLeftNav(props) {
   if (itinerary) {
     const travelParty = itinerary.users;
 
-    travelParty.forEach((member) => {
+    travelParty.forEach(member => {
       if (member.id === user.id) {
         inTravelParty = true;
       }
@@ -141,7 +143,7 @@ export default function ItineraryLeftNav(props) {
               return (
                 <div key={index} className='flex flex-col'>
                   <div
-                    onClick={(event) => handleDropDown(event)}
+                    onClick={event => handleDropDown(event)}
                     className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                     id={index}
                   >
@@ -167,7 +169,7 @@ export default function ItineraryLeftNav(props) {
                     </svg>
                   </div>
                   <div className={dropDown[index]?.dropClass || 'hidden'}>
-                    {locationObj.days.map((day) => {
+                    {locationObj.days.map(day => {
                       return (
                         <NavLink
                           to={`/itineraries/${itinerary.id}/days/${day.id}${
@@ -175,24 +177,27 @@ export default function ItineraryLeftNav(props) {
                           }`}
                           key={day.id}
                           activeClassName='bg-gray-200 bg-opacity-25'
-                          className='px-4 py-2 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                          className='flex justify-between px-4 py-2 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                           replace
                         >
-                          Day {day.day_order}{' '}
-                          {itinerary.start_date &&
-                            `(${addDays(itinerary.start_date, day.day_order - 1)
-                              .toDateString()
-                              .substring(4, 10)})`}
+                          <span>Day {day.day_order}</span>
+                          <span className='font-light'>
+                            {itinerary.start_date &&
+                              `${addDays(
+                                itinerary.start_date,
+                                day.day_order - 1
+                              )
+                                .toDateString()
+                                .substring(4, 10)}`}
+                          </span>
                         </NavLink>
                       );
                     })}
                     {editMode &&
-                      itinerary.users.some(
-                        (member) => member.id === user.id
-                      ) && (
+                      itinerary.users.some(member => member.id === user.id) && (
                         <div>
                           <button
-                            onClick={(event) =>
+                            onClick={event =>
                               handleSubmit(
                                 event,
                                 locationObj.days.slice(-1)[0].day_order,
@@ -221,10 +226,12 @@ export default function ItineraryLeftNav(props) {
               );
             })}
           </div>
-          {editMode &&
-          itinerary.users.some((member) => member.id === user.id) ? (
+          {editMode && itinerary.users.some(member => member.id === user.id) ? (
             <div>
-              <div className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'>
+              <div
+                className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                onClick={() => setShowLocation(true)}
+              >
                 <button className='text-xl font-bold pointer-events-none'>
                   Add Location
                 </button>
@@ -243,20 +250,38 @@ export default function ItineraryLeftNav(props) {
               </div>
               <form
                 onSubmit={handleSubmit}
-                className='flex flex-col items-center'
+                className={showLocation ? 'flex items-center' : 'hidden'}
               >
                 <input
                   value={newLocation}
                   name='add-location'
-                  onChange={(event) => setNewLocation(event.target.value)}
+                  onChange={event => setNewLocation(event.target.value)}
                   type='text'
                   placeholder='Location'
-                  className='mx-3 text-gray-600 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:ring-offset-2 focus:ring-offset-transparent focus:border-transparent'
+                  className='text-gray-600 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:ring-offset-2 focus:ring-offset-transparent focus:border-transparent'
                 />
+                <button
+                  type='button'
+                  className='z-50 p-2 text-gray-600 opacity-75 -ml-9 hover:opacity-100 focus:outline-none'
+                  onClick={() => setShowLocation(false)}
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    className='w-4 h-4'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                </button>
               </form>
             </div>
           ) : (
-            itinerary.users.some((member) => member.id === user.id) && (
+            itinerary.users.some(member => member.id === user.id) && (
               <div className=''>
                 <div>
                   <Link
