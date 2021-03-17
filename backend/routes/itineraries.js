@@ -89,14 +89,16 @@ module.exports = ({
             getDetailedItinerary(req.body.id).then(fullItinerary => {
               const parsed = itineraryObj(fullItinerary);
 
+              const users = parseTravelParty(travelParty);
+
               const io = req.app.get('socketio');
 
               io.sockets.in(parsed.id).emit('itinerary', {
                 ...parsed,
-                users: parseTravelParty(travelParty),
+                users: users,
               });
 
-              res.send({ ...parsed, users: parseTravelParty(travelParty) });
+              res.send({ ...parsed, users: users });
             });
           });
         } else {
@@ -134,13 +136,15 @@ module.exports = ({
               res.send({ error: 'No user with this email.' });
             } else {
               getTravelParty(itinerary_id).then(party => {
+                const parsed = parseTravelParty(party);
+
                 const io = req.app.get('socketio');
 
-                io.sockets.in(itinerary_id).emit('itinerary', {
-                  users: parseTravelParty(party),
+                io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                  users: parsed,
                 });
 
-                res.send(parseTravelParty(party));
+                res.send(parsed);
               });
             }
           })
@@ -185,13 +189,15 @@ module.exports = ({
     const { itinerary_id, user_id } = req.params;
     deleteCollaborator(itinerary_id, user_id).then(() => {
       getTravelParty(itinerary_id).then(party => {
+        const parsed = parseTravelParty(party);
+
         const io = req.app.get('socketio');
 
-        io.sockets.in(itinerary_id).emit('itinerary', {
-          users: parseTravelParty(party),
+        io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+          users: parsed,
         });
 
-        res.send(parseTravelParty(party));
+        res.send(parsed);
       });
     });
   });
@@ -364,13 +370,13 @@ module.exports = ({
                 res.send({ error: result.message });
               } else {
                 getDetailedItinerary(itinerary_id).then(resultArr => {
+                  const parsed = itineraryObj(resultArr);
+
                   const io = req.app.get('socketio');
 
-                  io.sockets
-                    .in(itinerary_id)
-                    .emit('itinerary', itineraryObj(resultArr));
+                  io.sockets.in(Number(itinerary_id)).emit('itinerary', parsed);
 
-                  res.send(itineraryObj(resultArr));
+                  res.send(parsed);
                 });
               }
             });
@@ -419,13 +425,12 @@ module.exports = ({
                 });
               } else {
                 getDetailedItinerary(itinerary_id).then(resultArr => {
+                  const parsed = itineraryObj(resultArr);
                   const io = req.app.get('socketio');
 
-                  io.sockets
-                    .in(itinerary_id)
-                    .emit('itinerary', itineraryObj(resultArr));
+                  io.sockets.in(Number(itinerary_id)).emit('itinerary', parsed);
 
-                  res.send(itineraryObj(resultArr));
+                  res.send(parsed);
                 });
               }
             });
@@ -445,12 +450,12 @@ module.exports = ({
         res.send({ error: `apiHelpers: ${result.message}` });
       } else {
         getDetailedItinerary(itinerary_id).then(resultArr => {
+          const parsed = itineraryObj(resultArr);
+
           const io = req.app.get('socketio');
 
-          io.sockets
-            .in(itinerary_id)
-            .emit('itinerary', itineraryObj(resultArr));
-          res.send(itineraryObj(resultArr));
+          io.sockets.in(Number(itinerary_id)).emit('itinerary', parsed);
+          res.send(parsed);
         });
       }
     });
