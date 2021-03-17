@@ -96,7 +96,7 @@ module.exports = ({
                 users: parseTravelParty(travelParty),
               });
 
-              // res.send({ ...parsed, users: parseTravelParty(travelParty) });
+              res.send({ ...parsed, users: parseTravelParty(travelParty) });
             });
           });
         } else {
