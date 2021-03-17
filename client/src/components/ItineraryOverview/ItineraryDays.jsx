@@ -30,6 +30,11 @@ export default function ItineraryDays(props) {
       // if (res.success) console.log('success: ', res.success);
     });
   };
+  const addDays = (date, days) => {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
 
   const isActivitiesZero =
     day.activities.length === 0 ? 'rounded-b-xl' : 'rounded-t-xl';
@@ -51,7 +56,11 @@ export default function ItineraryDays(props) {
               : 'hidden'
           }
         >
-          Day {day.day_order}
+          Day {day.day_order}{' '}
+          {itinerary.start_date &&
+            ` - ${addDays(itinerary.start_date, day.day_order - 1)
+              .toDateString()
+              .substring(0, 10)}`}
         </h2>
         {pathname.includes('edit') &&
           itinerary.users.some(member => member.id === user.id) && (

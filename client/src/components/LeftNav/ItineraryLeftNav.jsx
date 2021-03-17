@@ -1,11 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {
-  NavLink,
-  Link,
-  useLocation,
-  useParams,
-  useHistory,
-} from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { NavLink, Link, useLocation, useParams } from 'react-router-dom';
 export default function ItineraryLeftNav(props) {
   const [newLocation, setNewLocation] = useState('');
   const [dropDown, setDropDown] = useState({});
@@ -35,7 +29,8 @@ export default function ItineraryLeftNav(props) {
 
   useEffect(() => {
     setItinerary(itinerary_id);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itinerary_id]);
 
   function handleSubmit(event, last_day_order, locationName) {
     event.preventDefault();
@@ -50,9 +45,9 @@ export default function ItineraryLeftNav(props) {
     return;
   }
 
-  const handleDropDown = event => {
+  const handleDropDown = (event) => {
     const targetId = event.target.id;
-    setDropDown(prev => {
+    setDropDown((prev) => {
       const isClassHidden =
         prev[targetId]?.dropClass === 'hidden' ||
         prev[targetId]?.dropClass === undefined;
@@ -74,12 +69,18 @@ export default function ItineraryLeftNav(props) {
   if (itinerary) {
     const travelParty = itinerary.users;
 
-    travelParty.forEach(member => {
+    travelParty.forEach((member) => {
       if (member.id === user.id) {
         inTravelParty = true;
       }
     });
   }
+
+  const addDays = (date, days) => {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
 
   return (
     <nav
@@ -129,7 +130,7 @@ export default function ItineraryLeftNav(props) {
               return (
                 <div key={index} className='flex flex-col'>
                   <div
-                    onClick={event => handleDropDown(event)}
+                    onClick={(event) => handleDropDown(event)}
                     className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                     id={index}
                   >
@@ -155,7 +156,7 @@ export default function ItineraryLeftNav(props) {
                     </svg>
                   </div>
                   <div className={dropDown[index]?.dropClass || 'hidden'}>
-                    {locationObj.days.map(day => {
+                    {locationObj.days.map((day) => {
                       return (
                         <NavLink
                           to={`/itineraries/${itinerary.id}/days/${day.id}${
@@ -166,15 +167,17 @@ export default function ItineraryLeftNav(props) {
                           className='px-4 py-2 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
                           replace
                         >
-                          Day {day.day_order}
+                          Day {day.day_order} {itinerary.start_date && `(${addDays(itinerary.start_date, day.day_order -1).toDateString().substring(4,10)})`}
                         </NavLink>
                       );
                     })}
                     {editMode &&
-                      itinerary.users.some(member => member.id === user.id) && (
+                      itinerary.users.some(
+                        (member) => member.id === user.id
+                      ) && (
                         <div>
                           <button
-                            onClick={event =>
+                            onClick={(event) =>
                               handleSubmit(
                                 event,
                                 locationObj.days.slice(-1)[0].day_order,
@@ -203,7 +206,8 @@ export default function ItineraryLeftNav(props) {
               );
             })}
           </div>
-          {editMode && itinerary.users.some(member => member.id === user.id) ? (
+          {editMode &&
+          itinerary.users.some((member) => member.id === user.id) ? (
             <div>
               <div className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'>
                 <button className='text-xl font-bold pointer-events-none'>
@@ -229,7 +233,7 @@ export default function ItineraryLeftNav(props) {
                 <input
                   value={newLocation}
                   name='add-location'
-                  onChange={event => setNewLocation(event.target.value)}
+                  onChange={(event) => setNewLocation(event.target.value)}
                   type='text'
                   placeholder='Location'
                   className='mx-3 text-gray-600 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:ring-offset-2 focus:ring-offset-transparent focus:border-transparent'
@@ -237,7 +241,7 @@ export default function ItineraryLeftNav(props) {
               </form>
             </div>
           ) : (
-            itinerary.users.some(member => member.id === user.id) && (
+            itinerary.users.some((member) => member.id === user.id) && (
               <div className=''>
                 <div>
                   <Link
