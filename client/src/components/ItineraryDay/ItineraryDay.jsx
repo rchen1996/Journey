@@ -92,8 +92,8 @@ export default function ItineraryDay(props) {
         <header
           className={
             view !== DELETE
-              ? 'flex sm:items-center sm:justify-between flex-col sm:flex-row space-y-4'
-              : 'flex sm:items-center sm:justify-between flex-col sm:flex-row space-y-4'
+              ? 'flex xl:items-center xl:justify-between flex-col xl:flex-row space-y-4'
+              : 'flex xl:items-center xl:justify-between flex-col xl:flex-row space-y-4'
           }
         >
           <div

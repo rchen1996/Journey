@@ -283,7 +283,7 @@ export default function ItineraryDayActivities(props) {
                 </div>
               )}
             </div>
-            <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap sm:w-3/4 lg:w-min rounded-r-xl lg:whitespace-nowrap'>
+            <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap sm:w-3/4 xl:w-min rounded-r-xl xl:whitespace-nowrap'>
               {activity.address}
             </p>
             <div className='space-x-1'>
