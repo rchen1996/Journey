@@ -50,19 +50,23 @@ export default function ItineraryDays(props) {
               isActivitiesZero
         }
       >
-        <h2
+        <div
           className={
             view !== DELETE
-              ? 'px-4 py-1.5 mb-2 text-lg font-bold text-gray-100 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'
+              ? 'mb-2 text-lg font-bold text-gray-100 w-min whitespace-nowrap space-x-2'
               : 'hidden'
           }
         >
-          Day {day.day_order}{' '}
-          {itinerary.start_date &&
-            ` - ${addDays(itinerary.start_date, day.day_order - 1)
-              .toDateString()
-              .substring(0, 10)}`}
-        </h2>
+          <span className='bg-teal-600 shadow-md px-4 py-1.5 rounded-xl'>
+            Day{day.day_order}
+          </span>
+          <span className='font-medium text-gray-600'>
+            {itinerary.start_date &&
+              ` ${addDays(itinerary.start_date, day.day_order - 1)
+                .toDateString()
+                .substring(0, 10)}`}
+          </span>
+        </div>
         {pathname.includes('edit') &&
           itinerary.users.some(member => member.id === user.id) && (
             <div className='flex flex-wrap items-center space-x-3'>
