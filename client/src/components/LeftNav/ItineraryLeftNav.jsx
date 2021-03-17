@@ -108,7 +108,7 @@ export default function ItineraryLeftNav(props) {
           <div className='flex flex-col mb-2 '>
             <NavLink
               to={`/itineraries/${itinerary.id}${editMode ? '/edit' : ''}`}
-              className='px-3 py-2 text-2xl font-bold '
+              className='px-3 py-2 text-2xl font-bold'
               state='test'
             >
               {itinerary.name}
