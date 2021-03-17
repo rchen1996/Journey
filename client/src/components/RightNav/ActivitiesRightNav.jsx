@@ -11,29 +11,29 @@ export default function ActivitiesRightNav(props) {
   const [view, setView] = useState(MY_LOCATIONS);
 
   return (
-    <nav className='mt-16 bg-gray-600 sm-w64'>
-      <div className='sticky flex flex-col items-center w-full px-4 py-6 text-xl font-semibold text-gray-100 sm:block top-16'>
+    <div className='w-64 min-h-full mt-16 bg-gray-600'>
+      <div className='fixed z-40 w-full h-full px-6 py-4 pb-24 overflow-y-scroll text-gray-100 lg:w-64 md:w-full no-scrollbar lg:block '>
         <div className='mb-4'>
           <button
             type='button'
             onClick={() => setView(MY_LOCATIONS)}
-            className='flex items-center justify-between p-4 sm:px-4 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+            className='flex items-center justify-between w-full p-4 text-2xl font-bold sm:px-4 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
           >
             My Locations
           </button>
           <button
             type='button'
             onClick={() => setView(ATTRACTION_SEARCH)}
-            className='flex items-center justify-between p-4 sm:px-4 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+            className='flex items-center justify-between w-full p-4 text-2xl font-bold sm:px-4 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
           >
-            Search for Attractions
+            Find Places
           </button>
         </div>
+        {view === MY_LOCATIONS && itinerary && (
+          <MyLocations itinerary={itinerary} />
+        )}
+        {view === ATTRACTION_SEARCH && <AttractionSearch />}
       </div>
-      {view === MY_LOCATIONS && itinerary && (
-        <MyLocations itinerary={itinerary} />
-      )}
-      {view === ATTRACTION_SEARCH && <AttractionSearch />}
-    </nav>
+    </div>
   );
 }

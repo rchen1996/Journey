@@ -7,8 +7,8 @@ export default function RightNav(props) {
   const url = useLocation().pathname;
 
   return (
-    <div>
+    <nav className=''>
       {url.includes('edit') && <ActivitiesRightNav itinerary={itinerary} />}
-    </div>
+    </nav>
   );
 }

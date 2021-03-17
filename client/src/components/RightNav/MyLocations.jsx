@@ -9,5 +9,5 @@ export default function MyLocations(props) {
     return <MyLocationsItem key={location.id} location={location} />;
   });
 
-  return <div>{parsedMyLocations}</div>;
+  return <div className='w-full'>{parsedMyLocations}</div>;
 }
