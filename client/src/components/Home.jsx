@@ -1,19 +1,12 @@
-import bgPhoto from '../images/fuji-2.jpg';
 import Register from './Register';
 export default function Home(props) {
   return (
-    <div className='w-full min-h-full pt-16'>
-      <div className='inset-0 z-0 w-full'>
-        <img
-          src={bgPhoto}
-          alt='Mt Fuji'
-          className='w-full h-full bg-fill top-16 horizontal'
-        />
-      </div>
+    <div className='w-full h-screen pt-16'>
+      <div className='object-cover object-top w-full h-full bg-no-repeat bg-homepage'></div>
       <div className='fixed inset-0 hidden pt-16 lg:ml-44 lg:-mr-60 xl:ml-72 xl:-mr-72 lg:block'>
-        <div className='absolute inset-0'>
+        {/* <div className='absolute inset-0'>
           <Register hide={true}></Register>
-        </div>
+        </div> */}
       </div>
       <div className='absolute inset-0 pt-16'>
         <h1 className='w-full px-8 pt-20 text-6xl font-bold text-gray-100 whitespace-wrap lg:w-5/12'>
