@@ -33,7 +33,9 @@ export default function ActivitiesRightNav(props) {
       {view === MY_LOCATIONS && itinerary && (
         <MyLocations itinerary={itinerary} />
       )}
-      {view === ATTRACTION_SEARCH && <AttractionSearch />}
+      {view === ATTRACTION_SEARCH && itinerary && (
+        <AttractionSearch itinerary={itinerary} />
+      )}
     </nav>
   );
 }
