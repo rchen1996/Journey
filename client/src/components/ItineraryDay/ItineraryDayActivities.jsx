@@ -162,6 +162,7 @@ export default function ItineraryDayActivities(props) {
 
   const cancel = () => {
     setView(DEFAULT);
+    setEditMode(BASE);
     history.push(url);
   };
 
@@ -180,51 +181,21 @@ export default function ItineraryDayActivities(props) {
           : 'flex justify-between w-full h-auto p-4 duration-300 transform transition-transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'
       }
     >
-      {error.status === true && <p>{error.message}</p>}
-      {editMode === EDIT && (
-        <div>
-          <form onSubmit={event => event.preventDefault()}>
-            <label htmlFor='start-time'>From :</label>
-            <input
-              name='start-time'
-              value={activityForm.start_time || ''}
-              type='time'
-              onChange={event =>
-                setActivityForm({
-                  ...activityForm,
-                  start_time: event.target.value,
-                })
-              }
-            ></input>
-            <label htmlFor='end-time'>To :</label>
-            <input
-              name='end-time'
-              value={activityForm.end_time || ''}
-              type='time'
-              onChange={event =>
-                setActivityForm({
-                  ...activityForm,
-                  end_time: event.target.value,
-                })
-              }
-            ></input>
-            <label htmlFor='notes'>Notes:</label>
-            <textarea
-              name='notes'
-              type='textarea'
-              value={activityForm.notes || ''}
-              onChange={event =>
-                setActivityForm({ ...activityForm, notes: event.target.value })
-              }
-            ></textarea>
-            <button onClick={handleEdit}>Save Changes</button>
-          </form>
-        </div>
-      )}
-
       {view === DEFAULT && (
-        <div className='flex justify-between w-full space-x-4'>
-          <div className='flex items-center justify-around space-x-4 w-min whitespace-nowrap'>
+        <div
+          className={
+            editMode === EDIT
+              ? 'flex justify-between w-full'
+              : 'flex justify-between w-full space-x-4'
+          }
+        >
+          <div
+            className={
+              editMode === EDIT
+                ? 'hidden'
+                : 'flex items-center justify-around space-x-4 w-min whitespace-nowrap'
+            }
+          >
             {duration && (
               <>
                 <div className='flex flex-col items-center justify-between w-12 py-1.5 h-full'>
@@ -250,7 +221,84 @@ export default function ItineraryDayActivities(props) {
               />
             </figure>
           </div>
-          <div className='flex flex-col w-full space-y-1'>
+          <form
+            action=''
+            className={editMode === EDIT ? 'flex w-full flex-col' : 'hidden'}
+            onSubmit={event => event.preventDefault()}
+          >
+            <div className='flex flex-col md:flex-row'>
+              <div className='flex flex-col'>
+                <label htmlFor='start-time' className='font-semibold'>
+                  Start Time
+                </label>
+                <input
+                  name='start-time'
+                  value={activityForm.start_time || ''}
+                  type='time'
+                  onChange={event =>
+                    setActivityForm({
+                      ...activityForm,
+                      start_time: event.target.value,
+                    })
+                  }
+                  className='mb-2 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+                ></input>
+                <label htmlFor='end-time' className='font-semibold'>
+                  End Time
+                </label>
+                <input
+                  name='end-time'
+                  value={activityForm.end_time || ''}
+                  type='time'
+                  onChange={event =>
+                    setActivityForm({
+                      ...activityForm,
+                      end_time: event.target.value,
+                    })
+                  }
+                  className='mb-2 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+                ></input>
+              </div>
+              <div className='flex flex-col w-full'>
+                <label htmlFor='notes' className='font-semibold md:ml-2'>
+                  Notes:
+                </label>
+                <textarea
+                  name='notes'
+                  type='textarea'
+                  value={activityForm.notes || ''}
+                  onChange={event =>
+                    setActivityForm({
+                      ...activityForm,
+                      notes: event.target.value,
+                    })
+                  }
+                  className='h-full mb-2 border-gray-300 rounded-md appearance-none resize-none md:ml-2 focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+                ></textarea>
+              </div>
+            </div>
+            <div className='flex pt-2 space-x-2'>
+              <button
+                type='submit'
+                onClick={cancel}
+                className='w-full px-4 py-3 font-semibold leading-none text-gray-200 bg-teal-600 border-2 border-transparent sm:w-1/4 lg:w-32 hover:text-teal-600 rounded-xl hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+              >
+                Save
+              </button>
+              <button
+                type='button'
+                onClick={cancel}
+                className='hover:underline hover:text-teal-600 focus:outline-none'
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+          <div
+            className={
+              editMode === EDIT ? 'hidden' : 'flex flex-col w-full space-y-1'
+            }
+          >
             <h4 className='text-2xl font-bold'>{activity.name}</h4>
             <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap lg:w-min rounded-r-xl lg:whitespace-nowrap'>
               {activity.address}
@@ -263,7 +311,11 @@ export default function ItineraryDayActivities(props) {
             </p>
           </div>
           {url.includes('edit') && (
-            <div className='flex items-center space-x-3'>
+            <div
+              className={
+                editMode === EDIT ? 'hidden' : 'flex items-center space-x-3'
+              }
+            >
               <button
                 type='button'
                 className='h-5'

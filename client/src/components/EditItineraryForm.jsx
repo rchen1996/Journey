@@ -90,9 +90,9 @@ export default function EditItineraryForm(props) {
   };
 
   return (
-    <section className='flex flex-col items-center w-full h-full mt-16'>
+    <section className='flex justify-center w-full h-full mt-16 lg:ml-64'>
       <div className='flex flex-col w-3/4 py-8 2xl:w-1/2'>
-        <h1 className='mb-4 ml-1 text-2xl font-bold'>
+        <h1 className='pl-4 mb-4 ml-1 text-2xl font-bold border-l-8 border-teal-600'>
           Edit Itinerary Information
         </h1>
         <div className='w-full shadow-lg bg-gray-50 rounded-xl'>
