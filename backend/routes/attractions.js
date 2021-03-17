@@ -4,7 +4,7 @@ const router = express.Router();
 
 module.exports = (
   {
-    //functions
+    //router.get...
   }
 ) => {
   return router;

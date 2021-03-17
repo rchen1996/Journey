@@ -11,6 +11,7 @@ const port = process.env.PORT || 8002;
 
 const usersRouter = require('./routes/users');
 const apiRouter = require('./routes/itineraries');
+const searchRouter = require('./routes/attractions');
 
 const db = require('./db');
 const userHelpers = require('./helpers/userHelpers')(db);
@@ -33,6 +34,7 @@ app.use(cors());
 
 app.use('/api/users', usersRouter(userHelpers));
 app.use('/api/itineraries', apiRouter(apiHelpers));
+app.use('/api/attractions', searchRouter(searchHelpers));
 
 const server = http.createServer(app);
 
@@ -45,10 +47,10 @@ const io = socketIo(server, {
 
 app.set('socketio', io);
 
-io.on('connection', socket => {
+io.on('connection', (socket) => {
   console.log('New client connected');
 
-  socket.on('itinerary_id', id => {
+  socket.on('itinerary_id', (id) => {
     socket.join(id);
   });
 
