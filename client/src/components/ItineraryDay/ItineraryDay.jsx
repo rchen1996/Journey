@@ -92,8 +92,8 @@ export default function ItineraryDay(props) {
         <header
           className={
             view !== DELETE
-              ? 'flex items-center justify-between'
-              : 'flex items-center justify-between'
+              ? 'flex sm:items-center sm:justify-between flex-col sm:flex-row space-y-4'
+              : 'flex sm:items-center sm:justify-between flex-col sm:flex-row space-y-4'
           }
         >
           <div
@@ -166,7 +166,7 @@ export default function ItineraryDay(props) {
             <Link
               to={`/itineraries/${itinerary_id}/days/${day_id}/activities/new`}
               type='button'
-              className='flex items-center px-4 py-2.5 text-gray-100 bg-teal-600 h-1/2 rounded-3xl border-2 border-transparent hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+              className='flex justify-center items-center px-4 py-2.5 text-gray-100 bg-teal-600 h-1/2 rounded-3xl border-2 border-transparent hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
               day={dayInfo}
             >
               Add Activity
