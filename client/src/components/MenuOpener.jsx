@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
 export default function MenuOpener(props) {
+  const url = useLocation().pathname;
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className='fixed z-50 flex flex-col space-y-3 bottom-4 right-4 lg:hidden'>
@@ -7,7 +10,7 @@ export default function MenuOpener(props) {
         type='button'
         onClick={() => props.updateMenuState(false, true)}
         className={
-          menuOpen
+          menuOpen && url.includes('edit') && url.includes('days')
             ? 'flex items-center justify-center w-16 h-16 text-gray-200 bg-teal-600 rounded-full'
             : 'hidden items-center justify-center w-16 h-16 text-gray-200 bg-teal-600 rounded-full'
         }
