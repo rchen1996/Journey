@@ -1,6 +1,7 @@
 import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import DeleteConfirmation from '../DeleteConfirmation';
+import EditActivityForm from './EditActivityForm';
 
 export default function ItineraryDayActivities(props) {
   const { activity, editActivity, timeSlots } = props;
@@ -221,79 +222,14 @@ export default function ItineraryDayActivities(props) {
               />
             </figure>
           </div>
-          <form
-            action=''
-            className={editMode === EDIT ? 'flex w-full flex-col' : 'hidden'}
-            onSubmit={event => event.preventDefault()}
-          >
-            <div className='flex flex-col md:flex-row'>
-              <div className='flex flex-col'>
-                <label htmlFor='start-time' className='font-semibold'>
-                  Start Time
-                </label>
-                <input
-                  name='start-time'
-                  value={activityForm.start_time || ''}
-                  type='time'
-                  onChange={event =>
-                    setActivityForm({
-                      ...activityForm,
-                      start_time: event.target.value,
-                    })
-                  }
-                  className='mb-2 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-                ></input>
-                <label htmlFor='end-time' className='font-semibold'>
-                  End Time
-                </label>
-                <input
-                  name='end-time'
-                  value={activityForm.end_time || ''}
-                  type='time'
-                  onChange={event =>
-                    setActivityForm({
-                      ...activityForm,
-                      end_time: event.target.value,
-                    })
-                  }
-                  className='mb-2 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-                ></input>
-              </div>
-              <div className='flex flex-col w-full'>
-                <label htmlFor='notes' className='font-semibold md:ml-2'>
-                  Notes:
-                </label>
-                <textarea
-                  name='notes'
-                  type='textarea'
-                  value={activityForm.notes || ''}
-                  onChange={event =>
-                    setActivityForm({
-                      ...activityForm,
-                      notes: event.target.value,
-                    })
-                  }
-                  className='h-full mb-2 border-gray-300 rounded-md appearance-none resize-none md:ml-2 focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-                ></textarea>
-              </div>
-            </div>
-            <div className='flex pt-2 space-x-2'>
-              <button
-                type='submit'
-                onClick={cancel}
-                className='w-full px-4 py-3 font-semibold leading-none text-gray-200 bg-teal-600 border-2 border-transparent sm:w-1/4 lg:w-32 hover:text-teal-600 rounded-xl hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
-              >
-                Save
-              </button>
-              <button
-                type='button'
-                onClick={cancel}
-                className='hover:underline hover:text-teal-600 focus:outline-none'
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+          <EditActivityForm
+            editMode={editMode}
+            activityForm={activityForm}
+            setActivityForm={setActivityForm}
+            handleEdit={handleEdit}
+            cancel={cancel}
+            EDIT={EDIT}
+          ></EditActivityForm>
           <div
             className={
               editMode === EDIT ? 'hidden' : 'flex flex-col w-full space-y-1'
@@ -303,12 +239,16 @@ export default function ItineraryDayActivities(props) {
             <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap lg:w-min rounded-r-xl lg:whitespace-nowrap'>
               {activity.address}
             </p>
-            <p className='text-sm line-clamp-3'>
-              Description: {activity.description}
-            </p>
-            <p className='text-sm line-clamp-3'>
-              {activity.notes && `Notes: ${activity.notes}`}
-            </p>
+            <div className='space-x-1'>
+              <p className='inline text-sm font-semibold'>Description:</p>
+              <p className='inline text-sm'>{activity.description}</p>
+            </div>
+            {activity.notes && (
+              <div className='space-x-1'>
+                <p className='inline text-sm font-semibold'>{'Notes: '}</p>
+                <p className='inline text-sm'>{`${activity.notes}`}</p>
+              </div>
+            )}
           </div>
           {url.includes('edit') && (
             <div
