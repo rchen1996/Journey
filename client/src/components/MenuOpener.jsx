@@ -5,11 +5,11 @@ export default function MenuOpener(props) {
     <div className='fixed z-50 flex flex-col space-y-3 bottom-4 right-4 lg:hidden'>
       <button
         type='button'
-        onClick={() => props.updateMenuState(null)}
+        onClick={() => props.updateMenuState(false, true)}
         className={
           menuOpen
-            ? 'flex items-center justify-center w-16 h-16 text-gray-200 bg-gray-600 rounded-full'
-            : 'hidden items-center justify-center w-16 h-16 text-gray-200 bg-gray-600 rounded-full'
+            ? 'flex items-center justify-center w-16 h-16 text-gray-200 bg-teal-600 rounded-full'
+            : 'hidden items-center justify-center w-16 h-16 text-gray-200 bg-teal-600 rounded-full'
         }
       >
         <svg
@@ -29,10 +29,10 @@ export default function MenuOpener(props) {
         type='button'
         className={
           menuOpen
-            ? 'flex items-center justify-center w-16 h-16 text-gray-200 bg-gray-600 rounded-full'
-            : 'hidden items-center justify-center w-16 h-16 text-gray-200 bg-gray-600 rounded-full'
+            ? 'flex items-center justify-center w-16 h-16 text-gray-200 bg-teal-600 rounded-full'
+            : 'hidden items-center justify-center w-16 h-16 text-gray-200 bg-teal-600 rounded-full'
         }
-        onClick={() => props.updateMenuState(null)}
+        onClick={() => props.updateMenuState(true, false)}
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -50,11 +50,11 @@ export default function MenuOpener(props) {
       </button>
       <button
         type='button'
-        className='flex items-center justify-center w-16 h-16 text-gray-200 bg-gray-600 rounded-full'
+        className='flex items-center justify-center w-16 h-16 text-gray-200 bg-teal-600 rounded-full'
         onClick={() => {
           setMenuOpen(!menuOpen);
-          if (props.isMenuOpen) {
-            props.updateMenuState(null);
+          if (props.isLeftNavOpen || props.isRightNavOpen) {
+            props.updateMenuState(false, false);
           }
         }}
       >
