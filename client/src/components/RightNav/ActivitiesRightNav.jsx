@@ -53,7 +53,7 @@ export default function ActivitiesRightNav(props) {
       <div className='fixed z-40 w-full h-full px-4 py-4 pb-24 space-y-2 overflow-y-scroll text-gray-100 divide-y divide-gray-100 lg:w-64 md:w-full no-scrollbar lg:block divide-opacity-50'>
         <div className={dropDown.subMenuOpen ? 'block' : 'mb-4'}>
           <div
-            className='flex items-center justify-between w-full p-4 text-2xl font-bold bg-gray-200 bg-opacity-25 cursor-pointer sm:px-3 sm:py-2 rounded-xl'
+            className='flex items-center justify-between w-full p-4 text-xl font-bold bg-gray-200 bg-opacity-25 cursor-pointer sm:px-3 sm:py-2 rounded-xl'
             type='button'
             onClick={handleDropDown}
           >

@@ -22,6 +22,7 @@ module.exports = {
       display: ['group-hover'],
       margin: ['last'],
       borderRadius: ['last'],
+      backgroundColor: ['checked'],
     },
   },
   plugins: [
