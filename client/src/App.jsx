@@ -8,7 +8,7 @@ import Nav from './components/Nav';
 import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
-import LeftNav from './components/LeftNav';
+import LeftNav from './components/LeftNav/index';
 import Itinerary from './components/ItineraryOverview/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
@@ -19,6 +19,7 @@ import Bookmarks from './components/Bookmarks';
 import MenuOpener from './components/MenuOpener';
 import ManageAccount from './components/ManageAccount';
 import EditItineraryForm from './components/EditItineraryForm';
+import RightNav from './components/RightNav/RightNav';
 
 function App() {
   const {
@@ -151,6 +152,10 @@ function App() {
               isMenuOpen={state.isMenuOpen}
               editActivity={editActivity}
             />
+            {itinerary &&
+              itinerary.users.some(member => member.id === user.id) && (
+                <RightNav />
+              )}
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id/overview/edit'>
