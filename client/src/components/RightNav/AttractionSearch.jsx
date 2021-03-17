@@ -23,6 +23,11 @@ export default function AttractionSearch(props) {
     name: '',
   });
 
+  const LOADING = 'LOADING';
+  const SHOW = 'SHOW';
+
+  const [view, setView] = useState(SHOW);
+
   const handleChange = event => {
     const { value, name } = event.target;
     setSearchTerms({ ...searchTerms, [name]: value });
@@ -30,6 +35,8 @@ export default function AttractionSearch(props) {
 
   const search = event => {
     event.preventDefault();
+
+    setView(LOADING);
   };
 
   return (
@@ -96,6 +103,16 @@ export default function AttractionSearch(props) {
           </svg>
         </FormButton>
       </form>
+      {view === LOADING && (
+        <img
+          src='/images/status.png'
+          className='animate-spin'
+          alt='loading indicator'
+        />
+      )}
+      {view === SHOW && (
+        <div className='text-white'>This is where attractions appear</div>
+      )}
     </div>
   );
 }
