@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation, useParams } from 'react-router-dom';
 export default function ItineraryLeftNav(props) {
-  const [newLocation, setNewLocation] = useState('');
-  const [dropDown, setDropDown] = useState({});
   const {
     setItinerary,
     itinerary,
@@ -10,9 +8,14 @@ export default function ItineraryLeftNav(props) {
     addDayWithLocation,
     isMenuOpen,
   } = props;
+
+  const { itinerary_id } = useParams();
+
   const pathname = useLocation().pathname;
   const location = useLocation();
-  const { itinerary_id } = useParams();
+
+  const [newLocation, setNewLocation] = useState('');
+  const [dropDown, setDropDown] = useState({});
   const [editMode, setEditMode] = useState(null);
   const [showLocation, setShowLocation] = useState(false);
 
