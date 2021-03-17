@@ -16,6 +16,7 @@ const searchRouter = require('./routes/attractions');
 const db = require('./db');
 const userHelpers = require('./helpers/userHelpers')(db);
 const apiHelpers = require('./helpers/apiHelpers')(db);
+const searchHelpers = require('./helpers/searchHelpers')(db);
 
 const app = express();
 
