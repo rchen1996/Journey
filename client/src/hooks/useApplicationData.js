@@ -277,6 +277,9 @@ export default function useApplicationData() {
     socket.on('message', (data) => {
       console.log(data);
     });
+    socket.on('itinerary', (data) => {
+      console.log(data);
+    });
   }, []);
 
   return {
