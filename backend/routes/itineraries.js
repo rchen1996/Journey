@@ -134,6 +134,12 @@ module.exports = ({
               res.send({ error: 'No user with this email.' });
             } else {
               getTravelParty(itinerary_id).then(party => {
+                const io = req.app.get('socketio');
+
+                io.sockets.in(itinerary_id).emit('itinerary', {
+                  users: parseTravelParty(party),
+                });
+
                 res.send(parseTravelParty(party));
               });
             }
@@ -179,6 +185,12 @@ module.exports = ({
     const { itinerary_id, user_id } = req.params;
     deleteCollaborator(itinerary_id, user_id).then(() => {
       getTravelParty(itinerary_id).then(party => {
+        const io = req.app.get('socketio');
+
+        io.sockets.in(itinerary_id).emit('itinerary', {
+          users: parseTravelParty(party),
+        });
+
         res.send(parseTravelParty(party));
       });
     });
@@ -209,6 +221,10 @@ module.exports = ({
             deleteActivity(activity_id).then(() => {
               getDetailedItinerary(itinerary_id).then(result => {
                 const itinerary = itineraryObj(result);
+
+                const io = req.app.get('socketio');
+
+                io.sockets.in(itinerary.id).emit('itinerary', itinerary);
 
                 res.send(itinerary);
               });
@@ -291,6 +307,10 @@ module.exports = ({
                   getDetailedItinerary(itinerary_id).then(itinerary => {
                     const parsed = itineraryObj(itinerary);
 
+                    const io = req.app.get('socketio');
+
+                    io.sockets.in(parsed.id).emit('itinerary', parsed);
+
                     response.send(parsed);
                   });
                 });
@@ -344,11 +364,22 @@ module.exports = ({
                 res.send({ error: result.message });
               } else {
                 getDetailedItinerary(itinerary_id).then(resultArr => {
+                  const io = req.app.get('socketio');
+
+                  io.sockets
+                    .in(itinerary_id)
+                    .emit('itinerary', itineraryObj(resultArr));
+
                   res.send(itineraryObj(resultArr));
                 });
               }
             });
-          } else res.send(newItinerary);
+          } else {
+            const io = req.app.get('socketio');
+
+            io.sockets.in(newItinerary.id).emit('itinerary', newItinerary);
+            res.send(newItinerary);
+          }
         });
       }
     });
@@ -373,6 +404,12 @@ module.exports = ({
           const newOrderArr = daysOrderArr.map((i, index) => index + 1);
 
           if (newOrderArr.length === 0) {
+            const io = req.app.get('socketio');
+
+            io.sockets
+              .in(bufferItinerary.id)
+              .emit('itinerary', bufferItinerary);
+
             res.send(bufferItinerary);
           } else {
             reorderDays(daysIdArr, newOrderArr).then(result => {
@@ -382,6 +419,12 @@ module.exports = ({
                 });
               } else {
                 getDetailedItinerary(itinerary_id).then(resultArr => {
+                  const io = req.app.get('socketio');
+
+                  io.sockets
+                    .in(itinerary_id)
+                    .emit('itinerary', itineraryObj(resultArr));
+
                   res.send(itineraryObj(resultArr));
                 });
               }
@@ -401,9 +444,14 @@ module.exports = ({
       if (result.message) {
         res.send({ error: `apiHelpers: ${result.message}` });
       } else {
-        getDetailedItinerary(itinerary_id).then(resultArr => [
-          res.send(itineraryObj(resultArr)),
-        ]);
+        getDetailedItinerary(itinerary_id).then(resultArr => {
+          const io = req.app.get('socketio');
+
+          io.sockets
+            .in(itinerary_id)
+            .emit('itinerary', itineraryObj(resultArr));
+          res.send(itineraryObj(resultArr));
+        });
       }
     });
   });
