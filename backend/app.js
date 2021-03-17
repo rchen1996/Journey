@@ -5,6 +5,7 @@ const path = require('path');
 const cookieSession = require('cookie-session');
 const logger = require('morgan');
 const helmet = require('helmet');
+const cors = require('cors');
 
 const port = process.env.PORT || 8002;
 
@@ -28,13 +29,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
+app.use(cors());
 
 app.use('/api/users', usersRouter(userHelpers));
 app.use('/api/itineraries', apiRouter(apiHelpers));
 
 const server = http.createServer(app);
 
-const io = socketIo(server);
+const io = socketIo(server, {
+  cors: {
+    origin: 'http://localhost:8000',
+    methods: ['GET', 'POST'],
+  },
+});
 
 let interval;
 
