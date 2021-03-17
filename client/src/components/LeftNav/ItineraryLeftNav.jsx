@@ -102,7 +102,7 @@ export default function ItineraryLeftNav(props) {
     <nav
       className={
         isLeftNavOpen
-          ? 'fixed z-40 lg:w-64 md:w-5/6 w-2/3 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block '
+          ? 'fixed z-40 lg:w-64 md:w-full w-full h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block '
           : 'hidden'
       }
     >
