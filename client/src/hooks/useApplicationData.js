@@ -274,6 +274,9 @@ export default function useApplicationData() {
 
   useEffect(() => {
     const socket = io(ENDPOINT);
+    socket.on('connect', function () {
+      socket.emit('itinerary_id', state.itinerary && state.itinerary.id);
+    });
     socket.on('message', (data) => {
       console.log(data);
     });
@@ -283,6 +286,7 @@ export default function useApplicationData() {
         itinerary: { ...state.itinerary, ...data },
       });
     });
+    return () => socket.disconnect();
   }, []);
 
   return {
