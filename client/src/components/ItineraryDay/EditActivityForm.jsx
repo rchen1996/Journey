@@ -14,8 +14,8 @@ export default function EditActivityForm(props) {
       onSubmit={event => event.preventDefault()}
     >
       <div className='flex flex-col'>
-        <div className='flex justify-between space-x-4'>
-          <div className='flex flex-col w-1/2'>
+        <div className='flex flex-col justify-between sm:space-x-4 sm:flex-row'>
+          <div className='flex flex-col sm:w-1/2'>
             <label htmlFor='start-time' className='font-semibold'>
               Start Time
             </label>
@@ -32,7 +32,7 @@ export default function EditActivityForm(props) {
               className='mb-2 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
             ></input>
           </div>
-          <div className='flex flex-col w-1/2'>
+          <div className='flex flex-col sm:w-1/2'>
             <label htmlFor='end-time' className='font-semibold'>
               End Time
             </label>
