@@ -1,7 +1,6 @@
 import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import DeleteConfirmation from '../DeleteConfirmation';
-import FormButton from '../FormButton';
 
 export default function ItineraryDayActivities(props) {
   const { activity, editActivity, timeSlots } = props;
