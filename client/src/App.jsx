@@ -20,6 +20,8 @@ import MenuOpener from './components/MenuOpener';
 import ManageAccount from './components/ManageAccount';
 import EditItineraryForm from './components/EditItineraryForm';
 
+
+
 function App() {
   const {
     state,
@@ -43,9 +45,10 @@ function App() {
     changePassword,
     editItinerary,
   } = useApplicationData();
-
+  
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
-
+  
+  
   return (
     <Router>
       <Nav user={user} logout={logout} dispatch={dispatch} />
