@@ -4,14 +4,7 @@ import { useState } from 'react';
 import ItineraryDayActivities from './ItineraryDayActivities';
 
 export default function ItineraryDays(props) {
-  const {
-    day,
-    itinerary,
-    user,
-    deleteDayFromItinerary,
-    days,
-    showConfirm,
-  } = props;
+  const { day, itinerary, user, deleteDayFromItinerary, days } = props;
 
   const { pathname } = useLocation();
   const getTimeValue = timeString => {
