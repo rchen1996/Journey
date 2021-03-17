@@ -387,6 +387,8 @@ module.exports = ({
 
   router.delete('/:itinerary_id/days/:day_id', (req, res) => {
     const { itinerary_id, day_id } = req.params;
+    const io = req.app.get('socketio');
+
     deleteDayFromItinerary(day_id).then(result => {
       if (result.message) {
         res.send({ error: 'there was an error' });
@@ -404,8 +406,6 @@ module.exports = ({
           const newOrderArr = daysOrderArr.map((i, index) => index + 1);
 
           if (newOrderArr.length === 0) {
-            const io = req.app.get('socketio');
-
             io.sockets
               .in(bufferItinerary.id)
               .emit('itinerary', bufferItinerary);
