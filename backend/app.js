@@ -48,6 +48,10 @@ app.set('socketio', io);
 io.on('connection', socket => {
   console.log('New client connected');
 
+  socket.on('itinerary_id', id => {
+    socket.join(id);
+  });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
