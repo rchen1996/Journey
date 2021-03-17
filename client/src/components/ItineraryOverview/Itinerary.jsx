@@ -29,7 +29,7 @@ export default function Itinerary(props) {
     return result;
   };
 
-  if (itinerary && itinerary.start_date) {
+  if (itinerary.start_date) {
     itinerary.locations.forEach(location => {
       tripDuration += location.days.length;
     });
@@ -75,13 +75,11 @@ export default function Itinerary(props) {
                     clipRule='evenodd'
                   />
                 </svg>
-                <h1 className='text-xl font-bold'>
-                  {itinerary && itinerary.name}
-                </h1>
+                <h1 className='text-xl font-bold'>{itinerary.name}</h1>
               </div>
               {url.includes('edit') && (
                 <Link
-                  to={itinerary && `/itineraries/${itinerary.id}/overview/edit`}
+                  to={`/itineraries/${itinerary.id}/overview/edit`}
                   className=''
                 >
                   <svg
@@ -102,12 +100,10 @@ export default function Itinerary(props) {
             </div>
             <div
               className={
-                itinerary && itinerary.start_date
-                  ? 'flex items-center py-2'
-                  : 'hidden'
+                itinerary.start_date ? 'flex items-center py-2' : 'hidden'
               }
             >
-              {itinerary && itinerary.start_date && (
+              {itinerary.start_date && (
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'
@@ -122,8 +118,7 @@ export default function Itinerary(props) {
                 </svg>
               )}
               <p className=''>
-                {itinerary &&
-                  itinerary.start_date &&
+                {itinerary.start_date &&
                   `${formatDate(itinerary.start_date)} - ${endDate}`}
               </p>
             </div>
@@ -155,12 +150,11 @@ export default function Itinerary(props) {
                   clipRule='evenodd'
                 />
               </svg>
-              <p className='py-2'>{itinerary && itinerary.description}</p>
+              <p className='py-2'>{itinerary.description}</p>
             </div>
           </div>
         </div>
-        {itinerary &&
-          itinerary.locations &&
+        {itinerary.locations &&
           itinerary.locations.map((location, index) => {
             return (
               <div key={index} className='mx-8 lg:mx-16'>
