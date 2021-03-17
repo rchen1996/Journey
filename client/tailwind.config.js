@@ -13,6 +13,7 @@ module.exports = {
     },
     fontFamily: {
       body: ['Open Sans', 'sans-serif'],
+      test: ['Inter', 'sans-serif'],
     },
   },
   variants: {

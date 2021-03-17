@@ -2,6 +2,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import ItineraryDayActivities from './ItineraryDayActivities';
+import DeleteConfirmation from '../DeleteConfirmation';
 
 export default function ItineraryDays(props) {
   const { day, itinerary, user, deleteDayFromItinerary, days } = props;
@@ -106,30 +107,17 @@ export default function ItineraryDays(props) {
                 </button>
               </div>
               {view === DELETE && (
-                <div className='flex flex-col px-2 text-gray-100 bg-opacity-90 rounded-xl'>
-                  <h4 className='text-xl font-bold '>Delete Day</h4>
-                  <p className=''>
-                    {days.length > 1
+                <DeleteConfirmation
+                  removeItem={handleDelete}
+                  setView={setView}
+                  DEFAULT={DEFAULT}
+                  title={'Delete Day'}
+                  message={
+                    days.length > 1
                       ? 'Are you sure you want to delete this day?'
-                      : 'There is only one day for this location. Are you sure you want to delete this section of the trip?'}
-                  </p>
-                  <div className='flex pt-2 space-x-3'>
-                    <button
-                      type='button'
-                      onClick={() => setView(DEFAULT)}
-                      className='p-2 font-semibold leading-none text-gray-100 transition duration-300 transform bg-transparent border-2 border-gray-100 rounded-lg focus:ring-1 focus:ring-red-600 hover:scale-110'
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type='button'
-                      onClick={handleDelete}
-                      className='px-2 py-2 font-semibold leading-none text-gray-200 transition duration-300 transform bg-red-600 border-2 border-transparent rounded-md bg-opacity-80 focus:ring-1 focus:ring-red-600 hover:scale-110'
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
+                      : 'There is only one day for this location. Are you sure you want to delete this section of the trip?'
+                  }
+                ></DeleteConfirmation>
               )}
             </div>
           )}

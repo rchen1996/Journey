@@ -2,6 +2,7 @@ import { useParams, Link, useLocation, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 
 import ItineraryDayActivities from './ItineraryDayActivities';
+import DeleteConfirmation from '../DeleteConfirmation';
 
 export default function ItineraryDay(props) {
   const { itinerary_id, day_id } = useParams();
@@ -20,13 +21,13 @@ export default function ItineraryDay(props) {
     locations = itinerary.locations;
   }
 
-  const getCurrentDay = (locations) => {
+  const getCurrentDay = locations => {
     let currentDay;
     let currentLocation;
 
     if (locations) {
-      locations.forEach((location) => {
-        location.days.forEach((day) => {
+      locations.forEach(location => {
+        location.days.forEach(day => {
           if (day.id === Number(day_id)) {
             currentLocation = location;
             currentDay = day;
@@ -63,7 +64,7 @@ export default function ItineraryDay(props) {
   const [view, setView] = useState(DEFAULT);
 
   const handleDelete = () => {
-    deleteDayFromItinerary(itinerary_id, day_id).then((res) => {
+    deleteDayFromItinerary(itinerary_id, day_id).then(res => {
       if (res.error) {
         console.log(res.error);
       } else {
@@ -74,7 +75,7 @@ export default function ItineraryDay(props) {
 
   const activitiesTimeSlots = [];
   if (day && day.activities) {
-    day.activities.forEach((activity) => {
+    day.activities.forEach(activity => {
       if (activity.start_time) {
         activitiesTimeSlots.push({
           activity_id: activity.id,
@@ -88,12 +89,18 @@ export default function ItineraryDay(props) {
   return (
     <div className='flex w-full mt-16 lg:ml-64'>
       <section className='flex flex-col justify-start w-5/6 h-full mx-auto my-8 mt-8 space-y-4'>
-        <header className='flex items-center justify-between'>
+        <header
+          className={
+            view !== DELETE
+              ? 'flex items-center justify-between'
+              : 'flex items-center justify-between'
+          }
+        >
           <div
             className={
-              view !== DELETE
-                ? 'flex flex-col px-8 py-2 bg-gray-100 border-l-8 border-gray-600 shadow-md rounded-r-xl'
-                : 'flex flex-col px-8 py-2 bg-gray-700 border-gray-600 shadow-md rounded-xl bg-opacity-70 items-center justify-center'
+              view === DELETE
+                ? 'flex flex-col px-4 py-2 bg-gray-600 shadow-md rounded-xl bg-opacity-75 w-full'
+                : 'flex flex-col px-8 py-2 bg-gray-100 border-l-8 border-gray-600 shadow-md rounded-r-xl'
             }
           >
             <div className='flex items-center'>
@@ -103,12 +110,18 @@ export default function ItineraryDay(props) {
                 </h1>
               )}
               {view === DELETE && (
-                <h1 className='text-xl font-bold text-gray-200'>
-                  {dayInfo.currentLocation &&
-                  dayInfo.currentLocation.days.length > 1
-                    ? 'Delete This Day?'
-                    : 'There is only one day for this location. Delete this section of the trip?'}
-                </h1>
+                <DeleteConfirmation
+                  removeItem={handleDelete}
+                  setView={setView}
+                  DEFAULT={DEFAULT}
+                  title={'Delete Day'}
+                  message={
+                    dayInfo.currentLocation &&
+                    dayInfo.currentLocation.days.length > 1
+                      ? 'Are you sure you want to delete this day?'
+                      : 'There is only one day for this location. Are you sure you want to delete this section of the trip?'
+                  }
+                ></DeleteConfirmation>
               )}
               {url.includes('edit') && (
                 <>
@@ -148,27 +161,8 @@ export default function ItineraryDay(props) {
                   Planned
                 </h2>
               )}
-
-            {view === DELETE && (
-              <div className='flex justify-center mt-2 space-x-3'>
-                <button
-                  type='button'
-                  onClick={() => setView(DEFAULT)}
-                  className='px-3 font-semibold text-gray-200 bg-teal-600 rounded-xl'
-                >
-                  Cancel
-                </button>
-                <button
-                  type='button'
-                  onClick={handleDelete}
-                  className='px-3 font-semibold text-gray-200 bg-red-600 rounded-xl bg-opacity-80'
-                >
-                  Confirm
-                </button>
-              </div>
-            )}
           </div>
-          {url.includes('edit') && (
+          {url.includes('edit') && view !== DELETE && (
             <Link
               to={`/itineraries/${itinerary_id}/days/${day_id}/activities/new`}
               type='button'
@@ -193,7 +187,7 @@ export default function ItineraryDay(props) {
         </header>
         {day &&
           day.activities &&
-          sortActivities(day.activities).map((activity) => {
+          sortActivities(day.activities).map(activity => {
             return (
               <ItineraryDayActivities
                 key={activity.id}
