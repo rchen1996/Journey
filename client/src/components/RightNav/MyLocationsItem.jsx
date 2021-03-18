@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { SET_ITINERARY } from '../../reducers/application';
 import { useState } from 'react';
+import DeleteConfirmation from '../DeleteConfirmation';
 
 export default function MyLocationsItem(props) {
   const {
@@ -46,30 +47,35 @@ export default function MyLocationsItem(props) {
 
   return (
     <div
-      className='z-0 flex flex-col w-full mt-4 rounded-xl group'
+      className={'z-0 flex flex-col w-full mt-4 rounded-xl'}
       style={{ backgroundImage: `url(${location.image})` }}
     >
-      <div className='w-full transition bg-gray-800 shadow-lg bg-opacity-80 xl:block rounded-xl group-hover:bg-gray-100 group'>
-        <div className='flex flex-col items-start pl-2 m-4 border-l group-hover:border-l-0'>
+      <div
+        className={
+          view === DELETE
+            ? 'w-full transition bg-gray-500 shadow-lg xl:block rounded-xl'
+            : 'w-full transition bg-gray-800 shadow-lg bg-opacity-80 xl:block rounded-xl hover:bg-gray-500 duration-300'
+        }
+      >
+        <div className='flex flex-col items-start pl-2 m-4 border-l group-hover:border-l-0 group'>
           {view === DEFAULT && (
             <>
-              <span className='font-bold leading-tight group-hover:hidden'>
-                {location.name}
-              </span>
-              <p className='text-sm font-normal leading-tight text-gray-300 group-hover:hidden'>
+              <span className='font-bold leading-tight'>{location.name}</span>
+              <p className='text-sm font-normal leading-tight text-gray-300 line-clamp-5'>
                 {location.description}
               </p>
-              <div className='relative hidden group-hover:flex'>
+              <div className='relative items-center mt-2 space-x-2'>
                 <button type='button' onClick={addToDay}>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'
                     fill='currentColor'
-                    className='w-8 h-8 text-gray-600'
+                    className='w-5 h-5 text-gray-200 transition duration-300 transform hover:scale-110'
+                    title='Add To Day'
                   >
                     <path
                       fillRule='evenodd'
-                      d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
+                      d='M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z'
                       clipRule='evenodd'
                     />
                   </svg>
@@ -79,7 +85,8 @@ export default function MyLocationsItem(props) {
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'
                     fill='currentColor'
-                    className='w-6 h-6 text-gray-600'
+                    className='w-5 h-5 text-gray-200 transition duration-300 transform hover:scale-110'
+                    title='Remove From My Locations'
                   >
                     <path
                       fillRule='evenodd'
@@ -92,18 +99,15 @@ export default function MyLocationsItem(props) {
             </>
           )}
           {view === DELETE && (
-            <div className='bg-red-600'>
-              <p>
-                Are you sure you want to delete this attraction from My
-                Locations?
-              </p>
-              <button type='button' onClick={() => setView(DEFAULT)}>
-                Cancel
-              </button>
-              <button type='button' onClick={removeLocation}>
-                Delete
-              </button>
-            </div>
+            <DeleteConfirmation
+              title={'Delete Attraction'}
+              message={
+                'Are you sure you want to delete this attraction from My Locations?'
+              }
+              DEFAULT={DEFAULT}
+              setView={setView}
+              removeItem={removeLocation}
+            ></DeleteConfirmation>
           )}
         </div>
       </div>
