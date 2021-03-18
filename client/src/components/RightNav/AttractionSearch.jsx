@@ -228,7 +228,7 @@ export default function AttractionSearch(props) {
       )}
       {view === SHOW && (
         <div className='text-white'>
-          {attractionList &&
+          {attractionList.length > 0 &&
             attractionList.map(attraction => {
               return (
                 <AttractionsListItem
@@ -242,6 +242,7 @@ export default function AttractionSearch(props) {
                 />
               );
             })}
+          {attractionList.length === 0 && <p>No Search Results</p>}
         </div>
       )}
     </div>
