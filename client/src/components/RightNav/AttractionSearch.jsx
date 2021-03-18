@@ -14,13 +14,15 @@ export default function AttractionSearch(props) {
     createActivity,
   } = props;
 
-  const attractionList = props.attractions;
+  // const attractionList = props.attractions;
 
   const { day_id } = useParams();
 
   const [dropDown, setDropDown] = useState({
     subMenuOpen: false,
   });
+
+  const [attractionList, setAttractionList] = useState([]);
 
   let currentLocation;
 
@@ -32,16 +34,14 @@ export default function AttractionSearch(props) {
     });
   });
 
-  useEffect(() => {
-    axios
-      .get(`/api/attractions/${currentLocation}/null/null`)
-      .then(attractions => {
-        dispatch({
-          type: SET_ATTRACTIONS,
-          attractions: attractions,
-        });
-      });
-  }, [currentLocation, dispatch]);
+  // useEffect(() => {
+  //   axios.get(`/api/attractions/${currentLocation}/null/null`).then(res => {
+  //     dispatch({
+  //       type: SET_ATTRACTIONS,
+  //       attractions: res.data,
+  //     });
+  //   });
+  // }, [currentLocation, dispatch]);
 
   const [searchTerms, setSearchTerms] = useState({
     location: currentLocation,
@@ -64,9 +64,9 @@ export default function AttractionSearch(props) {
 
   const [view, setView] = useState(LOADING);
 
-  if (attractionList) {
-    setView(SHOW);
-  }
+  // if (attractionList) {
+  //   setView(SHOW);
+  // }
 
   const handleChange = event => {
     const { value, name } = event.target;
@@ -105,10 +105,14 @@ export default function AttractionSearch(props) {
 
     searchAttractions(searchTerms.location, query, categoryString).then(res => {
       if (!res.data.error) {
-        dispatch({
-          type: SET_ATTRACTIONS,
-          attractions: res.data,
-        });
+        // console.log(res.data);
+        // dispatch({
+        //   type: SET_ATTRACTIONS,
+        //   attractions: res.data,
+        // });
+
+        setAttractionList(res.data);
+        setView(SHOW);
       }
     });
   };
@@ -238,7 +242,6 @@ export default function AttractionSearch(props) {
       )}
       {view === SHOW && (
         <div className='text-white'>
-          <p>This is where attractions appear</p>
           {attractionList &&
             attractionList.map(attraction => {
               return (
