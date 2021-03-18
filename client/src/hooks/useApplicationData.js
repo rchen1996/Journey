@@ -302,6 +302,13 @@ export default function useApplicationData() {
     return axios.get(`/api/attractions/${locationName}/${query}/${categories}`);
   };
 
+  const addMyLocation = (attractionId, itineraryId) => {
+    return axios.post(`/api/itinerary/${itineraryId}/activities`, {
+      attractionId,
+      itineraryId,
+    });
+  };
+
   return {
     state,
     dispatch,
@@ -324,5 +331,6 @@ export default function useApplicationData() {
     editActivity,
     editItinerary,
     searchAttractions,
+    addMyLocation,
   };
 }
