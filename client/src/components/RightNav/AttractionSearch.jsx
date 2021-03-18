@@ -32,6 +32,8 @@ export default function AttractionSearch(props) {
   });
 
   useEffect(() => {
+    setSearchTerms({ location: currentLocation, name: '' });
+
     axios.get(`/api/attractions/${currentLocation}/null/null`).then(res => {
       setAttractionList(res.data);
 
