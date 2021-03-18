@@ -42,17 +42,55 @@ export default function AttractionsListItem(props) {
   };
 
   return (
-    <div>
-      <h4>{attraction.name}</h4>
-      {attraction.image && <img src={attraction.image} alt='attraction' />}
-      <p>{attraction.description}</p>
+    <div className='p-3 mb-4 text-gray-600 bg-gray-100 shadow-md rounded-xl'>
+      {attraction.image && (
+        <div className='mb-2 aspect-w-2 aspect-h-1 aspect-w-1'>
+          <img
+            src={attraction.image}
+            alt='attraction'
+            className='object-cover object-bottom rounded-xl'
+          />
+        </div>
+      )}
+      <h4 className='font-bold'>{attraction.name}</h4>
+      <p className='-mt-0.5 text-sm line-clamp-3 leading-tight'>
+        {attraction.description}
+      </p>
       {/* do one of those on hover effects for the buttons perhaps - use some kind of icon instead? */}
-      <button type='button' onClick={addToMyLocations}>
-        Add to My Locations List
-      </button>
-      <button type='button' onClick={addToDay}>
-        Add to Day
-      </button>
+      <div className='flex mt-2 space-x-3'>
+        <button
+          type='button'
+          onClick={addToMyLocations}
+          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 20 20'
+            fill='currentColor'
+            className='w-5 h-5'
+          >
+            <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
+          </svg>
+        </button>
+        <button
+          type='button'
+          onClick={addToDay}
+          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 20 20'
+            fill='currentColor'
+            className='w-5 h-5'
+          >
+            <path
+              fillRule='evenodd'
+              d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
+              clipRule='evenodd'
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }
