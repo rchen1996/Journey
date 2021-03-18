@@ -82,7 +82,7 @@ export default function ItineraryLeftNav(props) {
   };
 
   let inTravelParty = false;
-  if (itinerary) {
+  if (itinerary && itinerary.users) {
     const travelParty = itinerary.users;
 
     travelParty.forEach(member => {
@@ -197,6 +197,7 @@ export default function ItineraryLeftNav(props) {
                       );
                     })}
                     {editMode &&
+                      itinerary.users &&
                       itinerary.users.some(member => member.id === user.id) && (
                         <div>
                           <button
@@ -229,7 +230,9 @@ export default function ItineraryLeftNav(props) {
               );
             })}
           </div>
-          {editMode && itinerary.users.some(member => member.id === user.id) ? (
+          {editMode &&
+          itinerary.users &&
+          itinerary.users.some(member => member.id === user.id) ? (
             <div>
               <div
                 className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
@@ -284,6 +287,7 @@ export default function ItineraryLeftNav(props) {
               </form>
             </div>
           ) : (
+            itinerary.users &&
             itinerary.users.some(member => member.id === user.id) && (
               <div className=''>
                 <div>
