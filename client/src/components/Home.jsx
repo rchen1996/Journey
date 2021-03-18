@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className='flex flex-col justify-between w-full min-h-screen pt-16'>
       {/* <div className='flex flex-col items-center justify-center p-8 py-16 overflow-hidden bg-no-repeat shadow-lg lg:space-x-8 lg:flex-row bg-homepage'> */}
-      <div className='flex flex-col items-center justify-around p-8 py-16 overflow-hidden shadow-lg lg:space-x-8 lg:flex-row bg-gradient-to-b to-teal-600 from-blue-400'>
+      <div className='flex flex-col items-center justify-around p-8 py-16 overflow-hidden shadow-lg lg:px-24 xl:px-28 lg:space-x-8 lg:flex-row bg-gradient-to-b to-teal-600 from-blue-400'>
         <div className='w-full space-y-2 text-gray-200 lg:w-min'>
           <h1 className='text-5xl font-black whitespace-wrap sm:whitespace-nowrap'>
             Go on an adventure.
@@ -22,7 +22,7 @@ export default function Home() {
             members of their group in real time.
           </p>
         </div>
-        <div className='w-full mt-6 lg:mt-2 lg:w-2/3 xl:w-1/2'>
+        <div className='w-full mt-6 lg:mt-2 lg:w-2/3 xl:w-1/2 '>
           <article className='mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
             <div
               className={
@@ -54,14 +54,14 @@ export default function Home() {
           </article>
         </div>
       </div>
-      <div className='flex flex-col items-center justify-between p-8 pb-16 space-y-8 lg:pt-16'>
+      <div className='flex flex-col items-center justify-between p-8 pb-16 space-y-8 lg:pt-16 lg:px-24 xl:px-40'>
         <div className='flex mb-8 md:space-x-8'>
           <article className='flex-col hidden w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg md:flex rounded-xl hover:scale-105'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 20 20'
               fill='currentColor'
-              className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform shadow-xl transiton -top-1'
+              className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform transiton -top-1'
             >
               <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
             </svg>
@@ -115,7 +115,7 @@ export default function Home() {
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 20 20'
               fill='currentColor'
-              className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform shadow-xl transiton -top-1'
+              className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform transiton -top-1'
             >
               <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
             </svg>
@@ -125,7 +125,7 @@ export default function Home() {
               ></div>
               <img
                 src={
-                  'https://images.unsplash.com/photo-1580798966872-8b1414293e55?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80'
+                  'https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80'
                 }
                 alt='itinerary cover'
                 className='object-cover rounded-md shadow-lg'
@@ -149,19 +149,20 @@ export default function Home() {
                   />
                 </svg>
 
-                <span className='text-xs font-bold text-gray-200'>7 Days</span>
+                <span className='text-xs font-bold text-gray-200'>9 Days</span>
               </div>
               <div className='flex items-center justify-center px-2.5 py-2 bg-teal-600 w-min whitespace-nowrap rounded-2xl my-2 shadow-md'>
                 <span className='text-xs font-bold text-gray-200 pl-0.5'>
-                  Couples
+                  Group
                 </span>
               </div>
             </div>
-            <h4 className='mb-1 text-xl font-bold'>Our Honeymoon</h4>
+            <h4 className='mb-1 text-xl font-bold'>Tour of Japan</h4>
             <p className='pb-4 text-sm'>
-              This seven-day experience includes a beautiful ocean-front stay,
-              stops to all the local attractions, and food breaks at the
-              island's best eats.
+              Starting in Tokyo, you can explore the incredible city districts.
+              Then move out to the Kansai region and explore the beautiful city
+              of Kyoto. Cap off the journey with the majestic view of Mount
+              Fuji.
             </p>
           </article>
           <article className='flex flex-col w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
@@ -169,7 +170,7 @@ export default function Home() {
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 20 20'
               fill='currentColor'
-              className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform shadow-xl transiton -top-1'
+              className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform transiton -top-1'
             >
               <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
             </svg>
@@ -179,7 +180,7 @@ export default function Home() {
               ></div>
               <img
                 src={
-                  'https://images.unsplash.com/photo-1580798966872-8b1414293e55?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80'
+                  'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80'
                 }
                 alt='itinerary cover'
                 className='object-cover rounded-md shadow-lg'
@@ -211,11 +212,11 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <h4 className='mb-1 text-xl font-bold'>Our Honeymoon</h4>
+            <h4 className='mb-1 text-xl font-bold'>The American Midwest</h4>
             <p className='pb-4 text-sm'>
-              This seven-day experience includes a beautiful ocean-front stay,
-              stops to all the local attractions, and food breaks at the
-              island's best eats.
+              Explore the diverse landscape of the American midwest from prairie
+              farmland, to the towering Rocky Mountains. Finally, end your
+              journey in the depths of the Grand Canyon.
             </p>
           </article>
           <article className='flex-col hidden w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg xl:flex rounded-xl hover:scale-105'>
@@ -223,7 +224,7 @@ export default function Home() {
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 20 20'
               fill='currentColor'
-              className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform shadow-xl transiton -top-1'
+              className='fixed z-40 w-10 h-10 text-red-600 duration-300 transform transiton -top-1'
             >
               <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
             </svg>
@@ -233,7 +234,7 @@ export default function Home() {
               ></div>
               <img
                 src={
-                  'https://images.unsplash.com/photo-1580798966872-8b1414293e55?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80'
+                  'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80'
                 }
                 alt='itinerary cover'
                 className='object-cover rounded-md shadow-lg'
@@ -257,7 +258,7 @@ export default function Home() {
                   />
                 </svg>
 
-                <span className='text-xs font-bold text-gray-200'>7 Days</span>
+                <span className='text-xs font-bold text-gray-200'>12 Days</span>
               </div>
               <div className='flex items-center justify-center px-2.5 py-2 bg-teal-600 w-min whitespace-nowrap rounded-2xl my-2 shadow-md'>
                 <span className='text-xs font-bold text-gray-200 pl-0.5'>
@@ -265,21 +266,21 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <h4 className='mb-1 text-xl font-bold'>Our Honeymoon</h4>
+            <h4 className='mb-1 text-xl font-bold'>Exploring Europe</h4>
             <p className='pb-4 text-sm'>
-              This seven-day experience includes a beautiful ocean-front stay,
-              stops to all the local attractions, and food breaks at the
-              island's best eats.
+              Visit London, Paris, and Rome and their iconic sights like Big
+              Ben, the Eiffel Tower, and the Colosseum. You will be amazed by
+              the breath-taking sights of England, France, and Italy.
             </p>
           </article>
         </div>
         <div className='w-full'>
-          <div className='flex-none w-full h-64 transform shadow-lg sm:h-44 bg-gray-50 rounded-2xl rotate-3'></div>
-          <div className='flex flex-col justify-center w-full h-64 p-6 -mt-64 space-y-2 text-gray-200 transform bg-teal-600 shadow-lg sm:h-44 sm:-mt-44 rounded-2xl'>
+          <div className='flex-none w-full h-64 transform shadow-lg sm:h-44 bg-gray-50 rounded-2xl rotate-2'></div>
+          <div className='flex flex-col justify-center w-full h-64 p-6 -mt-64 space-y-2 text-gray-200 transform shadow-lg bg-gradient-to-l to-teal-600 from-teal-500 sm:h-44 sm:-mt-44 rounded-2xl'>
             <h2 className='flex items-center space-x-2 text-4xl font-black'>
               Get Inspired
             </h2>
-            <p className='text-xl font-light leading-snug'>
+            <p className='text-lg font-normal leading-tight tracking-tight lg:text-xl'>
               Check out our list of curated itineraries and browse for
               inspiration. Save them as a bookmark and view them later date.
               There are tons of trips to explore, so sign up today!
@@ -340,7 +341,7 @@ export default function Home() {
             focusable='false'
             data-prefix='far'
             data-icon='copyright'
-            className='h-3 w-3 mr-1'
+            className='w-3 h-3 mr-1'
             role='img'
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 512 512'
