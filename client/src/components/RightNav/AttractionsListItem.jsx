@@ -53,10 +53,9 @@ export default function AttractionsListItem(props) {
         </div>
       )}
       <h4 className='font-bold'>{attraction.name}</h4>
-      <p className='-mt-0.5 text-sm line-clamp-3 leading-tight text-gray-500'>
+      <p className='-mt-0.5 text-sm line-clamp-5 leading-tight text-gray-500'>
         {attraction.description}
       </p>
-      {/* do one of those on hover effects for the buttons perhaps - use some kind of icon instead? */}
       <div className='flex mt-2 space-x-3'>
         <button
           type='button'
