@@ -4,29 +4,25 @@ import ItineraryListItem from './ItineraryListItem';
 export default function Home() {
   return (
     <main className='flex flex-col justify-between w-full min-h-screen pt-16'>
-      {/* <svg viewBox='0 0 500 500' preserveAspectRatio='xMinYMin meet'>
-        <path
-          d='M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z'
-          style={{ stroke: 'none', fill: 'red' }}
-          className='absolute inset-0'
-        ></path>
-      </svg> */}
-      <div className='flex flex-col items-center justify-center p-8 py-16 overflow-hidden shadow-lg lg:space-x-8 lg:flex-row bg-gradient-to-b to-teal-600 from-blue-400'>
-        <div className='w-full space-y-2 text-gray-200 lg:w-3/5'>
-          <h1 className='text-5xl font-black'>Go on an adventure.</h1>
-          <p className='hidden text-xl font-light leading-snug lg:block'>
+      {/* <div className='flex flex-col items-center justify-center p-8 py-16 overflow-hidden bg-no-repeat shadow-lg lg:space-x-8 lg:flex-row bg-homepage'> */}
+      <div className='flex flex-col items-center justify-around p-8 py-16 overflow-hidden shadow-lg lg:space-x-8 lg:flex-row bg-gradient-to-b to-teal-600 from-blue-400'>
+        <div className='w-full space-y-2 text-gray-200 lg:w-min'>
+          <h1 className='text-5xl font-black whitespace-wrap sm:whitespace-nowrap'>
+            Go on an adventure.
+          </h1>
+          {/* <p className='hidden text-xl leading-tight tracking-tight font-regular lg:block'>
             Trips with friends and loved ones is always a memorable experience,
             but coordinating and planning a trip with a group can be a
             frustrating experience.
-          </p>
+          </p> */}
 
-          <p className='text-xl font-light leading-snug lg:text-xl'>
+          <p className='text-lg font-normal leading-tight tracking-tight lg:text-xl'>
             Journey is a group trip planning app that helps alleviate those
             frustrations by allowing users to create itineraries with other
             members of their group in real time.
           </p>
         </div>
-        <div className='w-full mt-6 lg:mt-2 lg:w-2/3'>
+        <div className='w-full mt-6 lg:mt-2 lg:w-2/3 xl:w-1/2'>
           <article className='mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
             <div
               className={

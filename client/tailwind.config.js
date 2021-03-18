@@ -17,7 +17,7 @@ module.exports = {
     },
     extend: {
       backgroundImage: theme => ({
-        homepage: "url('./images/open-field.png')",
+        homepage: "url('./images/fuji-5.png')",
       }),
     },
   },
