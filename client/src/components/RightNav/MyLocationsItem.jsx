@@ -41,6 +41,7 @@ export default function MyLocationsItem(props) {
           type: SET_ITINERARY,
           itinerary: { ...itinerary, ...res.data },
         });
+        setView(DEFAULT);
       }
     });
   };
