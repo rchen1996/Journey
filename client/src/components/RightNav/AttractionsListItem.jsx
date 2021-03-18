@@ -1,7 +1,14 @@
 import { SET_ITINERARY } from '../../reducers/application';
 
 export default function AttractionsListItem(props) {
-  const { attraction, dayId, addMyLocation, itinerary, dispatch } = props;
+  const {
+    attraction,
+    dayId,
+    addMyLocation,
+    itinerary,
+    dispatch,
+    createActivity,
+  } = props;
 
   const addToMyLocations = () => {
     addMyLocation(attraction.id, itinerary.id).then(res => {
@@ -19,10 +26,19 @@ export default function AttractionsListItem(props) {
   };
 
   const addToDay = () => {
-    // add attraction as an activity to the current day displayed
-    // need day id
-    // once added needs to dispatch to update itinerary
-    // display message upon successfully added
+    const activity = { attractionId: attraction.id };
+    createActivity(activity, itinerary.id, dayId).then(res => {
+      if (res.data.error) {
+        // dispay error => must be logged in, or don't have permissions because they are not part of travel party
+      } else {
+        dispatch({
+          type: SET_ITINERARY,
+          itinerary: res.data,
+        });
+
+        // display message upon successfully added
+      }
+    });
   };
 
   return (
