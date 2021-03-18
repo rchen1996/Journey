@@ -80,17 +80,18 @@ export default function Nav(props) {
           </NavButton>
         )}
         {props.user.id && (
-          <NavButton
-            link='/'
+          <Link
+            to='/'
             onClick={() => {
               props.logout();
               clearItineraryState();
               clearMyItinerariesState();
               clearBookmarksState();
             }}
+            className='flex items-center h-full p-2 pt-3 border-b-4 border-transparent hover:border-teal-600'
           >
             Log out
-          </NavButton>
+          </Link>
         )}
         {!props.user.id && (
           <NavButton link='/signup' onClick={clearItineraryState}>

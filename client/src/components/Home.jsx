@@ -292,10 +292,10 @@ export default function Home() {
           <h6>Follow us on social media</h6>
           <div className='flex justify-between px-2'>
             <svg
-              ariaHidden='true'
+              aria-hidden='true'
               focusable='false'
-              dataPrefix='fab'
-              dataIcon='instagram'
+              dataprefix='fab'
+              dataicon='instagram'
               className='w-8 h-8 text-gray-400 cursor-pointer hover:text-gray-100'
               role='img'
               xmlns='http://www.w3.org/2000/svg'
@@ -340,7 +340,7 @@ export default function Home() {
             focusable='false'
             data-prefix='far'
             data-icon='copyright'
-            class='h-3 w-3 mr-1'
+            className='h-3 w-3 mr-1'
             role='img'
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 512 512'
