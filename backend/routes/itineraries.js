@@ -249,6 +249,10 @@ module.exports = ({
     const { itinerary_id, day_id } = req.params;
     const userId = req.session.userId;
 
+    if (!userId) {
+      res.send({ error: 'You must be logged in to add an activity' });
+    }
+
     getTravelParty(itinerary_id).then(userArr => {
       let userOfParty;
       for (const user of userArr) {
@@ -270,63 +274,90 @@ module.exports = ({
           state,
           country,
           postal,
+          attractionId,
         } = req.body;
-        const address = `${street} ${city}, ${state}, ${country} ${postal}`;
-        const addressNoPostal = `${street} ${city}, ${state}, ${country}`;
-        const query = addressNoPostal.replace(/\s/g, '+').replace(/,/g, '%2C');
-        axios
-          .get(
-            `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
-          )
-          .then(res => {
-            if (res.data.features.length < 1) {
-              response.send({ addressError: 'This is not a valid address' });
-            } else {
-              const coordinatesArr = res.data.features[0].geometry.coordinates;
-              const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
 
-              if (image === '') {
-                image =
-                  'https://images.unsplash.com/photo-1523496922380-91d5afba98a3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1789&q=80';
-              }
+        if (attractionId) {
+          const activity = {
+            dayId: Number(day_id),
+            start: null,
+            end: null,
+            attractionId: attractionId,
+            itineraryId: Number(itinerary_id),
+          };
 
-              createAttraction({
-                name,
-                description,
-                category,
-                image,
-                address,
-                location,
-              }).then(attraction => {
-                if (start === '') {
-                  start = null;
+          createActivity(activity).then(() => {
+            getDetailedItinerary(itinerary_id).then(itinerary => {
+              const parsed = itineraryObj(itinerary);
+
+              const io = req.app.get('socketio');
+
+              io.sockets.in(parsed.id).emit('itinerary', parsed);
+
+              response.send(parsed);
+            });
+          });
+        } else {
+          const address = `${street} ${city}, ${state}, ${country} ${postal}`;
+          const addressNoPostal = `${street} ${city}, ${state}, ${country}`;
+          const query = addressNoPostal
+            .replace(/\s/g, '+')
+            .replace(/,/g, '%2C');
+          axios
+            .get(
+              `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
+            )
+            .then(res => {
+              if (res.data.features.length < 1) {
+                response.send({ addressError: 'This is not a valid address' });
+              } else {
+                const coordinatesArr =
+                  res.data.features[0].geometry.coordinates;
+                const location = `${coordinatesArr[0]},${coordinatesArr[1]}`;
+
+                if (image === '') {
+                  image =
+                    'https://images.unsplash.com/photo-1523496922380-91d5afba98a3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1789&q=80';
                 }
 
-                if (end === '') {
-                  end = null;
-                }
+                createAttraction({
+                  name,
+                  description,
+                  category,
+                  image,
+                  address,
+                  location,
+                }).then(attraction => {
+                  if (start === '') {
+                    start = null;
+                  }
 
-                const activity = {
-                  dayId: day_id,
-                  start: start,
-                  end: end,
-                  attractionId: attraction.id,
-                  itineraryId: itinerary_id,
-                };
-                createActivity(activity).then(activity => {
-                  getDetailedItinerary(itinerary_id).then(itinerary => {
-                    const parsed = itineraryObj(itinerary);
+                  if (end === '') {
+                    end = null;
+                  }
 
-                    const io = req.app.get('socketio');
+                  const activity = {
+                    dayId: day_id,
+                    start: start,
+                    end: end,
+                    attractionId: attraction.id,
+                    itineraryId: itinerary_id,
+                  };
+                  createActivity(activity).then(activity => {
+                    getDetailedItinerary(itinerary_id).then(itinerary => {
+                      const parsed = itineraryObj(itinerary);
 
-                    io.sockets.in(parsed.id).emit('itinerary', parsed);
+                      const io = req.app.get('socketio');
 
-                    response.send(parsed);
+                      io.sockets.in(parsed.id).emit('itinerary', parsed);
+
+                      response.send(parsed);
+                    });
                   });
                 });
-              });
-            }
-          });
+              }
+            });
+        }
       } else {
         response.send({
           error:
