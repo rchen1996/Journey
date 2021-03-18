@@ -61,8 +61,8 @@ export default function AttractionsListItem(props) {
         <button
           type='button'
           onClick={addToMyLocations}
-          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
-          alt='text'
+          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 transition bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+          title='Add to bookmarks'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -76,7 +76,8 @@ export default function AttractionsListItem(props) {
         <button
           type='button'
           onClick={addToDay}
-          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 transition bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+          title='Add to current day'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
