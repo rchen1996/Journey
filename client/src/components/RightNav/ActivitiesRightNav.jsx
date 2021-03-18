@@ -105,7 +105,7 @@ export default function ActivitiesRightNav(props) {
             dispatch={dispatch}
             searchAttractions={searchAttractions}
             addMyLocation={addMyLocation}
-            createActivity
+            createActivity={createActivity}
           />
         )}
       </div>

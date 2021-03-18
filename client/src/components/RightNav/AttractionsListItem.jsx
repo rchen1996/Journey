@@ -44,7 +44,7 @@ export default function AttractionsListItem(props) {
   return (
     <div>
       <h4>{attraction.name}</h4>
-      <img src={attraction.image} alt='attraction' />
+      {attraction.image && <img src={attraction.image} alt='attraction' />}
       <p>{attraction.description}</p>
       {/* do one of those on hover effects for the buttons perhaps - use some kind of icon instead? */}
       <button type='button' onClick={addToMyLocations}>

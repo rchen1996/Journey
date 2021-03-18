@@ -1,7 +1,7 @@
 // if need to reformat output of queries for easier manipulation on front end
 // do that in here
 
-const itineraryObj = (resultArr) => {
+const itineraryObj = resultArr => {
   const {
     id,
     name,
@@ -28,8 +28,8 @@ const itineraryObj = (resultArr) => {
   };
   if (resultArr[0].location_id) {
     const dayObjs = [];
-    resultArr.forEach((item) => {
-      if (!dayObjs.some((day) => day.id === item.day_id)) {
+    resultArr.forEach(item => {
+      if (!dayObjs.some(day => day.id === item.day_id)) {
         dayObjs.push({
           id: item.day_id,
           location_id: item.location_id,
@@ -39,7 +39,7 @@ const itineraryObj = (resultArr) => {
         });
       }
 
-      let activityDay = dayObjs.find((day) => day.id === item.day_id);
+      let activityDay = dayObjs.find(day => day.id === item.day_id);
       if (item.activity_id) {
         activityDay.activities.push({
           id: item.activity_id,
@@ -56,7 +56,7 @@ const itineraryObj = (resultArr) => {
       }
     });
     const locationArr = [];
-    dayObjs.forEach((day) => {
+    dayObjs.forEach(day => {
       if (
         !locationArr.slice(-1)[0] ||
         !(locationArr.slice(-1)[0].id === day.location_id)
@@ -79,8 +79,8 @@ const itineraryObj = (resultArr) => {
 
   return itinerary;
 };
-const parseTravelParty = (party) => {
-  return party.map((user) => ({
+const parseTravelParty = party => {
+  return party.map(user => ({
     id: user.user_id,
     email: user.email,
     first_name: user.first_name,
@@ -88,7 +88,7 @@ const parseTravelParty = (party) => {
   }));
 };
 
-const parseAttractionObj = (attractionObj) => {
+const parseAttractionObj = attractionObj => {
   const tag_labels = attractionObj.tag_labels;
   let category = 'landmark';
   if (tag_labels.includes('sightseeing') || tag_labels.includes('architecture'))
@@ -98,11 +98,10 @@ const parseAttractionObj = (attractionObj) => {
     category = 'cultural';
   if (tag_labels.includes('adrenaline')) category = 'sport';
 
-  let address = attractionObj.properties.find((el) => el.key === 'address');
+  let address = attractionObj.properties.find(el => el.key === 'address');
   address = (address && address.value) || 'no address found';
   const image =
-    (attractionObj.images[0] && attractionObj.images[0].source_url) ||
-    'no image available';
+    (attractionObj.images[0] && attractionObj.images[0].source_url) || null;
   const attraction = {
     name: attractionObj.name,
     description: attractionObj.snippet,
