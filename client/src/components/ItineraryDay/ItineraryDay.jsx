@@ -1,5 +1,6 @@
 import { useParams, Link, useLocation, useHistory } from 'react-router-dom';
 import { useState } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 
 import ItineraryDayActivities from './ItineraryDayActivities';
 import DeleteConfirmation from '../DeleteConfirmation';
@@ -191,19 +192,27 @@ export default function ItineraryDay(props) {
             </Link>
           )}
         </header>
-        {day &&
-          day.activities &&
-          sortActivities(day.activities).map(activity => {
-            return (
-              <ItineraryDayActivities
-                key={activity.id}
-                activity={activity}
-                deleteActivity={deleteActivity}
-                editActivity={editActivity}
-                timeSlots={activitiesTimeSlots}
-              />
-            );
-          })}
+        <Droppable droppableId={day_id}>
+          {provided => (
+            <section ref={provided.innerRef} {...provided.droppableProps}>
+              {day &&
+                day.activities &&
+                sortActivities(day.activities).map((activity, index) => {
+                  return (
+                    <ItineraryDayActivities
+                      key={activity.id}
+                      activity={activity}
+                      deleteActivity={deleteActivity}
+                      editActivity={editActivity}
+                      timeSlots={activitiesTimeSlots}
+                      index={index}
+                    />
+                  );
+                })}
+              {provided.placeholder}
+            </section>
+          )}
+        </Droppable>
       </section>
     </div>
   );

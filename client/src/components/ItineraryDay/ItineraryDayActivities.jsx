@@ -1,5 +1,6 @@
 import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import DeleteConfirmation from '../DeleteConfirmation';
 import EditActivityForm from './EditActivityForm';
 
@@ -175,139 +176,150 @@ export default function ItineraryDayActivities(props) {
   };
 
   return (
-    <article
-      className={
-        view === DELETE
-          ? 'flex justify-between w-full h-auto p-4 bg-gray-600 shadow-lg rounded-xl bg-opacity-75'
-          : 'flex justify-between w-full h-auto p-4 duration-300 transform transition-transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'
-      }
-    >
-      {view === DEFAULT && (
-        <div
+    <Draggable draggableId={activity.id.toString()} index={props.index}>
+      {provided => (
+        <article
           className={
-            editMode === EDIT
-              ? 'flex justify-between w-full flex-col sm:flex-row'
-              : 'flex justify-between w-full sm:space-x-4 flex-col sm:flex-row'
+            view === DELETE
+              ? 'flex justify-between w-full h-auto p-4 bg-gray-600 shadow-lg rounded-xl bg-opacity-75'
+              : 'flex justify-between w-full h-auto p-4 duration-300 transform transition-transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'
           }
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
         >
-          <div
-            className={
-              editMode === EDIT
-                ? 'hidden'
-                : 'flex items-center justify-between sm:justify-around space-x-4 w-full sm:w-min whitespace-nowrap'
-            }
-          >
-            {duration && (
-              <>
-                <div className='flex sm:flex-col items-center w-full justify-start sm:justify-between space-x-4 sm:space-x-0 sm:w-12 py-1.5 h-full'>
-                  <p className='text-xs'>{startTime}</p>
-                  {duration &&
-                    (duration < 1 ? (
-                      <p className='text-xs'>{duration * 60} MIN</p>
-                    ) : (
-                      <p className='text-xs font-bold'>
-                        {duration.toFixed(2)} HR
-                      </p>
-                    ))}
-                  <p className='text-xs'>{endTime}</p>
-                </div>
-                <div className='w-0.5 h-full bg-gray-600 rounded-xl hidden sm:block'></div>
-              </>
-            )}
-            <figure className='hidden w-48 h-full xl:block aspect-w-3 aspect-w-2'>
-              <img
-                src={activity.image}
-                alt='activity'
-                className='object-cover rounded-md shadow-lg'
-              />
-            </figure>
-          </div>
-          <EditActivityForm
-            editMode={editMode}
-            activityForm={activityForm}
-            setActivityForm={setActivityForm}
-            handleEdit={handleEdit}
-            cancel={cancel}
-            EDIT={EDIT}
-          ></EditActivityForm>
-          <div
-            className={
-              editMode === EDIT ? 'hidden' : 'flex flex-col w-full space-y-1'
-            }
-          >
-            <div className='flex justify-between'>
-              <h4 className='text-2xl font-bold'>{activity.name}</h4>
-              {url.includes('edit') && (
-                <div
-                  className={
-                    editMode === EDIT ? 'hidden' : 'flex items-center space-x-3'
-                  }
-                >
-                  <button
-                    type='button'
-                    className='h-5'
-                    onClick={() => setEditMode(EDIT)}
-                  >
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      viewBox='0 0 20 20'
-                      fill='currentColor'
-                      className='w-5 h-5 duration-200 transform fill-current hover:text-teal-600 hover:scale-125'
-                    >
-                      <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
-                      <path
-                        fillRule='evenodd'
-                        d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'
-                        clipRule='evenodd'
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    type='button'
-                    onClick={() => setView(DELETE)}
-                    className='h-5'
-                  >
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      viewBox='0 0 20 20'
-                      fill='currentColor'
-                      className='w-5 h-5 duration-200 transform fill-current hover:text-red-600 hover:scale-125'
-                    >
-                      <path
-                        fillRule='evenodd'
-                        d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
-                        clipRule='evenodd'
-                      />
-                    </svg>
-                  </button>
-                </div>
-              )}
-            </div>
-            <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap sm:w-3/4 xl:w-min rounded-r-xl xl:whitespace-nowrap'>
-              {activity.address}
-            </p>
-            <div className='space-x-1'>
-              <p className='inline text-sm font-semibold'>Description:</p>
-              <p className='inline text-sm'>{activity.description}</p>
-            </div>
-            {activity.notes && (
-              <div className='space-x-1'>
-                <p className='inline text-sm font-semibold'>{'Notes: '}</p>
-                <p className='inline text-sm'>{`${activity.notes}`}</p>
+          {view === DEFAULT && (
+            <div
+              className={
+                editMode === EDIT
+                  ? 'flex justify-between w-full flex-col sm:flex-row'
+                  : 'flex justify-between w-full sm:space-x-4 flex-col sm:flex-row'
+              }
+            >
+              <div
+                className={
+                  editMode === EDIT
+                    ? 'hidden'
+                    : 'flex items-center justify-between sm:justify-around space-x-4 w-full sm:w-min whitespace-nowrap'
+                }
+              >
+                {duration && (
+                  <>
+                    <div className='flex sm:flex-col items-center w-full justify-start sm:justify-between space-x-4 sm:space-x-0 sm:w-12 py-1.5 h-full'>
+                      <p className='text-xs'>{startTime}</p>
+                      {duration &&
+                        (duration < 1 ? (
+                          <p className='text-xs'>{duration * 60} MIN</p>
+                        ) : (
+                          <p className='text-xs font-bold'>
+                            {duration.toFixed(2)} HR
+                          </p>
+                        ))}
+                      <p className='text-xs'>{endTime}</p>
+                    </div>
+                    <div className='w-0.5 h-full bg-gray-600 rounded-xl hidden sm:block'></div>
+                  </>
+                )}
+                <figure className='hidden w-48 h-full xl:block aspect-w-3 aspect-w-2'>
+                  <img
+                    src={activity.image}
+                    alt='activity'
+                    className='object-cover rounded-md shadow-lg'
+                  />
+                </figure>
               </div>
-            )}
-          </div>
-        </div>
+              <EditActivityForm
+                editMode={editMode}
+                activityForm={activityForm}
+                setActivityForm={setActivityForm}
+                handleEdit={handleEdit}
+                cancel={cancel}
+                EDIT={EDIT}
+              ></EditActivityForm>
+              <div
+                className={
+                  editMode === EDIT
+                    ? 'hidden'
+                    : 'flex flex-col w-full space-y-1'
+                }
+              >
+                <div className='flex justify-between'>
+                  <h4 className='text-2xl font-bold'>{activity.name}</h4>
+                  {url.includes('edit') && (
+                    <div
+                      className={
+                        editMode === EDIT
+                          ? 'hidden'
+                          : 'flex items-center space-x-3'
+                      }
+                    >
+                      <button
+                        type='button'
+                        className='h-5'
+                        onClick={() => setEditMode(EDIT)}
+                      >
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          viewBox='0 0 20 20'
+                          fill='currentColor'
+                          className='w-5 h-5 duration-200 transform fill-current hover:text-teal-600 hover:scale-125'
+                        >
+                          <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
+                          <path
+                            fillRule='evenodd'
+                            d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'
+                            clipRule='evenodd'
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        type='button'
+                        onClick={() => setView(DELETE)}
+                        className='h-5'
+                      >
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          viewBox='0 0 20 20'
+                          fill='currentColor'
+                          className='w-5 h-5 duration-200 transform fill-current hover:text-red-600 hover:scale-125'
+                        >
+                          <path
+                            fillRule='evenodd'
+                            d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
+                            clipRule='evenodd'
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap sm:w-3/4 xl:w-min rounded-r-xl xl:whitespace-nowrap'>
+                  {activity.address}
+                </p>
+                <div className='space-x-1'>
+                  <p className='inline text-sm font-semibold'>Description:</p>
+                  <p className='inline text-sm'>{activity.description}</p>
+                </div>
+                {activity.notes && (
+                  <div className='space-x-1'>
+                    <p className='inline text-sm font-semibold'>{'Notes: '}</p>
+                    <p className='inline text-sm'>{`${activity.notes}`}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {view === DELETE && (
+            <DeleteConfirmation
+              removeItem={() => removeActivity(activity.id)}
+              setView={setView}
+              DEFAULT={DEFAULT}
+              title={'Delete Activity'}
+              message={'Are you sure you want to delete this activity?'}
+            ></DeleteConfirmation>
+          )}
+        </article>
       )}
-      {view === DELETE && (
-        <DeleteConfirmation
-          removeItem={() => removeActivity(activity.id)}
-          setView={setView}
-          DEFAULT={DEFAULT}
-          title={'Delete Activity'}
-          message={'Are you sure you want to delete this activity?'}
-        ></DeleteConfirmation>
-      )}
-    </article>
+    </Draggable>
   );
 }
