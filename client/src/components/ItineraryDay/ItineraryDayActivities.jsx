@@ -2,6 +2,7 @@ import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import DeleteConfirmation from '../DeleteConfirmation';
 import EditActivityForm from './EditActivityForm';
+import AlertMessage from '../AlertMessage';
 
 export default function ItineraryDayActivities(props) {
   const { activity, editActivity, timeSlots } = props;
@@ -19,8 +20,8 @@ export default function ItineraryDayActivities(props) {
   const [error, setError] = useState({
     status: false,
     message: '',
-    show: '',
-    hide: '',
+    show: 'flex p-3 mb-2 bg-red-700 bg-opacity-50 rounded-xl',
+    hide: 'hidden',
   });
 
   const [activityForm, setActivityForm] = useState({
@@ -78,7 +79,7 @@ export default function ItineraryDayActivities(props) {
       setError({
         ...error,
         status: true,
-        message: 'end time should be after start time',
+        message: 'End time should be after start time',
       });
       return;
     }
@@ -100,22 +101,21 @@ export default function ItineraryDayActivities(props) {
       setError({
         ...error,
         status: true,
-        message:
-          'there was a time conflict so we removed the start/end time for your activity',
+        message: 'There is a time conflict with another activity.',
       });
 
-      editActivity(itinerary_id, activity.id, {
-        ...activityForm,
-        start_time: '',
-        end_time: '',
-      }).then(res => {
-        if (res.error) {
-          console.log('error:', res.error);
-          return;
-        }
-        setActivityForm({ ...activityForm, start_time: '', end_time: '' });
-        setEditMode(BASE);
-      });
+      // editActivity(itinerary_id, activity.id, {
+      //   ...activityForm,
+      //   start_time: '',
+      //   end_time: '',
+      // }).then(res => {
+      //   if (res.error) {
+      //     console.log('error:', res.error);
+      //     return;
+      //   }
+      //   setActivityForm({ ...activityForm, start_time: '', end_time: '' });
+      //   setEditMode(BASE);
+      // });
     }
   }
 
@@ -178,10 +178,16 @@ export default function ItineraryDayActivities(props) {
     <article
       className={
         view === DELETE
-          ? 'flex justify-between w-full h-auto p-4 bg-gray-600 shadow-lg rounded-xl bg-opacity-75'
-          : 'flex justify-between w-full h-auto p-4 duration-300 transform transition-transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'
+          ? 'flex flex-col justify-between w-full h-auto p-4 bg-gray-600 shadow-lg rounded-xl bg-opacity-75'
+          : 'flex flex-col justify-between w-full h-auto p-4 duration-300 transform transition-transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'
       }
     >
+      <AlertMessage
+        isError={error.status}
+        show={error.show}
+        hide={error.hide}
+        message={error.message}
+      ></AlertMessage>
       {view === DEFAULT && (
         <div
           className={
