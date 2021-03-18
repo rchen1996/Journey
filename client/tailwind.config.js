@@ -23,7 +23,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      borderWidth: ['hover', 'focus'],
+      borderWidth: ['hover', 'focus', 'group-hover'],
       display: ['group-hover'],
       margin: ['last'],
       borderRadius: ['last'],
