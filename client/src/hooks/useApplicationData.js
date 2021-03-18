@@ -308,6 +308,15 @@ export default function useApplicationData() {
     });
   };
 
+  const updateActivityDay = (activityId, dayId, itineraryId) => {
+    const activity = { activityId, dayId };
+
+    return axios.put(
+      `/api/itineraries/${itineraryId}/activities/${activityId}`,
+      activity
+    );
+  };
+
   return {
     state,
     dispatch,
@@ -331,5 +340,6 @@ export default function useApplicationData() {
     editItinerary,
     searchAttractions,
     addMyLocation,
+    updateActivityDay,
   };
 }
