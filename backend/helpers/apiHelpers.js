@@ -335,6 +335,21 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const editActivityDay = (activityId, dayId) => {
+    const query = {
+      text: `UPDATE activities
+      SET day_id = $1
+      WHERE id = $2
+      RETURNING *;`,
+      values: [dayId, activityId],
+    };
+
+    return db
+      .query(query)
+      .then(res => res.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -356,5 +371,6 @@ module.exports = db => {
     editItinerary,
     getMyLocations,
     createActivityWithoutDay,
+    editActivityDay,
   };
 };
