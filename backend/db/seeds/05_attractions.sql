@@ -1,5 +1,5 @@
 INSERT INTO attractions (name,description,category,image, address,location)
-VALUES ('Guiness Storehouse', 'Free Stout for days','adult','https://lh5.googleusercontent.com/p/AF1QipOBu91VD75j_3kjb8Bl8MzFF3BPXA8JFuvlNAmI=w408-h358-k-no', 'St. James''s Gate, Dublin 8, D08 VF8H, Ireland', '53.3419812,-6.2889051'),
+VALUES ('Guinness Storehouse', 'Free Stout for days','adult','https://lh5.googleusercontent.com/p/AF1QipOBu91VD75j_3kjb8Bl8MzFF3BPXA8JFuvlNAmI=w408-h358-k-no', 'St. James''s Gate, Dublin 8, D08 VF8H, Ireland', '53.3419812,-6.2889051'),
 ('Phoenix Park', 'mature trees and deer','nature','https://lh5.googleusercontent.com/p/AF1QipOfy-78jvDcn7do6MWRsvIH4zuJJYsUUq3Qx6ZA=w408-h725-k-no','Phoenix Park, Dublin 8, Ireland', '53.3637092,-6.345843'),
 ('The Shelbourne, Autograph Collection', 'hotel featuring plush rooms and elegant furnishings','accomodation','https://lh5.googleusercontent.com/p/AF1QipO4J4CWMWKmStq74vTF_Pnk0E0eT2uSFkBpXtmB=w408-h272-k-no','27 St Stephen''s Green, Dublin, Ireland','53.3389757,-6.2582078'),
 

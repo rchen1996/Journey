@@ -100,13 +100,16 @@ const parseAttractionObj = (attractionObj) => {
 
   let address = attractionObj.properties.find((el) => el.key === 'address');
   address = (address && address.value) || 'no address found';
+  const image =
+    (attractionObj.images[0] && attractionObj.images[0].source_url) ||
+    'no image available';
   const attraction = {
     name: attractionObj.name,
     description: attractionObj.snippet,
     category: category,
-    image: attractionObj.images[0].source_url,
+    image: image,
     address: address,
-    location: `${attractionObj.coordinates.latitude},${attractionObj.coordinates.latitude}`,
+    location: `${attractionObj.coordinates.latitude},${attractionObj.coordinates.longitude}`,
   };
   return attraction;
 };
