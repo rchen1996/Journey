@@ -44,6 +44,7 @@ function App() {
     changePassword,
     editItinerary,
     searchAttractions,
+    addMyLocation,
   } = useApplicationData();
 
   const {
@@ -172,6 +173,7 @@ function App() {
                   dispatch={dispatch}
                   attractions={attractions}
                   searchAttractions={searchAttractions}
+                  addMyLocation={addMyLocation}
                 />
               )}
           </main>
