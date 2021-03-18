@@ -9,6 +9,7 @@ export default function RightNav(props) {
     attractions,
     searchAttractions,
     addMyLocation,
+    createActivity,
   } = props;
 
   const url = useLocation().pathname;
@@ -28,6 +29,7 @@ export default function RightNav(props) {
           attractions={attractions}
           searchAttractions={searchAttractions}
           addMyLocation={addMyLocation}
+          createActivity={createActivity}
         />
       )}
     </nav>

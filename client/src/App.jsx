@@ -174,6 +174,7 @@ function App() {
                   attractions={attractions}
                   searchAttractions={searchAttractions}
                   addMyLocation={addMyLocation}
+                  createActivity={createActivity}
                 />
               )}
           </main>

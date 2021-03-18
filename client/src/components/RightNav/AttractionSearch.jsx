@@ -6,7 +6,13 @@ import { SET_ATTRACTIONS } from '../../reducers/application';
 import AttractionsListItem from './AttractionsListItem';
 
 export default function AttractionSearch(props) {
-  const { itinerary, dispatch, searchAttractions, addMyLocation } = props;
+  const {
+    itinerary,
+    dispatch,
+    searchAttractions,
+    addMyLocation,
+    createActivity,
+  } = props;
 
   const attractionList = props.attractions;
 
@@ -243,6 +249,7 @@ export default function AttractionSearch(props) {
                   addMyLocation={addMyLocation}
                   itinerary={itinerary}
                   dispatch={dispatch}
+                  createActivity={createActivity}
                 />
               );
             })}

@@ -12,6 +12,7 @@ export default function ActivitiesRightNav(props) {
     searchAttractions,
     dispatch,
     addMyLocation,
+    createActivity,
   } = props;
 
   const [view, setView] = useState(MY_LOCATIONS);
@@ -104,6 +105,7 @@ export default function ActivitiesRightNav(props) {
             dispatch={dispatch}
             searchAttractions={searchAttractions}
             addMyLocation={addMyLocation}
+            createActivity
           />
         )}
       </div>
