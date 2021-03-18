@@ -97,14 +97,14 @@ export default function AttractionSearch(props) {
 
     setView(LOADING);
 
-    searchAttractions(searchTerms.location, query, categoryString).then(
-      attractions => {
+    searchAttractions(searchTerms.location, query, categoryString).then(res => {
+      if (!res.data.error) {
         dispatch({
           type: SET_ATTRACTIONS,
-          attractions: attractions,
+          attractions: res.data,
         });
       }
-    );
+    });
   };
 
   const handleDropDown = () => {
