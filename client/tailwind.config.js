@@ -28,6 +28,7 @@ module.exports = {
       margin: ['last'],
       borderRadius: ['last'],
       backgroundColor: ['checked'],
+      visibility: ['group-hover'],
     },
   },
   plugins: [
