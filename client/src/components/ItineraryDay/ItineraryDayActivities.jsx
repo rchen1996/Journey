@@ -74,8 +74,10 @@ export default function ItineraryDayActivities(props) {
     }
     if (
       activityForm.start_time !== '' &&
+      activityForm.start_time !== null &&
       activityForm.end_time <= activityForm.start_time
     ) {
+      console.log(activityForm);
       setError({
         ...error,
         status: true,
