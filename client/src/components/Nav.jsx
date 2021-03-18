@@ -37,7 +37,7 @@ export default function Nav(props) {
   };
 
   return (
-    <nav className='fixed z-10 flex items-center justify-between w-full h-16 px-4 bg-gray-100 shadow-md'>
+    <nav className='fixed z-10 flex items-center justify-between w-full h-16 px-4 bg-gray-100'>
       <div className='flex items-center h-full mx-4 font-semibold'>
         <Link to='/' onClick={props.user.id && clearItineraryState}>
           <svg
@@ -67,10 +67,10 @@ export default function Nav(props) {
             clearItineraryState();
           }}
         >
-          Itineraries
+          Explore
         </NavButton>
       </div>
-      <div className='flex items-center h-full mx-6 font-semibold'>
+      <div className='flex items-center h-full mx-6 space-x-4 font-semibold'>
         {props.user.id && (
           <NavButton
             link={`/dashboard/${props.user.id}`}
