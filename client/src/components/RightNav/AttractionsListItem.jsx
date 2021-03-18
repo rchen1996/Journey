@@ -42,7 +42,7 @@ export default function AttractionsListItem(props) {
   };
 
   return (
-    <div className='p-3 mb-4 text-gray-600 bg-gray-100 shadow-md rounded-xl'>
+    <div className='p-3 text-gray-600 bg-gray-100 shadow-md rounded-xl'>
       {attraction.image && (
         <div className='mb-2 aspect-w-2 aspect-h-1 aspect-w-1'>
           <img
