@@ -42,7 +42,7 @@ export default function AttractionsListItem(props) {
   };
 
   return (
-    <div className='p-3 mb-4 text-gray-600 bg-gray-100 shadow-md rounded-xl'>
+    <div className='p-3 text-gray-600 bg-gray-100 shadow-md rounded-xl'>
       {attraction.image && (
         <div className='mb-2 aspect-w-2 aspect-h-1 aspect-w-1'>
           <img
@@ -53,16 +53,15 @@ export default function AttractionsListItem(props) {
         </div>
       )}
       <h4 className='font-bold'>{attraction.name}</h4>
-      <p className='-mt-0.5 text-sm line-clamp-3 leading-tight text-gray-500'>
+      <p className='-mt-0.5 text-sm line-clamp-5 leading-tight text-gray-500'>
         {attraction.description}
       </p>
-      {/* do one of those on hover effects for the buttons perhaps - use some kind of icon instead? */}
       <div className='flex mt-2 space-x-3'>
         <button
           type='button'
           onClick={addToMyLocations}
-          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
-          alt='text'
+          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 transition bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+          title='Add to bookmarks'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -76,7 +75,8 @@ export default function AttractionsListItem(props) {
         <button
           type='button'
           onClick={addToDay}
-          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+          className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 transition bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+          title='Add to current day'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
