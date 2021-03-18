@@ -48,8 +48,39 @@ function App() {
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
 
+  const onDragEnd = result => {
+    // draggableId - id of the item that was dragged
+    // source/destination - droppableId (list id), index (location in the list)
+    const { destination, source, draggableId } = result;
+
+    // list item got dragged outside of a list
+    if (!destination) {
+      return;
+    }
+
+    // user dropped the item back into position that it started in the same list
+    if (
+      destination.droppabaleId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    // update the position in the state
+    let currentDay;
+    itinerary.locations.forEach(location => {
+      location.days.forEach(day => {
+        if (day.id === Number(source.droppableId)) {
+          currentDay = day;
+        }
+      });
+    });
+
+    // after the state is updated, then make the requests to the server to update it in db
+  };
+
   return (
-    <DragDropContext>
+    <DragDropContext onDragEnd={onDragEnd}>
       <Router>
         <Nav user={user} logout={logout} dispatch={dispatch} />
         <Switch>
