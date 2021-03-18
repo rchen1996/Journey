@@ -43,6 +43,7 @@ function App() {
     editActivity,
     changePassword,
     editItinerary,
+    searchAttractions,
   } = useApplicationData();
 
   const {
@@ -170,6 +171,7 @@ function App() {
                   isRightNavOpen={state.isRightNavOpen}
                   dispatch={dispatch}
                   attractions={attractions}
+                  searchAttractions={searchAttractions}
                 />
               )}
           </main>

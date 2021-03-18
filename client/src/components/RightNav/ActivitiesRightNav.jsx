@@ -6,7 +6,7 @@ export default function ActivitiesRightNav(props) {
   const MY_LOCATIONS = 'MY_LOCATIONS';
   const ATTRACTION_SEARCH = 'ACTIVITIES_SEARCH';
 
-  const { itinerary } = props;
+  const { itinerary, attractions, searchAttractions, dispatch } = props;
 
   const [view, setView] = useState(MY_LOCATIONS);
   const [dropDown, setDropDown] = useState({
@@ -92,7 +92,12 @@ export default function ActivitiesRightNav(props) {
           <MyLocations itinerary={itinerary} />
         )}
         {view === ATTRACTION_SEARCH && itinerary && (
-          <AttractionSearch itinerary={itinerary} />
+          <AttractionSearch
+            itinerary={itinerary}
+            attractions={attractions}
+            dispatch={dispatch}
+            searchAttractions={searchAttractions}
+          />
         )}
       </div>
     </div>
