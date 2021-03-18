@@ -242,6 +242,7 @@ export default function AttractionSearch(props) {
                   dayId={day_id}
                   addMyLocation={addMyLocation}
                   itinerary={itinerary}
+                  dispatch={dispatch}
                 />
               );
             })}
