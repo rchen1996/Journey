@@ -287,14 +287,17 @@ module.exports = ({
           };
 
           createActivity(activity).then(() => {
-            getDetailedItinerary(itinerary_id).then(itinerary => {
-              const parsed = itineraryObj(itinerary);
-
+            Promise.all([
+              getDetailedItinerary(itinerary_id),
+              getMyLocations(itinerary_id),
+            ]).then(([resultArr, myLocations]) => {
+              const itinerary = itineraryObj(resultArr);
               const io = req.app.get('socketio');
 
-              io.sockets.in(parsed.id).emit('itinerary', parsed);
-
-              response.send(parsed);
+              io.sockets
+                .in(Number(itinerary_id))
+                .emit('itinerary', { ...itinerary, my_locations: myLocations });
+              response.send({ ...itinerary, my_locations: myLocations });
             });
           });
         } else {
@@ -344,14 +347,21 @@ module.exports = ({
                     itineraryId: itinerary_id,
                   };
                   createActivity(activity).then(activity => {
-                    getDetailedItinerary(itinerary_id).then(itinerary => {
-                      const parsed = itineraryObj(itinerary);
-
+                    Promise.all([
+                      getDetailedItinerary(itinerary_id),
+                      getMyLocations(itinerary_id),
+                    ]).then(([resultArr, myLocations]) => {
+                      const itinerary = itineraryObj(resultArr);
                       const io = req.app.get('socketio');
 
-                      io.sockets.in(parsed.id).emit('itinerary', parsed);
-
-                      response.send(parsed);
+                      io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                        ...itinerary,
+                        my_locations: myLocations,
+                      });
+                      response.send({
+                        ...itinerary,
+                        my_locations: myLocations,
+                      });
                     });
                   });
                 });
