@@ -564,12 +564,10 @@ module.exports = ({
                 const itinerary = itineraryObj(resultArr);
                 const io = req.app.get('socketio');
 
-                io.sockets
-                  .in(Number(itinerary_id))
-                  .emit('itinerary', {
-                    ...itinerary,
-                    my_locations: myLocations,
-                  });
+                io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                  ...itinerary,
+                  my_locations: myLocations,
+                });
 
                 res.send({ ...itinerary, my_locations: myLocations });
               });
@@ -596,6 +594,52 @@ module.exports = ({
               }
             );
           }
+        }
+      });
+    }
+  });
+
+  router.delete('/:itinerary_id/activities/:activity_id', (req, res) => {
+    const { itinerary_id, activity_id } = req.params;
+    const userId = req.session.userId;
+
+    if (!userId) {
+      res.send({
+        error:
+          'You must be logged in to delete an attraction from My Locations',
+      });
+    } else {
+      getTravelParty(itinerary_id).then(travelParty => {
+        let allowed = false;
+
+        travelParty.forEach(member => {
+          if (member.user_id === userId) {
+            allowed = true;
+          }
+        });
+
+        if (!allowed) {
+          res.send({
+            error:
+              'You do not have permissions to delete this attraction from My Locations',
+          });
+        } else {
+          deleteActivity(activity_id).then(() => {
+            Promise.all([
+              getDetailedItinerary(itinerary_id),
+              getMyLocations(itinerary_id),
+            ]).then(([resultArr, myLocations]) => {
+              const itinerary = itineraryObj(resultArr);
+              const io = req.app.get('socketio');
+
+              io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                ...itinerary,
+                my_locations: myLocations,
+              });
+
+              res.send({ ...itinerary, my_locations: myLocations });
+            });
+          });
         }
       });
     }
