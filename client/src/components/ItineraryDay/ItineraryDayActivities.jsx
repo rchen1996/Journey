@@ -165,6 +165,11 @@ export default function ItineraryDayActivities(props) {
     setView(DEFAULT);
     setEditMode(BASE);
     history.push(url);
+    setError({
+      ...error,
+      status: false,
+      message: '',
+    });
   };
 
   const removeActivity = activityId => {
