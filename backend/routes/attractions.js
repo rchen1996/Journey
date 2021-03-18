@@ -16,14 +16,14 @@ module.exports = ({
     let { query, cat, location_name } = req.params;
     location_name = location_name.split(',').join('2C_');
     location_name = location_name.split(' ').join('_');
-    if (location_name === 'North Cape') location_name = 'North_Cape_28Norway29';
+    if (location_name === 'North_Cape') location_name = 'North_Cape_28Norway29';
     if (query === 'null') query = null;
-    if (cat === 'null'){
-      cat = null
+    if (cat === 'null') {
+      cat = null;
     } else {
       cat = cat
         .split(',')
-        .map((category) => {
+        .map(category => {
           switch (category) {
             case 'adult':
               return '&tag_labels=nightlife';
@@ -51,21 +51,23 @@ module.exports = ({
 
     axios
       .get(
-        `https://www.triposo.com/api/20201111/poi.json?location_id=${location_name}${cat ? cat : ''}&count=10&fields=id,name,score,images,snippet,tag_labels,coordinates,properties&order_by=-score${
+        `https://www.triposo.com/api/20201111/poi.json?location_id=${location_name}${
+          cat ? cat : ''
+        }&count=10&fields=id,name,score,images,snippet,tag_labels,coordinates,properties&order_by=-score${
           query ? `&annotate=trigram:${query}&trigram=>=0.3` : ''
         }&account=${account}&token=${token}`
       )
-      .then((result) => {
+      .then(result => {
         Promise.all(
-          result.data.results.map((result) => {
+          result.data.results.map(result => {
             let attraction = parseAttractionObj(result);
             return addThenGetAttraction(attraction);
           })
-        ).then((attractions) => {
+        ).then(attractions => {
           // console.log('first return from database', attractions);
           const placesWithNoAddress = [];
           const placesWithAddress = [];
-          attractions.forEach((attraction) => {
+          attractions.forEach(attraction => {
             if (attraction.address === 'not in database') {
               placesWithNoAddress.push(attraction);
             } else {
@@ -75,14 +77,14 @@ module.exports = ({
           if (placesWithNoAddress.length > 0) {
             // console.log('placesWithNoAddress', placesWithNoAddress);
             Promise.all(
-              placesWithNoAddress.map((attraction) => {
+              placesWithNoAddress.map(attraction => {
                 const { x, y } = attraction.location;
                 return axios.get(
                   `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${x}&lon=${y}`
                 );
               })
             )
-              .then((results) => {
+              .then(results => {
                 const idToUpdate = [];
                 const addressToUpdate = [];
                 results.forEach((result, index) => {
@@ -94,11 +96,11 @@ module.exports = ({
                   idToUpdate.map((id, index) => {
                     addAddress(id, addressToUpdate[index]);
                   })
-                ).catch((err) => console.log(err));
+                ).catch(err => console.log(err));
                 // console.log('should have address', placesWithNoAddress);
                 res.send([...placesWithAddress, ...placesWithNoAddress]);
               })
-              .catch((err) => {
+              .catch(err => {
                 res.send(placesWithAddress);
                 console.log(err);
               });
