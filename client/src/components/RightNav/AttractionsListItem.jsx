@@ -1,7 +1,8 @@
 export default function AttractionsListItem(props) {
-  const { attraction, dayId, addMyLocation } = props;
+  const { attraction, dayId, addMyLocation, itinerary } = props;
 
   const addToMyLocations = () => {
+    addMyLocation(attraction.id, itinerary.id);
     // function add attraction using attraction id
     // add as an activity using itinerary id with no day id
     // once added needs to dispatch to update itinerary
