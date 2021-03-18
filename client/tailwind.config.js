@@ -15,6 +15,11 @@ module.exports = {
       body: ['Open Sans', 'sans-serif'],
       test: ['Inter', 'sans-serif'],
     },
+    extend: {
+      backgroundImage: theme => ({
+        homepage: "url('./images/open-field.png')",
+      }),
+    },
   },
   variants: {
     extend: {
