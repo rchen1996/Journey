@@ -45,8 +45,22 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const addAddress = (id,address) => {
+    const query={
+      text:`UPDATE attractions SET
+      address = $2
+      WHERE id = $1`,
+      values:[id,address]
+    }
+    return db
+      .query(query)
+      .then((res) => res.rows[0])
+      .catch((err) => err);
+  }
+
   return {
     getCoordinatesByLocationName,
     addThenGetAttraction,
+    addAddress,
   };
 };
