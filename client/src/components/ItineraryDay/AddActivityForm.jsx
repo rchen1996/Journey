@@ -23,8 +23,8 @@ export default function AddActivityForm(props) {
   const [error, setError] = useState({
     staus: false,
     message: '',
-    show: 'flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
-    hide: 'hidden flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
+    show: 'flex p-3 my-4 bg-red-700 bg-opacity-50 rounded-xl',
+    hide: 'hidden',
   });
 
   const history = useHistory();
