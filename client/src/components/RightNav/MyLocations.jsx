@@ -7,8 +7,8 @@ export default function MyLocations(props) {
 
   const parsedMyLocations =
     Array.isArray(myLocations) &&
-    myLocations.map(location => {
-      return <MyLocationsItem key={location.id} location={location} />;
+    myLocations.map((location, index) => {
+      return <MyLocationsItem key={index} location={location} />;
     });
 
   return (

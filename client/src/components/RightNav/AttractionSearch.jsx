@@ -229,10 +229,10 @@ export default function AttractionSearch(props) {
       {view === SHOW && (
         <div className='text-white'>
           {attractionList.length > 0 &&
-            attractionList.map(attraction => {
+            attractionList.map((attraction, index) => {
               return (
                 <AttractionsListItem
-                  key={attraction.id}
+                  key={index}
                   attraction={attraction}
                   dayId={day_id}
                   addMyLocation={addMyLocation}
