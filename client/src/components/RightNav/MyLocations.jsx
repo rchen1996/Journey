@@ -1,7 +1,7 @@
 import MyLocationsItem from './MyLocationsItem';
 
 export default function MyLocations(props) {
-  const { itinerary, updateActivityDay, dispatch } = props;
+  const { itinerary, updateActivityDay, dispatch, deleteActivity } = props;
 
   const myLocations = itinerary.my_locations;
 
@@ -15,6 +15,7 @@ export default function MyLocations(props) {
           itinerary={itinerary}
           updateActivityDay={updateActivityDay}
           dispatch={dispatch}
+          deleteActivity={deleteActivity}
         />
       );
     });
