@@ -17,7 +17,7 @@ export default function AttractionsListItem(props) {
       } else {
         dispatch({
           type: SET_ITINERARY,
-          itinerary: res.data,
+          itinerary: { ...itinerary, ...res.data },
         });
 
         // display message upon successfully added
@@ -33,7 +33,7 @@ export default function AttractionsListItem(props) {
       } else {
         dispatch({
           type: SET_ITINERARY,
-          itinerary: res.data,
+          itinerary: { ...itinerary, ...res.data },
         });
 
         // display message upon successfully added
