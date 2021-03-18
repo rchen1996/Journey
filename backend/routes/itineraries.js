@@ -23,6 +23,7 @@ module.exports = ({
   updateActivity,
   editItinerary,
   getMyLocations,
+  createActivityWithoutDay,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -158,11 +159,11 @@ module.exports = ({
     const itinerary_id = req.params.itinerary_id;
     Promise.all([
       getDetailedItinerary(itinerary_id),
-      getMyLocations(itinerary_id)
-    ]).then(([resultArr,myLocations]) => {
-       const itinerary = itineraryObj(resultArr)
-       res.send({...itinerary, my_locations: myLocations});
-    })      
+      getMyLocations(itinerary_id),
+    ]).then(([resultArr, myLocations]) => {
+      const itinerary = itineraryObj(resultArr);
+      res.send({ ...itinerary, my_locations: myLocations });
+    });
   });
 
   router.delete('/:itinerary_id', (req, res) => {
@@ -441,6 +442,50 @@ module.exports = ({
         });
       }
     });
+  });
+
+  router.post('/:itinerary_id/activities', (req, res) => {
+    const { attractionId, itineraryId } = req.body;
+    const userId = req.session.userId;
+
+    if (!userId) {
+      res.send({
+        error:
+          'You must be logged in to add an attraction to my locations list',
+      });
+    } else {
+      getTravelParty(itineraryId).then(travelParty => {
+        let allowed = false;
+
+        travelParty.forEach(member => {
+          if (member.user_id === userId) {
+            allowed = true;
+          }
+        });
+
+        if (!allowed) {
+          res.send({
+            error:
+              'You do not have permissions to add an attraction to this itinerary',
+          });
+        } else {
+          createActivityWithoutDay(attractionId, itineraryId).then(() => {
+            Promise.all([
+              getDetailedItinerary(itineraryId),
+              getMyLocations(itineraryId),
+            ]).then(([resultArr, myLocations]) => {
+              const itinerary = itineraryObj(resultArr);
+              const io = req.app.get('socketio');
+
+              io.sockets
+                .in(itineraryId)
+                .emit('itinerary', { ...itinerary, my_locations: myLocations });
+              res.send({ ...itinerary, my_locations: myLocations });
+            });
+          });
+        }
+      });
+    }
   });
 
   router.put('/:itinerary_id/activities/:activity_id', (req, res) => {
