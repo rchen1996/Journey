@@ -48,12 +48,12 @@ export default function AttractionsListItem(props) {
           <img
             src={attraction.image}
             alt='attraction'
-            className='object-cover object-bottom rounded-xl'
+            className='object-cover object-bottom shadow-sm rounded-xl'
           />
         </div>
       )}
       <h4 className='font-bold'>{attraction.name}</h4>
-      <p className='-mt-0.5 text-sm line-clamp-3 leading-tight'>
+      <p className='-mt-0.5 text-sm line-clamp-3 leading-tight text-gray-500'>
         {attraction.description}
       </p>
       {/* do one of those on hover effects for the buttons perhaps - use some kind of icon instead? */}
@@ -62,6 +62,7 @@ export default function AttractionsListItem(props) {
           type='button'
           onClick={addToMyLocations}
           className='flex items-center justify-center w-1/2 py-1 text-sm text-gray-100 bg-teal-600 border-2 border-transparent h-1/2 rounded-3xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+          alt='text'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
