@@ -302,7 +302,7 @@ export default function useApplicationData() {
   };
 
   const addMyLocation = (attractionId, itineraryId) => {
-    return axios.post(`/api/itinerary/${itineraryId}/activities`, {
+    return axios.post(`/api/itineraries/${itineraryId}/activities`, {
       attractionId,
       itineraryId,
     });

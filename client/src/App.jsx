@@ -101,6 +101,7 @@ function App() {
               isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             {itinerary &&
+              itinerary.users &&
               itinerary.users.some(member => member.id === user.id) && (
                 <MyGroup
                   user={user}
@@ -158,6 +159,7 @@ function App() {
               editActivity={editActivity}
             />
             {itinerary &&
+              itinerary.users &&
               itinerary.users.some(member => member.id === user.id) && (
                 <RightNav
                   itinerary={itinerary}
