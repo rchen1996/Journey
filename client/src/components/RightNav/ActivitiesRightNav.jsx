@@ -13,6 +13,7 @@ export default function ActivitiesRightNav(props) {
     addMyLocation,
     createActivity,
     updateActivityDay,
+    deleteActivity,
   } = props;
 
   const [view, setView] = useState(MY_LOCATIONS);
@@ -100,6 +101,7 @@ export default function ActivitiesRightNav(props) {
             itinerary={itinerary}
             updateActivityDay={updateActivityDay}
             dispatch={dispatch}
+            deleteActivity={deleteActivity}
           />
         )}
         {view === ATTRACTION_SEARCH && itinerary && (

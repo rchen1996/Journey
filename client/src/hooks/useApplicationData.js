@@ -315,6 +315,12 @@ export default function useApplicationData() {
     );
   };
 
+  const deleteActivityWithoutDay = (activityId, itineraryId) => {
+    return axios.delete(
+      `/api/itineraries/${itineraryId}/activities/${activityId}`
+    );
+  };
+
   return {
     state,
     dispatch,
@@ -339,5 +345,6 @@ export default function useApplicationData() {
     searchAttractions,
     addMyLocation,
     updateActivityDay,
+    deleteActivityWithoutDay,
   };
 }
