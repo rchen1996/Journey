@@ -88,4 +88,26 @@ const parseTravelParty = (party) => {
   }));
 };
 
-module.exports = { itineraryObj, parseTravelParty };
+const parseAttractionObj = (attractionObj) => {
+  const tag_labels = attractionObj.tag_labels;
+  let category = 'landmark';
+  if (tag_labels.includes('sightseeing') || tag_labels.includes('architecture'))
+    category = 'landmark';
+  if (tag_labels.includes('cuisine')) category = 'food';
+  if (tag_labels.includes('museums') || tag_labels.includes('poitype-Church'))
+    category = 'cultural';
+  if (tag_labels.includes('adrenaline')) category = 'sport';
+
+  let address = attractionObj.properties.find((el) => el.key === 'address');
+  address = (address && address.value) || 'no address found';
+  const attraction = {
+    name: attractionObj.name,
+    description: attractionObj.snippet,
+    category: category,
+    image: attractionObj.images[0].source_url,
+    address: address,
+    location: `${attractionObj.coordinates.latitude},${attractionObj.coordinates.latitude}`,
+  };
+  return attraction;
+};
+module.exports = { itineraryObj, parseTravelParty, parseAttractionObj };
