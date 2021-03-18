@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Checkbox from './Checkbox';
+import axios from 'axios';
+import { SET_ATTRACTIONS } from '../../reducers/application';
+import AttractionsListItem from './AttractionsListItem';
 
 export default function AttractionSearch(props) {
-  const { itinerary } = props;
+  const { itinerary, dispatch } = props;
+
+  const attractionList = props.attractions;
 
   const { day_id } = useParams();
-
-  useEffect(() => {
-    //default on load will get autosuggestions
-  }, []);
 
   const [dropDown, setDropDown] = useState({
     subMenuOpen: false,
@@ -24,6 +25,15 @@ export default function AttractionSearch(props) {
       }
     });
   });
+
+  // useEffect(() => {
+  //   axios.get(`/api/attractions/:name/${currentLocation}`).then(attractions => {
+  //     dispatch({
+  //       type: SET_ATTRACTIONS,
+  //       attractions: attractions,
+  //     });
+  //   });
+  // }, [currentLocation, dispatch]);
 
   const [searchTerms, setSearchTerms] = useState({
     location: currentLocation,
@@ -44,7 +54,11 @@ export default function AttractionSearch(props) {
   const LOADING = 'LOADING';
   const SHOW = 'SHOW';
 
-  const [view, setView] = useState(SHOW);
+  const [view, setView] = useState(LOADING);
+
+  if (attractionList) {
+    setView(SHOW);
+  }
 
   const handleChange = event => {
     const { value, name } = event.target;
@@ -186,7 +200,18 @@ export default function AttractionSearch(props) {
         </div>
       )}
       {view === SHOW && (
-        <div className='text-white'>This is where attractions appear</div>
+        <div className='text-white'>
+          <p>This is where attractions appear</p>
+          {attractionList &&
+            attractionList.map(attraction => {
+              return (
+                <AttractionsListItem
+                  key={attraction.id}
+                  attraction={attraction}
+                />
+              );
+            })}
+        </div>
       )}
     </div>
   );

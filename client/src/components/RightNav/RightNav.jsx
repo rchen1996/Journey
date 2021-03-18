@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import ActivitiesRightNav from './ActivitiesRightNav';
 
 export default function RightNav(props) {
-  const { itinerary, isRightNavOpen } = props;
+  const { itinerary, isRightNavOpen, dispatch, attractions } = props;
 
   const url = useLocation().pathname;
 
@@ -14,7 +14,13 @@ export default function RightNav(props) {
           : 'hidden'
       }
     >
-      {url.includes('edit') && <ActivitiesRightNav itinerary={itinerary} />}
+      {url.includes('edit') && (
+        <ActivitiesRightNav
+          itinerary={itinerary}
+          dispatch={dispatch}
+          attractions={attractions}
+        />
+      )}
     </nav>
   );
 }

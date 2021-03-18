@@ -45,7 +45,15 @@ function App() {
     editItinerary,
   } = useApplicationData();
 
-  const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
+  const {
+    user,
+    itineraries,
+    myItineraries,
+    key,
+    itinerary,
+    bookmarks,
+    attractions,
+  } = state;
 
   return (
     <Router>
@@ -160,6 +168,8 @@ function App() {
                 <RightNav
                   itinerary={itinerary}
                   isRightNavOpen={state.isRightNavOpen}
+                  dispatch={dispatch}
+                  attractions={attractions}
                 />
               )}
           </main>
