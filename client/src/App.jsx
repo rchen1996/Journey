@@ -8,7 +8,7 @@ import Nav from './components/Nav';
 import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
-import LeftNav from './components/LeftNav';
+import LeftNav from './components/LeftNav/index';
 import Itinerary from './components/ItineraryOverview/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
@@ -19,6 +19,7 @@ import Bookmarks from './components/Bookmarks';
 import MenuOpener from './components/MenuOpener';
 import ManageAccount from './components/ManageAccount';
 import EditItineraryForm from './components/EditItineraryForm';
+import RightNav from './components/RightNav/RightNav';
 
 function App() {
   const {
@@ -90,11 +91,12 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
             />
             <MenuOpener
               updateMenuState={updateMenuState}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
+              isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             {itinerary &&
               itinerary.users.some(member => member.id === user.id) && (
@@ -103,7 +105,7 @@ function App() {
                   itinerary={itinerary}
                   removeCollaborator={removeCollaborator}
                   addCollaborator={addCollaborator}
-                  isMenuOpen={state.isMenuOpen}
+                  isLeftNavOpen={state.isLeftNavOpen}
                 />
               )}
           </main>
@@ -115,17 +117,18 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
             />
             <MenuOpener
               updateMenuState={updateMenuState}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
+              isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             <AddActivityForm
               dispatch={dispatch}
               onSave={createActivity}
               itinerary={itinerary}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
             />
           </main>
         </Route>
@@ -136,11 +139,12 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
             />
             <MenuOpener
               updateMenuState={updateMenuState}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
+              isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             <ItineraryDay
               itinerary={itinerary}
@@ -148,9 +152,16 @@ function App() {
               user={user}
               deleteDayFromItinerary={deleteDayFromItinerary}
               deleteActivity={deleteActivity}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
               editActivity={editActivity}
             />
+            {itinerary &&
+              itinerary.users.some(member => member.id === user.id) && (
+                <RightNav
+                  itinerary={itinerary}
+                  isRightNavOpen={state.isRightNavOpen}
+                />
+              )}
           </main>
         </Route>
         <Route path='/itineraries/:itinerary_id/overview/edit'>
@@ -160,11 +171,12 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
             />
             <MenuOpener
               updateMenuState={updateMenuState}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
+              isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             {itinerary && (
               <EditItineraryForm
@@ -182,11 +194,12 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
             />
             <MenuOpener
               updateMenuState={updateMenuState}
-              isMenuOpen={state.isMenuOpen}
+              isLeftNavOpen={state.isLeftNavOpen}
+              isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             {itinerary && (
               <Itinerary
@@ -194,7 +207,7 @@ function App() {
                 itinerary={itinerary}
                 user={user}
                 deleteDayFromItinerary={deleteDayFromItinerary}
-                isMenuOpen={state.isMenuOpen}
+                isLeftNavOpen={state.isLeftNavOpen}
               />
             )}
           </main>

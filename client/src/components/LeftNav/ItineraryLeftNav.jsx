@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation, useParams } from 'react-router-dom';
 export default function ItineraryLeftNav(props) {
-  const [newLocation, setNewLocation] = useState('');
-  const [dropDown, setDropDown] = useState({});
   const {
     setItinerary,
     itinerary,
     user,
     addDayWithLocation,
-    isMenuOpen,
+    isLeftNavOpen,
   } = props;
+
+  const { itinerary_id } = useParams();
+
   const pathname = useLocation().pathname;
   const location = useLocation();
-  const { itinerary_id } = useParams();
+
+  const [newLocation, setNewLocation] = useState('');
+  const [dropDown, setDropDown] = useState({});
   const [editMode, setEditMode] = useState(null);
   const [showLocation, setShowLocation] = useState(false);
 
@@ -98,8 +101,8 @@ export default function ItineraryLeftNav(props) {
   return (
     <nav
       className={
-        isMenuOpen
-          ? 'fixed z-40 lg:w-64 md:w-5/6 w-2/3 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block '
+        isLeftNavOpen
+          ? 'fixed z-40 lg:w-64 md:w-full w-full h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block '
           : 'hidden'
       }
     >
@@ -108,7 +111,7 @@ export default function ItineraryLeftNav(props) {
           <div className='flex flex-col mb-2 '>
             <NavLink
               to={`/itineraries/${itinerary.id}${editMode ? '/edit' : ''}`}
-              className='px-3 py-2 text-2xl font-bold '
+              className='px-3 py-2 text-2xl font-bold'
               state='test'
             >
               {itinerary.name}

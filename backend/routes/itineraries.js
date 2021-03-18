@@ -160,8 +160,8 @@ module.exports = ({
       getDetailedItinerary(itinerary_id),
       getMyLocations(itinerary_id)
     ]).then(([resultArr,myLocations]) => {
-       const itinerary = itineraryObj({main: resultArr,my_locations: myLocations})
-       res.send(itinerary);
+       const itinerary = itineraryObj(resultArr)
+       res.send({...itinerary, my_locations: myLocations});
     })      
   });
 

@@ -41,7 +41,8 @@ const dataReducer = (state, action) => {
     case SHOW_MENU:
       return {
         ...state,
-        isMenuOpen: action.isMenuOpen,
+        isRightNavOpen: action.isRightNavOpen,
+        isLeftNavOpen: action.isLeftNavOpen,
       };
     default:
       return state;
