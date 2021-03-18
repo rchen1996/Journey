@@ -1,14 +1,23 @@
 import MyLocationsItem from './MyLocationsItem';
 
 export default function MyLocations(props) {
-  const { itinerary } = props;
+  const { itinerary, updateActivityDay, dispatch, deleteActivity } = props;
 
   const myLocations = itinerary.my_locations;
 
   const parsedMyLocations =
     Array.isArray(myLocations) &&
     myLocations.map((location, index) => {
-      return <MyLocationsItem key={index} location={location} />;
+      return (
+        <MyLocationsItem
+          key={index}
+          location={location}
+          itinerary={itinerary}
+          updateActivityDay={updateActivityDay}
+          dispatch={dispatch}
+          deleteActivity={deleteActivity}
+        />
+      );
     });
 
   return (

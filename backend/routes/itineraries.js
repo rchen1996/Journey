@@ -24,6 +24,7 @@ module.exports = ({
   editItinerary,
   getMyLocations,
   createActivityWithoutDay,
+  editActivityDay,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -531,23 +532,117 @@ module.exports = ({
 
   router.put('/:itinerary_id/activities/:activity_id', (req, res) => {
     const { itinerary_id, activity_id } = req.params;
-    let { start_time, end_time, notes } = req.body;
-    if (start_time === '') start_time = null;
-    if (end_time === '') end_time = null;
-    updateActivity(start_time, end_time, notes, activity_id).then(result => {
-      if (result.message) {
-        res.send({ error: `apiHelpers: ${result.message}` });
-      } else {
-        getDetailedItinerary(itinerary_id).then(resultArr => {
-          const parsed = itineraryObj(resultArr);
+    let { start_time, end_time, notes, dayId } = req.body;
 
-          const io = req.app.get('socketio');
+    const userId = req.session.userId;
 
-          io.sockets.in(Number(itinerary_id)).emit('itinerary', parsed);
-          res.send(parsed);
+    if (!userId) {
+      res.send({
+        error: 'You must be logged in to make changes to an activity',
+      });
+    } else {
+      getTravelParty(itinerary_id).then(travelParty => {
+        let allowed = false;
+
+        travelParty.forEach(member => {
+          if (member.user_id === userId) {
+            allowed = true;
+          }
         });
-      }
-    });
+
+        if (!allowed) {
+          res.send({
+            error: 'You do not have permissions to add this activity to a day',
+          });
+        } else {
+          if (dayId) {
+            editActivityDay(activity_id, dayId).then(() => {
+              Promise.all([
+                getDetailedItinerary(itinerary_id),
+                getMyLocations(itinerary_id),
+              ]).then(([resultArr, myLocations]) => {
+                const itinerary = itineraryObj(resultArr);
+                const io = req.app.get('socketio');
+
+                io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                  ...itinerary,
+                  my_locations: myLocations,
+                });
+
+                res.send({ ...itinerary, my_locations: myLocations });
+              });
+            });
+          } else {
+            if (start_time === '') start_time = null;
+            if (end_time === '') end_time = null;
+            updateActivity(start_time, end_time, notes, activity_id).then(
+              result => {
+                if (result.message) {
+                  res.send({ error: `apiHelpers: ${result.message}` });
+                } else {
+                  getDetailedItinerary(itinerary_id).then(resultArr => {
+                    const parsed = itineraryObj(resultArr);
+
+                    const io = req.app.get('socketio');
+
+                    io.sockets
+                      .in(Number(itinerary_id))
+                      .emit('itinerary', parsed);
+                    res.send(parsed);
+                  });
+                }
+              }
+            );
+          }
+        }
+      });
+    }
+  });
+
+  router.delete('/:itinerary_id/activities/:activity_id', (req, res) => {
+    const { itinerary_id, activity_id } = req.params;
+    const userId = req.session.userId;
+
+    if (!userId) {
+      res.send({
+        error:
+          'You must be logged in to delete an attraction from My Locations',
+      });
+    } else {
+      getTravelParty(itinerary_id).then(travelParty => {
+        let allowed = false;
+
+        travelParty.forEach(member => {
+          if (member.user_id === userId) {
+            allowed = true;
+          }
+        });
+
+        if (!allowed) {
+          res.send({
+            error:
+              'You do not have permissions to delete this attraction from My Locations',
+          });
+        } else {
+          deleteActivity(activity_id).then(() => {
+            Promise.all([
+              getDetailedItinerary(itinerary_id),
+              getMyLocations(itinerary_id),
+            ]).then(([resultArr, myLocations]) => {
+              const itinerary = itineraryObj(resultArr);
+              const io = req.app.get('socketio');
+
+              io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                ...itinerary,
+                my_locations: myLocations,
+              });
+
+              res.send({ ...itinerary, my_locations: myLocations });
+            });
+          });
+        }
+      });
+    }
   });
 
   return router;

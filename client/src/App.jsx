@@ -45,6 +45,8 @@ function App() {
     editItinerary,
     searchAttractions,
     addMyLocation,
+    updateActivityDay,
+    deleteActivityWithoutDay,
   } = useApplicationData();
 
   const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
@@ -168,6 +170,8 @@ function App() {
                   searchAttractions={searchAttractions}
                   addMyLocation={addMyLocation}
                   createActivity={createActivity}
+                  updateActivityDay={updateActivityDay}
+                  deleteActivity={deleteActivityWithoutDay}
                 />
               )}
           </main>

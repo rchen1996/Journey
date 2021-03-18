@@ -308,6 +308,19 @@ export default function useApplicationData() {
     });
   };
 
+  const updateActivityDay = (activityId, dayId, itineraryId) => {
+    return axios.put(
+      `/api/itineraries/${itineraryId}/activities/${activityId}`,
+      { dayId }
+    );
+  };
+
+  const deleteActivityWithoutDay = (activityId, itineraryId) => {
+    return axios.delete(
+      `/api/itineraries/${itineraryId}/activities/${activityId}`
+    );
+  };
+
   return {
     state,
     dispatch,
@@ -331,5 +344,7 @@ export default function useApplicationData() {
     editItinerary,
     searchAttractions,
     addMyLocation,
+    updateActivityDay,
+    deleteActivityWithoutDay,
   };
 }
