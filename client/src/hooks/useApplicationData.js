@@ -298,6 +298,10 @@ export default function useApplicationData() {
     return () => socket.disconnect();
   }, [state.itinerary]);
 
+  const searchAttractions = (locationName, query, categories) => {
+    return axios.get(`/api/attractions/${locationName}/${query}/${categories}`);
+  };
+
   return {
     state,
     dispatch,
@@ -319,5 +323,6 @@ export default function useApplicationData() {
     changePassword,
     editActivity,
     editItinerary,
+    searchAttractions,
   };
 }
