@@ -6,7 +6,7 @@ import { SET_ATTRACTIONS } from '../../reducers/application';
 import AttractionsListItem from './AttractionsListItem';
 
 export default function AttractionSearch(props) {
-  const { itinerary, dispatch } = props;
+  const { itinerary, dispatch, searchAttractions } = props;
 
   const attractionList = props.attractions;
 
@@ -26,14 +26,16 @@ export default function AttractionSearch(props) {
     });
   });
 
-  // useEffect(() => {
-  //   axios.get(`/api/attractions/:name/${currentLocation}`).then(attractions => {
-  //     dispatch({
-  //       type: SET_ATTRACTIONS,
-  //       attractions: attractions,
-  //     });
-  //   });
-  // }, [currentLocation, dispatch]);
+  useEffect(() => {
+    axios
+      .get(`/api/attractions/${currentLocation}/null/null`)
+      .then(attractions => {
+        dispatch({
+          type: SET_ATTRACTIONS,
+          attractions: attractions,
+        });
+      });
+  }, [currentLocation, dispatch]);
 
   const [searchTerms, setSearchTerms] = useState({
     location: currentLocation,
@@ -73,7 +75,36 @@ export default function AttractionSearch(props) {
   const search = event => {
     event.preventDefault();
 
+    const checkedCategories = [];
+
+    for (const term in category) {
+      if (category[term]) {
+        checkedCategories.push(term);
+      }
+    }
+
+    let categoryString = 'null';
+
+    if (checkedCategories.length > 0) {
+      categoryString = checkedCategories.join();
+    }
+
+    let query = searchTerms.name;
+
+    if (query === '') {
+      query = 'null';
+    }
+
     setView(LOADING);
+
+    searchAttractions(searchTerms.location, query, categoryString).then(
+      attractions => {
+        dispatch({
+          type: SET_ATTRACTIONS,
+          attractions: attractions,
+        });
+      }
+    );
   };
 
   const handleDropDown = () => {
