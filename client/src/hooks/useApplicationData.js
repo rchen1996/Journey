@@ -21,6 +21,7 @@ export default function useApplicationData() {
     bookmarks: [],
     isLeftNavOpen: window.innerWidth >= 1024 ? true : false,
     isRightNavOpen: window.innerWidth >= 1024 ? true : false,
+    attractions: null,
   });
 
   useEffect(() => {

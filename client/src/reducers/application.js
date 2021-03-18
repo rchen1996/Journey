@@ -5,6 +5,7 @@ export const SET_MY_ITINERARIES = 'SET_MY_ITINERARIES';
 export const SET_KEY = 'SET_KEY';
 export const SET_BOOKMARKS = 'SET_BOOKMARKS';
 export const SHOW_MENU = 'SET_MENU';
+export const SET_ATTRACTIONS = 'SET_ATTRACTIONS';
 
 const dataReducer = (state, action) => {
   switch (action.type) {
@@ -43,6 +44,11 @@ const dataReducer = (state, action) => {
         ...state,
         isRightNavOpen: action.isRightNavOpen,
         isLeftNavOpen: action.isLeftNavOpen,
+      };
+    case SET_ATTRACTIONS:
+      return {
+        ...state,
+        attractions: action.attractions,
       };
     default:
       return state;
