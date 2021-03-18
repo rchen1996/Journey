@@ -89,7 +89,7 @@ export default function AttractionSearch(props) {
         className='divide-y divide-gray-300 divide-opacity-50'
       >
         <div className='flex flex-col py-2 space-y-1'>
-          <label htmlFor='location' className='font-semibold text-gray-100'>
+          <label htmlFor='location' className='text-lg font-bold text-gray-100'>
             Location
           </label>
           <select
@@ -110,9 +110,9 @@ export default function AttractionSearch(props) {
         <div className='py-2 space-y-1'>
           <div
             onClick={handleDropDown}
-            className='flex items-center cursor-pointer'
+            className='flex items-center justify-between mr-4 cursor-pointer'
           >
-            <p className='font-bold text-gray-100'>Filter by Attraction Type</p>
+            <p className='text-lg font-bold text-gray-100'>Filter</p>
             <svg
               width='12'
               height='12'
@@ -145,7 +145,7 @@ export default function AttractionSearch(props) {
           </div>
         </div>
         <div className='py-2'>
-          <label htmlFor='name' className='font-bold text-gray-100 '>
+          <label htmlFor='name' className='text-lg font-bold text-gray-100 '>
             Attraction Name
           </label>
           <input
