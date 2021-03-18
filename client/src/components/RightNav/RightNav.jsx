@@ -6,7 +6,6 @@ export default function RightNav(props) {
     itinerary,
     isRightNavOpen,
     dispatch,
-    attractions,
     searchAttractions,
     addMyLocation,
     createActivity,
@@ -26,7 +25,6 @@ export default function RightNav(props) {
         <ActivitiesRightNav
           itinerary={itinerary}
           dispatch={dispatch}
-          attractions={attractions}
           searchAttractions={searchAttractions}
           addMyLocation={addMyLocation}
           createActivity={createActivity}

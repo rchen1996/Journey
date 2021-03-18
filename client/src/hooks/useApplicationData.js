@@ -21,7 +21,6 @@ export default function useApplicationData() {
     bookmarks: [],
     isLeftNavOpen: window.innerWidth >= 1024 ? true : false,
     isRightNavOpen: window.innerWidth >= 1024 ? true : false,
-    attractions: null,
   });
 
   useEffect(() => {
@@ -303,7 +302,7 @@ export default function useApplicationData() {
   };
 
   const addMyLocation = (attractionId, itineraryId) => {
-    return axios.post(`/api/itinerary/${itineraryId}/activities`, {
+    return axios.post(`/api/itineraries/${itineraryId}/activities`, {
       attractionId,
       itineraryId,
     });

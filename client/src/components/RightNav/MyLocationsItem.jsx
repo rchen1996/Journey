@@ -1,8 +1,6 @@
 export default function MyLocationsItem(props) {
   const { location } = props;
 
-  console.log(location);
-
   return (
     <div
       className='z-0 flex flex-col w-full mt-4 rounded-xl module group'

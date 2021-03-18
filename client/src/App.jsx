@@ -47,15 +47,7 @@ function App() {
     addMyLocation,
   } = useApplicationData();
 
-  const {
-    user,
-    itineraries,
-    myItineraries,
-    key,
-    itinerary,
-    bookmarks,
-    attractions,
-  } = state;
+  const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
 
   return (
     <Router>
@@ -109,6 +101,7 @@ function App() {
               isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             {itinerary &&
+              itinerary.users &&
               itinerary.users.some(member => member.id === user.id) && (
                 <MyGroup
                   user={user}
@@ -166,12 +159,12 @@ function App() {
               editActivity={editActivity}
             />
             {itinerary &&
+              itinerary.users &&
               itinerary.users.some(member => member.id === user.id) && (
                 <RightNav
                   itinerary={itinerary}
                   isRightNavOpen={state.isRightNavOpen}
                   dispatch={dispatch}
-                  attractions={attractions}
                   searchAttractions={searchAttractions}
                   addMyLocation={addMyLocation}
                   createActivity={createActivity}

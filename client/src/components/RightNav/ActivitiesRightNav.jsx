@@ -8,7 +8,6 @@ export default function ActivitiesRightNav(props) {
 
   const {
     itinerary,
-    attractions,
     searchAttractions,
     dispatch,
     addMyLocation,
@@ -101,7 +100,6 @@ export default function ActivitiesRightNav(props) {
         {view === ATTRACTION_SEARCH && itinerary && (
           <AttractionSearch
             itinerary={itinerary}
-            attractions={attractions}
             dispatch={dispatch}
             searchAttractions={searchAttractions}
             addMyLocation={addMyLocation}

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Checkbox from './Checkbox';
 import axios from 'axios';
-import { SET_ATTRACTIONS } from '../../reducers/application';
 import AttractionsListItem from './AttractionsListItem';
 
 export default function AttractionSearch(props) {
@@ -13,8 +12,6 @@ export default function AttractionSearch(props) {
     addMyLocation,
     createActivity,
   } = props;
-
-  // const attractionList = props.attractions;
 
   const { day_id } = useParams();
 
@@ -34,14 +31,13 @@ export default function AttractionSearch(props) {
     });
   });
 
-  // useEffect(() => {
-  //   axios.get(`/api/attractions/${currentLocation}/null/null`).then(res => {
-  //     dispatch({
-  //       type: SET_ATTRACTIONS,
-  //       attractions: res.data,
-  //     });
-  //   });
-  // }, [currentLocation, dispatch]);
+  useEffect(() => {
+    axios.get(`/api/attractions/${currentLocation}/null/null`).then(res => {
+      setAttractionList(res.data);
+
+      setView(SHOW);
+    });
+  }, [currentLocation, dispatch]);
 
   const [searchTerms, setSearchTerms] = useState({
     location: currentLocation,
@@ -63,10 +59,6 @@ export default function AttractionSearch(props) {
   const SHOW = 'SHOW';
 
   const [view, setView] = useState(LOADING);
-
-  // if (attractionList) {
-  //   setView(SHOW);
-  // }
 
   const handleChange = event => {
     const { value, name } = event.target;
@@ -105,12 +97,6 @@ export default function AttractionSearch(props) {
 
     searchAttractions(searchTerms.location, query, categoryString).then(res => {
       if (!res.data.error) {
-        // console.log(res.data);
-        // dispatch({
-        //   type: SET_ATTRACTIONS,
-        //   attractions: res.data,
-        // });
-
         setAttractionList(res.data);
         setView(SHOW);
       }
@@ -242,7 +228,7 @@ export default function AttractionSearch(props) {
       )}
       {view === SHOW && (
         <div className='text-white'>
-          {attractionList &&
+          {attractionList.length > 0 &&
             attractionList.map(attraction => {
               return (
                 <AttractionsListItem
@@ -256,6 +242,7 @@ export default function AttractionSearch(props) {
                 />
               );
             })}
+          {attractionList.length === 0 && <p>No Search Results</p>}
         </div>
       )}
     </div>
