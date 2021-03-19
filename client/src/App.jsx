@@ -86,7 +86,7 @@ function App() {
               dispatch={dispatch}
               bookmarks={bookmarks}
               searchItineraries={searchItineraries}
-              key={key}
+              reload={key}
             />
           </main>
         </Route>
