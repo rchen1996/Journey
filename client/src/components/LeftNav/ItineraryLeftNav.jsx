@@ -116,7 +116,7 @@ export default function ItineraryLeftNav(props) {
     >
       {itinerary && (
         <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
-          <div className='flex flex-col mb-2 '>
+          <div className='flex flex-col mb-2'>
             <NavLink
               to={`/itineraries/${itinerary.id}${editMode ? '/edit' : ''}`}
               className='px-3 py-2 text-2xl font-bold'
@@ -152,10 +152,10 @@ export default function ItineraryLeftNav(props) {
           <div>
             {itinerary.locations.map((locationObj, index) => {
               return (
-                <div key={index} className='flex flex-col'>
+                <div key={index} className='flex flex-col my-1'>
                   <div
                     onClick={event => handleDropDown(event)}
-                    className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                    className='flex items-center justify-between px-3 py-2 my-1 cursor-pointer hover:bg-opacity-25 rounded-xl'
                     id={index}
                   >
                     <h4 className='text-xl font-bold pointer-events-none'>
@@ -188,7 +188,7 @@ export default function ItineraryLeftNav(props) {
                           }`}
                           key={day.id}
                           activeClassName='bg-gray-200 bg-opacity-25'
-                          className='flex justify-between px-4 py-2 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
+                          className='flex justify-between px-4 py-2 font-semibold hover:bg-gray-200 hover:bg-opacity-25 rounded-xl hover:text-gray-100'
                           replace
                         >
                           <span>Day {day.day_order}</span>
