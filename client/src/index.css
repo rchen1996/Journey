@@ -15,3 +15,17 @@
     }
   }
 }
+
+@media print {
+  html,
+  body {
+    height: initial !important;
+    overflow: initial !important;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 20mm;
+}
