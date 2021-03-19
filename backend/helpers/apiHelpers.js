@@ -352,6 +352,27 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getQueryItineraries = searchTerms => {
+    const searchQuery = `%${searchTerms}%`;
+
+    const query = {
+      text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+      LEFT JOIN days ON itineraries.id = days.itinerary_id
+      LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
+      JOIN locations ON days.location_id = locations.id
+      WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1
+      GROUP BY itineraries.id
+      ORDER BY COUNT(bookmarks.itinerary_id) DESC
+      LIMIT 25;`,
+      values: [searchQuery],
+    };
+
+    return db
+      .query(query)
+      .then(res => res.rows)
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -374,5 +395,6 @@ module.exports = db => {
     getMyLocations,
     createActivityWithoutDay,
     editActivityDay,
+    getQueryItineraries,
   };
 };
