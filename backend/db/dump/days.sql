@@ -1,42 +1,4 @@
-INSERT INTO days(itinerary_id, location_id, day_order)
-VALUES(1, 1, 1),
-(1, 1, 2),
-(1, 1, 3),
-(1, 1, 4),
-(1, 1, 5),
-(1, 1, 6),
-(2, 5, 1),
-(2, 2, 2),
-(2, 2, 3),
-(2, 2, 4),
-(2, 3, 5),
-(2, 3, 6),
-(2, 3, 7),
-(2, 3, 8),
-(2, 4, 9),
-(2, 4, 10),
-(2, 5, 11),
-(2, 5, 12),
-(3, 6, 1),
-(3, 6, 2),
-(3, 6, 3),
-(3, 7, 4),
-(3, 7, 5),
-(4, 8, 1),
-(4, 8, 2),
-(4, 8, 3),
-(4, 8, 4),
-(4, 8, 5),
-(4, 8, 6),
-(5, 9, 1),
-(5, 9, 2),
-(5, 9, 3),
-(5, 9, 4),
-(5, 9, 5),
-(5, 9, 6),
-(5, 9, 7),
-(5, 9, 8),
-(7, 5, 1);
+
 INSERT INTO days ( itinerary_id, location_id, day_order, date) VALUES (8, 471, 1, NULL);
 INSERT INTO days ( itinerary_id, location_id, day_order, date) VALUES (8, 471, 2, NULL);
 INSERT INTO days ( itinerary_id, location_id, day_order, date) VALUES (8, 113, 3, NULL);
@@ -201,3 +163,15 @@ INSERT INTO days ( itinerary_id, location_id, day_order, date) VALUES ( 24, 102,
 INSERT INTO days ( itinerary_id, location_id, day_order, date) VALUES ( 24, 452, 11, NULL);
 INSERT INTO days ( itinerary_id, location_id, day_order, date) VALUES ( 24, 353, 7, NULL);
 INSERT INTO days ( itinerary_id, location_id, day_order, date) VALUES ( 24, 354, 4, NULL);
+
+
+--
+-- Name: days_id_seq; Type: SEQUENCE SET; Schema: public; Owner: labber
+--
+
+SELECT pg_catalog.setval('days_id_seq', 213, true);
+
+
+--
+-- PostgreSQL database dump complete
+--

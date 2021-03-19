@@ -71,3 +71,9 @@ VALUES
 (5,37,'15:00:00', '16:00:00',20,'Order in a massage'),
 (5,37,'16:00:00', '17:00:00',20,'Get ready for the dinner party'),
 (5,37,'17:00:00', '20:00:00',20,'Party time!');
+
+INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 39, NULL, NULL, '', 183, 8);
+INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 39, NULL, NULL, '', 190, 8);
+INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 39, NULL, NULL, '', 191, 8);
+INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 44, NULL, NULL, '', 195, 8);
+INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 131, NULL, NULL, '', 214, 17);
