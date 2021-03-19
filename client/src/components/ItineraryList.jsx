@@ -34,7 +34,7 @@ export default function ItineraryList(props) {
     setType({ ...type, [name]: checked });
   };
 
-  const [length, setLength] = useState(5);
+  const [length, setLength] = useState(20);
 
   const HIDE = 'HIDE';
   const SHOW = 'SHOW';
@@ -82,6 +82,19 @@ export default function ItineraryList(props) {
       query = 'null';
     }
 
+    const typeList = [];
+    for (const typeKey in type) {
+      if (type[typeKey]) {
+        typeList.push(typeKey);
+      }
+    }
+
+    let typeString = typeList.join();
+
+    if (typeString === '') {
+      typeString = 'null';
+    }
+
     setView(HIDE);
     setLoading(true);
     setSearchTerm('');
@@ -93,15 +106,12 @@ export default function ItineraryList(props) {
         setLoading(false);
       });
     } else {
-      // search based on name, trip type, trip length
+      searchItineraries(query, typeString, length).then(res => {
+        setItineraries(res.data);
+
+        setLoading(false);
+      });
     }
-
-    // advanced search options:
-    // trip type - couples, groups, families, solo, backpackers, business, accessibility, luxury
-    // trip length - slider? incrementor? - search results will display trips with +- 2 days
-    // trip length stops at 20 days - if select 20, return all results with at least 20 days
-
-    // once search results come back and itineraries gets set, set loading back to false
   };
 
   return (
