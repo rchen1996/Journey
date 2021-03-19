@@ -34,7 +34,7 @@ export default function ItineraryList(props) {
     setType({ ...type, [name]: checked });
   };
 
-  const [length, setLength] = useState(20);
+  const [length, setLength] = useState('');
 
   const HIDE = 'HIDE';
   const SHOW = 'SHOW';
@@ -95,6 +95,12 @@ export default function ItineraryList(props) {
       typeString = 'null';
     }
 
+    let tripLength = length;
+
+    if (length === '') {
+      tripLength = 'null';
+    }
+
     setView(HIDE);
     setLoading(true);
     setSearchTerm('');
@@ -106,7 +112,7 @@ export default function ItineraryList(props) {
         setLoading(false);
       });
     } else {
-      searchItineraries(query, typeString, length).then(res => {
+      searchItineraries(query, typeString, tripLength).then(res => {
         setItineraries(res.data);
 
         setLoading(false);
