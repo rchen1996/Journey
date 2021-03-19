@@ -391,26 +391,26 @@ module.exports = db => {
       });
     const tripString = `${tripTypes.join(',')}`;
 
-    let baseQuery = `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+    let baseQuery = `SELECT itineraries.id FROM itineraries
     LEFT JOIN days ON itineraries.id = days.itinerary_id
     LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
     JOIN locations ON days.location_id = locations.id `;
 
     const baseQueryEnd = `GROUP BY itineraries.id
     ORDER BY COUNT(bookmarks.itinerary_id) DESC
-    LIMIT 25;`;
+    LIMIT 25`;
 
     if (searchTerms === 'null') {
       if (types === 'null') {
         baseQuery += `GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC
-        LIMIT 25;`;
+        LIMIT 25`;
         values = [length];
       } else if (length === 'null') {
         baseQuery += `WHERE itineraries.trip_type IN (${tripString}) `;
         baseQuery += baseQueryEnd;
       } else {
         baseQuery += `WHERE itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC
-        LIMIT 25;`;
+        LIMIT 25`;
         values = [length];
       }
     }
@@ -422,7 +422,7 @@ module.exports = db => {
         values = [searchQuery];
       } else if (types === 'null') {
         baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 GROUP BY itineraries.id HAVING COUNT(days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC
-        LIMIT 25;`;
+        LIMIT 25`;
         values = [searchQuery, length];
       } else if (length === 'null') {
         baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) `;
@@ -430,13 +430,18 @@ module.exports = db => {
         values = [searchQuery];
       } else {
         baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC
-        LIMIT 25;`;
+        LIMIT 25`;
         values = [searchQuery, length];
       }
     }
 
+    let finalQuery = `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+    JOIN days ON itineraries.id = days.itinerary_id
+    WHERE itineraries.id IN (${baseQuery})
+    GROUP BY itineraries.id;`;
+
     const query = {
-      text: baseQuery,
+      text: finalQuery,
       values: values,
     };
 
