@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { query } = require('express');
 const express = require('express');
 const router = express.Router();
 const { itineraryObj, parseTravelParty } = require('../helpers/dataHelpers');
@@ -28,6 +29,12 @@ module.exports = ({
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
+  });
+
+  router.get('/:query/:type/:length', (req, res) => {
+    const { query, type, length } = req.params;
+
+    res.send({ query, type, length });
   });
 
   router.post('/', (req, res) => {
