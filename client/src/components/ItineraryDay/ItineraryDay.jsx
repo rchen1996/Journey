@@ -106,7 +106,7 @@ export default function ItineraryDay(props) {
             className={
               view === DELETE
                 ? 'flex flex-col px-4 py-2 bg-gray-600 shadow-md rounded-xl bg-opacity-75 w-full'
-                : 'flex flex-col px-8 py-2 bg-gray-100 border-l-8 border-gray-600 shadow-md rounded-r-xl'
+                : 'flex flex-col px-8 py-2 bg-gray-100 border-l-8 border-teal-600 shadow-md rounded-r-xl'
             }
           >
             <div className='flex items-center'>
