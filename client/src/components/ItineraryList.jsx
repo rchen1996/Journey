@@ -132,7 +132,7 @@ export default function ItineraryList(props) {
   };
 
   return (
-    <div className='p-8 mt-16'>
+    <div className='w-full h-full p-8 mt-16'>
       <h1 className='text-3xl font-bold'>Explore</h1>
       <form onSubmit={search} className='flex flex-col w-full my-2'>
         <div className='flex w-1/2'>
@@ -207,9 +207,15 @@ export default function ItineraryList(props) {
             </div>
             <h4 className='px-3 py-2 font-bold'>Trip Length:</h4>
             <div className='flex flex-col items-center px-4 pb-4'>
-              <span className='w-full my-2 text-sm font-semibold'>
-                {length} day
-              </span>
+              {length ? (
+                <span className='w-full my-2 text-sm font-semibold'>
+                  {length <= 1 ? `${length} day` : `${length} days`}
+                </span>
+              ) : (
+                <span className='w-full my-2 text-sm font-semibold'>
+                  Any Length
+                </span>
+              )}
               <input
                 type='range'
                 min='1'
@@ -247,7 +253,7 @@ export default function ItineraryList(props) {
         </section>
       )}
       {loading === false && itineraries.length === 0 && (
-        <div>No Itineraries Found</div>
+        <div className='px-2 font-bold'>No Itineraries Found</div>
       )}
     </div>
   );
