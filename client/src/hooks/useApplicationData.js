@@ -308,6 +308,10 @@ export default function useApplicationData() {
     );
   };
 
+  const searchItineraries = (query, type, length) => {
+    return axios.get(`/api/itineraries/${query}/${type}/${length}`);
+  };
+
   return {
     state,
     dispatch,
@@ -333,5 +337,6 @@ export default function useApplicationData() {
     addMyLocation,
     updateActivityDay,
     deleteActivityWithoutDay,
+    searchItineraries,
   };
 }
