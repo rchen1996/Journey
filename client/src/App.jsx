@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import LeftNav from './components/LeftNav/index';
+import PrintableItinerary from './components/ItineraryOverview/PrintableItinerary';
 import Itinerary from './components/ItineraryOverview/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
@@ -214,13 +215,15 @@ function App() {
               isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             {itinerary && (
-              <Itinerary
-                dispatch={dispatch}
-                itinerary={itinerary}
-                user={user}
-                deleteDayFromItinerary={deleteDayFromItinerary}
-                isLeftNavOpen={state.isLeftNavOpen}
-              />
+              <PrintableItinerary>
+                <Itinerary
+                  dispatch={dispatch}
+                  itinerary={itinerary}
+                  user={user}
+                  deleteDayFromItinerary={deleteDayFromItinerary}
+                  isLeftNavOpen={state.isLeftNavOpen}
+                />
+              </PrintableItinerary>
             )}
           </main>
         </Route>

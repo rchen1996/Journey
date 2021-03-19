@@ -1,4 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
+import React from 'react'
 
 import ItineraryDays from './ItineraryDays';
 
@@ -35,7 +36,8 @@ export default function Itinerary(props) {
   }
 
   return (
-    <div className='flex flex-col w-full pt-16 lg:ml-64'>
+    // <div className='flex flex-col w-full pt-16 lg:ml-64'>
+      
       <section className='flex flex-col w-full h-full my-8 space-y-6 divide-y divide-gray-300'>
         <div>
           <h2 className='pl-4 mx-8 mb-4 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
@@ -185,6 +187,6 @@ export default function Itinerary(props) {
             );
           })}
       </section>
-    </div>
+    
   );
 }
