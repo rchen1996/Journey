@@ -26,6 +26,7 @@ module.exports = ({
   getMyLocations,
   createActivityWithoutDay,
   editActivityDay,
+  getQueryItineraries,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -34,7 +35,13 @@ module.exports = ({
   router.get('/:query/:type/:length', (req, res) => {
     const { query, type, length } = req.params;
 
-    res.send({ query, type, length });
+    if (query === 'null' && type === 'null' && length === 'null') {
+      getAllItineraries().then(itineraries => res.send(itineraries));
+    }
+
+    if (query !== 'null' && type === 'null' && length === 'null') {
+      getQueryItineraries(query).then(itineraries => res.send(itineraries));
+    }
   });
 
   router.post('/', (req, res) => {
