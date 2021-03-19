@@ -64,6 +64,8 @@ export default function ItineraryList(props) {
 
     // typing into the search bar searches the locations, itinerary name, itinerary description
 
+    setView(HIDE);
+
     if (view === HIDE) {
       // searching only based on the name - display all trip durations & types
     } else {
