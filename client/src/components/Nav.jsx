@@ -3,18 +3,10 @@ import { Link } from 'react-router-dom';
 import {
   SET_BOOKMARKS,
   SET_ITINERARY,
-  SET_KEY,
   SET_MY_ITINERARIES,
 } from '../reducers/application';
 
 export default function Nav(props) {
-  const setKey = () => {
-    props.dispatch({
-      type: SET_KEY,
-      key: Math.random(),
-    });
-  };
-
   const clearItineraryState = () => {
     props.dispatch({
       type: SET_ITINERARY,
@@ -63,7 +55,6 @@ export default function Nav(props) {
         <NavButton
           link='/itineraries'
           onClick={() => {
-            setKey();
             clearItineraryState();
           }}
         >

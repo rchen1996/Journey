@@ -48,9 +48,10 @@ function App() {
     addMyLocation,
     updateActivityDay,
     deleteActivityWithoutDay,
+    searchItineraries,
   } = useApplicationData();
 
-  const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
+  const { user, myItineraries, itinerary, bookmarks } = state;
 
   return (
     <Router>
@@ -80,12 +81,11 @@ function App() {
         <Route path='/itineraries' exact>
           <main className='flex w-full min-h-full'>
             <ItineraryList
-              key={key}
-              itineraries={itineraries}
               user={user}
               addBookmark={addBookmark}
               dispatch={dispatch}
               bookmarks={bookmarks}
+              searchItineraries={searchItineraries}
             />
           </main>
         </Route>
