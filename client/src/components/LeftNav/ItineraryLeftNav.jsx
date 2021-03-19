@@ -98,6 +98,14 @@ export default function ItineraryLeftNav(props) {
     return result;
   };
 
+  const handleCommaLocations = name => {
+    if (!name.includes(',')) {
+      return name;
+    } else {
+      return name.replace(/,/g, ', ');
+    }
+  };
+
   return (
     <nav
       className={
@@ -151,7 +159,7 @@ export default function ItineraryLeftNav(props) {
                     id={index}
                   >
                     <h4 className='text-xl font-bold pointer-events-none'>
-                      {locationObj.name}
+                      {handleCommaLocations(locationObj.name)}
                     </h4>
 
                     <svg
