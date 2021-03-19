@@ -1,6 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
-import React, { useRef } from 'react';
-import ReactToPrint from 'react-to-print';
+import React from 'react';
 
 import ItineraryDays from './ItineraryDays';
 

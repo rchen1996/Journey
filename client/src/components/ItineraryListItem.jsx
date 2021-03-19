@@ -1,34 +1,21 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import { SET_BOOKMARKS } from '../reducers/application';
 
 export default function ItineraryListItem(props) {
   const { name, description, image, id, days, trip_type } = props.itinerary;
-
-  const [message, setMessage] = useState('');
 
   const isBookmarked = props.bookmarks.includes(id);
 
   const addBookmark = () => {
     if (props.user.id) {
       props.addBookmark(id).then(res => {
-        if (res.data.error) {
-          setMessage(res.data.error);
-        } else {
+        if (!res.data.error) {
           props.dispatch({
             type: SET_BOOKMARKS,
             bookmarks: res.data,
           });
-
-          setMessage('Itinerary added to bookmarks!');
-
-          setTimeout(() => {
-            setMessage('');
-          }, 2000);
         }
       });
-    } else {
-      setMessage('You must be logged in to bookmark an itinerary');
     }
   };
 
@@ -55,7 +42,6 @@ export default function ItineraryListItem(props) {
           >
             {props.user.id && !isBookmarked && (
               <div className='flex items-center justify-center w-full h-full'>
-                {/* {message && <p>{message}</p>} */}
                 <button
                   type='button'
                   onClick={addBookmark}

@@ -1,5 +1,4 @@
 import ItineraryDayActivities from './ItineraryOverview/ItineraryDayActivities';
-import ItineraryListItem from './ItineraryListItem';
 
 export default function Home() {
   return (
