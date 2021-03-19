@@ -95,6 +95,7 @@ export default function AttractionSearch(props) {
       query = 'null';
     }
 
+    setSearchTerms({ ...searchTerms, name: '' });
     setView(LOADING);
 
     searchAttractions(searchTerms.location, query, categoryString).then(res => {
