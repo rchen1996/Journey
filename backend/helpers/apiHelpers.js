@@ -352,19 +352,60 @@ module.exports = db => {
       .catch(err => err);
   };
 
-  const getQueryItineraries = searchTerms => {
+  const getQueryItineraries = (searchTerms, types, length) => {
+    let values = [];
     const searchQuery = `%${searchTerms.trim()}%`;
 
+    const tripTypes = types
+      .toLowerCase()
+      .split(',')
+      .map(type => {
+        return `'${type}'`;
+      });
+    const tripString = `${tripTypes.join(',')}`;
+
+    let baseQuery = `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+    LEFT JOIN days ON itineraries.id = days.itinerary_id
+    LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
+    JOIN locations ON days.location_id = locations.id `;
+
+    if (searchTerms === 'null') {
+      if (types === 'null') {
+        baseQuery += `WHERE COUNT(days.id) = $1 `;
+        values = [length];
+      } else if (length === 'null') {
+        baseQuery += `WHERE itineraries.trip_type IN (${tripString}) `;
+      } else {
+        baseQuery += `WHERE COUNT(days.id) = $1 AND itineraries.trip_type IN (${tripString}) `;
+        values = [length];
+      }
+    }
+
+    if (searchTerms !== 'null') {
+      if (types === 'null' && length === 'null') {
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 `;
+        values = [searchQuery];
+      } else if (types === 'null') {
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 AND COUNT(days.id) = $2 `;
+        values = [searchQuery, length];
+      } else if (length === 'null') {
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 AND itineraries.trip_type IN (${tripString}) `;
+        values = [searchQuery];
+      } else {
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 AND COUNT(days.id) = $2 AND tineraries.trip_type IN (${tripString}) `;
+        values = [searchQuery, length];
+      }
+    }
+
+    const baseQueryEnd = `GROUP BY itineraries.id
+    ORDER BY COUNT(bookmarks.itinerary_id) DESC
+    LIMIT 25;`;
+
+    baseQuery += baseQueryEnd;
+
     const query = {
-      text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
-      LEFT JOIN days ON itineraries.id = days.itinerary_id
-      LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
-      JOIN locations ON days.location_id = locations.id
-      WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1
-      GROUP BY itineraries.id
-      ORDER BY COUNT(bookmarks.itinerary_id) DESC
-      LIMIT 25;`,
-      values: [searchQuery],
+      text: baseQuery,
+      values: values,
     };
 
     return db
