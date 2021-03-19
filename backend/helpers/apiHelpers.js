@@ -353,7 +353,7 @@ module.exports = db => {
   };
 
   const getQueryItineraries = searchTerms => {
-    const searchQuery = `%${searchTerms}%`;
+    const searchQuery = `%${searchTerms.trim()}%`;
 
     const query = {
       text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
