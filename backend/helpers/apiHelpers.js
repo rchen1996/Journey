@@ -435,7 +435,7 @@ module.exports = (db) => {
       }
     }
 
-    let finalQuery = `SELECT itineraries.*, COUNT(distinct days.id) AS days FROM itineraries
+    let finalQuery = `SELECT itineraries.*, COUNT(DISTINCT days.id) AS days FROM itineraries
     LEFT JOIN days ON itineraries.id = days.itinerary_id
     LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
     WHERE itineraries.id IN (${baseQuery})

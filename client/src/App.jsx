@@ -51,7 +51,7 @@ function App() {
     searchItineraries,
   } = useApplicationData();
 
-  const { user, myItineraries, itinerary, bookmarks } = state;
+  const { user, myItineraries, itinerary, bookmarks, key } = state;
 
   return (
     <Router>
@@ -86,6 +86,7 @@ function App() {
               dispatch={dispatch}
               bookmarks={bookmarks}
               searchItineraries={searchItineraries}
+              key={key}
             />
           </main>
         </Route>
