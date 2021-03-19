@@ -436,9 +436,11 @@ module.exports = db => {
     }
 
     let finalQuery = `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
-    JOIN days ON itineraries.id = days.itinerary_id
+    LEFT JOIN days ON itineraries.id = days.itinerary_id
+    LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
     WHERE itineraries.id IN (${baseQuery})
-    GROUP BY itineraries.id;`;
+    GROUP BY itineraries.id
+    ORDER BY COUNT(bookmarks.itinerary_id) DESC;`;
 
     const query = {
       text: finalQuery,
