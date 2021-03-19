@@ -14,11 +14,6 @@ const dataReducer = (state, action) => {
         ...state,
         user: action.user,
       };
-    case SET_ALL_ITINERARIES:
-      return {
-        ...state,
-        itineraries: action.itineraries,
-      };
     case SET_ITINERARY:
       return {
         ...state,
@@ -28,11 +23,6 @@ const dataReducer = (state, action) => {
       return {
         ...state,
         myItineraries: action.myItineraries,
-      };
-    case SET_KEY:
-      return {
-        ...state,
-        key: action.key,
       };
     case SET_BOOKMARKS:
       return {
