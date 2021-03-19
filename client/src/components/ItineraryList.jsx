@@ -61,29 +61,37 @@ export default function ItineraryList(props) {
     'Accessibility',
   ];
 
-  const parsedItineraries = itineraries.map(itinerary => (
-    <ItineraryListItem
-      key={itinerary.id}
-      itinerary={itinerary}
-      user={props.user}
-      addBookmark={props.addBookmark}
-      dispatch={props.dispatch}
-      bookmarks={props.bookmarks.map(bookmark => bookmark.id)}
-    />
-  ));
+  const parsedItineraries =
+    itineraries.length > 0 &&
+    itineraries.map(itinerary => (
+      <ItineraryListItem
+        key={itinerary.id}
+        itinerary={itinerary}
+        user={props.user}
+        addBookmark={props.addBookmark}
+        dispatch={props.dispatch}
+        bookmarks={props.bookmarks.map(bookmark => bookmark.id)}
+      />
+    ));
 
   const search = event => {
     event.preventDefault();
-    // default loads in to be a list of 20-25 itineraries (most popular based on bookmarks)
-    // always display based on popularity
 
-    // typing into the search bar searches the locations, itinerary name, itinerary description
+    let query = searchTerm;
+    if (searchTerm === '') {
+      query = 'null';
+    }
 
     setView(HIDE);
     setLoading(true);
+    setSearchTerm('');
 
     if (view === HIDE) {
-      // searching only based on the name - display all trip durations & types
+      searchItineraries(query, 'null', 'null').then(res => {
+        setItineraries(res.data);
+
+        setLoading(false);
+      });
     } else {
       // search based on name, trip type, trip length
     }
