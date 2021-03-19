@@ -37,7 +37,7 @@ export default function Nav(props) {
   };
 
   return (
-    <nav className='fixed z-10 flex items-center justify-between w-full h-16 px-4 bg-gray-100'>
+    <nav className='fixed z-10 flex items-center justify-between w-full h-16 px-4 bg-gray-100 shadow-md'>
       <div className='flex items-center h-full mx-4 font-semibold'>
         <Link to='/' onClick={props.user.id && clearItineraryState}>
           <svg
