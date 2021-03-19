@@ -125,3 +125,4 @@ const parseAttractionObj = (attractionObj) => {
 };
 
 module.exports = { itineraryObj, parseTravelParty, parseAttractionObj };
+

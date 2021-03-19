@@ -1,5 +1,3 @@
-INSERT INTO locations (name)
-VALUES
 ("Paris"),
 ("Lyon"),
 ("Nice"),
@@ -289,6 +287,8 @@ VALUES
 ("Pattaya"),
 ("Ko Samui"),
 ("Patong"),
+
+
 ("Chiang Rai"),
 ("Ko Pha-ngan"),
 ("Ko Lanta District"),
@@ -312,6 +312,7 @@ VALUES
 ("Bamberg"),
 ("Potsdam"),
 ("Füssen"),
+
 ("Nuremberg"),
 ("Trier"),
 ("Regensburg"),
@@ -341,6 +342,7 @@ VALUES
 ("Cabo San Lucas"),
 ("Palenque"),
 ("San Miguel de Allende"),
+
 ("Guadalajara"),
 ("Oaxaca City"),
 ("Cancún"),
@@ -352,6 +354,7 @@ VALUES
 ("Alanya"),
 ("Bursa"),
 ("Bodrum"),
+
 ("Pamukkale"),
 ("Ankara"),
 ("Edirne"),
@@ -384,6 +387,7 @@ VALUES
 ("wv Andalusia"),
 ("wv Catalonia"),
 ("wv Canary Islands"),
+
 ("Barcelona"),
 ("Madrid"),
 ("Seville"),
@@ -521,4 +525,14 @@ VALUES
 ('North Cape'),
 ('Aspen,Colorado'),
 ('Dubai')
-;
+
+
+// replace 'ö' with 'C3B6'
+// replace ' ' with '_',
+// replace ',' with '2C ',
+// replace '.' with '2e',
+// replace 'ü' with 'C3BC',
+// replace 'ú' with 'C3BA',
+// replace 'é' with 'C3A9',
+// replace 'á' with 'C3A1',
+// replace 'ã' with 'C3A3'
