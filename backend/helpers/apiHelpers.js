@@ -3,7 +3,9 @@ module.exports = db => {
     const query = {
       text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
       LEFT JOIN days ON itineraries.id = days.itinerary_id
+      LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
       GROUP BY itineraries.id
+      ORDER BY COUNT(bookmarks.itinerary_id) DESC
       LIMIT 25;`,
     };
 
