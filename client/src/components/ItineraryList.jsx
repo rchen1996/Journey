@@ -21,6 +21,8 @@ export default function ItineraryList(props) {
     setType({ ...type, [name]: checked });
   };
 
+  const [length, setLength] = useState(5);
+
   const HIDE = 'HIDE';
   const SHOW = 'SHOW';
   const [view, setView] = useState(HIDE);
@@ -71,6 +73,7 @@ export default function ItineraryList(props) {
     // advanced search options:
     // trip type - couples, groups, families, solo, backpackers, business, accessibility, luxury
     // trip length - slider? incrementor? - search results will display trips with +- 2 days
+    // trip length stops at 20 days - if select 20, return all results with at least 20 days
   };
 
   return (
@@ -119,6 +122,23 @@ export default function ItineraryList(props) {
               );
             })}
             <h4>Trip Length</h4>
+            <input
+              type='range'
+              min='1'
+              max='20'
+              increment='1'
+              name='length'
+              value={length}
+              onChange={event => setLength(event.target.value)}
+            />
+            <input
+              type='number'
+              min='1'
+              max='20'
+              name='length'
+              value={length}
+              onChange={event => setLength(event.target.value)}
+            />
           </div>
         )}
         <button
