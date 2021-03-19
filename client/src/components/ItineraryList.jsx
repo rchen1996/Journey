@@ -4,7 +4,7 @@ import axios from 'axios';
 import ItineraryListItem from './ItineraryListItem';
 
 export default function ItineraryList(props) {
-  const { searchItineraries } = props;
+  const { searchItineraries, reload } = props;
 
   const [itineraries, setItineraries] = useState([]);
 
@@ -14,7 +14,7 @@ export default function ItineraryList(props) {
       setItineraries(itineraries);
       setLoading(false);
     });
-  }, []);
+  }, [reload]);
 
   const [searchTerm, setSearchTerm] = useState('');
 
