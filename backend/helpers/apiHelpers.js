@@ -198,7 +198,7 @@ module.exports = (db) => {
         return 'Málaga';
       case 'Sao Paulo':
         return 'São Paulo';
-      default :
+      default:
         return locationName;
     }
   };
@@ -207,7 +207,7 @@ module.exports = (db) => {
     const query = {
       text: `INSERT INTO days (itinerary_id,location_id,day_order )
     VALUES($1,
-      (select id from locations where name = $2), 
+      (select id from locations where name = $2 OR name iLIKE $2 LIMIT 1), 
       (select coalesce(max(day_order),0) from days where itinerary_id = $1)+1)
     RETURNING *;`,
       values: [itineraryId, convertLocationLetters(locationName)],
