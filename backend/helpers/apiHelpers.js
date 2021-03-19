@@ -18,7 +18,7 @@ module.exports = db => {
   const createNewItinerary = itinerary => {
     const query = {
       text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
       values: [
         itinerary.name,
         itinerary.description,
