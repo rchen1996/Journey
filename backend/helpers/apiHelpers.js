@@ -369,14 +369,21 @@ module.exports = db => {
     LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
     JOIN locations ON days.location_id = locations.id `;
 
+    const baseQueryEnd = `GROUP BY itineraries.id
+    ORDER BY COUNT(bookmarks.itinerary_id) DESC
+    LIMIT 25;`;
+
     if (searchTerms === 'null') {
       if (types === 'null') {
-        baseQuery += `WHERE COUNT(days.id) = $1 `;
+        baseQuery += `GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC
+        LIMIT 25;`;
         values = [length];
       } else if (length === 'null') {
         baseQuery += `WHERE itineraries.trip_type IN (${tripString}) `;
+        baseQuery += baseQueryEnd;
       } else {
-        baseQuery += `WHERE COUNT(days.id) = $1 AND itineraries.trip_type IN (${tripString}) `;
+        baseQuery += `WHERE itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC
+        LIMIT 25;`;
         values = [length];
       }
     }
@@ -384,24 +391,22 @@ module.exports = db => {
     if (searchTerms !== 'null') {
       if (types === 'null' && length === 'null') {
         baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 `;
+        baseQuery += baseQueryEnd;
         values = [searchQuery];
       } else if (types === 'null') {
-        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 AND COUNT(days.id) = $2 `;
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC
+        LIMIT 25;`;
         values = [searchQuery, length];
       } else if (length === 'null') {
         baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 AND itineraries.trip_type IN (${tripString}) `;
+        baseQuery += baseQueryEnd;
         values = [searchQuery];
       } else {
-        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 AND COUNT(days.id) = $2 AND tineraries.trip_type IN (${tripString}) `;
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 AND itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC
+        LIMIT 25;`;
         values = [searchQuery, length];
       }
     }
-
-    const baseQueryEnd = `GROUP BY itineraries.id
-    ORDER BY COUNT(bookmarks.itinerary_id) DESC
-    LIMIT 25;`;
-
-    baseQuery += baseQueryEnd;
 
     const query = {
       text: baseQuery,
