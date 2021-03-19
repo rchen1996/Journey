@@ -123,7 +123,7 @@ export default function useApplicationData() {
             type: SET_ITINERARY,
             itinerary: { ...state.itinerary, users: res.data },
           });
-          return { success: 'user added to travel party' };
+          return { party: res.data, success: 'user added to travel party' };
         }
       })
       .catch(err => console.log(err));
