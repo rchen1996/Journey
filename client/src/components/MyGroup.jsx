@@ -22,7 +22,7 @@ export default function MyGroup(props) {
     removeCollaborator(id, userId);
   };
 
-  function sendEmail(name) {
+  function sendEmail(name, personWhoAdded) {
     emailjs
       .send(
         'service_ha193ol',
@@ -30,7 +30,7 @@ export default function MyGroup(props) {
         {
           to_name: name,
           from_name: 'Journey',
-          message: `You were just add to the trip ${props.itinerary.name}.`,
+          message: `You were just added to the ${props.itinerary.name} itinerary by ${personWhoAdded}.`,
         },
         'user_t1rYZ5aMx35opccJ5gGJG'
       )
@@ -54,6 +54,9 @@ export default function MyGroup(props) {
           message: result.error,
         });
       } else if (result.success) {
+        const newMember = result.party[result.party.length - 1].first_name;
+        const creatorObj = result.party.find(user => user.id === creator_id);
+        const memberWhoAdded = `${creatorObj.first_name} ${creatorObj.last_name}`;
         setError({
           ...error,
           status: false,
@@ -61,7 +64,7 @@ export default function MyGroup(props) {
         });
         setAddInput('');
         handleDropDown();
-        sendEmail(event);
+        sendEmail(newMember, memberWhoAdded);
       }
     });
   };
@@ -137,7 +140,6 @@ export default function MyGroup(props) {
               <form
                 onSubmit={e => {
                   handleAdd(e);
-                  sendEmail(e);
                 }}
                 className={dropDown.formClass}
               >
