@@ -10,6 +10,7 @@ export default function ItineraryList(props) {
     return axios.get('/api/itineraries').then(res => {
       const itineraries = res.data;
       setItineraries(itineraries);
+      setLoading(false);
     });
   }, []);
 
@@ -36,6 +37,8 @@ export default function ItineraryList(props) {
   const HIDE = 'HIDE';
   const SHOW = 'SHOW';
   const [view, setView] = useState(HIDE);
+
+  const [loading, setLoading] = useState(true);
 
   const advancedSearchView = () => {
     if (view === HIDE) {
@@ -75,6 +78,7 @@ export default function ItineraryList(props) {
     // typing into the search bar searches the locations, itinerary name, itinerary description
 
     setView(HIDE);
+    setLoading(true);
 
     if (view === HIDE) {
       // searching only based on the name - display all trip durations & types
@@ -86,6 +90,8 @@ export default function ItineraryList(props) {
     // trip type - couples, groups, families, solo, backpackers, business, accessibility, luxury
     // trip length - slider? incrementor? - search results will display trips with +- 2 days
     // trip length stops at 20 days - if select 20, return all results with at least 20 days
+
+    // once search results come back and itineraries gets set, set loading back to false
   };
 
   return (
@@ -171,9 +177,20 @@ export default function ItineraryList(props) {
           </svg>
         </button>
       </form>
-      <section className='grid w-full gap-4 m-8 mt-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-flow-rows'>
-        {parsedItineraries}
-      </section>
+      {loading === true && (
+        <div className='flex justify-center w-full '>
+          <img
+            src='/images/status.png'
+            className='w-8 h-8 animate-spin'
+            alt='loading indicator'
+          />
+        </div>
+      )}
+      {loading === false && (
+        <section className='grid w-full gap-4 m-8 mt-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-flow-rows'>
+          {parsedItineraries}
+        </section>
+      )}
     </div>
   );
 }
