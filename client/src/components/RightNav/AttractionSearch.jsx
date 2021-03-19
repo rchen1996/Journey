@@ -97,6 +97,7 @@ export default function AttractionSearch(props) {
 
     setSearchTerms({ ...searchTerms, name: '' });
     setView(LOADING);
+    setSearchTerms({ ...searchTerms, name: '' });
 
     searchAttractions(searchTerms.location, query, categoryString).then(res => {
       if (!res.data.error) {
@@ -118,7 +119,7 @@ export default function AttractionSearch(props) {
   const categories = [
     'Adult',
     'Amusement',
-    'Accomadation',
+    'Accomodation',
     'Landmark',
     'Sport',
     'Food',
