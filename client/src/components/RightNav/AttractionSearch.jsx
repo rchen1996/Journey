@@ -118,7 +118,7 @@ export default function AttractionSearch(props) {
   const categories = [
     'Adult',
     'Amusement',
-    'Accomadation',
+    'Accomodation',
     'Landmark',
     'Sport',
     'Food',
