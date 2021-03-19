@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import ItineraryListItem from './ItineraryListItem';
 
 export default function ItineraryList(props) {
+  const [itineraries, setItineraries] = useState([]);
+
+  useEffect(() => {
+    return axios.get('/api/itineraries').then(res => {
+      const itineraries = res.data;
+      setItineraries(itineraries);
+    });
+  }, []);
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const [type, setType] = useState({
@@ -46,7 +56,7 @@ export default function ItineraryList(props) {
     'Accessibility',
   ];
 
-  const parsedItineraries = props.itineraries.map(itinerary => (
+  const parsedItineraries = itineraries.map(itinerary => (
     <ItineraryListItem
       key={itinerary.id}
       itinerary={itinerary}
