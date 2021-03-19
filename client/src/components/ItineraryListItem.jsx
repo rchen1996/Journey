@@ -114,7 +114,7 @@ export default function ItineraryListItem(props) {
                 clipRule='evenodd'
               />
             </svg>
-            <span className='text-xs font-bold text-gray-200 pl-0.5'>
+            <span className='text-xs font-bold text-gray-200'>
               {`${trip_type.charAt(0).toUpperCase()}${trip_type.slice(1)}`}
             </span>
           </div>
