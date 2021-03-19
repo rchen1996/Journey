@@ -479,5 +479,7 @@ VALUES ('Dublin'),
 ('Karlskrona'),
 ('Visby'),
 ('Uppsala'),
-('Lund')
+('Lund'),
+('Amalfi'),
+('Amalfi Coast')
 ;

@@ -170,6 +170,7 @@ const parseLocationName = (locationName) => {
   if (name === 'Penang') name = 'George Town,Penang';
   if (name === 'Malacca') name = 'Malacca City';
   if (name === 'Ho Chi Minh') name = 'Ho Chi Minh City';
+  if (name === 'Amalfi Coast') name = 'Amalfi';
 
   name = name.replace(' ', '_');
   name = name.replace(',', '2C_');
