@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 import AlertMessage from './AlertMessage';
 
 export default function MyGroup(props) {
@@ -21,6 +22,28 @@ export default function MyGroup(props) {
     removeCollaborator(id, userId);
   };
 
+  function sendEmail(name) {
+    emailjs
+      .send(
+        'service_ha193ol',
+        'template_hvkpeht',
+        {
+          to_name: name,
+          from_name: 'Journey',
+          message: `You were just add to the trip ${props.itinerary.name}.`,
+        },
+        'user_t1rYZ5aMx35opccJ5gGJG'
+      )
+      .then(
+        result => {
+          console.log(result.text);
+        },
+        error => {
+          console.log(error.text);
+        }
+      );
+  }
+
   const handleAdd = event => {
     event.preventDefault();
     addCollaborator(id, addInput).then(result => {
@@ -38,6 +61,7 @@ export default function MyGroup(props) {
         });
         setAddInput('');
         handleDropDown();
+        sendEmail(event);
       }
     });
   };
@@ -110,7 +134,13 @@ export default function MyGroup(props) {
                 </div>
               )}
 
-              <form onSubmit={handleAdd} className={dropDown.formClass}>
+              <form
+                onSubmit={e => {
+                  handleAdd(e);
+                  sendEmail(e);
+                }}
+                className={dropDown.formClass}
+              >
                 <input
                   value={addInput}
                   onChange={event => setAddInput(event.target.value)}
