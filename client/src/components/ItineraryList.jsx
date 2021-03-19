@@ -5,6 +5,22 @@ import ItineraryListItem from './ItineraryListItem';
 export default function ItineraryList(props) {
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [type, setType] = useState({
+    couples: false,
+    groups: false,
+    families: false,
+    solo: false,
+    backpackers: false,
+    luxury: false,
+    business: false,
+    accessibility: false,
+  });
+
+  const handleTypeChange = event => {
+    const { checked, name } = event.target;
+    setType({ ...type, [name]: checked });
+  };
+
   const HIDE = 'HIDE';
   const SHOW = 'SHOW';
   const [view, setView] = useState(HIDE);
@@ -46,6 +62,12 @@ export default function ItineraryList(props) {
 
     // typing into the search bar searches the locations, itinerary name, itinerary description
 
+    if (view === HIDE) {
+      // searching only based on the name - display all trip durations & types
+    } else {
+      // search based on name, trip type, trip length
+    }
+
     // advanced search options:
     // trip type - couples, groups, families, solo, backpackers, business, accessibility, luxury
     // trip length - slider? incrementor? - search results will display trips with +- 2 days
@@ -77,6 +99,28 @@ export default function ItineraryList(props) {
             />
           </svg>
         </button>
+        {view === SHOW && (
+          <div>
+            <h4>Trip Type</h4>
+            {tripTypes.map((tripType, index) => {
+              return (
+                <div key={index}>
+                  <input
+                    type='checkbox'
+                    id={tripType.toLowerCase()}
+                    name={tripType.toLowerCase()}
+                    value={tripType.toLowerCase()}
+                    checked={type[tripType.toLowerCase()]}
+                    onChange={handleTypeChange}
+                    className='mr-2 text-teal-600 border-gray-300 rounded focus:ring-teal-500 ring-offset-0'
+                  />
+                  <label htmlFor={tripType.toLowerCase()}>{tripType}</label>
+                </div>
+              );
+            })}
+            <h4>Trip Length</h4>
+          </div>
+        )}
         <button
           type='submit'
           className='flex justify-between px-4 py-2 font-semibold text-gray-200 bg-teal-600 border-2 border-transparent rounded-xl focus:ring-teal-600 focus:ring-1'
