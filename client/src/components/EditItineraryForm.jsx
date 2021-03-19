@@ -115,25 +115,6 @@ export default function EditItineraryForm(props) {
                 className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
                 placeholder='Itinerary Name'
               />
-              <label htmlFor='tripType' className='ml-1 font-semibold'>
-                Trip Type
-              </label>
-              <select
-                name='tripType'
-                value={itineraryInfo.tripType}
-                onChange={handleChange}
-                className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-              >
-                <option defaultValue></option>
-                <option value='couples'>Couples</option>
-                <option value='groups'>Groups</option>
-                <option value='families'>Families</option>
-                <option value='backpackers'>Backpackers</option>
-                <option value='solo'>Solo</option>
-                <option value='luxury'>Luxury</option>
-                <option value='business'>Business</option>
-                <option value='accessibility'>Accessibility</option>
-              </select>
               <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
                 <div className='flex flex-col lg:w-1/2'>
                   <label htmlFor='startDate' className='ml-1 font-semibold'>
@@ -146,6 +127,27 @@ export default function EditItineraryForm(props) {
                     type='date'
                     className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
                   />
+                </div>
+                <div className='flex flex-col lg:w-1/2'>
+                  <label htmlFor='tripType' className='ml-1 font-semibold'>
+                    Trip Type
+                  </label>
+                  <select
+                    name='tripType'
+                    value={itineraryInfo.tripType}
+                    onChange={handleChange}
+                    className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+                  >
+                    <option defaultValue></option>
+                    <option value='couples'>Couples</option>
+                    <option value='groups'>Groups</option>
+                    <option value='families'>Families</option>
+                    <option value='backpackers'>Backpackers</option>
+                    <option value='solo'>Solo</option>
+                    <option value='luxury'>Luxury</option>
+                    <option value='business'>Business</option>
+                    <option value='accessibility'>Accessibility</option>
+                  </select>
                 </div>
               </div>
               <label htmlFor='image' className='ml-1 font-semibold'>
