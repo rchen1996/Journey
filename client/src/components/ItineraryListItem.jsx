@@ -79,7 +79,7 @@ export default function ItineraryListItem(props) {
             className='object-cover rounded-md shadow-lg'
           />
         </figure>
-        <div className='flex pt-2 pb-1.5 space-x-2'>
+        <div className='flex pt-2 pb-1.5 space-x-2 text-gray-200'>
           <div className='flex items-center justify-center px-2 py-1.5 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'>
             <svg
               width='14'
@@ -87,7 +87,7 @@ export default function ItineraryListItem(props) {
               viewBox='0 0 12 12'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
-              className='mr-2 text-gray-200'
+              className='w-3.5 h-3.5 mr-1.5 mb-0.5'
             >
               <path
                 fillRule='evenodd'
@@ -97,11 +97,23 @@ export default function ItineraryListItem(props) {
               />
             </svg>
 
-            <span className='text-xs font-bold text-gray-200'>
+            <span className='text-xs font-bold'>
               {days === '1' ? '1 Day' : `${days} Days`}
             </span>
           </div>
           <div className='flex items-center justify-center px-2 py-1.5 bg-teal-600 shadow-md w-min whitespace-nowrap rounded-2xl'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              className='w-3.5 h-3.5 mr-1.5'
+            >
+              <path
+                fillRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z'
+                clipRule='evenodd'
+              />
+            </svg>
             <span className='text-xs font-bold text-gray-200 pl-0.5'>
               {`${trip_type.charAt(0).toUpperCase()}${trip_type.slice(1)}`}
             </span>
@@ -111,7 +123,7 @@ export default function ItineraryListItem(props) {
           <Link to={`/itineraries/${id}`}>
             <h4 className='text-xl font-bold hover:underline'>{name}</h4>
           </Link>
-          <p className='text-sm text-gray-500'>{description}</p>
+          <p className='text-sm text-gray-500 line-clamp-3'>{description}</p>
         </div>
       </div>
       {/* <span className='text-xs hover:underline'>{'Read more -->'}</span> */}
