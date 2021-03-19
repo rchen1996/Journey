@@ -4,6 +4,7 @@ import {
   SET_BOOKMARKS,
   SET_ITINERARY,
   SET_MY_ITINERARIES,
+  SET_KEY,
 } from '../reducers/application';
 
 export default function Nav(props) {
@@ -25,6 +26,13 @@ export default function Nav(props) {
     props.dispatch({
       type: SET_BOOKMARKS,
       bookmarks: [],
+    });
+  };
+
+  const resetKey = () => {
+    props.dispatch({
+      type: SET_KEY,
+      key: Math.random(),
     });
   };
 
@@ -56,6 +64,7 @@ export default function Nav(props) {
           link='/itineraries'
           onClick={() => {
             clearItineraryState();
+            resetKey();
           }}
         >
           Explore
