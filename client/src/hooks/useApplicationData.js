@@ -1,6 +1,5 @@
 import { useEffect, useReducer } from 'react';
 import dataReducer, {
-  SET_ALL_ITINERARIES,
   SET_USER,
   SET_MY_ITINERARIES,
   SET_ITINERARY,
@@ -14,10 +13,8 @@ const ENDPOINT = 'http://localhost:8002';
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(dataReducer, {
     user: {},
-    itineraries: [],
     itinerary: null,
     myItineraries: [],
-    key: Math.random(),
     bookmarks: [],
     isLeftNavOpen: window.innerWidth >= 1024 ? true : false,
     isRightNavOpen: window.innerWidth >= 1024 ? true : false,
@@ -63,16 +60,6 @@ export default function useApplicationData() {
       password,
     });
   };
-
-  useEffect(() => {
-    return axios.get('/api/itineraries').then(res => {
-      const itineraries = res.data;
-      dispatch({
-        type: SET_ALL_ITINERARIES,
-        itineraries: itineraries,
-      });
-    });
-  }, [state.key]);
 
   const createItinerary = function (itinerary) {
     return axios.post('/api/itineraries', itinerary);
