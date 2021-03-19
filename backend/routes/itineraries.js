@@ -37,10 +37,10 @@ module.exports = ({
 
     if (query === 'null' && type === 'null' && length === 'null') {
       getAllItineraries().then(itineraries => res.send(itineraries));
-    }
-
-    if (query !== 'null' && type === 'null' && length === 'null') {
-      getQueryItineraries(query).then(itineraries => res.send(itineraries));
+    } else {
+      getQueryItineraries(query, type, length).then(itineraries =>
+        res.send(itineraries)
+      );
     }
   });
 
