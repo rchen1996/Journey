@@ -58,8 +58,8 @@ export default function ActivitiesRightNav(props) {
 
   return (
     <div className='w-full bg-gray-600'>
-      <div className=''>
-        <div className={dropDown.subMenuOpen ? 'block' : 'mb-2'}>
+      <div className='divide-y divide-gray-500 divide-opacity-50'>
+        <div className={dropDown.subMenuOpen ? 'block' : 'mb-4'}>
           <div
             className='flex items-center justify-between w-full p-4 text-xl font-bold bg-gray-200 bg-opacity-25 cursor-pointer sm:px-3 sm:py-2 rounded-xl'
             type='button'
@@ -89,7 +89,7 @@ export default function ActivitiesRightNav(props) {
             onClick={updateMenuViewInfo}
             className={
               dropDown.subMenuOpen
-                ? 'flex items-center justify-between w-full p-4 text-xl font-bold sm:px-3 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl cursor-pointer mt-2'
+                ? 'mb-2 flex items-center justify-between w-full p-4 text-xl font-bold sm:px-3 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl cursor-pointer mt-2'
                 : 'hidden'
             }
           >
