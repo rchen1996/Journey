@@ -205,9 +205,11 @@ export default function ItineraryList(props) {
                 );
               })}
             </div>
-            <h4 className='px-3 py-2 font-bold'>Trip Length</h4>
-            <div className='flex flex-col items-center px-4 py-4'>
-              <span value={length}></span>
+            <h4 className='px-3 py-2 font-bold'>Trip Length:</h4>
+            <div className='flex flex-col items-center px-4 pb-4'>
+              <span className='w-full my-2 text-sm font-semibold'>
+                {length} day
+              </span>
               <input
                 type='range'
                 min='1'
@@ -218,9 +220,6 @@ export default function ItineraryList(props) {
                 onChange={event => setLength(event.target.value)}
                 className=''
               />
-              <div>
-                <span>1</span>
-              </div>
             </div>
             {/* <input
               type='number'
