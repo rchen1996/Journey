@@ -53,10 +53,7 @@ CREATE TABLE "travel_parties" (
 DROP TABLE IF EXISTS locations CASCADE;
 CREATE TABLE "locations" (
   "id" serial PRIMARY KEY NOT NULL,
-  "name" varchar(255) NOT NULL,
-  "country" varchar(255) NOT NULL,
-  "latitude" float NOT NULL,
-  "longitude" float NOT NULL
+  "name" varchar(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS days CASCADE;

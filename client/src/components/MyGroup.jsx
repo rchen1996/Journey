@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 import AlertMessage from './AlertMessage';
 
 export default function MyGroup(props) {
@@ -21,6 +22,28 @@ export default function MyGroup(props) {
     removeCollaborator(id, userId);
   };
 
+  function sendEmail(name, personWhoAdded) {
+    emailjs
+      .send(
+        'service_ha193ol',
+        'template_hvkpeht',
+        {
+          to_name: name,
+          from_name: 'Journey',
+          message: `You were just added to the ${props.itinerary.name} itinerary by ${personWhoAdded}.`,
+        },
+        'user_t1rYZ5aMx35opccJ5gGJG'
+      )
+      .then(
+        result => {
+          console.log(result.text);
+        },
+        error => {
+          console.log(error.text);
+        }
+      );
+  }
+
   const handleAdd = event => {
     event.preventDefault();
     addCollaborator(id, addInput).then(result => {
@@ -31,6 +54,9 @@ export default function MyGroup(props) {
           message: result.error,
         });
       } else if (result.success) {
+        const newMember = result.party[result.party.length - 1].first_name;
+        const creatorObj = result.party.find(user => user.id === creator_id);
+        const memberWhoAdded = `${creatorObj.first_name} ${creatorObj.last_name}`;
         setError({
           ...error,
           status: false,
@@ -38,6 +64,7 @@ export default function MyGroup(props) {
         });
         setAddInput('');
         handleDropDown();
+        sendEmail(newMember, memberWhoAdded);
       }
     });
   };
@@ -110,7 +137,12 @@ export default function MyGroup(props) {
                 </div>
               )}
 
-              <form onSubmit={handleAdd} className={dropDown.formClass}>
+              <form
+                onSubmit={e => {
+                  handleAdd(e);
+                }}
+                className={dropDown.formClass}
+              >
                 <input
                   value={addInput}
                   onChange={event => setAddInput(event.target.value)}

@@ -124,4 +124,68 @@ const parseAttractionObj = (attractionObj) => {
   return attraction;
 };
 
-module.exports = { itineraryObj, parseTravelParty, parseAttractionObj };
+const parseLocationName = (locationName) => {
+  let name = locationName;
+  if (name === 'Queenstown') name = 'Queenstown,New Zealand';
+  if (name === 'Cinque Terre') name = 'Cinque Terre National Park';
+  if (name === 'Sicily') name = 'wv Sicily';
+  if (name === 'Tuscany') name = 'wv Tuscany';
+  if (name === 'Veneto') name = 'wv Veneto';
+  if (name === 'Sardinia') name = 'wv Sardinia';
+  if (name === 'Canary Islands') name = 'wv Canary Islands';
+  if (name === 'Catalonia') name = 'wv Catalonia';
+  if (name === 'Andalusia') name = 'wv Andalusia';
+  if (name === 'Syracuse') name = 'Syracuse,Sicily';
+  if (name === 'Rhodes') name = 'Rhodes 28city29';
+  if (name === 'Corfu') name = 'Corfu 28city29';
+  if (name === 'Vienna') name = 'wv Vienna';
+  if (name === 'Chiyoda') name = 'Chiyoda,Tokyo';
+  if (name === 'Minato') name = 'Minato,Tokyo';
+  if (name === 'Nara') name = 'Nara,Nara';
+  if (name === 'Nagano') name = 'Nagano 28city29';
+  if (name === 'Newcastle') name = 'Newcastle upon Tyne';
+  if (name === 'Phuket') name = 'Phuket 28city29';
+  if (name === 'Ko Phi Phi') name = 'Ko Phi Phi Don';
+  if (name === 'Berlin') name = 'wv Berlin';
+  if (name === 'Hamburg') name = 'wv Hamburg';
+  if (name === 'Jeju') name = 'wv Jeju';
+  if (name === 'Split') name = 'Split,Croatia';
+  if (name === 'Hong Kong') name = 'wv Hong Kong';
+  if (name === 'Shanghai') name = 'wv Shanghai';
+  if (name === 'Beijing') name = 'wv Beijing';
+  if (name === 'Macau') name = 'wv Macau';
+  if (name === 'Tianjin') name = 'wv Tianjin';
+  if (name === 'Niagara Falls') name = 'Niagara Falls,Ontario';
+  if (name === 'Aspen') name = 'Aspen,Colorado';
+  if (name === 'North Cape') name = 'North_Cape_28Norway29';
+  if (name === 'Washington') name = 'Washington,D.C.';
+  if (name === 'Versailles') name = 'Versailles,Yvelines';
+  if (name === 'Banff') name = 'Banff,Alberta';
+  if (name === 'Orlando') name = 'Orlando,Florida';
+  if (name === 'Tampa') name = 'Tampa,Florida';
+  if (name === 'Atlantic City') name = 'Atlantic City,New Jersey';
+  if (name === 'Sacramento') name = 'Sacramento,California';
+  if (name === 'Memphis') name = 'Memphis,Tennessee';
+  if (name === 'Santa Fe') name = 'Santa Fe,New Mexico';
+  if (name === 'Penang') name = 'George Town,Penang';
+  if (name === 'Malacca') name = 'Malacca City';
+  if (name === 'Ho Chi Minh') name = 'Ho Chi Minh City';
+  if (name === 'Amalfi Coast') name = 'Amalfi';
+
+  name = name.replace(' ', '_');
+  name = name.replace(',', '2C_');
+  name = name.replace('.', '2e');
+  name = name.replace('ü', 'C3BC');
+  name = name.replace('ú', 'C3BA');
+  name = name.replace('é', 'C3A9');
+  name = name.replace('á', 'C3A1');
+  name = name.replace('ã', 'C3A3');
+  return name;
+};
+
+module.exports = {
+  itineraryObj,
+  parseTravelParty,
+  parseAttractionObj,
+  parseLocationName,
+};
