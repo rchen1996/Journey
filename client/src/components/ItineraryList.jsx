@@ -104,6 +104,17 @@ export default function ItineraryList(props) {
     setView(HIDE);
     setLoading(true);
     setSearchTerm('');
+    setType({
+      couples: false,
+      groups: false,
+      families: false,
+      solo: false,
+      backpackers: false,
+      luxury: false,
+      business: false,
+      accessibility: false,
+    });
+    setLength('');
 
     if (view === HIDE) {
       searchItineraries(query, 'null', 'null').then(res => {
