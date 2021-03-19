@@ -48,6 +48,7 @@ function App() {
     addMyLocation,
     updateActivityDay,
     deleteActivityWithoutDay,
+    searchItineraries,
   } = useApplicationData();
 
   const { user, myItineraries, itinerary, bookmarks } = state;
@@ -84,6 +85,7 @@ function App() {
               addBookmark={addBookmark}
               dispatch={dispatch}
               bookmarks={bookmarks}
+              searchItineraries={searchItineraries}
             />
           </main>
         </Route>

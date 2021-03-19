@@ -4,6 +4,8 @@ import axios from 'axios';
 import ItineraryListItem from './ItineraryListItem';
 
 export default function ItineraryList(props) {
+  const { searchItineraries } = props;
+
   const [itineraries, setItineraries] = useState([]);
 
   useEffect(() => {
