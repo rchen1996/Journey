@@ -234,7 +234,10 @@ export default function ItineraryDayActivities(props) {
               }
             >
               <img
-                src={activity.image}
+                src={
+                  activity.image ||
+                  'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2235&q=80'
+                }
                 alt='activity'
                 className='object-cover rounded-md shadow-lg'
               />
@@ -335,7 +338,7 @@ export default function ItineraryDayActivities(props) {
                 />
               </svg>
 
-              <span className='ml-1 text-sm text-gray-500'>
+              <span className='ml-1 text-sm text-gray-500 line-clamp-4'>
                 {activity.description}
               </span>
             </div>

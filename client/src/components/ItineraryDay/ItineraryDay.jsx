@@ -200,6 +200,25 @@ export default function ItineraryDay(props) {
             </Link>
           )}
         </header>
+        {day && day.activities.length === 0 && (
+          <div className='flex items-center px-4 py-4 duration-200 transform bg-gray-100 shadow-md rounded-xl'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              className='w-5 h-5'
+            >
+              <path
+                fillRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                clipRule='evenodd'
+              />
+            </svg>
+            <h5 className='ml-2'>
+              There are no activities planned for this day.
+            </h5>
+          </div>
+        )}
         {day &&
           day.activities &&
           sortActivities(day.activities).map(activity => {

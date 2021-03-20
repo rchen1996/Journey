@@ -74,8 +74,8 @@ export default function ItineraryLeftNav(props) {
             ? 'flex flex-col space-y-2 pl-2 last:mb-4'
             : 'hidden',
           svgClass: isClassHidden
-            ? 'transform duration-300 cursor-pointer pointer-events-none mr-1 flex-shrink-0'
-            : 'transform duration-300 -rotate-90 cursor-pointer pointer-events-none mr-1 flex-shrink-0',
+            ? 'transform duration-300 cursor-pointer pointer-events-none mr-1 flex-shrink-0 ml-2'
+            : 'transform duration-300 -rotate-90 cursor-pointer pointer-events-none mr-1 flex-shrink-0 ml-2',
         },
       };
     });
@@ -170,7 +170,7 @@ export default function ItineraryLeftNav(props) {
                       xmlns='http://www.w3.org/2000/svg'
                       className={
                         dropDown[index]?.svgClass ||
-                        'transform duration-300 -rotate-90 cursor-pointer pointer-events-none mr-1 flex-shrink-0'
+                        'transform duration-300 -rotate-90 cursor-pointer pointer-events-none mr-1 flex-shrink-0 ml-2'
                       }
                     >
                       <path

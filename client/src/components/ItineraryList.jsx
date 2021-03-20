@@ -142,7 +142,7 @@ export default function ItineraryList(props) {
       >
         <div className='flex flex-col w-3/4 p-4 py-6 mb-2 bg-gray-100 shadow-md md:w-3/4 lg:w-1/2 rounded-xl'>
           <div className='flex flex-col items-center pb-3 md:-ml-4'>
-            <h1 className='pb-1 text-5xl font-black'>Explore</h1>
+            <h1 className='pb-1 text-5xl font-black '>Explore</h1>
             <h2 className='text-center text-gray-500'>
               Get inspired by other members' explorations and adventures
             </h2>
