@@ -25,8 +25,10 @@ export default function EditItineraryForm(props) {
     hide: 'hidden flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
   });
 
-  const [visibility, setVisibility] = useState(false);
-  const [translate, setTranslate] = useState('');
+  const [visibility, setVisibility] = useState(itinerary.visible);
+  const [translate, setTranslate] = useState(
+    visibility ? 'transform translate-x-full bg-teal-600' : ''
+  );
   const handleVisibility = event => {
     if (visibility) {
       setVisibility(false);
