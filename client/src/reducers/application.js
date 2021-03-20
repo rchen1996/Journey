@@ -3,7 +3,7 @@ export const SET_ALL_ITINERARIES = 'SET_ALL_ITINERARIES';
 export const SET_ITINERARY = 'SET_ITINERARY';
 export const SET_MY_ITINERARIES = 'SET_MY_ITINERARIES';
 export const SET_BOOKMARKS = 'SET_BOOKMARKS';
-export const SHOW_MENU = 'SET_MENU';
+export const SHOW_SIDEBAR = 'SHOW_SIDEBAR';
 export const SET_ATTRACTIONS = 'SET_ATTRACTIONS';
 export const SET_KEY = 'SET_KEY';
 
@@ -29,11 +29,23 @@ const dataReducer = (state, action) => {
         ...state,
         bookmarks: action.bookmarks,
       };
-    case SHOW_MENU:
+    case SHOW_SIDEBAR:
       return {
         ...state,
-        isRightNavOpen: action.isRightNavOpen,
-        isLeftNavOpen: action.isLeftNavOpen,
+        sideNav: {
+          rightNav: {
+            ...state.sideNav.rightNav,
+            collapsed: action.rightNav.collapsed,
+            breakPointCollapsed: action.rightNav.breakPointCollapsed,
+            userCollapsed: action.rightNav.userCollapsed,
+          },
+          leftNav: {
+            ...state.sideNav.leftNav,
+            collapsed: action.leftNav.collapsed,
+            breakPointCollapsed: action.leftNav.breakPointCollapsed,
+            userCollapsed: action.leftNav.userCollapsed,
+          },
+        },
       };
     case SET_ATTRACTIONS:
       return {

@@ -4,7 +4,7 @@ import dataReducer, {
   SET_MY_ITINERARIES,
   SET_ITINERARY,
   SET_BOOKMARKS,
-  SHOW_MENU,
+  SHOW_SIDEBAR,
 } from '../reducers/application';
 import axios from 'axios';
 import { io } from 'socket.io-client';
@@ -16,8 +16,18 @@ export default function useApplicationData() {
     itinerary: null,
     myItineraries: [],
     bookmarks: [],
-    isLeftNavOpen: window.innerWidth >= 1024 ? true : false,
-    isRightNavOpen: window.innerWidth >= 1024 ? true : false,
+    sideNav: {
+      rightNav: {
+        collapsed: false,
+        breakPointCollapsed: false,
+        userCollapsed: false,
+      },
+      leftNav: {
+        collapsed: false,
+        breakPointCollapsed: false,
+        userCollapsed: false,
+      },
+    },
     key: Math.random(),
   });
 
@@ -197,31 +207,43 @@ export default function useApplicationData() {
    * Updates menu states when size of the window is changed.
    * @param {boolean} breakpointTrigger Overrided from menu button
    */
-  function updateMenuState(leftNavTrigger, rightNavTrigger) {
+  function updateSidebar(right, rightUser, left, leftUser) {
+    // Normal Screens
+    // Both Side Navs default to open
+    // UserCollapse can close them
+    // breakPointCollapsed > UserCollapse
     dispatch({
-      type: SHOW_MENU,
-      isRightNavOpen:
-        rightNavTrigger === null ? !state.isRightNavOpen : rightNavTrigger,
-      isLeftNavOpen:
-        leftNavTrigger === null ? !state.isLeftNavOpen : leftNavTrigger,
+      type: SHOW_SIDEBAR,
+      rightNav: {
+        collapsed: right !== null ? right : state.sideNav.rightNav.collapsed,
+        breakPointCollapsed: false,
+        userCollapsed:
+          rightUser !== null ? rightUser : state.sideNav.rightNav.userCollapsed,
+      },
+      leftNav: {
+        collapsed: left !== null ? left : state.sideNav.leftNav.collapsed,
+        breakPointCollapsed: false,
+        userCollapsed:
+          leftUser !== null ? leftUser : state.sideNav.leftNav.userCollapsed,
+      },
     });
   }
 
-  useEffect(() => {
-    const handleWindowResize = () => {
-      if (window.innerWidth >= 1024) {
-        dispatch({
-          type: SHOW_MENU,
-          isRightNavOpen: true,
-          isLeftNavOpen: true,
-        });
-      }
-    };
+  // useEffect(() => {
+  //   const handleWindowResize = () => {
+  //     if (window.innerWidth >= 1024) {
+  //       dispatch({
+  //         type: SHOW_SIDEBAR,
+  //         isRightNavOpen: true,
+  //         isLeftNavOpen: true,
+  //       });
+  //     }
+  //   };
 
-    window.addEventListener('resize', handleWindowResize);
+  //   window.addEventListener('resize', handleWindowResize);
 
-    return () => window.removeEventListener('resize', handleWindowResize);
-  }, []);
+  //   return () => window.removeEventListener('resize', handleWindowResize);
+  // }, []);
 
   const deleteActivity = (itineraryId, dayId, activityId) => {
     return axios
@@ -331,7 +353,7 @@ export default function useApplicationData() {
     deleteBookmark,
     addBookmark,
     deleteDayFromItinerary,
-    updateMenuState,
+    updateSidebar,
     deleteActivity,
     changePassword,
     editActivity,
