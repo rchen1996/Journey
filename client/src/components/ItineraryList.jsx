@@ -4,7 +4,7 @@ import axios from 'axios';
 import ItineraryListItem from './ItineraryListItem';
 
 export default function ItineraryList(props) {
-  const { searchItineraries, reload } = props;
+  const { searchItineraries, reload, deleteBookmark } = props;
 
   const [itineraries, setItineraries] = useState([]);
 
@@ -70,7 +70,9 @@ export default function ItineraryList(props) {
         user={props.user}
         addBookmark={props.addBookmark}
         dispatch={props.dispatch}
-        bookmarks={props.bookmarks.map(bookmark => bookmark.id)}
+        bookmarkItineraryIds={props.bookmarks.map(bookmark => bookmark.id)}
+        bookmarks={props.bookmarks}
+        deleteBookmark={deleteBookmark}
       />
     ));
 

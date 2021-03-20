@@ -4,7 +4,7 @@ import { SET_BOOKMARKS } from '../reducers/application';
 export default function ItineraryListItem(props) {
   const { name, description, image, id, days, trip_type } = props.itinerary;
 
-  const isBookmarked = props.bookmarks.includes(id);
+  const isBookmarked = props.bookmarkItineraryIds.includes(id);
 
   const addBookmark = () => {
     if (props.user.id) {
@@ -18,6 +18,22 @@ export default function ItineraryListItem(props) {
       });
     }
   };
+
+  const deleteBookmark = id => {
+    if (props.user.id) {
+      props.deleteBookmark(id).then(res => {
+        if (!res.data.error) {
+          props.dispatch({
+            type: SET_BOOKMARKS,
+            bookmarks: res.data,
+          });
+        }
+      });
+    }
+  };
+
+  const bookmarkId = props.bookmarks.find(bookmarkObj => bookmarkObj.id === id)
+    ?.bookmark_id;
 
   return (
     <article className='flex flex-col justify-between w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
@@ -37,7 +53,7 @@ export default function ItineraryListItem(props) {
             className={
               props.user.id && !isBookmarked
                 ? 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'
-                : 'z-10 flex items-center justify-center space-x-8'
+                : 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'
             }
           >
             {props.user.id && !isBookmarked && (
@@ -54,6 +70,28 @@ export default function ItineraryListItem(props) {
                     className='hidden w-10 h-10 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110'
                   >
                     <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
+                  </svg>
+                </button>
+              </div>
+            )}
+            {props.user.id && isBookmarked && (
+              <div className='flex items-center justify-center w-full h-full'>
+                <button
+                  type='button'
+                  onClick={() => deleteBookmark(bookmarkId)}
+                  className='p-4 lg:p-0'
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    className='hidden w-10 h-10 text-gray-100 duration-300 transform group-hover:inline-block transiton hover:scale-110'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
                   </svg>
                 </button>
               </div>

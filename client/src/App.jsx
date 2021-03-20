@@ -87,6 +87,7 @@ function App() {
               bookmarks={bookmarks}
               searchItineraries={searchItineraries}
               reload={key}
+              deleteBookmark={deleteBookmark}
             />
           </main>
         </Route>
