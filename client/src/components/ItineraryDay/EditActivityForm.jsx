@@ -61,7 +61,7 @@ export default function EditActivityForm(props) {
         </div>
         <div className='flex flex-col w-full'>
           <label htmlFor='dayOrder' className='ml-1 font-semibold'>
-            Activity Day
+            Move Activity To:
           </label>
           <select
             name='dayOrder'
