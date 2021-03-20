@@ -86,8 +86,23 @@ export default function ItineraryDayActivities(props) {
       return;
     }
 
-    if (ifAvailable(activityForm.start_time, activityForm.end_time)) {
-      editActivity(itinerary_id, activity.id, activityForm).then(res => {
+    let start_time = activityForm.start_time;
+    let end_time = activityForm.end_time;
+    let notes = activityForm.notes;
+    let dayOrder = activityForm.dayOrder;
+
+    if (activityForm.dayOrder !== currentDay.day_order) {
+      start_time = null;
+      end_time = null;
+    }
+
+    let editedActivity = { start_time, end_time, notes, dayOrder };
+
+    if (
+      ifAvailable(activityForm.start_time, activityForm.end_time) ||
+      activityForm.dayOrder !== currentDay.day_order
+    ) {
+      editActivity(itinerary_id, activity.id, editedActivity).then(res => {
         if (res.error) {
           console.log('error:', res.error);
           return;
