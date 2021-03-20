@@ -6,7 +6,16 @@ export default function EditActivityForm(props) {
     handleEdit,
     cancel,
     EDIT,
+    itinerary,
   } = props;
+
+  let totalDays = [];
+  itinerary.locations.forEach(location => {
+    location.days.forEach(day => {
+      totalDays.push(day.day_order);
+    });
+  });
+
   return (
     <form
       action=''
@@ -49,6 +58,28 @@ export default function EditActivityForm(props) {
               className='mb-2 border-gray-300 rounded-md appearance-none resize-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
             ></input>
           </div>
+        </div>
+        <div className='flex flex-col w-full'>
+          <label htmlFor='dayOrder' className='ml-1 font-semibold'>
+            Activity Day
+          </label>
+          <select
+            name='dayOrder'
+            value={activityForm.dayOrder}
+            onChange={event =>
+              setActivityForm({ ...activityForm, dayOrder: event.target.value })
+            }
+            className={`mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600`}
+          >
+            <option value='none'>My Locations</option>
+            {totalDays.map(dayOrder => {
+              return (
+                <option key={dayOrder} value={dayOrder}>
+                  Day {`${dayOrder}`}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div className='flex flex-col w-full'>
           <label htmlFor='notes' className='font-semibold'>
