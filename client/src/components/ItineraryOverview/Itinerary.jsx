@@ -1,14 +1,23 @@
 import { useLocation, Link } from 'react-router-dom';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { SET_BOOKMARKS } from '../../reducers/application';
 
 import ItineraryDays from './ItineraryDays';
 
 export default function Itinerary(props) {
-  const { itinerary, user, deleteDayFromItinerary } = props;
+  const {
+    itinerary,
+    user,
+    deleteDayFromItinerary,
+    bookmarks,
+    addBookmark,
+    deleteBookmark,
+    dispatch,
+  } = props;
 
   const url = useLocation().pathname;
 
-  const formatDate = dateString => {
+  const formatDate = (dateString) => {
     if (dateString) {
       return new Date(dateString).toDateString();
     }
@@ -24,23 +33,96 @@ export default function Itinerary(props) {
   };
 
   if (itinerary.start_date) {
-    itinerary.locations.forEach(location => {
+    itinerary.locations.forEach((location) => {
       tripDuration += location.days.length;
     });
 
     endDate = addDays(itinerary.start_date, tripDuration).toDateString();
   } else if (itinerary) {
     itinerary.locations.forEach(
-      location => (tripDuration += location.days.length)
+      (location) => (tripDuration += location.days.length)
     );
   }
+  const BOOKMARKED = 'BOOKMARKED';
+  const BOOKMARK = 'BOOKMARK';
+  const [bookmarkView, setBookMarkView] = useState(BOOKMARK);
+
+  const bookmarkArr = bookmarks.map((bookmark) => {
+    return bookmark.id;
+  });
+  useEffect(() => {
+    if (bookmarkArr.includes(itinerary.id)) {
+      setBookMarkView(BOOKMARKED);
+    }
+  }, [itinerary.id, bookmarkArr]);
+
+  const handleBookmark = () => {
+    if (user.id && !bookmarkArr.includes(itinerary.id)) {
+      addBookmark(itinerary.id).then((res) => {
+        if (!res.data.error) {
+          dispatch({
+            type: SET_BOOKMARKS,
+            bookmarks: res.data,
+          });
+          setBookMarkView(BOOKMARKED);
+        }
+      });
+    } else if (user.id && bookmarkArr.includes(itinerary.id)) {
+      const bookmarkId = bookmarks.find(
+        (bookmark) => bookmark.id === itinerary.id
+      ).bookmark_id;
+      deleteBookmark(bookmarkId).then((res) => {
+        if (!res.data.error) {
+          dispatch({
+            type: SET_BOOKMARKS,
+            bookmarks: res.data,
+          });
+          setBookMarkView(BOOKMARK);
+        }
+      });
+    }
+  };
 
   return (
     <section className='flex flex-col w-full h-full my-8 space-y-6 divide-y divide-gray-300'>
       <div>
-        <h2 className='pl-4 mx-8 mb-4 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
-          Itinerary Overview
-        </h2>
+        <div className='flex'>
+          <h2 className='pl-4 mx-8 mb-4 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
+            Itinerary Overview
+          </h2>
+          {bookmarkView === BOOKMARKED && user.id && (
+            <>
+              <span>Bookmarked</span>
+              <button onClick={handleBookmark}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                  className='inline w-6 h-10'
+                >
+                  <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
+                </svg>
+              </button>
+            </>
+          )}
+          {bookmarkView === BOOKMARK && user.id && (
+            <>
+              <span>Bookmark</span>
+              <button onClick={handleBookmark}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='transparent'
+                  stroke='currentColor'
+                  className='inline w-6 h-10'
+                >
+                  <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
+                </svg>
+              </button>
+            </>
+          )}
+        </div>
+
         <div className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>
           <div className='flex items-center justify-between py-2 pb-2'>
             <div className='flex items-center'>
@@ -168,7 +250,7 @@ export default function Itinerary(props) {
                 {location.name}
               </h2>
               {location.days &&
-                location.days.map(day => {
+                location.days.map((day) => {
                   return (
                     <ItineraryDays
                       key={day.id}
