@@ -139,6 +139,14 @@ export default function EditItineraryForm(props) {
                     name='startDate'
                     onChange={handleChange}
                     type='date'
+                    min={
+                      new Date(
+                        new Date().getTime() -
+                          new Date().getTimezoneOffset() * 60000
+                      )
+                        .toISOString()
+                        .split('T')[0]
+                    }
                     className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
                   />
                 </div>
