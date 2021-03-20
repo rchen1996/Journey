@@ -481,7 +481,7 @@ VALUES ('Dublin'),
 ('Uppsala'),
 ('Lund'),
 ('Amalfi'),
-('Amalfi Coast')
+('Amalfi Coast'),
 ('Abu Dhabi'),
 ('Oman'),
 ('Muscat'),
