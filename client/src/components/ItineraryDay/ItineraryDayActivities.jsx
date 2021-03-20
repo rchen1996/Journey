@@ -5,7 +5,7 @@ import EditActivityForm from './EditActivityForm';
 import AlertMessage from '../AlertMessage';
 
 export default function ItineraryDayActivities(props) {
-  const { activity, editActivity, timeSlots } = props;
+  const { activity, editActivity, timeSlots, currentDay, itinerary } = props;
   const history = useHistory();
   const url = useLocation().pathname;
   const { itinerary_id, day_id } = useParams();
@@ -28,6 +28,7 @@ export default function ItineraryDayActivities(props) {
     start_time: activity.start_time,
     end_time: activity.end_time,
     notes: activity.notes,
+    dayOrder: currentDay.day_order,
   });
 
   const getTimeValue = timeString => {
@@ -250,6 +251,7 @@ export default function ItineraryDayActivities(props) {
             handleEdit={handleEdit}
             cancel={cancel}
             EDIT={EDIT}
+            itinerary={itinerary}
           ></EditActivityForm>
           <div
             className={
