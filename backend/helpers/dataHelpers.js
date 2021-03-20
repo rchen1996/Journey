@@ -173,14 +173,14 @@ const parseLocationName = (locationName) => {
   if (name === 'Ho Chi Minh') name = 'Ho Chi Minh City';
   if (name === 'Amalfi Coast') name = 'Amalfi';
 
-  name = name.replace(' ', '_');
-  name = name.replace(',', '2C_');
-  name = name.replace('.', '2e');
-  name = name.replace('ü', 'C3BC');
-  name = name.replace('ú', 'C3BA');
-  name = name.replace('é', 'C3A9');
-  name = name.replace('á', 'C3A1');
-  name = name.replace('ã', 'C3A3');
+  name = name.replace(/\s/g, '_');
+  name = name.replace(/,/g, '2C_');
+  name = name.replace(/\./g, '2e');
+  name = name.replace(/ü/g, 'C3BC');
+  name = name.replace(/ú/g, 'C3BA');
+  name = name.replace(/é/g, 'C3A9');
+  name = name.replace(/á/g, 'C3A1');
+  name = name.replace(/ã/g, 'C3A3');
   return name;
 };
 
