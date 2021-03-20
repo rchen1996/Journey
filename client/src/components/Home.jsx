@@ -280,7 +280,12 @@ export default function Home() {
         <div className='space-y-2'>
           <h6>Check us out on GitHub</h6>
           <div className='flex justify-between px-2'>
-            <a href='https://github.com/babs20' className='w-12'>
+            <a
+              href='https://github.com/babs20'
+              className='w-12'
+              target='_blank'
+              rel='noreferrer'
+            >
               <svg
                 aria-hidden='true'
                 focusable='false'
@@ -297,7 +302,12 @@ export default function Home() {
                 ></path>
               </svg>
             </a>
-            <a href='https://github.com/maycheongs' className='w-12'>
+            <a
+              href='https://github.com/maycheongs'
+              className='w-12'
+              target='_blank'
+              rel='noreferrer'
+            >
               <svg
                 aria-hidden='true'
                 focusable='false'
@@ -314,7 +324,12 @@ export default function Home() {
                 ></path>
               </svg>
             </a>
-            <a href='https://github.com/rchen1996' className='w-12'>
+            <a
+              href='https://github.com/rchen1996'
+              className='w-12'
+              target='_blank'
+              rel='noreferrer'
+            >
               <svg
                 aria-hidden='true'
                 focusable='false'
