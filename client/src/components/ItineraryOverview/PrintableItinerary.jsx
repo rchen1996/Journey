@@ -1,7 +1,14 @@
 import React, { useRef } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
 
 export default function PrintableItinerary({ children }) {
+  const { pathname } = useLocation();
+  const history = useHistory();
+  const removeEdit = () => {
+    console.log('should remove edit');
+    history.push(pathname.replace('edit', ''));
+  };
   const linkToPrint = () => {
     return (
       <button
@@ -32,6 +39,7 @@ export default function PrintableItinerary({ children }) {
       <ReactToPrint
         trigger={linkToPrint}
         content={() => componentRef.current}
+        onBeforeGetContent={removeEdit}
       />
       {children}
     </div>
