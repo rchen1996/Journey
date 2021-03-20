@@ -102,28 +102,30 @@ export default function Itinerary(props) {
           <div className='flex items-center mr-24 space-x-1 md:mr-32 lg:mr-40'>
             <span className='hidden text-sm md:block'>
               {bookmarkView === BOOKMARKED && user.id
-                ? 'Bookmark'
-                : 'Bookmarked'}
+                ? 'Bookmarked'
+                : 'Bookmark'}
             </span>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 20 20'
-              stroke='currentColor'
-              strokeWidth='1.5'
-              fill={
-                bookmarkView === BOOKMARKED && user.id
-                  ? 'transparent'
-                  : 'currentColor'
-              }
-              className={
-                bookmarkView === BOOKMARKED && user.id
-                  ? 'w-5 h-5 '
-                  : 'w-5 h-5 text-red-600 '
-              }
-              onClick={handleBookmark}
-            >
-              <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
-            </svg>
+            <button>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 20 20'
+                stroke='currentColor'
+                strokeWidth='1.5'
+                fill={
+                  bookmarkView === BOOKMARKED && user.id
+                    ? 'currentColor'
+                    : 'transparent'
+                }
+                className={
+                  bookmarkView === BOOKMARKED && user.id
+                    ? 'w-5 h-5 text-red-600 '
+                    : 'w-5 h-5 '
+                }
+                onClick={handleBookmark}
+              >
+                <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
+              </svg>
+            </button>
           </div>
         </div>
 
