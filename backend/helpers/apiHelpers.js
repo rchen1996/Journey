@@ -404,13 +404,13 @@ module.exports = db => {
 
     if (searchTerms === 'null') {
       if (types === 'null') {
-        baseQuery += `GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+        baseQuery += `GROUP BY itineraries.id HAVING COUNT(DISTINCT days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
         values = [length];
       } else if (length === 'null') {
         baseQuery += `WHERE itineraries.trip_type IN (${tripString}) `;
         baseQuery += baseQueryEnd;
       } else {
-        baseQuery += `WHERE itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+        baseQuery += `WHERE itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(DISTINCT days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
         values = [length];
       }
     }
@@ -421,14 +421,14 @@ module.exports = db => {
         baseQuery += baseQueryEnd;
         values = [searchQuery];
       } else if (types === 'null') {
-        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 GROUP BY itineraries.id HAVING COUNT(days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 GROUP BY itineraries.id HAVING COUNT(DISTINCT days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
         values = [searchQuery, length];
       } else if (length === 'null') {
         baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) `;
         baseQuery += baseQueryEnd;
         values = [searchQuery];
       } else {
-        baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+        baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(DISTINCT days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
         values = [searchQuery, length];
       }
     }

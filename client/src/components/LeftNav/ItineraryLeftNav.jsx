@@ -110,7 +110,7 @@ export default function ItineraryLeftNav(props) {
     <nav
       className={
         isLeftNavOpen
-          ? 'fixed z-40 lg:w-64 md:w-full w-full h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block '
+          ? 'fixed z-40 lg:w-64 xl:w-80 h-full px-6 py-4 pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block '
           : 'hidden'
       }
     >
@@ -244,7 +244,7 @@ export default function ItineraryLeftNav(props) {
             <div>
               <div
                 className='flex items-center justify-between px-3 py-2 my-2 cursor-pointer hover:bg-gray-200 hover:bg-opacity-25 rounded-xl'
-                onClick={() => setShowLocation(true)}
+                onClick={() => setShowLocation(!showLocation)}
               >
                 <button className='text-xl font-bold pointer-events-none'>
                   Add Location
@@ -272,26 +272,8 @@ export default function ItineraryLeftNav(props) {
                   onChange={event => setNewLocation(event.target.value)}
                   type='text'
                   placeholder='Location'
-                  className='text-gray-600 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:ring-offset-2 focus:ring-offset-transparent focus:border-transparent'
+                  className='w-full text-gray-600 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:ring-offset-2 focus:ring-offset-transparent focus:border-transparent'
                 />
-                <button
-                  type='button'
-                  className='z-50 p-2 text-gray-600 opacity-75 -ml-9 hover:opacity-100 focus:outline-none'
-                  onClick={() => setShowLocation(false)}
-                >
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 20 20'
-                    fill='currentColor'
-                    className='w-4 h-4'
-                  >
-                    <path
-                      fillRule='evenodd'
-                      d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
-                      clipRule='evenodd'
-                    />
-                  </svg>
-                </button>
               </form>
             </div>
           ) : (

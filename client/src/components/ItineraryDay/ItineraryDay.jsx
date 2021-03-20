@@ -98,8 +98,8 @@ export default function ItineraryDay(props) {
     <div
       className={
         url.includes('edit')
-          ? 'flex w-full mt-16 lg:mx-64'
-          : 'flex w-full mt-16 lg:ml-64'
+          ? 'flex w-full mt-16 lg:mx-64 xl:mx-80'
+          : 'flex w-full mt-16 lg:ml-64 xl:ml-80'
       }
     >
       <section className='flex flex-col justify-start w-5/6 h-full mx-auto my-8 mt-8 space-y-4'>
