@@ -223,6 +223,9 @@ function App() {
                   user={user}
                   deleteDayFromItinerary={deleteDayFromItinerary}
                   isLeftNavOpen={state.isLeftNavOpen}
+                  addBookmark={addBookmark}
+                  deleteBookmark={deleteBookmark}
+                  bookmarks={bookmarks}
                 />
               </PrintableItinerary>
             )}
