@@ -334,7 +334,7 @@ module.exports = db => {
   const editItinerary = itinerary => {
     const query = {
       text: `UPDATE itineraries
-      SET name = $1, description = $2, image = $3, trip_type = $4, start_date = $5
+      SET name = $1, description = $2, image = $3, trip_type = $4, start_date = $5, visible = $7
       WHERE id = $6
       RETURNING *;`,
       values: [
@@ -344,6 +344,7 @@ module.exports = db => {
         itinerary.tripType,
         itinerary.startDate,
         itinerary.id,
+        itinerary.visible,
       ],
     };
 
