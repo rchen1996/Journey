@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { query } = require('express');
 const express = require('express');
 const router = express.Router();
 const { itineraryObj, parseTravelParty } = require('../helpers/dataHelpers');
@@ -25,9 +26,22 @@ module.exports = ({
   getMyLocations,
   createActivityWithoutDay,
   editActivityDay,
+  getQueryItineraries,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
+  });
+
+  router.get('/:query/:type/:length', (req, res) => {
+    const { query, type, length } = req.params;
+
+    if (query === 'null' && type === 'null' && length === 'null') {
+      getAllItineraries().then(itineraries => res.send(itineraries));
+    } else {
+      getQueryItineraries(query, type, length).then(itineraries =>
+        res.send(itineraries)
+      );
+    }
   });
 
   router.post('/', (req, res) => {

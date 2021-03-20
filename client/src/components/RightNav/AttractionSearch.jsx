@@ -95,6 +95,7 @@ export default function AttractionSearch(props) {
       query = 'null';
     }
 
+    setSearchTerms({ ...searchTerms, name: '' });
     setView(LOADING);
     setSearchTerms({ ...searchTerms, name: '' });
 

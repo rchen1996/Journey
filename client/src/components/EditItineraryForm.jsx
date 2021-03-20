@@ -25,6 +25,20 @@ export default function EditItineraryForm(props) {
     hide: 'hidden flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
   });
 
+  const [visibility, setVisibility] = useState(itinerary.visible);
+  const [translate, setTranslate] = useState(
+    visibility ? 'transform translate-x-full bg-teal-600' : ''
+  );
+  const handleVisibility = event => {
+    if (visibility) {
+      setVisibility(false);
+      setTranslate('');
+    } else {
+      setVisibility(true);
+      setTranslate('transform translate-x-full bg-teal-600');
+    }
+  };
+
   let history = useHistory();
 
   const handleChange = event => {
@@ -62,7 +76,7 @@ export default function EditItineraryForm(props) {
       return;
     }
 
-    onSave(itineraryInfo).then(res => {
+    onSave(itineraryInfo, visibility).then(res => {
       if (res.data.id) {
         setError({
           ...error,
@@ -90,7 +104,7 @@ export default function EditItineraryForm(props) {
   };
 
   return (
-    <section className='flex justify-center w-full h-full mt-16 lg:ml-64'>
+    <section className='flex justify-center w-full h-full mt-16 lg:ml-64 xl:ml-80'>
       <div className='flex flex-col w-3/4 py-8 2xl:w-1/2'>
         <h1 className='pl-4 mb-4 ml-1 text-2xl font-bold border-l-8 border-teal-600'>
           Edit Itinerary Information
@@ -104,17 +118,48 @@ export default function EditItineraryForm(props) {
           ></AlertMessage>
           <form onSubmit={event => save(event)} className='flex flex-col'>
             <div className='flex flex-col mx-8 my-6'>
-              <label htmlFor='name' className='ml-1 font-semibold'>
-                Itinerary Name
-              </label>
-              <input
-                value={itineraryInfo.name}
-                name='name'
-                onChange={handleChange}
-                type='text'
-                className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-                placeholder='Itinerary Name'
-              />
+              <div className='flex flex-col justify-between md:space-x-8 md:flex-row'>
+                <div className='flex flex-col md:w-11/12'>
+                  <label htmlFor='name' className='ml-1 font-semibold'>
+                    Itinerary Name
+                  </label>
+                  <input
+                    value={itineraryInfo.name}
+                    name='name'
+                    onChange={handleChange}
+                    type='text'
+                    className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+                    placeholder='Itinerary Name'
+                  />
+                </div>
+                <div className='flex flex-col justify-center pb-4 md:items-center lg:w-1/12'>
+                  <label className='font-semibold'>
+                    {visibility ? 'Public' : 'Private'}
+                  </label>
+                  <div className=''>
+                    <label
+                      htmlFor='visible'
+                      className='flex p-2 ml-1 -mt-1 cursor-pointer'
+                    >
+                      <div className='relative'>
+                        <input
+                          type='checkbox'
+                          className='hidden'
+                          id='visible'
+                          name='visible'
+                          value={visibility}
+                          checked={visibility}
+                          onChange={handleVisibility}
+                        />
+                        <div className='w-10 h-4 bg-gray-400 rounded-full shadow-inner toggle__line'></div>
+                        <div
+                          className={`-mt-1 -ml-1 transition-all duration-300 ease-in-out absolute w-6 h-6 bg-gray-300 rounded-full shadow inset-y-0 left-0 ${translate}`}
+                        ></div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
               <div className='flex flex-col justify-between lg:space-x-8 lg:flex-row'>
                 <div className='flex flex-col lg:w-1/2'>
                   <label htmlFor='startDate' className='ml-1 font-semibold'>
@@ -125,6 +170,14 @@ export default function EditItineraryForm(props) {
                     name='startDate'
                     onChange={handleChange}
                     type='date'
+                    min={
+                      new Date(
+                        new Date().getTime() -
+                          new Date().getTimezoneOffset() * 60000
+                      )
+                        .toISOString()
+                        .split('T')[0]
+                    }
                     className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
                   />
                 </div>

@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ItineraryList from './components/ItineraryList';
 import LeftNav from './components/LeftNav/index';
+import PrintableItinerary from './components/ItineraryOverview/PrintableItinerary';
 import Itinerary from './components/ItineraryOverview/Itinerary';
 import NewItineraryForm from './components/NewItineraryForm';
 import MyItinerariesList from './components/MyItinerariesList';
@@ -47,9 +48,10 @@ function App() {
     addMyLocation,
     updateActivityDay,
     deleteActivityWithoutDay,
+    searchItineraries,
   } = useApplicationData();
 
-  const { user, itineraries, myItineraries, key, itinerary, bookmarks } = state;
+  const { user, myItineraries, itinerary, bookmarks, key } = state;
 
   return (
     <Router>
@@ -79,12 +81,12 @@ function App() {
         <Route path='/itineraries' exact>
           <main className='flex w-full min-h-full'>
             <ItineraryList
-              key={key}
-              itineraries={itineraries}
               user={user}
               addBookmark={addBookmark}
               dispatch={dispatch}
               bookmarks={bookmarks}
+              searchItineraries={searchItineraries}
+              reload={key}
             />
           </main>
         </Route>
@@ -214,13 +216,18 @@ function App() {
               isRightNavOpen={state.isRightNavOpen}
             ></MenuOpener>
             {itinerary && (
-              <Itinerary
-                dispatch={dispatch}
-                itinerary={itinerary}
-                user={user}
-                deleteDayFromItinerary={deleteDayFromItinerary}
-                isLeftNavOpen={state.isLeftNavOpen}
-              />
+              <PrintableItinerary>
+                <Itinerary
+                  dispatch={dispatch}
+                  itinerary={itinerary}
+                  user={user}
+                  deleteDayFromItinerary={deleteDayFromItinerary}
+                  isLeftNavOpen={state.isLeftNavOpen}
+                  addBookmark={addBookmark}
+                  deleteBookmark={deleteBookmark}
+                  bookmarks={bookmarks}
+                />
+              </PrintableItinerary>
             )}
           </main>
         </Route>

@@ -1,6 +1,5 @@
 import { useEffect, useReducer } from 'react';
 import dataReducer, {
-  SET_ALL_ITINERARIES,
   SET_USER,
   SET_MY_ITINERARIES,
   SET_ITINERARY,
@@ -14,13 +13,12 @@ const ENDPOINT = 'http://localhost:8002';
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(dataReducer, {
     user: {},
-    itineraries: [],
     itinerary: null,
     myItineraries: [],
-    key: Math.random(),
     bookmarks: [],
     isLeftNavOpen: window.innerWidth >= 1024 ? true : false,
     isRightNavOpen: window.innerWidth >= 1024 ? true : false,
+    key: Math.random(),
   });
 
   useEffect(() => {
@@ -64,18 +62,9 @@ export default function useApplicationData() {
     });
   };
 
-  useEffect(() => {
-    return axios.get('/api/itineraries').then(res => {
-      const itineraries = res.data;
-      dispatch({
-        type: SET_ALL_ITINERARIES,
-        itineraries: itineraries,
-      });
-    });
-  }, [state.key]);
-
-  const createItinerary = function (itinerary) {
-    return axios.post('/api/itineraries', itinerary);
+  const createItinerary = function (itinerary, visibility) {
+    const completeItinerary = { ...itinerary, visible: visibility };
+    return axios.post('/api/itineraries', completeItinerary);
   };
 
   useEffect(() => {
@@ -123,7 +112,7 @@ export default function useApplicationData() {
             type: SET_ITINERARY,
             itinerary: { ...state.itinerary, users: res.data },
           });
-          return { success: 'user added to travel party' };
+          return { party: res.data, success: 'user added to travel party' };
         }
       })
       .catch(err => console.log(err));
@@ -276,8 +265,9 @@ export default function useApplicationData() {
       });
   };
 
-  const editItinerary = itinerary => {
-    return axios.put(`/api/itineraries/${itinerary.id}`, itinerary);
+  const editItinerary = (itinerary, visibility) => {
+    const completeItinerary = { ...itinerary, visible: visibility };
+    return axios.put(`/api/itineraries/${itinerary.id}`, completeItinerary);
   };
 
   useEffect(() => {
@@ -321,6 +311,10 @@ export default function useApplicationData() {
     );
   };
 
+  const searchItineraries = (query, type, length) => {
+    return axios.get(`/api/itineraries/${query}/${type}/${length}`);
+  };
+
   return {
     state,
     dispatch,
@@ -346,5 +340,6 @@ export default function useApplicationData() {
     addMyLocation,
     updateActivityDay,
     deleteActivityWithoutDay,
+    searchItineraries,
   };
 }

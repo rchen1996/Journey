@@ -86,12 +86,20 @@ export default function ItineraryDay(props) {
     });
   }
 
+  const handleCommaLocations = name => {
+    if (!name.includes(',')) {
+      return name;
+    } else {
+      return name.replace(/,/g, ', ');
+    }
+  };
+
   return (
     <div
       className={
         url.includes('edit')
-          ? 'flex w-full mt-16 lg:mx-64'
-          : 'flex w-full mt-16 lg:ml-64'
+          ? 'flex w-full mt-16 lg:mx-64 xl:mx-80'
+          : 'flex w-full mt-16 lg:ml-64 xl:ml-80'
       }
     >
       <section className='flex flex-col justify-start w-5/6 h-full mx-auto my-8 mt-8 space-y-4'>
@@ -112,7 +120,8 @@ export default function ItineraryDay(props) {
             <div className='flex items-center'>
               {view !== DELETE && (
                 <h1 className='text-3xl font-bold'>
-                  Day {day && day.day_order}: {location && location.name}
+                  Day {day && day.day_order}:{' '}
+                  {location && handleCommaLocations(location.name)}
                 </h1>
               )}
               {view === DELETE && (
