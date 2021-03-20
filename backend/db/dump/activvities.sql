@@ -1,82 +1,3 @@
-INSERT INTO activities(itinerary_id,day_id, start_time, end_time, attraction_id)
-VALUES(1,1, '16:00:00', '21:00:00', 1),
-(1,2, '12:00:00', '19:00:00', 2),
-(1,3,'12:00:00', '15:00:00',3),
-(1,3,'16:00:00', '19:00:00',2),
-(1,4,'16:00:00', '19:00:00',3),
-(1,5,'16:00:00', '19:00:00',1),
-(1,6,'16:00:00', '19:00:00',3),
-
-(2,7,'16:00:00', '19:00:00',12),
-(2,8,'16:00:00', '19:00:00',4),
-(2,9,'12:00:00', '14:00:00',4),
-(2,9,'16:00:00', '20:00:00',5),
-(2,10,'09:00:00', '19:00:00',5),
-
-(2,11,'09:00:00', '19:00:00',6),
-(2,12,'09:00:00', '19:00:00',7),
-(2,13,'09:00:00', '19:00:00',6),
-(2,14,'09:00:00', '19:00:00',7),
-
-(2,15,'09:00:00', '12:00:00',8),
-(2,15,'13:00:00', '19:00:00',9),
-(2,16,'19:00:00', '22:00:00',10),
-
-(2,17,'12:00:00', '19:00:00',11),
-(2,18,'10:00:00', '13:00:00',12),
-
-(3,19,'10:00:00', '13:00:00',13),
-(3,20,'10:00:00', '13:00:00',14),
-(3,21,'10:00:00', '13:00:00',13),
-
-(3,22,'10:00:00', '13:00:00',15),
-(3,23,'10:00:00', '13:00:00',15),
-(3,23,'13:30:00', '18:00:00',16),
-
-(4,24,'10:00:00', '13:00:00',17),
-(4,25,'10:00:00', '13:00:00',17),
-(4,26,'10:00:00', '13:00:00',17),
-(4,27,'10:00:00', '13:00:00',18),
-(4,28,'10:00:00', '13:00:00',18),
-(4,29,'10:00:00', '13:00:00',18),
-
-(5,30,'10:00:00', '13:00:00',19),
-(5,31,'10:00:00', '13:00:00',19),
-(5,31,'14:00:00', '18:00:00',20),
-(5,32,'10:00:00', '13:00:00',19),
-(5,33,'10:00:00', '13:00:00',19),
-(5,34,'10:00:00', '16:00:00',19),
-(5,34,'17:00:00', '22:00:00',20),
-(5,35,'10:00:00', '13:00:00',19),
-(5,36,'10:00:00', '13:00:00',19),
-(5,37,'08:00:00', '09:00:00',19),
-(5,37,'09:00:00', '10:00:00',20);
-
-
-
-INSERT INTO activities(itinerary_id,day_id,attraction_id)
-VALUES(1,1,2);
-
-INSERT INTO activities(itinerary_id, attraction_id)
-VALUES(1, 1);
-
-
-INSERT INTO activities(itinerary_id,day_id, start_time, end_time, attraction_id,notes)
-VALUES
-(5,37,'10:00:00', '11:00:00',20,'Wake up'),
-(5,37,'11:00:00', '12:00:00',20,'Eat Brunch'),
-(5,37,'12:00:00', '13:00:00',20,'Take a nap'),
-(5,37,'13:00:00', '14:00:00',20,'Hang out with everyone'),
-(5,37,'14:00:00', '15:00:00',20,'Hot tub!'),
-(5,37,'15:00:00', '16:00:00',20,'Order in a massage'),
-(5,37,'16:00:00', '17:00:00',20,'Get ready for the dinner party'),
-(5,37,'17:00:00', '20:00:00',20,'Party time!');
-
-INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 39, NULL, NULL, '', 183, 8);
-INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 39, NULL, NULL, '', 190, 8);
-INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 39, NULL, NULL, '', 191, 8);
-INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 44, NULL, NULL, '', 195, 8);
-INSERT INTO activities (day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 131, NULL, NULL, '', 214, 17);
 
 INSERT INTO activities ( day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES (203, '14:00:00', '15:00:00', 'Booking Id: C1234-678
 Phone:  +81 3-3476-3000', 288, 26);
@@ -199,3 +120,4 @@ INSERT INTO activities ( day_id, start_time, end_time, notes, attraction_id, iti
 INSERT INTO activities ( day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 218, '16:00:00', '18:00:00', '', 647, 27);
 INSERT INTO activities ( day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 218, '13:00:00', '14:30:00', '', 650, 27);
 INSERT INTO activities ( day_id, start_time, end_time, notes, attraction_id, itinerary_id) VALUES ( 222, NULL, NULL, '', 742, 27);
+
