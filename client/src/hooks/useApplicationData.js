@@ -265,8 +265,9 @@ export default function useApplicationData() {
       });
   };
 
-  const editItinerary = itinerary => {
-    return axios.put(`/api/itineraries/${itinerary.id}`, itinerary);
+  const editItinerary = (itinerary, visibility) => {
+    const completeItinerary = { ...itinerary, visible: visibility };
+    return axios.put(`/api/itineraries/${itinerary.id}`, completeItinerary);
   };
 
   useEffect(() => {

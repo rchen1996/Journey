@@ -76,7 +76,7 @@ export default function EditItineraryForm(props) {
       return;
     }
 
-    onSave(itineraryInfo).then(res => {
+    onSave(itineraryInfo, visibility).then(res => {
       if (res.data.id) {
         setError({
           ...error,
