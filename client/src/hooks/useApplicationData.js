@@ -63,7 +63,7 @@ export default function useApplicationData() {
   };
 
   const createItinerary = function (itinerary, visibility) {
-    const completeItinerary = { ...itinerary, visibile: visibility };
+    const completeItinerary = { ...itinerary, visible: visibility };
     return axios.post('/api/itineraries', completeItinerary);
   };
 
