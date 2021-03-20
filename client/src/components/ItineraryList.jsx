@@ -136,7 +136,7 @@ export default function ItineraryList(props) {
       <div className='pl-3 border-l-8 border-teal-600 '>
         <h1 className='text-3xl font-bold'>Explore</h1>
         <h2 className='text-lg text-gray-500'>
-          Get inspired by other members explorations and adventures
+          Get inspired by other members' explorations and adventures
         </h2>
       </div>
       <form onSubmit={search} className='flex flex-col w-full mt-4 mb-2'>
