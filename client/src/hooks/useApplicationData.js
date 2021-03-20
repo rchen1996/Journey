@@ -62,8 +62,9 @@ export default function useApplicationData() {
     });
   };
 
-  const createItinerary = function (itinerary) {
-    return axios.post('/api/itineraries', itinerary);
+  const createItinerary = function (itinerary, visibility) {
+    const completeItinerary = { ...itinerary, visibile: visibility };
+    return axios.post('/api/itineraries', completeItinerary);
   };
 
   useEffect(() => {
