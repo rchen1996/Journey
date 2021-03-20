@@ -105,7 +105,7 @@ export default function Itinerary(props) {
                 ? 'Bookmarked'
                 : 'Bookmark'}
             </span>
-            <button>
+            <button className='focus:outline-none'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 20 20'
