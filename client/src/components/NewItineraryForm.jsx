@@ -22,6 +22,18 @@ export default function NewItineraryForm(props) {
     hide: 'hidden flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
   });
 
+  const [visibility, setVisibility] = useState(false);
+  const [translate, setTranslate] = useState('');
+  const handleVisibility = event => {
+    if (visibility) {
+      setVisibility(false);
+      setTranslate('');
+    } else {
+      setVisibility(true);
+      setTranslate('transform translate-x-full bg-teal-600');
+    }
+  };
+
   let history = useHistory();
 
   const handleChange = event => {
@@ -59,7 +71,7 @@ export default function NewItineraryForm(props) {
       return;
     }
 
-    props.onSave(itineraryInfo).then(res => {
+    props.onSave(itineraryInfo, visibility).then(res => {
       if (res.data.id) {
         setError({
           ...error,
@@ -133,7 +145,7 @@ export default function NewItineraryForm(props) {
                     name='tripType'
                     value={itineraryInfo.tripType}
                     onChange={handleChange}
-                    className='mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+                    className={`mb-4 border-gray-300 rounded-md appearance-none last-name focus:ring-teal-600 focus:ring-1 focus:border-teal-600`}
                   >
                     <option defaultValue></option>
                     <option value='couples'>Couples</option>
@@ -170,6 +182,27 @@ export default function NewItineraryForm(props) {
                 placeholder='Description'
                 rows='3'
               />
+              <label
+                htmlFor='visible'
+                className='flex items-center cursor-pointer ml-1 mt-2'
+              >
+                <div className='relative'>
+                  <input
+                    type='checkbox'
+                    className='hidden'
+                    id='visible'
+                    name='visible'
+                    value={visibility}
+                    checked={visibility}
+                    onChange={handleVisibility}
+                  />
+                  <div className='toggle__line w-10 h-4 bg-gray-400 rounded-full shadow-inner'></div>
+                  <div
+                    className={`-mt-1 -ml-1 transition-all duration-300 ease-in-out absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0 ${translate}`}
+                  ></div>
+                  <div class='ml-3 text-gray-700 font-medium'>Public</div>
+                </div>
+              </label>
             </div>
             <footer className='flex items-center px-8 py-3 space-x-4 bg-gray-300 bg-opacity-50 rounded-b-xl'>
               <FormButton type='submit'>Create Itinerary</FormButton>
