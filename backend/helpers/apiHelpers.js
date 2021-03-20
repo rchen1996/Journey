@@ -18,8 +18,8 @@ module.exports = db => {
 
   const createNewItinerary = itinerary => {
     const query = {
-      text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date) 
-      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
+      text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date, visible) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
       values: [
         itinerary.name,
         itinerary.description,
@@ -27,6 +27,7 @@ module.exports = db => {
         itinerary.tripType,
         itinerary.userId,
         itinerary.startDate,
+        itinerary.visible,
       ],
     };
 
@@ -395,23 +396,20 @@ module.exports = db => {
     let baseQuery = `SELECT itineraries.id FROM itineraries
     LEFT JOIN days ON itineraries.id = days.itinerary_id
     LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
-    JOIN locations ON days.location_id = locations.id `;
+    LEFT JOIN locations ON days.location_id = locations.id `;
 
     const baseQueryEnd = `GROUP BY itineraries.id
-    ORDER BY COUNT(bookmarks.itinerary_id) DESC
-    LIMIT 25`;
+    ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
 
     if (searchTerms === 'null') {
       if (types === 'null') {
-        baseQuery += `GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC
-        LIMIT 25`;
+        baseQuery += `GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
         values = [length];
       } else if (length === 'null') {
         baseQuery += `WHERE itineraries.trip_type IN (${tripString}) `;
         baseQuery += baseQueryEnd;
       } else {
-        baseQuery += `WHERE itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC
-        LIMIT 25`;
+        baseQuery += `WHERE itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
         values = [length];
       }
     }
@@ -422,16 +420,14 @@ module.exports = db => {
         baseQuery += baseQueryEnd;
         values = [searchQuery];
       } else if (types === 'null') {
-        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 GROUP BY itineraries.id HAVING COUNT(days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC
-        LIMIT 25`;
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 GROUP BY itineraries.id HAVING COUNT(days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
         values = [searchQuery, length];
       } else if (length === 'null') {
         baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) `;
         baseQuery += baseQueryEnd;
         values = [searchQuery];
       } else {
-        baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC
-        LIMIT 25`;
+        baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
         values = [searchQuery, length];
       }
     }
@@ -441,7 +437,8 @@ module.exports = db => {
     LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
     WHERE itineraries.id IN (${baseQuery}) AND itineraries.visible = true
     GROUP BY itineraries.id
-    ORDER BY COUNT(bookmarks.itinerary_id) DESC;`;
+    ORDER BY COUNT(bookmarks.itinerary_id) DESC
+    LIMIT 25;`;
 
     const query = {
       text: finalQuery,
