@@ -13,7 +13,7 @@ export default function PrintableItinerary({ children }) {
     return (
       <button
         type='button'
-        className='absolute flex items-center p-2 space-x-2 lg:mr-2 top-24 lg:right-16 right-10 hover:underline'
+        className='absolute flex items-center p-2 -mt-0.5 space-x-2 lg:mr-2 top-24 lg:right-16 right-10 hover:underline'
       >
         <span className='hidden text-sm md:inline'>Print</span>
         <svg
