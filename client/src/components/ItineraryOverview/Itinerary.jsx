@@ -35,6 +35,14 @@ export default function Itinerary(props) {
     );
   }
 
+  const handleCommaLocations = name => {
+    if (!name.includes(',')) {
+      return name;
+    } else {
+      return name.replace(/,/g, ', ');
+    }
+  };
+
   return (
     <section className='flex flex-col w-full h-full my-8 space-y-6 divide-y divide-gray-300'>
       <div>
@@ -165,7 +173,7 @@ export default function Itinerary(props) {
           return (
             <div key={index} className='mx-8 lg:mx-16'>
               <h2 className='mt-4 mb-2 ml-2 text-3xl font-bold'>
-                {location.name}
+                {handleCommaLocations(location.name)}
               </h2>
               {location.days &&
                 location.days.map(day => {

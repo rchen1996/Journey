@@ -86,6 +86,14 @@ export default function ItineraryDay(props) {
     });
   }
 
+  const handleCommaLocations = name => {
+    if (!name.includes(',')) {
+      return name;
+    } else {
+      return name.replace(/,/g, ', ');
+    }
+  };
+
   return (
     <div
       className={
@@ -112,7 +120,8 @@ export default function ItineraryDay(props) {
             <div className='flex items-center'>
               {view !== DELETE && (
                 <h1 className='text-3xl font-bold'>
-                  Day {day && day.day_order}: {location && location.name}
+                  Day {day && day.day_order}:{' '}
+                  {location && handleCommaLocations(location.name)}
                 </h1>
               )}
               {view === DELETE && (
