@@ -46,7 +46,6 @@ export default function ItineraryDayActivities(props) {
       (a, b) => getTimeValue(a.start_time) - getTimeValue(b.start_time)
     );
 
-    console.log('filteredimeSlots', sortedTimeSlots);
     sortedTimeSlots.forEach((timeslot, index, arr) => {
       if (
         index < arr.length - 1 &&
