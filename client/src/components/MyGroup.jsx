@@ -94,7 +94,7 @@ export default function MyGroup(props) {
   };
 
   return (
-    <section className='flex justify-center w-full h-full pt-16 lg:ml-64'>
+    <section className='flex justify-center w-full h-full pt-16 lg:ml-64 xl:ml-80'>
       <div className='flex flex-col items-center w-3/4 h-full mt-8 space-y-4'>
         <header className='flex flex-col w-full space-y-2'>
           <div className='flex items-center justify-between'>

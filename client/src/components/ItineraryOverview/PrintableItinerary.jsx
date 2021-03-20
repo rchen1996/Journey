@@ -35,7 +35,10 @@ export default function PrintableItinerary({ children }) {
   const componentRef = useRef();
 
   return (
-    <div ref={componentRef} className='flex flex-col w-full pt-16 lg:ml-64'>
+    <div
+      ref={componentRef}
+      className='flex flex-col w-full pt-16 lg:ml-64 xl:ml-80'
+    >
       <ReactToPrint
         trigger={linkToPrint}
         content={() => componentRef.current}
