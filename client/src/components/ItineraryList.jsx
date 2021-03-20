@@ -133,9 +133,14 @@ export default function ItineraryList(props) {
 
   return (
     <div className='w-full h-full p-8 mt-16'>
-      <h1 className='text-3xl font-bold'>Explore</h1>
-      <form onSubmit={search} className='flex flex-col w-full my-2'>
-        <div className='flex w-1/2'>
+      <div className='pl-3 border-l-8 border-teal-600 '>
+        <h1 className='text-3xl font-bold'>Explore</h1>
+        <h2 className='text-lg text-gray-500'>
+          Get inspired by other members explorations and adventures
+        </h2>
+      </div>
+      <form onSubmit={search} className='flex flex-col w-full mt-4 mb-2'>
+        <div className='flex w-full mb-2 md:w-3/4 lg:w-1/2'>
           <div className='flex items-center w-full mr-4'>
             <input
               value={searchTerm}
@@ -183,9 +188,9 @@ export default function ItineraryList(props) {
           </button>
         </div>
         {view === SHOW && (
-          <div className='absolute z-50 flex flex-col w-1/2 mt-12 bg-gray-100 divide-y shadow-xl rounded-xl'>
+          <div className='z-50 flex flex-col w-full my-2 bg-gray-100 divide-y shadow-xl md:mt-12 md:absolute md:w-3/4 lg:w-1/2 rounded-xl'>
             <h4 className='px-3 pt-3 font-bold'>Trip Type</h4>
-            <div className='grid grid-cols-4 grid-rows-2 px-3 pt-3 my-2'>
+            <div className='grid grid-cols-2 grid-rows-4 px-3 pt-3 my-2 sm:grid-cols-4 sm:grid-rows-2'>
               {tripTypes.map((tripType, index) => {
                 return (
                   <div key={index}>
@@ -205,7 +210,7 @@ export default function ItineraryList(props) {
                 );
               })}
             </div>
-            <h4 className='px-3 py-2 font-bold'>Trip Length:</h4>
+            <h4 className='px-3 py-2 font-bold'>Trip Length</h4>
             <div className='flex flex-col items-center px-4 pb-4'>
               {length ? (
                 <span className='w-full my-2 text-sm font-semibold'>
@@ -227,14 +232,6 @@ export default function ItineraryList(props) {
                 className=''
               />
             </div>
-            {/* <input
-              type='number'
-              min='1'
-              max='20'
-              name='length'
-              value={length}
-              onChange={event => setLength(event.target.value)}
-            /> */}
           </div>
         )}
       </form>
