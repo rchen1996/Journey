@@ -305,7 +305,14 @@ module.exports = db => {
       .catch(err => err);
   };
 
-  const updateActivity = (start_time, end_time, notes, activity_id) => {
+  const updateActivity = (
+    start_time,
+    end_time,
+    notes,
+    activity_id,
+    dayOrder,
+    itinerary_id
+  ) => {
     if (start_time && start_time.length < 8) {
       start_time += ':00';
     }
@@ -316,14 +323,37 @@ module.exports = db => {
       notes = '';
     }
 
-    const query = {
-      text: `UPDATE activities SET 
+    let text = `UPDATE activities SET 
+    start_time = $1,
+    end_time = $2,
+    notes = $3,
+    day_id = (SELECT id FROM days WHERE itinerary_id = $5 AND day_order = $6) 
+    WHERE id = $4
+    RETURNING *`;
+
+    let values = [
+      start_time,
+      end_time,
+      notes,
+      activity_id,
+      itinerary_id,
+      dayOrder,
+    ];
+
+    if (dayOrder === null) {
+      text = `UPDATE activities SET
       start_time = $1,
       end_time = $2,
-      notes = $3 
+      notes = $3,
+      day_id = $5
       WHERE id = $4
-      RETURNING *`,
-      values: [start_time, end_time, notes, activity_id],
+      RETURNING *;`;
+      values = [start_time, end_time, notes, activity_id, dayOrder];
+    }
+
+    const query = {
+      text: text,
+      values: values,
     };
     return db
       .query(query)
