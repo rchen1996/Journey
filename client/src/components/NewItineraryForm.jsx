@@ -200,7 +200,7 @@ export default function NewItineraryForm(props) {
                   <div
                     className={`-mt-1 -ml-1 transition-all duration-300 ease-in-out absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0 ${translate}`}
                   ></div>
-                  <div class='ml-3 text-gray-700 font-medium'>Public</div>
+                  <div className='ml-3 text-gray-700 font-medium'>Public</div>
                 </div>
               </label>
             </div>
