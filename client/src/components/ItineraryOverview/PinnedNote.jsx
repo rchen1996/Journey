@@ -2,9 +2,19 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SET_ITINERARY } from '../../reducers/application';
 import EditNoteForm from './EditNoteForm';
+import DeleteConfirmation from '../DeleteConfirmation';
 
 export default function PinnedNote(props) {
-  const { note, deleteTripNote, itinerary, dispatch, editTripNote } = props;
+  const {
+    note,
+    deleteTripNote,
+    itinerary,
+    dispatch,
+    editTripNote,
+    isRegularNotes,
+    isFirstNote,
+    isLastNote,
+  } = props;
 
   const url = useLocation().pathname;
 
@@ -22,10 +32,35 @@ export default function PinnedNote(props) {
     });
   };
 
+  let roundedCorner = '';
+  if (isRegularNotes) {
+    switch (true) {
+      case isFirstNote:
+        roundedCorner = 'rounded-t-xl';
+        break;
+      default:
+        roundedCorner = '';
+    }
+  } else {
+    switch (true) {
+      case isFirstNote && isLastNote:
+        roundedCorner = 'rounded-xl';
+        break;
+      case isFirstNote:
+        roundedCorner = 'rounded-t-xl';
+        break;
+      case isLastNote:
+        roundedCorner = 'rounded-b-xl';
+        break;
+      default:
+        roundedCorner = '';
+    }
+  }
+
   return (
-    <div>
+    <div className=''>
       {view === NOTE && (
-        <div className='flex items-center py-2 '>
+        <div className='flex items-center p-4'>
           <div
             key={note.id}
             className='flex items-center justify-between w-full space-x-2'
@@ -36,7 +71,7 @@ export default function PinnedNote(props) {
                 focusable='false'
                 data-prefix='fas'
                 data-icon='thumbtack'
-                className='flex-shrink-0 w-5 h-5'
+                className='self-start flex-shrink-0 w-5 h-5 mt-1'
                 role='img'
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 384 512'
@@ -85,14 +120,14 @@ export default function PinnedNote(props) {
         </div>
       )}
       {view === DELETE && (
-        <div>
-          <p>Are you sure you want to delete this note?</p>
-          <button type='button' onClick={() => setView(NOTE)}>
-            Cancel
-          </button>
-          <button type='button' onClick={deleteNote}>
-            Delete
-          </button>
+        <div className={`bg-gray-600 bg-opacity-80 ${roundedCorner} p-4`}>
+          <DeleteConfirmation
+            title='Delete Note'
+            message='Are you sure you want to delete this note?'
+            removeItem={deleteNote}
+            setView={setView}
+            DEFAULT={NOTE}
+          ></DeleteConfirmation>
         </div>
       )}
       {view === EDIT && (
