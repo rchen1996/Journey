@@ -247,16 +247,6 @@ export default function Itinerary(props) {
             </svg>
             <p className='py-2'>{itinerary.description}</p>
           </div>
-          <div className='flex items-center pt-2'>
-            {pinnedNotes.length > 0 &&
-              pinnedNotes.map(note => {
-                return (
-                  // image of thumbtack/pin
-                  <p>{note.note}</p>
-                );
-              })}
-            {pinnedNotes.length === 0 && <p>No pinned notes</p>}
-          </div>
         </div>
       </div>
 
@@ -296,18 +286,28 @@ export default function Itinerary(props) {
             </svg>
           )}
         </button>
-        {view === SHOW && (
-          <article className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>
-            {regularNotes.length > 0 &&
-              regularNotes.map(note => {
+        <article className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>
+          <div className='flex items-center pt-2'>
+            {pinnedNotes.length > 0 &&
+              pinnedNotes.map(note => {
                 return (
-                  // image of paperclip
+                  // image of thumbtack/pin
                   <p>{note.note}</p>
                 );
               })}
-            {regularNotes.length === 0 && <p>No trip notes to display</p>}
-          </article>
-        )}
+          </div>
+          {view === SHOW &&
+            regularNotes.length > 0 &&
+            regularNotes.map(note => {
+              return (
+                // image of paperclip
+                <p>{note.note}</p>
+              );
+            })}
+          {regularNotes.length === 0 && pinnedNotes.length === 0 && (
+            <p>No trip notes to display</p>
+          )}
+        </article>
       </div>
 
       {itinerary.locations.length === 0 && (
