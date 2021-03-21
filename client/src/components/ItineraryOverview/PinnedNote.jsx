@@ -12,6 +12,8 @@ export default function PinnedNote(props) {
     dispatch,
     editTripNote,
     isRegularNotes,
+    isFirstNote,
+    isLastNote,
   } = props;
 
   const url = useLocation().pathname;
@@ -29,6 +31,28 @@ export default function PinnedNote(props) {
       });
     });
   };
+
+  let roundedCorner = '';
+  if (isRegularNotes) {
+    switch (true) {
+      case isFirstNote:
+        roundedCorner = 'rounded-t-xl';
+        break;
+      default:
+        roundedCorner = '';
+    }
+  } else {
+    switch (true) {
+      case isFirstNote:
+        roundedCorner = 'rounded-t-xl';
+        break;
+      case isLastNote:
+        roundedCorner = 'rounded-b-xl';
+        break;
+      default:
+        roundedCorner = '';
+    }
+  }
 
   return (
     <div className=''>
@@ -93,13 +117,7 @@ export default function PinnedNote(props) {
         </div>
       )}
       {view === DELETE && (
-        <div
-          className={
-            isRegularNotes
-              ? 'p-4 bg-gray-600 bg-opacity-80 rounded-t-xl'
-              : 'p-4 bg-gray-600 bg-opacity-80 rounded-xl'
-          }
-        >
+        <div className={`bg-gray-600 bg-opacity-80 ${roundedCorner} p-4`}>
           <DeleteConfirmation
             title='Delete Note'
             message='Are you sure you want to delete this note?'
