@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { SET_ITINERARY } from '../../reducers/application';
+import AlertMessage from '../AlertMessage';
 
 export default function EditNoteForm(props) {
   const { itinerary, dispatch, editTripNote, note, setView, NOTE } = props;
   const [noteText, setNoteText] = useState(note.note);
+  const [error, setError] = useState({
+    staus: false,
+    message: '',
+    show: 'flex p-3 mb-4 bg-red-700 bg-opacity-50 rounded-xl',
+    hide: 'hidden',
+  });
 
   const [translate, setTranslate] = useState(
     note.important ? 'transform translate-x-full bg-teal-600' : ''
@@ -23,8 +30,14 @@ export default function EditNoteForm(props) {
   const editNote = event => {
     event.preventDefault();
 
-    if (note === '') {
-      // error message that note cannot be blank
+    if (noteText === '') {
+      setError(prev => {
+        return {
+          ...prev,
+          status: true,
+          message: 'The note can not be blank',
+        };
+      });
     } else {
       editTripNote(itinerary.id, note.id, noteText, important).then(res => {
         dispatch({
@@ -43,6 +56,12 @@ export default function EditNoteForm(props) {
 
   return (
     <form className='p-4 mb-2 bg-gray-100 rounded-xl' onSubmit={editNote}>
+      <AlertMessage
+        isError={error.status}
+        show={error.show}
+        message={error.message}
+        hide={error.hide}
+      ></AlertMessage>
       <div className='flex flex-col pb-3'>
         <label className='font-semibold'>
           {important ? 'Pinned' : 'Not Pinned'}
