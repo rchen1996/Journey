@@ -49,6 +49,7 @@ function App() {
     updateActivityDay,
     deleteActivityWithoutDay,
     searchItineraries,
+    addTripNote,
   } = useApplicationData();
 
   const { user, myItineraries, itinerary, bookmarks, key } = state;
@@ -155,8 +156,6 @@ function App() {
               addDayWithLocation={addDayWithLocation}
               sideBarState={state.sideNav}
               updateSidebar={updateSidebar}
-              sideBarState={state.sideNav}
-              updateSidebar={updateSidebar}
             />
             {/* <MenuOpener
               updateMenuState={updateMenuState}
@@ -242,6 +241,7 @@ function App() {
                   addBookmark={addBookmark}
                   deleteBookmark={deleteBookmark}
                   bookmarks={bookmarks}
+                  addTripNote={addTripNote}
                 />
               </PrintableItinerary>
             )}

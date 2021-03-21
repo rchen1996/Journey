@@ -15,6 +15,7 @@ export default function Itinerary(props) {
     deleteBookmark,
     dispatch,
     sideBarState,
+    addTripNote,
   } = props;
 
   const url = useLocation().pathname;
@@ -110,13 +111,14 @@ export default function Itinerary(props) {
   const pinnedNotes = [];
   const regularNotes = [];
 
-  itinerary.trip_notes.forEach(note => {
-    if (note.important) {
-      pinnedNotes.push(note);
-    } else {
-      regularNotes.push(note);
-    }
-  });
+  itinerary.trip_notes &&
+    itinerary.trip_notes.forEach(note => {
+      if (note.important) {
+        pinnedNotes.push(note);
+      } else {
+        regularNotes.push(note);
+      }
+    });
 
   const toggleNotes = event => {
     view === SHOW ? setView(HIDE) : setView(SHOW);
@@ -314,12 +316,20 @@ export default function Itinerary(props) {
             )}
           </button>
         </div>
-        {addView === ADD && <AddNoteForm />}
+        {addView === ADD && (
+          <AddNoteForm
+            addTripNote={addTripNote}
+            itinerary={itinerary}
+            dispatch={dispatch}
+            setAddView={setAddView}
+            DEFAULT={DEFAULT}
+          />
+        )}
         <article className='flex flex-col p-4 bg-gray-100 divide-y shadow-md rounded-xl divide'>
-          <div className='flex items-center py-2 '>
-            {pinnedNotes.length > 0 &&
-              pinnedNotes.map(note => {
-                return (
+          {pinnedNotes.length > 0 &&
+            pinnedNotes.map(note => {
+              return (
+                <div className='flex items-center py-2 '>
                   <div
                     key={note.id}
                     className='flex items-center justify-between w-full space-x-2'
@@ -372,9 +382,9 @@ export default function Itinerary(props) {
                       </div>
                     )}
                   </div>
-                );
-              })}
-          </div>
+                </div>
+              );
+            })}
           {view === SHOW &&
             regularNotes.length > 0 &&
             regularNotes.map(note => {
