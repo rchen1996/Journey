@@ -5,7 +5,7 @@ import EditActivityForm from './EditActivityForm';
 import AlertMessage from '../AlertMessage';
 
 export default function ItineraryDayActivities(props) {
-  const { activity, editActivity, timeSlots } = props;
+  const { activity, editActivity, timeSlots, currentDay, itinerary } = props;
   const history = useHistory();
   const url = useLocation().pathname;
   const { itinerary_id, day_id } = useParams();
@@ -28,6 +28,7 @@ export default function ItineraryDayActivities(props) {
     start_time: activity.start_time,
     end_time: activity.end_time,
     notes: activity.notes,
+    dayOrder: currentDay.day_order,
   });
 
   const getTimeValue = timeString => {
@@ -45,7 +46,6 @@ export default function ItineraryDayActivities(props) {
       (a, b) => getTimeValue(a.start_time) - getTimeValue(b.start_time)
     );
 
-    console.log('filteredimeSlots', sortedTimeSlots);
     sortedTimeSlots.forEach((timeslot, index, arr) => {
       if (
         index < arr.length - 1 &&
@@ -85,8 +85,23 @@ export default function ItineraryDayActivities(props) {
       return;
     }
 
-    if (ifAvailable(activityForm.start_time, activityForm.end_time)) {
-      editActivity(itinerary_id, activity.id, activityForm).then(res => {
+    let start_time = activityForm.start_time;
+    let end_time = activityForm.end_time;
+    let notes = activityForm.notes;
+    let dayOrder = activityForm.dayOrder;
+
+    if (activityForm.dayOrder !== currentDay.day_order) {
+      start_time = null;
+      end_time = null;
+    }
+
+    let editedActivity = { start_time, end_time, notes, dayOrder };
+
+    if (
+      ifAvailable(activityForm.start_time, activityForm.end_time) ||
+      activityForm.dayOrder !== currentDay.day_order
+    ) {
+      editActivity(itinerary_id, activity.id, editedActivity).then(res => {
         if (res.error) {
           console.log('error:', res.error);
           return;
@@ -250,6 +265,7 @@ export default function ItineraryDayActivities(props) {
             handleEdit={handleEdit}
             cancel={cancel}
             EDIT={EDIT}
+            itinerary={itinerary}
           ></EditActivityForm>
           <div
             className={

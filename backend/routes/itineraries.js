@@ -546,7 +546,7 @@ module.exports = ({
 
   router.put('/:itinerary_id/activities/:activity_id', (req, res) => {
     const { itinerary_id, activity_id } = req.params;
-    let { start_time, end_time, notes, dayId } = req.body;
+    let { start_time, end_time, notes, dayId, dayOrder } = req.body;
 
     const userId = req.session.userId;
 
@@ -589,24 +589,39 @@ module.exports = ({
           } else {
             if (start_time === '') start_time = null;
             if (end_time === '') end_time = null;
-            updateActivity(start_time, end_time, notes, activity_id).then(
-              result => {
-                if (result.message) {
-                  res.send({ error: `apiHelpers: ${result.message}` });
-                } else {
-                  getDetailedItinerary(itinerary_id).then(resultArr => {
-                    const parsed = itineraryObj(resultArr);
+            if (dayOrder === 'none') {
+              dayOrder = null;
+              start_time = null;
+              end_time = null;
+              notes = null;
+            }
+            updateActivity(
+              start_time,
+              end_time,
+              notes,
+              activity_id,
+              dayOrder,
+              itinerary_id
+            ).then(result => {
+              if (result.message) {
+                res.send({ error: `apiHelpers: ${result.message}` });
+              } else {
+                Promise.all([
+                  getDetailedItinerary(itinerary_id),
+                  getMyLocations(itinerary_id),
+                ]).then(([resultArr, myLocations]) => {
+                  const itinerary = itineraryObj(resultArr);
+                  const io = req.app.get('socketio');
 
-                    const io = req.app.get('socketio');
-
-                    io.sockets
-                      .in(Number(itinerary_id))
-                      .emit('itinerary', parsed);
-                    res.send(parsed);
+                  io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                    ...itinerary,
+                    my_locations: myLocations,
                   });
-                }
+
+                  res.send({ ...itinerary, my_locations: myLocations });
+                });
               }
-            );
+            });
           }
         }
       });

@@ -295,7 +295,6 @@ export default function useApplicationData() {
   };
 
   const editActivity = (itinerary_id, activity_id, activityForm) => {
-    console.log('from useapplicationdata ', activityForm);
     return axios
       .put(
         `/api/itineraries/${itinerary_id}/activities/${activity_id}`,

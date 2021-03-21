@@ -238,6 +238,8 @@ export default function ItineraryDay(props) {
                 deleteActivity={deleteActivity}
                 editActivity={editActivity}
                 timeSlots={activitiesTimeSlots}
+                currentDay={day}
+                itinerary={itinerary}
               />
             );
           })}
