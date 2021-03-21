@@ -27,6 +27,7 @@ module.exports = ({
   createActivityWithoutDay,
   editActivityDay,
   getQueryItineraries,
+  getTripNotes,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -175,9 +176,11 @@ module.exports = ({
     Promise.all([
       getDetailedItinerary(itinerary_id),
       getMyLocations(itinerary_id),
-    ]).then(([resultArr, myLocations]) => {
+      getTripNotes(itinerary_id)
+    ]).then(([resultArr, myLocations, tripNotes]) => {
       const itinerary = itineraryObj(resultArr);
-      res.send({ ...itinerary, my_locations: myLocations });
+      
+      res.send({ ...itinerary, my_locations: myLocations, trip_notes: tripNotes });
     });
   });
 
