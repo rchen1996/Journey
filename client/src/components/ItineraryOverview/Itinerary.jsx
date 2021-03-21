@@ -17,6 +17,10 @@ export default function Itinerary(props) {
 
   const url = useLocation().pathname;
 
+  const SHOW = 'SHOW';
+  const HIDE = 'HIDE';
+  const [view, setView] = useState(SHOW);
+
   const formatDate = dateString => {
     if (dateString) {
       return new Date(dateString).toDateString();
@@ -107,6 +111,10 @@ export default function Itinerary(props) {
       regularNotes.push(note);
     }
   });
+
+  const toggleNotes = event => {
+    view === SHOW ? setView(HIDE) : setView(SHOW);
+  };
 
   return (
     <section className='flex flex-col w-full h-full my-8 space-y-6 divide-y divide-gray-300'>
@@ -253,19 +261,23 @@ export default function Itinerary(props) {
       </div>
 
       <div className='pt-8 mx-8 lg:mx-16'>
-        <h2 className='pl-4 ml-8 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
-          Trip Notes
-        </h2>
-        <article className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>
-          {regularNotes.length > 0 &&
-            regularNotes.map(note => {
-              return (
-                // image of paperclip
-                <p>{note.note}</p>
-              );
-            })}
-          {regularNotes.length === 0 && <p>No trip notes to display</p>}
-        </article>
+        <button type='button' onClick={toggleNotes}>
+          <h2 className='pl-4 ml-8 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
+            Trip Notes
+          </h2>
+        </button>
+        {view === SHOW && (
+          <article className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>
+            {regularNotes.length > 0 &&
+              regularNotes.map(note => {
+                return (
+                  // image of paperclip
+                  <p>{note.note}</p>
+                );
+              })}
+            {regularNotes.length === 0 && <p>No trip notes to display</p>}
+          </article>
+        )}
       </div>
 
       {itinerary.locations.length === 0 && (
