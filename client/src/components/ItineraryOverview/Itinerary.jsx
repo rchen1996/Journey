@@ -57,11 +57,10 @@ export default function Itinerary(props) {
   }, [itinerary.id, bookmarkArr]);
 
   useEffect(() => {
-    const trip_notes = itinerary.trip_notes
-    if(trip_notes.length > 0){
-      
+    const trip_notes = itinerary.trip_notes;
+    if (trip_notes.length > 0) {
     }
-  })
+  });
 
   const handleBookmark = () => {
     if (user.id && !bookmarkArr.includes(itinerary.id)) {
@@ -97,6 +96,17 @@ export default function Itinerary(props) {
       return name.replace(/,/g, ', ');
     }
   };
+
+  const pinnedNotes = [];
+  const regularNotes = [];
+
+  itinerary.trip_notes.forEach(note => {
+    if (note.important) {
+      pinnedNotes.push(note);
+    } else {
+      regularNotes.push(note);
+    }
+  });
 
   return (
     <section className='flex flex-col w-full h-full my-8 space-y-6 divide-y divide-gray-300'>
@@ -229,7 +239,31 @@ export default function Itinerary(props) {
             </svg>
             <p className='py-2'>{itinerary.description}</p>
           </div>
+          <div className='flex items-center pt-2'>
+            {pinnedNotes.length > 0 &&
+              pinnedNotes.map(note => {
+                return (
+                  // image of thumbtack/pin
+                  <p>{note.note}</p>
+                );
+              })}
+          </div>
         </div>
+      </div>
+
+      <div className='pt-8 mx-8 lg:mx-16'>
+        <h2 className='pl-4 ml-8 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
+          Trip Notes
+        </h2>
+        <article className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>
+          {regularNotes.length > 0 &&
+            regularNotes.map(note => {
+              return (
+                // image of paperclip
+                <p>{note.note}</p>
+              );
+            })}
+        </article>
       </div>
 
       {itinerary.locations.length === 0 && (
@@ -255,15 +289,6 @@ export default function Itinerary(props) {
           </article>
         </div>
       )}
-      {itinerary.trip_notes.length > 0 && 
-      <div className='mx-8 lg:mx-16'>
-        {itinerary.trip_notes.sort((a,b) => a.important ? -1 : 1).map((note) => {
-return <div>
-  {note.important ? 'pin-icon ' : 'paperclip-icon '}
-  {note.note}</div>
-        })}
-      </div>
-      }
       {itinerary.locations &&
         itinerary.locations.map((location, index) => {
           return (
