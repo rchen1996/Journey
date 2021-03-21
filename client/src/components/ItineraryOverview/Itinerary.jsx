@@ -320,24 +320,24 @@ export default function Itinerary(props) {
               </svg>
             )}
           </button>
-          {addView === ADD && (
-            <AddNoteForm
-              addTripNote={addTripNote}
-              itinerary={itinerary}
-              dispatch={dispatch}
-              setAddView={setAddView}
-              DEFAULT={DEFAULT}
-            />
-          )}
         </div>
+        {addView === ADD && (
+          <AddNoteForm
+            addTripNote={addTripNote}
+            itinerary={itinerary}
+            dispatch={dispatch}
+            setAddView={setAddView}
+            DEFAULT={DEFAULT}
+          />
+        )}
         <article className='flex flex-col p-4 bg-gray-100 divide-y shadow-md rounded-xl divide'>
-          <div className='flex items-center py-2'>
-            {pinnedNotes.length > 0 &&
-              pinnedNotes.map(note => {
-                return (
+          {pinnedNotes.length > 0 &&
+            pinnedNotes.map(note => {
+              return (
+                <div className='flex items-center py-2 '>
                   <div
                     key={note.id}
-                    className='flex items-center justify-between space-x-2'
+                    className='flex items-center justify-between w-full space-x-2'
                   >
                     <div className='flex items-center space-x-3'>
                       <svg
@@ -387,9 +387,9 @@ export default function Itinerary(props) {
                       </div>
                     )}
                   </div>
-                );
-              })}
-          </div>
+                </div>
+              );
+            })}
           {view === SHOW &&
             regularNotes.length > 0 &&
             regularNotes.map(note => {

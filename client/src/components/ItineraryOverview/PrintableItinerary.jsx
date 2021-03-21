@@ -39,8 +39,8 @@ export default function PrintableItinerary({ children }) {
       ref={componentRef}
       className={
         children.props.sideBarState.leftNav.collapsed
-          ? 'flex flex-col w-full pt-16 ml-16 px-32'
-          : 'flex flex-col w-full pt-16 lg:ml-64 xl:ml-80'
+          ? 'flex flex-col w-full pt-16 ml-16 px-8 md:px-20 xl:px-32'
+          : 'flex flex-col w-full pt-16 lg:ml-64 xl:ml-80 px-8 md:px-20 xl:px-32'
       }
     >
       <ReactToPrint

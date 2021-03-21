@@ -373,6 +373,13 @@ export default function useApplicationData() {
     return axios.delete(`/api/itineraries/${itinerary_id}/notes/${note_id}`);
   };
 
+  const editTripNote = (itinerary_id, note_id, noteStr, important) => {
+    return axios.put(`/api/itineraries/${itinerary_id}/notes/${note_id}`, {
+      note: noteStr,
+      important,
+    });
+  };
+
   return {
     state,
     dispatch,
@@ -401,5 +408,6 @@ export default function useApplicationData() {
     searchItineraries,
     addTripNote,
     deleteTripNote,
+    editTripNote,
   };
 }
