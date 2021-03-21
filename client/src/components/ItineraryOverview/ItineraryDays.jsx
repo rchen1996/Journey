@@ -37,17 +37,13 @@ export default function ItineraryDays(props) {
     return result;
   };
 
-  const isActivitiesZero =
-    day.activities.length === 0 ? 'rounded-b-xl' : 'rounded-t-xl';
-
   return (
     <article className='mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
       <div
         className={
           view !== DELETE
             ? 'flex items-center justify-between px-4 pt-4 pb-2 rounded-xl'
-            : 'flex items-center justify-between px-4 pt-4 pb-4 bg-gray-600 bg-opacity-75 ' +
-              isActivitiesZero
+            : 'flex items-center justify-between px-4 pt-4 pb-4 bg-gray-600 bg-opacity-75 rounded-t-xl'
         }
       >
         <div
@@ -57,9 +53,16 @@ export default function ItineraryDays(props) {
               : 'hidden'
           }
         >
-          <span className='bg-teal-600 shadow-md px-4 py-1.5 rounded-xl'>
-            Day{day.day_order}
-          </span>
+          <Link
+            to={
+              pathname.includes('edit')
+                ? `/itineraries/${itinerary.id}/days/${day.id}/edit`
+                : `/itineraries/${itinerary.id}/days/${day.id}/`
+            }
+            className='bg-teal-600 border-2 border-transparent shadow-md px-4 py-1.5 rounded-xl hover:text-teal-600 hover:border-teal-600 hover:bg-transparent focus:ring-teal-600 focus:ring-1'
+          >
+            Day {day.day_order}
+          </Link>
           <span className='font-medium text-gray-600'>
             {itinerary.start_date &&
               ` ${addDays(itinerary.start_date, day.day_order - 1)

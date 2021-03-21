@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 import AlertMessage from './AlertMessage';
 
 export default function MyGroup(props) {
@@ -21,6 +22,28 @@ export default function MyGroup(props) {
     removeCollaborator(id, userId);
   };
 
+  function sendEmail(name, personWhoAdded) {
+    emailjs
+      .send(
+        'service_ha193ol',
+        'template_hvkpeht',
+        {
+          to_name: name,
+          from_name: 'Journey',
+          message: `You were just added to the ${props.itinerary.name} itinerary by ${personWhoAdded}.`,
+        },
+        'user_t1rYZ5aMx35opccJ5gGJG'
+      )
+      .then(
+        result => {
+          console.log(result.text);
+        },
+        error => {
+          console.log(error.text);
+        }
+      );
+  }
+
   const handleAdd = event => {
     event.preventDefault();
     addCollaborator(id, addInput).then(result => {
@@ -31,6 +54,9 @@ export default function MyGroup(props) {
           message: result.error,
         });
       } else if (result.success) {
+        const newMember = result.party[result.party.length - 1].first_name;
+        const creatorObj = result.party.find(user => user.id === creator_id);
+        const memberWhoAdded = `${creatorObj.first_name} ${creatorObj.last_name}`;
         setError({
           ...error,
           status: false,
@@ -38,6 +64,7 @@ export default function MyGroup(props) {
         });
         setAddInput('');
         handleDropDown();
+        sendEmail(newMember, memberWhoAdded);
       }
     });
   };
@@ -67,32 +94,32 @@ export default function MyGroup(props) {
   };
 
   return (
-    <section className='flex justify-center w-full h-full pt-16 lg:ml-64'>
+    <section className='flex justify-center w-full h-full pt-16 ml-16 lg:ml-64 xl:ml-80'>
       <div className='flex flex-col items-center w-3/4 h-full mt-8 space-y-4'>
-        {user.id === creator_id && (
-          <header className='flex flex-col w-full space-y-2'>
-            <div className='flex items-center justify-between'>
-              <h1 className='text-2xl font-bold'>My Group</h1>
-              <AlertMessage
-                isError={error.status}
-                show={error.show}
-                hide={error.hide}
-                message={error.message}
-              ></AlertMessage>
+        <header className='flex flex-col w-full space-y-2'>
+          <div className='flex items-center justify-between'>
+            <h1 className='text-2xl font-bold'>My Group</h1>
+            <AlertMessage
+              isError={error.status}
+              show={error.show}
+              hide={error.hide}
+              message={error.message}
+            ></AlertMessage>
+          </div>
+          <div className='flex items-center justify-between'>
+            <div className='flex space-x-2'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 20 20'
+                fill='currentColor'
+                className='w-6 h-6'
+              >
+                <path d='M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z' />
+              </svg>
+              <span className='text-xl'>{users.length} People</span>
             </div>
-            <div className='flex items-center justify-between'>
-              <div className='flex space-x-2'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                  className='w-6 h-6'
-                >
-                  <path d='M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z' />
-                </svg>
-                <span className='text-xl'>{users.length} People</span>
-              </div>
-              <div className='flex'>
+            <div className='flex'>
+              {user.id === creator_id && (
                 <div onClick={handleDropDown} className={dropDown.textClass}>
                   <span className='text-xl'>Add User</span>
                   <svg
@@ -108,43 +135,49 @@ export default function MyGroup(props) {
                     />
                   </svg>
                 </div>
-                <form onSubmit={handleAdd} className={dropDown.formClass}>
-                  <input
-                    value={addInput}
-                    onChange={event => setAddInput(event.target.value)}
-                    placeholder='Enter Email'
-                    type='email'
-                    className='pr-8 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
-                  ></input>
-                  <button
-                    type='button'
-                    onClick={handleDropDown}
-                    className='p-2 opacity-75 -ml-9 hover:opacity-100 focus:outline-none'
+              )}
+
+              <form
+                onSubmit={e => {
+                  handleAdd(e);
+                }}
+                className={dropDown.formClass}
+              >
+                <input
+                  value={addInput}
+                  onChange={event => setAddInput(event.target.value)}
+                  placeholder='Enter Email'
+                  type='email'
+                  className='pr-8 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
+                ></input>
+                <button
+                  type='button'
+                  onClick={handleDropDown}
+                  className='p-2 opacity-75 -ml-9 hover:opacity-100 focus:outline-none'
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    className='w-4 h-4'
                   >
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      viewBox='0 0 20 20'
-                      fill='currentColor'
-                      className='w-4 h-4'
-                    >
-                      <path
-                        fillRule='evenodd'
-                        d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
-                        clipRule='evenodd'
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    type='Submit'
-                    className='px-4 py-3 ml-6 font-semibold leading-none text-gray-200 bg-teal-600 border-2 border-transparent focus:ring-1 focus:ring-teal-600 hover:bg-transparent hover:border-teal-600 hover:text-teal-600 rounded-xl'
-                  >
-                    Add
-                  </button>
-                </form>
-              </div>
+                    <path
+                      fillRule='evenodd'
+                      d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                </button>
+                <button
+                  type='Submit'
+                  className='px-4 py-3 ml-6 font-semibold leading-none text-gray-200 bg-teal-600 border-2 border-transparent focus:ring-1 focus:ring-teal-600 hover:bg-transparent hover:border-teal-600 hover:text-teal-600 rounded-xl'
+                >
+                  Add
+                </button>
+              </form>
             </div>
-          </header>
-        )}
+          </div>
+        </header>
         <div className='flex flex-col w-full space-y-4'>
           {users.map(member => {
             return (

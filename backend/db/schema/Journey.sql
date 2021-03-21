@@ -53,10 +53,7 @@ CREATE TABLE "travel_parties" (
 DROP TABLE IF EXISTS locations CASCADE;
 CREATE TABLE "locations" (
   "id" serial PRIMARY KEY NOT NULL,
-  "name" varchar(255) NOT NULL,
-  "country" varchar(255) NOT NULL,
-  "latitude" float NOT NULL,
-  "longitude" float NOT NULL
+  "name" varchar(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS days CASCADE;
@@ -98,6 +95,14 @@ CREATE TABLE "bookmarks" (
   "user_id" int NOT NULL
 );
 
+DROP TABLE IF EXISTS trip_notes CASCADE;
+CREATE TABLE "trip_notes" (
+  "id" serial PRIMARY KEY NOT NULL,
+  "itinerary_id" int NOT NULL,
+  "note" text NOT NULL,
+  "important" boolean NOT NULL default false
+);
+
 ALTER TABLE "travel_parties" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE "travel_parties" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -117,3 +122,5 @@ ALTER TABLE "activities" ADD FOREIGN KEY ("day_id") REFERENCES "days" ("id") ON 
 ALTER TABLE "bookmarks" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE "bookmarks" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "trip_notes" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;

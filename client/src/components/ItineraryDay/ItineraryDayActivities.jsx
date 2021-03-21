@@ -5,7 +5,7 @@ import EditActivityForm from './EditActivityForm';
 import AlertMessage from '../AlertMessage';
 
 export default function ItineraryDayActivities(props) {
-  const { activity, editActivity, timeSlots } = props;
+  const { activity, editActivity, timeSlots, currentDay, itinerary } = props;
   const history = useHistory();
   const url = useLocation().pathname;
   const { itinerary_id, day_id } = useParams();
@@ -28,6 +28,7 @@ export default function ItineraryDayActivities(props) {
     start_time: activity.start_time,
     end_time: activity.end_time,
     notes: activity.notes,
+    dayOrder: currentDay.day_order,
   });
 
   const getTimeValue = timeString => {
@@ -45,7 +46,6 @@ export default function ItineraryDayActivities(props) {
       (a, b) => getTimeValue(a.start_time) - getTimeValue(b.start_time)
     );
 
-    console.log('filteredimeSlots', sortedTimeSlots);
     sortedTimeSlots.forEach((timeslot, index, arr) => {
       if (
         index < arr.length - 1 &&
@@ -85,8 +85,23 @@ export default function ItineraryDayActivities(props) {
       return;
     }
 
-    if (ifAvailable(activityForm.start_time, activityForm.end_time)) {
-      editActivity(itinerary_id, activity.id, activityForm).then(res => {
+    let start_time = activityForm.start_time;
+    let end_time = activityForm.end_time;
+    let notes = activityForm.notes;
+    let dayOrder = activityForm.dayOrder;
+
+    if (activityForm.dayOrder !== currentDay.day_order) {
+      start_time = null;
+      end_time = null;
+    }
+
+    let editedActivity = { start_time, end_time, notes, dayOrder };
+
+    if (
+      ifAvailable(activityForm.start_time, activityForm.end_time) ||
+      activityForm.dayOrder !== currentDay.day_order
+    ) {
+      editActivity(itinerary_id, activity.id, editedActivity).then(res => {
         if (res.error) {
           console.log('error:', res.error);
           return;
@@ -226,9 +241,18 @@ export default function ItineraryDayActivities(props) {
                 <div className='w-0.5 h-full bg-gray-600 rounded-xl hidden sm:block'></div>
               </>
             )}
-            <figure className='hidden w-48 h-full xl:block aspect-w-3 aspect-w-2'>
+            <figure
+              className={
+                view === EDIT
+                  ? 'hidden w-48 h-full md:block aspect-w-3 aspect-w-2'
+                  : 'hidden w-48 h-full xl:block aspect-w-3 aspect-w-2'
+              }
+            >
               <img
-                src={activity.image}
+                src={
+                  activity.image ||
+                  'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2235&q=80'
+                }
                 alt='activity'
                 className='object-cover rounded-md shadow-lg'
               />
@@ -241,6 +265,7 @@ export default function ItineraryDayActivities(props) {
             handleEdit={handleEdit}
             cancel={cancel}
             EDIT={EDIT}
+            itinerary={itinerary}
           ></EditActivityForm>
           <div
             className={
@@ -248,7 +273,9 @@ export default function ItineraryDayActivities(props) {
             }
           >
             <div className='flex justify-between'>
-              <h4 className='text-2xl font-bold'>{activity.name}</h4>
+              <h4 className='text-2xl font-bold text-gray-600'>
+                {activity.name}
+              </h4>
               {url.includes('edit') && (
                 <div
                   className={
@@ -295,17 +322,60 @@ export default function ItineraryDayActivities(props) {
                 </div>
               )}
             </div>
-            <p className='px-2 py-1 text-sm font-bold text-gray-100 bg-teal-600 border-l-4 border-gray-700 shadow-md whitespace-wrap sm:w-3/4 xl:w-min rounded-r-xl xl:whitespace-nowrap'>
-              {activity.address}
-            </p>
-            <div className='space-x-1'>
-              <p className='inline text-sm font-semibold'>Description:</p>
-              <p className='inline text-sm'>{activity.description}</p>
+            <div className='flex items-center'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 20 20'
+                fill='currentColor'
+                className='flex-shrink-0 w-4 h-4 mr-1 text-gray-600'
+              >
+                <path
+                  fillRule='evenodd'
+                  d='M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z'
+                  clipRule='evenodd'
+                />
+              </svg>
+
+              <span className='ml-1 text-sm text-gray-500'>
+                {activity.address}
+              </span>
+            </div>
+            <div className='flex items-center'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 20 20'
+                fill='currentColor'
+                className='flex-shrink-0 w-4 h-4 mr-1 text-gray-600'
+              >
+                <path
+                  fillRule='evenodd'
+                  d='M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z'
+                  clipRule='evenodd'
+                />
+              </svg>
+
+              <span className='ml-1 text-sm text-gray-500 line-clamp-4'>
+                {activity.description}
+              </span>
             </div>
             {activity.notes && (
-              <div className='space-x-1'>
-                <p className='inline text-sm font-semibold'>{'Notes: '}</p>
-                <p className='inline text-sm'>{`${activity.notes}`}</p>
+              <div className='flex items-center'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                  className='flex-shrink-0 w-4 h-4 mr-1 text-gray-600'
+                >
+                  <path
+                    fillRule='evenodd'
+                    d='M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z'
+                    clipRule='evenodd'
+                  />
+                </svg>
+
+                <span className='ml-1 text-sm text-gray-500'>
+                  {activity.notes}
+                </span>
               </div>
             )}
           </div>

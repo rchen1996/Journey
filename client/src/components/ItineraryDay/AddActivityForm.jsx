@@ -117,7 +117,7 @@ export default function AddActivityForm(props) {
   };
 
   return (
-    <div className='w-full h-full mt-16 lg:ml-64'>
+    <div className='w-full h-full mt-16 ml-16 lg:ml-64 xl:ml-80'>
       <section className='w-5/6 mx-auto my-8 lg:w-2/3 h-5/6'>
         <h1 className='pl-4 mb-4 text-2xl font-bold border-l-8 border-teal-600'>
           Add Activity

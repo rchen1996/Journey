@@ -95,6 +95,7 @@ export default function AttractionSearch(props) {
       query = 'null';
     }
 
+    setSearchTerms({ ...searchTerms, name: '' });
     setView(LOADING);
     setSearchTerms({ ...searchTerms, name: '' });
 
@@ -118,7 +119,7 @@ export default function AttractionSearch(props) {
   const categories = [
     'Adult',
     'Amusement',
-    'Accomadation',
+    'Accomodation',
     'Landmark',
     'Sport',
     'Food',

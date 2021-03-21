@@ -1,9 +1,12 @@
 module.exports = db => {
   const getAllItineraries = () => {
     const query = {
-      text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+      text: `SELECT itineraries.*, COUNT(DISTINCT days.id) AS days FROM itineraries
       LEFT JOIN days ON itineraries.id = days.itinerary_id
+      LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
+      WHERE visible = true
       GROUP BY itineraries.id
+      ORDER BY COUNT(bookmarks.itinerary_id) DESC
       LIMIT 25;`,
     };
 
@@ -15,7 +18,7 @@ module.exports = db => {
 
   const createNewItinerary = itinerary => {
     const query = {
-      text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date) 
+      text: `INSERT INTO itineraries (name, description, image, trip_type, creator_id, start_date, visible) 
       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
       values: [
         itinerary.name,
@@ -24,6 +27,7 @@ module.exports = db => {
         itinerary.tripType,
         itinerary.userId,
         itinerary.startDate,
+        itinerary.visible,
       ],
     };
 
@@ -176,14 +180,41 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const convertLocationLetters = locationName => {
+    switch (locationName) {
+      case 'Malmo':
+        return 'Malmö';
+      case 'Zurich':
+        return 'Zürich';
+      case 'Dusseldorf':
+        return 'Düsseldorf';
+      case 'Fussen':
+        return 'Füssen';
+      case 'Lubeck':
+        return 'Lübeck';
+      case 'Wurzberg':
+        return 'Würzburg';
+      case 'Cancun':
+        return 'Cancún';
+      case 'Pecs':
+        return 'Pécs';
+      case 'Malaga':
+        return 'Málaga';
+      case 'Sao Paulo':
+        return 'São Paulo';
+      default:
+        return locationName;
+    }
+  };
+
   const addDayWithLocation = (itineraryId, locationName) => {
     const query = {
       text: `INSERT INTO days (itinerary_id,location_id,day_order )
     VALUES($1,
-      (select id from locations where name = $2), 
+      (select id from locations where name = $2 OR name iLIKE $2 LIMIT 1), 
       (select coalesce(max(day_order),0) from days where itinerary_id = $1)+1)
     RETURNING *;`,
-      values: [itineraryId, locationName],
+      values: [itineraryId, convertLocationLetters(locationName)],
     };
     return db
       .query(query)
@@ -274,7 +305,14 @@ module.exports = db => {
       .catch(err => err);
   };
 
-  const updateActivity = (start_time, end_time, notes, activity_id) => {
+  const updateActivity = (
+    start_time,
+    end_time,
+    notes,
+    activity_id,
+    dayOrder,
+    itinerary_id
+  ) => {
     if (start_time && start_time.length < 8) {
       start_time += ':00';
     }
@@ -285,14 +323,37 @@ module.exports = db => {
       notes = '';
     }
 
-    const query = {
-      text: `UPDATE activities SET 
+    let text = `UPDATE activities SET 
+    start_time = $1,
+    end_time = $2,
+    notes = $3,
+    day_id = (SELECT id FROM days WHERE itinerary_id = $5 AND day_order = $6) 
+    WHERE id = $4
+    RETURNING *`;
+
+    let values = [
+      start_time,
+      end_time,
+      notes,
+      activity_id,
+      itinerary_id,
+      dayOrder,
+    ];
+
+    if (dayOrder === null) {
+      text = `UPDATE activities SET
       start_time = $1,
       end_time = $2,
-      notes = $3 
+      notes = $3,
+      day_id = $5
       WHERE id = $4
-      RETURNING *`,
-      values: [start_time, end_time, notes, activity_id],
+      RETURNING *;`;
+      values = [start_time, end_time, notes, activity_id, dayOrder];
+    }
+
+    const query = {
+      text: text,
+      values: values,
     };
     return db
       .query(query)
@@ -303,7 +364,7 @@ module.exports = db => {
   const editItinerary = itinerary => {
     const query = {
       text: `UPDATE itineraries
-      SET name = $1, description = $2, image = $3, trip_type = $4, start_date = $5
+      SET name = $1, description = $2, image = $3, trip_type = $4, start_date = $5, visible = $7
       WHERE id = $6
       RETURNING *;`,
       values: [
@@ -313,6 +374,7 @@ module.exports = db => {
         itinerary.tripType,
         itinerary.startDate,
         itinerary.id,
+        itinerary.visible,
       ],
     };
 
@@ -350,6 +412,128 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getQueryItineraries = (searchTerms, types, length) => {
+    let values = [];
+    const searchQuery = `%${searchTerms.trim()}%`;
+
+    const tripTypes = types
+      .toLowerCase()
+      .split(',')
+      .map(type => {
+        return `'${type}'`;
+      });
+    const tripString = `${tripTypes.join(',')}`;
+
+    let baseQuery = `SELECT itineraries.id FROM itineraries
+    LEFT JOIN days ON itineraries.id = days.itinerary_id
+    LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
+    LEFT JOIN locations ON days.location_id = locations.id `;
+
+    const baseQueryEnd = `GROUP BY itineraries.id
+    ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+
+    if (searchTerms === 'null') {
+      if (types === 'null') {
+        baseQuery += `GROUP BY itineraries.id HAVING COUNT(DISTINCT days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+        values = [length];
+      } else if (length === 'null') {
+        baseQuery += `WHERE itineraries.trip_type IN (${tripString}) `;
+        baseQuery += baseQueryEnd;
+      } else {
+        baseQuery += `WHERE itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(DISTINCT days.id) = $1 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+        values = [length];
+      }
+    }
+
+    if (searchTerms !== 'null') {
+      if (types === 'null' && length === 'null') {
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 `;
+        baseQuery += baseQueryEnd;
+        values = [searchQuery];
+      } else if (types === 'null') {
+        baseQuery += `WHERE itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1 GROUP BY itineraries.id HAVING COUNT(DISTINCT days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+        values = [searchQuery, length];
+      } else if (length === 'null') {
+        baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) `;
+        baseQuery += baseQueryEnd;
+        values = [searchQuery];
+      } else {
+        baseQuery += `WHERE (itineraries.description iLIKE $1 OR itineraries.name iLIKE $1 OR locations.name iLIKE $1) AND itineraries.trip_type IN (${tripString}) GROUP BY itineraries.id HAVING COUNT(DISTINCT days.id) = $2 ORDER BY COUNT(bookmarks.itinerary_id) DESC`;
+        values = [searchQuery, length];
+      }
+    }
+
+    let finalQuery = `SELECT itineraries.*, COUNT(DISTINCT days.id) AS days FROM itineraries
+    LEFT JOIN days ON itineraries.id = days.itinerary_id
+    LEFT JOIN bookmarks ON itineraries.id = bookmarks.itinerary_id
+    WHERE itineraries.id IN (${baseQuery}) AND itineraries.visible = true
+    GROUP BY itineraries.id
+    ORDER BY COUNT(bookmarks.itinerary_id) DESC
+    LIMIT 25;`;
+
+    const query = {
+      text: finalQuery,
+      values: values,
+    };
+
+    return db
+      .query(query)
+      .then(res => res.rows)
+      .catch(err => err);
+  };
+
+  const getTripNotes = itinerary_id => {
+    const query = {
+      text: `SELECT * from trip_notes
+      WHERE itinerary_id = $1`,
+      values: [itinerary_id],
+    };
+    return db
+      .query(query)
+      .then(res => res.rows)
+      .catch(err => err);
+  };
+
+  const editTripNote = (noteId, note, important) => {
+    const query = {
+      text: `UPDATE trip_notes 
+      SET note = $2,
+      important = $3
+      WHERE id = $1
+      RETURNING *
+      `,
+      values: [noteId, note, important],
+    };
+    return db
+      .query(query)
+      .then(res => res.rows[0])
+      .catch(err => err);
+  };
+
+  const addTripNote = (itinerary_id, note, important) => {
+    const query = {
+      text: `INSERT INTO trip_notes (itinerary_id,note, important)
+      VALUES ($1,$2,$3)
+      RETURNING *;`,
+      values: [itinerary_id, note, important],
+    };
+    return db
+      .query(query)
+      .then(res => res.rows[0])
+      .catch(err => err);
+  };
+  const deleteTripNote = note_id => {
+    const query = {
+      text: `DELETE from trip_notes
+      WHERE id = $1 RETURNING*`,
+      values: [note_id],
+    };
+    return db
+      .query(query)
+      .then(res => res.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -372,5 +556,10 @@ module.exports = db => {
     getMyLocations,
     createActivityWithoutDay,
     editActivityDay,
+    getQueryItineraries,
+    getTripNotes,
+    editTripNote,
+    addTripNote,
+    deleteTripNote,
   };
 };

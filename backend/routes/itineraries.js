@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { query } = require('express');
 const express = require('express');
 const router = express.Router();
 const { itineraryObj, parseTravelParty } = require('../helpers/dataHelpers');
@@ -25,9 +26,26 @@ module.exports = ({
   getMyLocations,
   createActivityWithoutDay,
   editActivityDay,
+  getQueryItineraries,
+  getTripNotes,
+  editTripNote,
+  addTripNote,
+  deleteTripNote,
 }) => {
   router.get('/', (req, res) => {
-    getAllItineraries().then(itineraries => res.send(itineraries));
+    getAllItineraries().then((itineraries) => res.send(itineraries));
+  });
+
+  router.get('/:query/:type/:length', (req, res) => {
+    const { query, type, length } = req.params;
+
+    if (query === 'null' && type === 'null' && length === 'null') {
+      getAllItineraries().then((itineraries) => res.send(itineraries));
+    } else {
+      getQueryItineraries(query, type, length).then((itineraries) =>
+        res.send(itineraries)
+      );
+    }
   });
 
   router.post('/', (req, res) => {
@@ -49,10 +67,10 @@ module.exports = ({
         userId,
         startDate,
         image,
-      }).then(itinerary => {
-        createTravelParty(itinerary.id, userId).then(travelParty => {
-          getTravelParty(itinerary.id).then(users => {
-            getDetailedItinerary(itinerary.id).then(fullItinerary => {
+      }).then((itinerary) => {
+        createTravelParty(itinerary.id, userId).then((travelParty) => {
+          getTravelParty(itinerary.id).then((users) => {
+            getDetailedItinerary(itinerary.id).then((fullItinerary) => {
               const parsed = itineraryObj(fullItinerary);
               res.send({ ...parsed, users: parseTravelParty(users) });
             });
@@ -78,10 +96,10 @@ module.exports = ({
     }
 
     if (userId) {
-      getTravelParty(req.body.id).then(travelParty => {
+      getTravelParty(req.body.id).then((travelParty) => {
         let allowed = false;
 
-        travelParty.forEach(member => {
+        travelParty.forEach((member) => {
           if (member.user_id === userId) {
             allowed = true;
           }
@@ -89,7 +107,7 @@ module.exports = ({
 
         if (allowed) {
           editItinerary({ ...req.body, startDate, image }).then(() => {
-            getDetailedItinerary(req.body.id).then(fullItinerary => {
+            getDetailedItinerary(req.body.id).then((fullItinerary) => {
               const parsed = itineraryObj(fullItinerary);
 
               const users = parseTravelParty(travelParty);
@@ -117,7 +135,7 @@ module.exports = ({
 
   router.get('/:itinerary_id/collaborators', (req, res) => {
     const itinerary_id = req.params.itinerary_id;
-    getTravelParty(itinerary_id).then(party => {
+    getTravelParty(itinerary_id).then((party) => {
       res.send(parseTravelParty(party));
     });
   });
@@ -126,7 +144,7 @@ module.exports = ({
     const { email } = req.body;
     const { itinerary_id } = req.params;
     getTravelParty(itinerary_id)
-      .then(party => {
+      .then((party) => {
         for (const user of party) {
           if (user.email === email) {
             return res.send({ error: 'User already in party.' });
@@ -134,11 +152,11 @@ module.exports = ({
         }
 
         addCollaborator(itinerary_id, email)
-          .then(result => {
+          .then((result) => {
             if (result.message) {
               res.send({ error: 'No user with this email.' });
             } else {
-              getTravelParty(itinerary_id).then(party => {
+              getTravelParty(itinerary_id).then((party) => {
                 const parsed = parseTravelParty(party);
 
                 const io = req.app.get('socketio');
@@ -151,9 +169,9 @@ module.exports = ({
               });
             }
           })
-          .catch(err => res.send(err));
+          .catch((err) => res.send(err));
       })
-      .catch(err => res.send(err));
+      .catch((err) => res.send(err));
   });
 
   router.get('/:itinerary_id', (req, res) => {
@@ -161,9 +179,15 @@ module.exports = ({
     Promise.all([
       getDetailedItinerary(itinerary_id),
       getMyLocations(itinerary_id),
-    ]).then(([resultArr, myLocations]) => {
+      getTripNotes(itinerary_id),
+    ]).then(([resultArr, myLocations, tripNotes]) => {
       const itinerary = itineraryObj(resultArr);
-      res.send({ ...itinerary, my_locations: myLocations });
+
+      res.send({
+        ...itinerary,
+        my_locations: myLocations,
+        trip_notes: tripNotes,
+      });
     });
   });
 
@@ -174,14 +198,14 @@ module.exports = ({
     if (!userId) {
       res.send({ error: 'You must be logged in to delete an itinerary.' });
     } else {
-      getItinerary(itineraryId).then(itinerary => {
+      getItinerary(itineraryId).then((itinerary) => {
         if (itinerary.creator_id !== userId) {
           res.send({
             error: 'You must be the creator of an itinerary to delete it.',
           });
         } else {
           deleteItinerary(itineraryId).then(() => {
-            getItinerariesForGroup(userId).then(itineraries => {
+            getItinerariesForGroup(userId).then((itineraries) => {
               res.send(itineraries);
             });
           });
@@ -193,7 +217,7 @@ module.exports = ({
   router.delete('/:itinerary_id/users/:user_id', (req, res) => {
     const { itinerary_id, user_id } = req.params;
     deleteCollaborator(itinerary_id, user_id).then(() => {
-      getTravelParty(itinerary_id).then(party => {
+      getTravelParty(itinerary_id).then((party) => {
         const parsed = parseTravelParty(party);
 
         const io = req.app.get('socketio');
@@ -216,9 +240,9 @@ module.exports = ({
       if (!userId) {
         res.send({ error: 'You must be logged in to delete an activity' });
       } else {
-        getTravelParty(itinerary_id).then(travelParty => {
+        getTravelParty(itinerary_id).then((travelParty) => {
           let allowed = false;
-          travelParty.forEach(member => {
+          travelParty.forEach((member) => {
             if (member.id === userId) {
               allowed = true;
             }
@@ -230,7 +254,7 @@ module.exports = ({
             });
           } else {
             deleteActivity(activity_id).then(() => {
-              getDetailedItinerary(itinerary_id).then(result => {
+              getDetailedItinerary(itinerary_id).then((result) => {
                 const itinerary = itineraryObj(result);
 
                 const io = req.app.get('socketio');
@@ -254,7 +278,7 @@ module.exports = ({
       res.send({ error: 'You must be logged in to add an activity' });
     }
 
-    getTravelParty(itinerary_id).then(userArr => {
+    getTravelParty(itinerary_id).then((userArr) => {
       let userOfParty;
       for (const user of userArr) {
         if (user.user_id === userId) {
@@ -311,7 +335,7 @@ module.exports = ({
             .get(
               `https://nominatim.openstreetmap.org/search?q=${query}&format=geojson`
             )
-            .then(res => {
+            .then((res) => {
               if (res.data.features.length < 1) {
                 response.send({ addressError: 'This is not a valid address' });
               } else {
@@ -331,7 +355,7 @@ module.exports = ({
                   image,
                   address,
                   location,
-                }).then(attraction => {
+                }).then((attraction) => {
                   if (start === '') {
                     start = null;
                   }
@@ -347,7 +371,7 @@ module.exports = ({
                     attractionId: attraction.id,
                     itineraryId: itinerary_id,
                   };
-                  createActivity(activity).then(activity => {
+                  createActivity(activity).then((activity) => {
                     Promise.all([
                       getDetailedItinerary(itinerary_id),
                       getMyLocations(itinerary_id),
@@ -381,11 +405,11 @@ module.exports = ({
   router.post('/:itinerary_id', (req, res) => {
     const { itinerary_id } = req.params;
     const { location_name, new_day_order } = req.body;
-    addDayWithLocation(itinerary_id, location_name).then(result => {
+    addDayWithLocation(itinerary_id, location_name).then((result) => {
       if (result.message) {
         res.send({ error: 'No such location in database' });
       } else {
-        getDetailedItinerary(itinerary_id).then(resultArr => {
+        getDetailedItinerary(itinerary_id).then((resultArr) => {
           let newItinerary = itineraryObj(resultArr);
           const last_day_order = newItinerary.locations
             .slice(-1)[0]
@@ -403,19 +427,19 @@ module.exports = ({
             console.log('does reorder');
             const daysIdArr = [];
             const daysOrderArr = [];
-            newItinerary.locations.forEach(location => {
-              location.days.forEach(day => {
+            newItinerary.locations.forEach((location) => {
+              location.days.forEach((day) => {
                 daysIdArr.push(day.id);
                 daysOrderArr.push(day.day_order);
               });
             });
             daysIdArr.splice(new_day_order - 1, 0, daysIdArr.pop());
 
-            reorderDays(daysIdArr, daysOrderArr).then(result => {
+            reorderDays(daysIdArr, daysOrderArr).then((result) => {
               if (result.message) {
                 res.send({ error: result.message });
               } else {
-                getDetailedItinerary(itinerary_id).then(resultArr => {
+                getDetailedItinerary(itinerary_id).then((resultArr) => {
                   const parsed = itineraryObj(resultArr);
 
                   const io = req.app.get('socketio');
@@ -441,16 +465,16 @@ module.exports = ({
     const { itinerary_id, day_id } = req.params;
     const io = req.app.get('socketio');
 
-    deleteDayFromItinerary(day_id).then(result => {
+    deleteDayFromItinerary(day_id).then((result) => {
       if (result.message) {
         res.send({ error: 'there was an error' });
       } else {
-        getDetailedItinerary(itinerary_id).then(resultArr => {
+        getDetailedItinerary(itinerary_id).then((resultArr) => {
           const bufferItinerary = itineraryObj(resultArr);
           const daysIdArr = [];
           const daysOrderArr = [];
-          bufferItinerary.locations.forEach(location => {
-            location.days.forEach(day => {
+          bufferItinerary.locations.forEach((location) => {
+            location.days.forEach((day) => {
               daysIdArr.push(day.id);
               daysOrderArr.push(day.day_order);
             });
@@ -464,13 +488,13 @@ module.exports = ({
 
             res.send(bufferItinerary);
           } else {
-            reorderDays(daysIdArr, newOrderArr).then(result => {
+            reorderDays(daysIdArr, newOrderArr).then((result) => {
               if (result.message) {
                 res.send({
                   error: `error with reorderDays: ${result.message}`,
                 });
               } else {
-                getDetailedItinerary(itinerary_id).then(resultArr => {
+                getDetailedItinerary(itinerary_id).then((resultArr) => {
                   const parsed = itineraryObj(resultArr);
                   const io = req.app.get('socketio');
 
@@ -496,10 +520,10 @@ module.exports = ({
           'You must be logged in to add an attraction to my locations list',
       });
     } else {
-      getTravelParty(itineraryId).then(travelParty => {
+      getTravelParty(itineraryId).then((travelParty) => {
         let allowed = false;
 
-        travelParty.forEach(member => {
+        travelParty.forEach((member) => {
           if (member.user_id === userId) {
             allowed = true;
           }
@@ -532,7 +556,7 @@ module.exports = ({
 
   router.put('/:itinerary_id/activities/:activity_id', (req, res) => {
     const { itinerary_id, activity_id } = req.params;
-    let { start_time, end_time, notes, dayId } = req.body;
+    let { start_time, end_time, notes, dayId, dayOrder } = req.body;
 
     const userId = req.session.userId;
 
@@ -541,10 +565,10 @@ module.exports = ({
         error: 'You must be logged in to make changes to an activity',
       });
     } else {
-      getTravelParty(itinerary_id).then(travelParty => {
+      getTravelParty(itinerary_id).then((travelParty) => {
         let allowed = false;
 
-        travelParty.forEach(member => {
+        travelParty.forEach((member) => {
           if (member.user_id === userId) {
             allowed = true;
           }
@@ -575,24 +599,39 @@ module.exports = ({
           } else {
             if (start_time === '') start_time = null;
             if (end_time === '') end_time = null;
-            updateActivity(start_time, end_time, notes, activity_id).then(
-              result => {
-                if (result.message) {
-                  res.send({ error: `apiHelpers: ${result.message}` });
-                } else {
-                  getDetailedItinerary(itinerary_id).then(resultArr => {
-                    const parsed = itineraryObj(resultArr);
+            if (dayOrder === 'none') {
+              dayOrder = null;
+              start_time = null;
+              end_time = null;
+              notes = null;
+            }
+            updateActivity(
+              start_time,
+              end_time,
+              notes,
+              activity_id,
+              dayOrder,
+              itinerary_id
+            ).then((result) => {
+              if (result.message) {
+                res.send({ error: `apiHelpers: ${result.message}` });
+              } else {
+                Promise.all([
+                  getDetailedItinerary(itinerary_id),
+                  getMyLocations(itinerary_id),
+                ]).then(([resultArr, myLocations]) => {
+                  const itinerary = itineraryObj(resultArr);
+                  const io = req.app.get('socketio');
 
-                    const io = req.app.get('socketio');
-
-                    io.sockets
-                      .in(Number(itinerary_id))
-                      .emit('itinerary', parsed);
-                    res.send(parsed);
+                  io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                    ...itinerary,
+                    my_locations: myLocations,
                   });
-                }
+
+                  res.send({ ...itinerary, my_locations: myLocations });
+                });
               }
-            );
+            });
           }
         }
       });
@@ -609,10 +648,10 @@ module.exports = ({
           'You must be logged in to delete an attraction from My Locations',
       });
     } else {
-      getTravelParty(itinerary_id).then(travelParty => {
+      getTravelParty(itinerary_id).then((travelParty) => {
         let allowed = false;
 
-        travelParty.forEach(member => {
+        travelParty.forEach((member) => {
           if (member.user_id === userId) {
             allowed = true;
           }
@@ -643,6 +682,59 @@ module.exports = ({
         }
       });
     }
+  });
+
+  router.post('/:itinerary_id/notes', (req, res) => {
+    const { itinerary_id } = req.params;
+    const { note, important } = req.body;
+    Promise.all([
+      addTripNote(itinerary_id, note, important),
+      getTripNotes(itinerary_id),
+    ]).then(([result, trip_notes]) => {
+      if (result.message) {
+        console.log(result.message);
+      }
+      const io = req.app.get('socketio');
+      io.sockets
+        .in(Number(itinerary_id))
+        .emit('itinerary', { trip_notes: trip_notes });
+      res.send({ trip_notes: trip_notes });
+    });
+  });
+
+  router.delete('/:itinerary_id/notes/:note_id', (req, res) => {
+    const { itinerary_id, note_id } = req.params;
+
+    Promise.all([deleteTripNote(note_id), getTripNotes(itinerary_id)]).then(
+      ([result, trip_notes]) => {
+        if (result.message) {
+          console.log(result.message);
+        }
+        const io = req.app.get('socketio');
+        io.sockets
+          .in(Number(itinerary_id))
+          .emit('itinerary', { trip_notes: trip_notes });
+        res.send({ trip_notes: trip_notes });
+      }
+    );
+  });
+
+  router.put('/:itinerary_id/notes/:note_id', (req, res) => {
+    const { itinerary_id, note_id } = req.params;
+    const { note, important } = req.body;
+    Promise.all([
+      editTripNote(note_id, note, important),
+      getTripNotes(itinerary_id),
+    ]).then(([result, trip_notes]) => {
+      if (result.message) {
+        console.log(result.message);
+      }
+      const io = req.app.get('socketio');
+      io.sockets
+        .in(Number(itinerary_id))
+        .emit('itinerary', { trip_notes: trip_notes });
+      res.send({ trip_notes: trip_notes });
+    });
   });
 
   return router;

@@ -3,18 +3,11 @@ import { Link } from 'react-router-dom';
 import {
   SET_BOOKMARKS,
   SET_ITINERARY,
-  SET_KEY,
   SET_MY_ITINERARIES,
+  SET_KEY,
 } from '../reducers/application';
 
 export default function Nav(props) {
-  const setKey = () => {
-    props.dispatch({
-      type: SET_KEY,
-      key: Math.random(),
-    });
-  };
-
   const clearItineraryState = () => {
     props.dispatch({
       type: SET_ITINERARY,
@@ -36,8 +29,15 @@ export default function Nav(props) {
     });
   };
 
+  const resetKey = () => {
+    props.dispatch({
+      type: SET_KEY,
+      key: Math.random(),
+    });
+  };
+
   return (
-    <nav className='fixed z-10 flex items-center justify-between w-full h-16 px-4 bg-gray-100'>
+    <nav className='fixed z-10 flex items-center justify-between w-full h-16 px-4 bg-gray-100 shadow-md'>
       <div className='flex items-center h-full mx-4 font-semibold'>
         <Link to='/' onClick={props.user.id && clearItineraryState}>
           <svg
@@ -63,8 +63,8 @@ export default function Nav(props) {
         <NavButton
           link='/itineraries'
           onClick={() => {
-            setKey();
             clearItineraryState();
+            resetKey();
           }}
         >
           Explore

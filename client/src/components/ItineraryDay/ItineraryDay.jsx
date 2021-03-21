@@ -12,6 +12,7 @@ export default function ItineraryDay(props) {
     deleteDayFromItinerary,
     deleteActivity,
     editActivity,
+    sideBarState,
   } = props;
 
   const url = useLocation().pathname;
@@ -86,15 +87,31 @@ export default function ItineraryDay(props) {
     });
   }
 
+  const handleCommaLocations = name => {
+    if (!name.includes(',')) {
+      return name;
+    } else {
+      return name.replace(/,/g, ', ');
+    }
+  };
+
+  const rightNav = sideBarState.rightNav.collapsed
+    ? 'mr-16'
+    : 'lg:mr-64 xl:mr-80';
+
+  const leftNav = sideBarState.leftNav.collapsed
+    ? 'ml-16'
+    : 'lg:ml-64 xl:ml-80';
+
   return (
     <div
       className={
         url.includes('edit')
-          ? 'flex w-full mt-16 lg:mx-64'
-          : 'flex w-full mt-16 lg:ml-64'
+          ? `flex w-full mt-16 ${rightNav} ${leftNav}`
+          : `flex w-full ml-16 mt-16 lg:ml-64 xl:ml-80`
       }
     >
-      <section className='flex flex-col justify-start w-5/6 h-full mx-auto my-8 mt-8 space-y-4'>
+      <section className='flex flex-col justify-start w-full h-full px-12 mt-8 space-y-4'>
         <header
           className={
             view !== DELETE
@@ -106,13 +123,14 @@ export default function ItineraryDay(props) {
             className={
               view === DELETE
                 ? 'flex flex-col px-4 py-2 bg-gray-600 shadow-md rounded-xl bg-opacity-75 w-full'
-                : 'flex flex-col px-8 py-2 bg-gray-100 border-l-8 border-gray-600 shadow-md rounded-r-xl'
+                : 'flex flex-col px-8 py-2 bg-gray-100 border-l-8 border-teal-600 shadow-md rounded-r-xl'
             }
           >
             <div className='flex items-center'>
               {view !== DELETE && (
                 <h1 className='text-3xl font-bold'>
-                  Day {day && day.day_order}: {location && location.name}
+                  Day {day && day.day_order}:{' '}
+                  {location && handleCommaLocations(location.name)}
                 </h1>
               )}
               {view === DELETE && (
@@ -191,6 +209,25 @@ export default function ItineraryDay(props) {
             </Link>
           )}
         </header>
+        {day && day.activities.length === 0 && (
+          <div className='flex items-center px-4 py-4 duration-200 transform bg-gray-100 shadow-md rounded-xl'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              className='w-5 h-5'
+            >
+              <path
+                fillRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                clipRule='evenodd'
+              />
+            </svg>
+            <h5 className='ml-2'>
+              There are no activities planned for this day.
+            </h5>
+          </div>
+        )}
         {day &&
           day.activities &&
           sortActivities(day.activities).map(activity => {
@@ -201,6 +238,8 @@ export default function ItineraryDay(props) {
                 deleteActivity={deleteActivity}
                 editActivity={editActivity}
                 timeSlots={activitiesTimeSlots}
+                currentDay={day}
+                itinerary={itinerary}
               />
             );
           })}

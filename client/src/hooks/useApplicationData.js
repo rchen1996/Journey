@@ -1,11 +1,10 @@
 import { useEffect, useReducer } from 'react';
 import dataReducer, {
-  SET_ALL_ITINERARIES,
   SET_USER,
   SET_MY_ITINERARIES,
   SET_ITINERARY,
   SET_BOOKMARKS,
-  SHOW_MENU,
+  SHOW_SIDEBAR,
 } from '../reducers/application';
 import axios from 'axios';
 import { io } from 'socket.io-client';
@@ -14,18 +13,28 @@ const ENDPOINT = 'http://localhost:8002';
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(dataReducer, {
     user: {},
-    itineraries: [],
     itinerary: null,
     myItineraries: [],
-    key: Math.random(),
     bookmarks: [],
-    isLeftNavOpen: window.innerWidth >= 1024 ? true : false,
-    isRightNavOpen: window.innerWidth >= 1024 ? true : false,
+    sideNav: {
+      belowBreak: false,
+      rightNav: {
+        collapsed: false,
+        breakPointCollapsed: false,
+        userCollapsed: false,
+      },
+      leftNav: {
+        collapsed: false,
+        breakPointCollapsed: false,
+        userCollapsed: false,
+      },
+    },
+    key: Math.random(),
   });
 
   useEffect(() => {
     if (!state.user.id) {
-      axios.get(`/api/users/:user_id`).then(res => {
+      axios.get(`/api/users/:user_id`).then((res) => {
         const user = res.data;
         if (res.data.id) {
           dispatch({
@@ -64,23 +73,14 @@ export default function useApplicationData() {
     });
   };
 
-  useEffect(() => {
-    return axios.get('/api/itineraries').then(res => {
-      const itineraries = res.data;
-      dispatch({
-        type: SET_ALL_ITINERARIES,
-        itineraries: itineraries,
-      });
-    });
-  }, [state.key]);
-
-  const createItinerary = function (itinerary) {
-    return axios.post('/api/itineraries', itinerary);
+  const createItinerary = function (itinerary, visibility) {
+    const completeItinerary = { ...itinerary, visible: visibility };
+    return axios.post('/api/itineraries', completeItinerary);
   };
 
   useEffect(() => {
     if (state.user.id) {
-      axios.get(`/api/users/${state.user.id}/itineraries`).then(res => {
+      axios.get(`/api/users/${state.user.id}/itineraries`).then((res) => {
         const myItineraries = res.data;
 
         if (Array.isArray(myItineraries) && myItineraries.length > 0) {
@@ -96,13 +96,13 @@ export default function useApplicationData() {
   function removeCollaborator(itineraryId, userId) {
     axios
       .delete(`/api/itineraries/${itineraryId}/users/${userId}`)
-      .then(res => {
+      .then((res) => {
         dispatch({
           type: SET_ITINERARY,
           itinerary: { ...state.itinerary, users: res.data },
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   const createActivity = (activity, itineraryId, dayId) => {
@@ -115,7 +115,7 @@ export default function useApplicationData() {
   function addCollaborator(itineraryId, email) {
     return axios
       .post(`/api/itineraries/${itineraryId}/users`, { email })
-      .then(res => {
+      .then((res) => {
         if (res.data.error) {
           return { error: res.data.error };
         } else {
@@ -123,10 +123,10 @@ export default function useApplicationData() {
             type: SET_ITINERARY,
             itinerary: { ...state.itinerary, users: res.data },
           });
-          return { success: 'user added to travel party' };
+          return { party: res.data, success: 'user added to travel party' };
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   function setItinerary(itinerary_id) {
@@ -140,7 +140,7 @@ export default function useApplicationData() {
           itinerary: { ...itinerary.data, users: users.data },
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   function addDayWithLocation(itinerary_id, location_name, new_day_order) {
@@ -149,7 +149,7 @@ export default function useApplicationData() {
         location_name,
         new_day_order,
       })
-      .then(res => {
+      .then((res) => {
         if (res.data.error) {
           return { error: res.data.error };
         } else {
@@ -162,13 +162,13 @@ export default function useApplicationData() {
       });
   }
 
-  const deleteItinerary = itineraryId => {
+  const deleteItinerary = (itineraryId) => {
     return axios.delete(`/api/itineraries/${itineraryId}`);
   };
 
   useEffect(() => {
     if (state.user.id) {
-      axios.get(`/api/users/${state.user.id}/bookmarks`).then(res => {
+      axios.get(`/api/users/${state.user.id}/bookmarks`).then((res) => {
         const bookmarks = res.data;
 
         if (Array.isArray(bookmarks) && bookmarks.length > 0) {
@@ -181,18 +181,18 @@ export default function useApplicationData() {
     }
   }, [state.user]);
 
-  const deleteBookmark = bookmarkId => {
+  const deleteBookmark = (bookmarkId) => {
     return axios.delete(`/api/users/${state.user.id}/bookmarks/${bookmarkId}`);
   };
 
-  const addBookmark = itineraryId => {
+  const addBookmark = (itineraryId) => {
     return axios.post(`/api/users/${state.user.id}/bookmarks`, { itineraryId });
   };
 
   function deleteDayFromItinerary(itinerary_id, day_id) {
     return axios
       .delete(`/api/itineraries/${itinerary_id}/days/${day_id}`)
-      .then(res => {
+      .then((res) => {
         if (res.data.error) {
           return { error: res.data.error };
         }
@@ -208,13 +208,26 @@ export default function useApplicationData() {
    * Updates menu states when size of the window is changed.
    * @param {boolean} breakpointTrigger Overrided from menu button
    */
-  function updateMenuState(leftNavTrigger, rightNavTrigger) {
+  function updateSidebar(right, rightUser, left, leftUser) {
     dispatch({
-      type: SHOW_MENU,
-      isRightNavOpen:
-        rightNavTrigger === null ? !state.isRightNavOpen : rightNavTrigger,
-      isLeftNavOpen:
-        leftNavTrigger === null ? !state.isLeftNavOpen : leftNavTrigger,
+      type: SHOW_SIDEBAR,
+      belowBreak: window.innerWidth < 1024,
+      rightNav: {
+        collapsed: right !== null ? right : state.sideNav.rightNav.collapsed,
+        breakPointCollapsed: state.sideNav.rightNav.breakPointCollapsed,
+        userCollapsed:
+          rightUser !== null ? rightUser : state.sideNav.rightNav.userCollapsed,
+      },
+      leftNav: {
+        // collapsed: left !== null ? left : state.sideNav.leftNav.collapsed,
+        // breakPointCollapsed: state.sideNav.leftNav.breakPointCollapsed,
+        // userCollapsed:
+        //   leftUser !== null ? leftUser : state.sideNav.leftNav.userCollapsed,
+        collapsed: left !== null ? left : state.sideNav.leftNav.collapsed,
+        breakPointCollapsed: false,
+        userCollapsed:
+          leftUser !== null ? leftUser : state.sideNav.leftNav.userCollapsed,
+      },
     });
   }
 
@@ -222,9 +235,33 @@ export default function useApplicationData() {
     const handleWindowResize = () => {
       if (window.innerWidth >= 1024) {
         dispatch({
-          type: SHOW_MENU,
-          isRightNavOpen: true,
-          isLeftNavOpen: true,
+          type: SHOW_SIDEBAR,
+          belowBreak: false,
+          rightNav: {
+            collapsed: false,
+            breakPointCollapsed: true,
+            userCollapsed: false,
+          },
+          leftNav: {
+            collapsed: false,
+            breakPointCollapsed: true,
+            userCollapsed: false,
+          },
+        });
+      } else {
+        dispatch({
+          type: SHOW_SIDEBAR,
+          belowBreak: true,
+          rightNav: {
+            collapsed: true,
+            breakPointCollapsed: false,
+            userCollapsed: true,
+          },
+          leftNav: {
+            collapsed: true,
+            breakPointCollapsed: false,
+            userCollapsed: true,
+          },
         });
       }
     };
@@ -239,7 +276,7 @@ export default function useApplicationData() {
       .delete(
         `/api/itineraries/${itineraryId}/days/${dayId}/activities/${activityId}`
       )
-      .then(res => {
+      .then((res) => {
         if (res.data.error) {
           return { error: res.data.error };
         } else {
@@ -253,18 +290,17 @@ export default function useApplicationData() {
       });
   };
 
-  const changePassword = password => {
+  const changePassword = (password) => {
     return axios.put(`/api/users/:user_id`, password);
   };
 
   const editActivity = (itinerary_id, activity_id, activityForm) => {
-    console.log('from useapplicationdata ', activityForm);
     return axios
       .put(
         `/api/itineraries/${itinerary_id}/activities/${activity_id}`,
         activityForm
       )
-      .then(res => {
+      .then((res) => {
         if (res.data.error) {
           return { error: res.data.error };
         }
@@ -276,8 +312,9 @@ export default function useApplicationData() {
       });
   };
 
-  const editItinerary = itinerary => {
-    return axios.put(`/api/itineraries/${itinerary.id}`, itinerary);
+  const editItinerary = (itinerary, visibility) => {
+    const completeItinerary = { ...itinerary, visible: visibility };
+    return axios.put(`/api/itineraries/${itinerary.id}`, completeItinerary);
   };
 
   useEffect(() => {
@@ -285,10 +322,10 @@ export default function useApplicationData() {
     socket.on('connect', function () {
       socket.emit('itinerary_id', state.itinerary && state.itinerary.id);
     });
-    socket.on('message', data => {
+    socket.on('message', (data) => {
       console.log(data);
     });
-    socket.on('itinerary', data => {
+    socket.on('itinerary', (data) => {
       dispatch({
         type: SET_ITINERARY,
         itinerary: { ...state.itinerary, ...data },
@@ -321,6 +358,28 @@ export default function useApplicationData() {
     );
   };
 
+  const searchItineraries = (query, type, length) => {
+    return axios.get(`/api/itineraries/${query}/${type}/${length}`);
+  };
+
+  const addTripNote = (itinerary_id, noteString, important) => {
+    return axios.post(`/api/itineraries/${itinerary_id}/notes`, {
+      note: noteString,
+      important,
+    });
+  };
+
+  const deleteTripNote = (itinerary_id, note_id) => {
+    return axios.delete(`/api/itineraries/${itinerary_id}/notes/${note_id}`);
+  };
+
+  const editTripNote = (itinerary_id, note_id, noteStr, important) => {
+    return axios.put(`/api/itineraries/${itinerary_id}/notes/${note_id}`, {
+      note: noteStr,
+      important,
+    });
+  };
+
   return {
     state,
     dispatch,
@@ -337,7 +396,7 @@ export default function useApplicationData() {
     deleteBookmark,
     addBookmark,
     deleteDayFromItinerary,
-    updateMenuState,
+    updateSidebar,
     deleteActivity,
     changePassword,
     editActivity,
@@ -346,5 +405,9 @@ export default function useApplicationData() {
     addMyLocation,
     updateActivityDay,
     deleteActivityWithoutDay,
+    searchItineraries,
+    addTripNote,
+    deleteTripNote,
+    editTripNote,
   };
 }

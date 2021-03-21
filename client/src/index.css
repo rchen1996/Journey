@@ -15,3 +15,45 @@
     }
   }
 }
+
+@media print {
+  html,
+  body {
+    height: initial !important;
+    overflow: initial !important;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/* @page {
+  size: auto;
+  margin: 20mm;
+} */
+
+input[type='range'] {
+  @apply appearance-none;
+  @apply w-full;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  @apply h-1.5;
+  @apply bg-gray-300;
+  @apply rounded-xl;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  @apply appearance-none;
+  @apply h-4;
+  @apply w-4;
+  @apply rounded-full;
+  @apply bg-teal-600;
+  @apply -mt-1.5;
+}
+
+input[type='range']:focus {
+  @apply outline-none;
+}
+
+input[type='range']:focus::-webkit-slider-runnable-track {
+  /* background: #ccc; */
+}
