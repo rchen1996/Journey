@@ -43,6 +43,9 @@ export default function PinnedNote(props) {
     }
   } else {
     switch (true) {
+      case isFirstNote && isLastNote:
+        roundedCorner = 'rounded-xl';
+        break;
       case isFirstNote:
         roundedCorner = 'rounded-t-xl';
         break;
