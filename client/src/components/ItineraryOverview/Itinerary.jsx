@@ -56,6 +56,13 @@ export default function Itinerary(props) {
     }
   }, [itinerary.id, bookmarkArr]);
 
+  useEffect(() => {
+    const trip_notes = itinerary.trip_notes
+    if(trip_notes.length > 0){
+      
+    }
+  })
+
   const handleBookmark = () => {
     if (user.id && !bookmarkArr.includes(itinerary.id)) {
       addBookmark(itinerary.id).then(res => {
@@ -248,6 +255,15 @@ export default function Itinerary(props) {
           </article>
         </div>
       )}
+      {itinerary.trip_notes.length > 0 && 
+      <div className='mx-8 lg:mx-16'>
+        {itinerary.trip_notes.sort((a,b) => a.important ? -1 : 1).map((note) => {
+return <div>
+  {note.important ? 'pin-icon ' : 'paperclip-icon '}
+  {note.note}</div>
+        })}
+      </div>
+      }
       {itinerary.locations &&
         itinerary.locations.map((location, index) => {
           return (

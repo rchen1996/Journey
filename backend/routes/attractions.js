@@ -80,6 +80,7 @@ module.exports = ({
             const placesWithNoAddress = [];
             const placesWithAddress = [];
             attractions.forEach((attraction) => {
+              // console.log('error', attraction.message);
               if (attraction.address === 'not in database') {
                 placesWithNoAddress.push(attraction);
               } else {
@@ -115,7 +116,7 @@ module.exports = ({
                 })
                 .catch((err) => {
                   res.send(placesWithAddress);
-                  console.log(err);
+                  console.log('err', placesWithAddress);
                 });
             } else {
               res.send(placesWithAddress);
