@@ -12,6 +12,7 @@ export default function ItineraryDay(props) {
     deleteDayFromItinerary,
     deleteActivity,
     editActivity,
+    sideBarState,
   } = props;
 
   const url = useLocation().pathname;
@@ -94,15 +95,23 @@ export default function ItineraryDay(props) {
     }
   };
 
+  const rightNav = sideBarState.rightNav.collapsed
+    ? 'mr-16'
+    : 'lg:mr-64 xl:mr-80';
+
+  const leftNav = sideBarState.leftNav.collapsed
+    ? 'ml-16'
+    : 'lg:ml-64 xl:ml-80';
+
   return (
     <div
       className={
         url.includes('edit')
-          ? 'flex w-full mt-16 lg:mx-64 xl:mx-80'
-          : 'flex w-full mt-16 lg:ml-64 xl:ml-80'
+          ? `flex w-full mt-16 ${rightNav} ${leftNav}`
+          : `flex w-full ml-16 mt-16 lg:ml-64 xl:ml-80`
       }
     >
-      <section className='flex flex-col justify-start w-5/6 h-full mx-auto my-8 mt-8 space-y-4'>
+      <section className='flex flex-col justify-start w-full h-full px-12 mt-8 space-y-4'>
         <header
           className={
             view !== DELETE

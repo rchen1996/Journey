@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { SET_BOOKMARKS } from '../../reducers/application';
 
 import ItineraryDays from './ItineraryDays';
+import AddNoteForm from './AddNoteForm';
 
 export default function Itinerary(props) {
   const {
@@ -13,6 +14,7 @@ export default function Itinerary(props) {
     addBookmark,
     deleteBookmark,
     dispatch,
+    sideBarState,
   } = props;
 
   const url = useLocation().pathname;
@@ -20,6 +22,10 @@ export default function Itinerary(props) {
   const SHOW = 'SHOW';
   const HIDE = 'HIDE';
   const [view, setView] = useState(SHOW);
+
+  const ADD = 'ADD';
+  const DEFAULT = 'DEFAULT';
+  const [addView, setAddView] = useState(DEFAULT);
 
   const formatDate = dateString => {
     if (dateString) {
@@ -114,6 +120,10 @@ export default function Itinerary(props) {
 
   const toggleNotes = event => {
     view === SHOW ? setView(HIDE) : setView(SHOW);
+  };
+
+  const addNote = () => {
+    addView === ADD ? setAddView(DEFAULT) : setAddView(ADD);
   };
 
   return (
@@ -254,6 +264,22 @@ export default function Itinerary(props) {
         <h2 className='pl-4 ml-8 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
           Trip Notes
         </h2>
+        {url.includes('edit') && (
+          <button type='button' onClick={addNote}>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              className='w-5 h-5'
+            >
+              <path
+                fillRule='evenodd'
+                d='M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z'
+                clipRule='evenodd'
+              />
+            </svg>
+          </button>
+        )}
         <button type='button' onClick={toggleNotes}>
           {view === SHOW && (
             <svg
@@ -286,13 +312,45 @@ export default function Itinerary(props) {
             </svg>
           )}
         </button>
+        {addView === ADD && <AddNoteForm />}
         <article className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>
           <div className='flex items-center pt-2'>
             {pinnedNotes.length > 0 &&
               pinnedNotes.map(note => {
                 return (
-                  // image of thumbtack/pin
-                  <p>{note.note}</p>
+                  <div>
+                    {/* image of thumbtack/pin */}
+                    <p>{note.note}</p>
+                    {url.includes('edit') && (
+                      <div>
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          viewBox='0 0 20 20'
+                          fill='currentColor'
+                          className='w-5 h-5'
+                        >
+                          <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
+                          <path
+                            fillRule='evenodd'
+                            d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'
+                            clipRule='evenodd'
+                          />
+                        </svg>
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          viewBox='0 0 20 20'
+                          fill='currentColor'
+                          className='w-5 h-5'
+                        >
+                          <path
+                            fillRule='evenodd'
+                            d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
+                            clipRule='evenodd'
+                          />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
                 );
               })}
           </div>
@@ -300,8 +358,39 @@ export default function Itinerary(props) {
             regularNotes.length > 0 &&
             regularNotes.map(note => {
               return (
-                // image of paperclip
-                <p>{note.note}</p>
+                <div>
+                  {/* image of paperclip */}
+                  <p>{note.note}</p>
+                  {url.includes('edit') && (
+                    <div>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 20 20'
+                        fill='currentColor'
+                        className='w-5 h-5'
+                      >
+                        <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
+                        <path
+                          fillRule='evenodd'
+                          d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'
+                          clipRule='evenodd'
+                        />
+                      </svg>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 20 20'
+                        fill='currentColor'
+                        className='w-5 h-5'
+                      >
+                        <path
+                          fillRule='evenodd'
+                          d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
+                          clipRule='evenodd'
+                        />
+                      </svg>
+                    </div>
+                  )}
+                </div>
               );
             })}
           {regularNotes.length === 0 && pinnedNotes.length === 0 && (
