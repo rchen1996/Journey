@@ -4,6 +4,8 @@ import { SET_BOOKMARKS } from '../../reducers/application';
 
 import ItineraryDays from './ItineraryDays';
 import AddNoteForm from './AddNoteForm';
+import Note from './Note';
+import PinnedNote from './PinnedNote';
 
 export default function Itinerary(props) {
   const {
@@ -14,8 +16,8 @@ export default function Itinerary(props) {
     addBookmark,
     deleteBookmark,
     dispatch,
-    sideBarState,
     addTripNote,
+    deleteTripNote,
   } = props;
 
   const url = useLocation().pathname;
@@ -283,44 +285,6 @@ export default function Itinerary(props) {
               </svg>
             </button>
           )}
-          {/* <button
-            type='button'
-            onClick={toggleNotes}
-            className='w-5 h-5 m-1'
-            title='Hide non-pinned notes'
-          >
-            {view === SHOW && (
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 20 20'
-                fill='currentColor'
-                className='flex-shrink-0 w-full h-full'
-                title='Hide non-pinned notes'
-              >
-                <path d='M10 12a2 2 0 100-4 2 2 0 000 4z' />
-                <path
-                  fillRule='evenodd'
-                  d='M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z'
-                  clipRule='evenodd'
-                />
-              </svg>
-            )}
-            {view === HIDE && (
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 20 20'
-                fill='currentColor'
-                className='flex-shrink-0 w-full h-full'
-              >
-                <path
-                  fillRule='evenodd'
-                  d='M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z'
-                  clipRule='evenodd'
-                />
-                <path d='M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z' />
-              </svg>
-            )}
-          </button> */}
         </div>
         {addView === ADD && (
           <AddNoteForm
@@ -335,157 +299,70 @@ export default function Itinerary(props) {
           {pinnedNotes.length > 0 &&
             pinnedNotes.map(note => {
               return (
-                <div className='flex items-center py-2 '>
-                  <div
-                    key={note.id}
-                    className='flex items-center justify-between w-full space-x-2'
-                  >
-                    <div className='flex items-center space-x-3'>
-                      <svg
-                        aria-hidden='true'
-                        focusable='false'
-                        data-prefix='fas'
-                        data-icon='thumbtack'
-                        className='self-start flex-shrink-0 w-5 h-5 mt-1'
-                        role='img'
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 384 512'
-                      >
-                        <path
-                          fill='currentColor'
-                          d='M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z'
-                        ></path>
-                      </svg>
-                      <p>{note.note}</p>
-                    </div>
-                    {url.includes('edit') && (
-                      <div className='flex items-center pr-2 space-x-3'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          viewBox='0 0 20 20'
-                          fill='currentColor'
-                          className='w-5 h-5 duration-200 transform fill-current hover:text-teal-600 hover:scale-125'
-                        >
-                          <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
-                          <path
-                            fillRule='evenodd'
-                            d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'
-                            clipRule='evenodd'
-                          />
-                        </svg>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          viewBox='0 0 20 20'
-                          fill='currentColor'
-                          className='flex-shrink-0 w-5 h-5 duration-200 transform fill-current hover:text-red-600 hover:scale-125'
-                        >
-                          <path
-                            fillRule='evenodd'
-                            d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
-                            clipRule='evenodd'
-                          />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <PinnedNote
+                  key={note.id}
+                  note={note}
+                  deleteTripNote={deleteTripNote}
+                  itinerary={itinerary}
+                  dispatch={dispatch}
+                />
               );
             })}
-          <div className='flex items-center py-2 space-x-2'>
-            <button
-              type='button'
-              onClick={toggleNotes}
-              className='w-5 h-5'
-              title={
-                view === SHOW
-                  ? 'Hide additional notes'
-                  : 'Show additional notes'
-              }
-            >
-              {view === SHOW && (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                  className='flex-shrink-0 w-full h-full'
-                >
-                  <path
-                    fillRule='evenodd'
-                    d='M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z'
-                    clipRule='evenodd'
-                  />
-                </svg>
-              )}
-              {view === HIDE && (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                  className='flex-shrink-0 w-full h-full'
-                >
-                  <path
-                    fillRule='evenodd'
-                    d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
-                    clipRule='evenodd'
-                  />
-                </svg>
-              )}
-            </button>
-            <span className='font-semibold'>Additional Notes</span>
-          </div>
+          {regularNotes.length !== 0 && (
+            <div className='flex items-center py-2 space-x-2'>
+              <button
+                type='button'
+                onClick={toggleNotes}
+                className='w-5 h-5'
+                title={
+                  view === SHOW
+                    ? 'Hide additional notes'
+                    : 'Show additional notes'
+                }
+              >
+                {view === SHOW && (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    className='flex-shrink-0 w-full h-full'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                )}
+                {view === HIDE && (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    className='flex-shrink-0 w-full h-full'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                )}
+              </button>
+              <span className='font-semibold'>Additional Notes</span>
+            </div>
+          )}
           {view === SHOW &&
             regularNotes.length > 0 &&
             regularNotes.map(note => {
               return (
-                <div
+                <Note
                   key={note.id}
-                  className='flex items-center justify-between py-2 space-x-2'
-                >
-                  <div className='flex items-center space-x-3'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      viewBox='0 0 20 20'
-                      fill='currentColor'
-                      className='flex-shrink-0 w-5 h-5'
-                    >
-                      <path
-                        fillRule='evenodd'
-                        d='M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z'
-                        clipRule='evenodd'
-                      />
-                    </svg>
-                    <p>{note.note}</p>
-                  </div>
-                  {url.includes('edit') && (
-                    <div className='flex items-center pr-2 space-x-3'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 20 20'
-                        fill='currentColor'
-                        className='w-5 h-5 duration-200 transform fill-current hover:text-teal-600 hover:scale-125'
-                      >
-                        <path d='M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z' />
-                        <path
-                          fillRule='evenodd'
-                          d='M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z'
-                          clipRule='evenodd'
-                        />
-                      </svg>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 20 20'
-                        fill='currentColor'
-                        className='flex-shrink-0 w-5 h-5 duration-200 transform fill-current hover:text-red-600 hover:scale-125'
-                      >
-                        <path
-                          fillRule='evenodd'
-                          d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
-                          clipRule='evenodd'
-                        />
-                      </svg>
-                    </div>
-                  )}
-                </div>
+                  note={note}
+                  deleteTripNote={deleteTripNote}
+                  itinerary={itinerary}
+                  dispatch={dispatch}
+                />
               );
             })}
           {regularNotes.length === 0 && pinnedNotes.length === 0 && (

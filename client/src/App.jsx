@@ -50,6 +50,7 @@ function App() {
     deleteActivityWithoutDay,
     searchItineraries,
     addTripNote,
+    deleteTripNote,
   } = useApplicationData();
 
   const { user, myItineraries, itinerary, bookmarks, key } = state;
@@ -242,6 +243,7 @@ function App() {
                   deleteBookmark={deleteBookmark}
                   bookmarks={bookmarks}
                   addTripNote={addTripNote}
+                  deleteTripNote={deleteTripNote}
                 />
               </PrintableItinerary>
             )}
