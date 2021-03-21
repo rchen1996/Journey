@@ -362,6 +362,10 @@ export default function useApplicationData() {
     return axios.get(`/api/itineraries/${query}/${type}/${length}`);
   };
 
+  const addTripNote = (itinerary_id,noteString,important)=>{
+    return axios.post(`/api/itineraries/${itinerary_id}/notes`,{note: noteString,important});
+  }
+
   return {
     state,
     dispatch,
@@ -388,5 +392,6 @@ export default function useApplicationData() {
     updateActivityDay,
     deleteActivityWithoutDay,
     searchItineraries,
+    addTripNote,
   };
 }
