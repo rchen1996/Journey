@@ -316,13 +316,13 @@ export default function Itinerary(props) {
           {addView === ADD && <AddNoteForm />}
         </div>
         <article className='flex flex-col p-4 bg-gray-100 divide-y shadow-md rounded-xl divide'>
-          <div className='flex items-center py-2'>
+          <div className='flex items-center py-2 '>
             {pinnedNotes.length > 0 &&
               pinnedNotes.map(note => {
                 return (
                   <div
                     key={note.id}
-                    className='flex items-center justify-between space-x-2'
+                    className='flex items-center justify-between w-full space-x-2'
                   >
                     <div className='flex items-center space-x-3'>
                       <svg
@@ -340,12 +340,7 @@ export default function Itinerary(props) {
                           d='M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z'
                         ></path>
                       </svg>
-                      <p>
-                        {/*note.note*/} Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Assumenda maiores aliquam magni
-                        officia obcaecati ullam modi qui consequuntur molestiae
-                        nulla natus eius debitis at deleniti
-                      </p>
+                      <p>{note.note}</p>
                     </div>
                     {url.includes('edit') && (
                       <div className='flex items-center pr-2 space-x-3'>
