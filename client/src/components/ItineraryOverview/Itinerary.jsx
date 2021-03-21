@@ -132,7 +132,7 @@ export default function Itinerary(props) {
     <section className='flex flex-col w-full h-full my-8 space-y-6 divide-y divide-gray-300'>
       <div>
         <div className='flex items-center justify-between mb-4'>
-          <h2 className='pl-4 ml-8 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
+          <h2 className='pl-4 ml-8 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16 sm:whitespace-nowrap'>
             Itinerary Overview
           </h2>
 
@@ -249,7 +249,7 @@ export default function Itinerary(props) {
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 20 20'
               fill='currentColor'
-              className='flex-shrink-0 w-6 h-6 mr-2'
+              className='self-start flex-shrink-0 w-6 h-6 mt-2 mr-2'
             >
               <path
                 fillRule='evenodd'
@@ -283,13 +283,19 @@ export default function Itinerary(props) {
               </svg>
             </button>
           )}
-          <button type='button' onClick={toggleNotes} className='w-5 h-5 m-1'>
+          {/* <button
+            type='button'
+            onClick={toggleNotes}
+            className='w-5 h-5 m-1'
+            title='Hide non-pinned notes'
+          >
             {view === SHOW && (
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 20 20'
                 fill='currentColor'
                 className='flex-shrink-0 w-full h-full'
+                title='Hide non-pinned notes'
               >
                 <path d='M10 12a2 2 0 100-4 2 2 0 000 4z' />
                 <path
@@ -314,7 +320,7 @@ export default function Itinerary(props) {
                 <path d='M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z' />
               </svg>
             )}
-          </button>
+          </button> */}
         </div>
         {addView === ADD && (
           <AddNoteForm
@@ -340,7 +346,7 @@ export default function Itinerary(props) {
                         focusable='false'
                         data-prefix='fas'
                         data-icon='thumbtack'
-                        className='flex-shrink-0 w-5 h-5'
+                        className='self-start flex-shrink-0 w-5 h-5 mt-1'
                         role='img'
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 384 512'
@@ -385,6 +391,48 @@ export default function Itinerary(props) {
                 </div>
               );
             })}
+          <div className='flex items-center py-2 space-x-2'>
+            <button
+              type='button'
+              onClick={toggleNotes}
+              className='w-5 h-5'
+              title={
+                view === SHOW
+                  ? 'Hide additional notes'
+                  : 'Show additional notes'
+              }
+            >
+              {view === SHOW && (
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                  className='flex-shrink-0 w-full h-full'
+                >
+                  <path
+                    fillRule='evenodd'
+                    d='M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z'
+                    clipRule='evenodd'
+                  />
+                </svg>
+              )}
+              {view === HIDE && (
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                  className='flex-shrink-0 w-full h-full'
+                >
+                  <path
+                    fillRule='evenodd'
+                    d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+                    clipRule='evenodd'
+                  />
+                </svg>
+              )}
+            </button>
+            <span className='font-semibold'>Additional Notes</span>
+          </div>
           {view === SHOW &&
             regularNotes.length > 0 &&
             regularNotes.map(note => {
