@@ -313,8 +313,8 @@ export default function Itinerary(props) {
               </svg>
             )}
           </button>
-          {addView === ADD && <AddNoteForm />}
         </div>
+        {addView === ADD && <AddNoteForm />}
         <article className='flex flex-col p-4 bg-gray-100 divide-y shadow-md rounded-xl divide'>
           <div className='flex items-center py-2 '>
             {pinnedNotes.length > 0 &&
