@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { SET_ITINERARY } from '../../reducers/application';
 import FormButton from '../FormButton';
 
 export default function AddNoteForm(props) {
+  const { addTripNote, itinerary, dispatch, setAddView, DEFAULT } = props;
   const [note, setNote] = useState('');
 
   const [translate, setTranslate] = useState('');
@@ -17,15 +19,34 @@ export default function AddNoteForm(props) {
     }
   };
 
+  const addNote = event => {
+    event.preventDefault();
+
+    if (note === '') {
+      // add error display for cannot have blank note
+    } else {
+      addTripNote(itinerary.id, note, important).then(res => {
+        dispatch({
+          type: SET_ITINERARY,
+          itinerary: { ...itinerary, ...res.data },
+        });
+
+        setNote('');
+        setImportance(false);
+        setAddView(DEFAULT);
+      });
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={addNote}>
       <label htmlFor='note' className='font-semibold'>
         Note
       </label>
       <textarea
         value={note}
         name='note'
-        onChange={() => setNote(note)}
+        onChange={event => setNote(event.target.value)}
         type='text'
         placeholder='Note'
         className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
