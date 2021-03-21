@@ -298,7 +298,7 @@ export default function Itinerary(props) {
         )}
         <article className='flex flex-col bg-gray-100 divide-y shadow-md rounded-xl divide'>
           {pinnedNotes.length > 0 &&
-            pinnedNotes.map(note => {
+            pinnedNotes.map((note, index) => {
               return (
                 <PinnedNote
                   key={note.id}
@@ -308,6 +308,8 @@ export default function Itinerary(props) {
                   dispatch={dispatch}
                   editTripNote={editTripNote}
                   isRegularNotes={regularNotes.length !== 0}
+                  isFirstNote={index === 0}
+                  isLastNote={index === pinnedNotes.length - 1}
                 />
               );
             })}
@@ -367,6 +369,7 @@ export default function Itinerary(props) {
                   dispatch={dispatch}
                   isRegularNotes={regularNotes.length !== 0}
                   isMiddleNote={index !== regularNotes.length - 1}
+                  editTripNote={editTripNote}
                 />
               );
             })}

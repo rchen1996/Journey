@@ -3,14 +3,24 @@ import { useLocation } from 'react-router-dom';
 import { SET_ITINERARY } from '../../reducers/application';
 import DeleteConfirmation from '../DeleteConfirmation';
 
+import EditNoteForm from './EditNoteForm';
+
 export default function Note(props) {
-  const { note, deleteTripNote, itinerary, dispatch, isRegularNotes } = props;
+  const {
+    note,
+    deleteTripNote,
+    itinerary,
+    dispatch,
+    editTripNote,
+    isRegularNotes,
+  } = props;
 
   const url = useLocation().pathname;
 
   const DELETE = 'DELETE';
   const NOTE = 'NOTE';
-  const [deleteView, setDeleteView] = useState(NOTE);
+  const EDIT = 'EDIT';
+  const [view, setView] = useState(NOTE);
 
   const deleteNote = () => {
     deleteTripNote(itinerary.id, note.id).then(res => {
@@ -24,7 +34,7 @@ export default function Note(props) {
   const isMiddleNote = props.isMiddleNote ? '' : 'rounded-b-xl';
   return (
     <div>
-      {deleteView === NOTE && (
+      {view === NOTE && (
         <div className='flex items-center justify-between p-4 space-x-2'>
           <div className='flex items-center space-x-3'>
             <svg
@@ -43,7 +53,7 @@ export default function Note(props) {
           </div>
           {url.includes('edit') && (
             <div className='flex items-center pr-2 space-x-3'>
-              <button type='button'>
+              <button type='button' onClick={() => setView(EDIT)}>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'
@@ -58,7 +68,7 @@ export default function Note(props) {
                   />
                 </svg>
               </button>
-              <button type='button' onClick={() => setDeleteView(DELETE)}>
+              <button type='button' onClick={() => setView(DELETE)}>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'
@@ -76,7 +86,7 @@ export default function Note(props) {
           )}
         </div>
       )}
-      {deleteView === DELETE && (
+      {view === DELETE && (
         <div
           className={
             isRegularNotes
@@ -88,10 +98,20 @@ export default function Note(props) {
             title='Delete Note'
             message='Are you sure you want to delete this note?'
             removeItem={deleteNote}
-            setView={setDeleteView}
+            setView={setView}
             DEFAULT={NOTE}
           ></DeleteConfirmation>
         </div>
+      )}
+      {view === EDIT && (
+        <EditNoteForm
+          editTripNote={editTripNote}
+          itinerary={itinerary}
+          dispatch={dispatch}
+          note={note}
+          setView={setView}
+          NOTE={NOTE}
+        />
       )}
     </div>
   );

@@ -31,6 +31,8 @@ export default function EditNoteForm(props) {
           type: SET_ITINERARY,
           itinerary: { ...itinerary, ...res.data },
         });
+
+        setView(NOTE);
       });
     }
   };
