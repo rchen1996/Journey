@@ -110,48 +110,56 @@ export default function ItineraryLeftNav(props) {
     <nav
       className={
         sideBarState.leftNav.collapsed
-          ? 'w-16 text-gray-100 bg-gray-600 h-full mt-16'
-          : 'fixed px-6 z-40 lg:w-64 xl:w-80 h-full pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block'
+          ? 'fixed w-16 text-gray-100 bg-gray-600 h-full mt-16'
+          : 'fixed px-6 z-40 w-full lg:w-64 xl:w-80 h-full pb-24 mt-16 overflow-y-scroll text-gray-100 bg-gray-600 no-scrollbar lg:block'
       }
     >
-      <div className='flex items-center justify-between w-full py-2 pl-4 pr-3 mt-2'>
-        <h1
+      {sideBarState.belowBreak && (
+        <div
           className={
             sideBarState.leftNav.collapsed
-              ? 'hidden'
-              : 'text-xl font-bold text-gray-100'
+              ? 'flex items-center justify-between w-full py-2 pl-4 pr-3 mt-2'
+              : 'flex items-center justify-between w-full py-2 pl-4 pr-3 mt-2 border-b border-gray-100 border-opacity-50'
           }
         >
-          Navigation
-        </h1>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='0 0 20 20'
-          fill='currentColor'
-          className={
-            sideBarState.leftNav.collapsed
-              ? 'w-6 h-6 cursor-pointer mt-2 ml-1'
-              : 'w-6 h-6 cursor-pointer transform rotate-180'
-          }
-          onClick={() =>
-            props.updateSidebar(
-              null,
-              null,
-              !sideBarState.leftNav.userCollapsed,
-              !sideBarState.leftNav.collapsed
-            )
-          }
-        >
-          <path
-            fillRule='evenodd'
-            d='M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z'
-            clipRule='evenodd'
-          />
-        </svg>
-      </div>
+          <h1
+            className={
+              sideBarState.leftNav.collapsed
+                ? 'hidden'
+                : 'text-xl font-bold text-gray-100'
+            }
+          >
+            Navigation
+          </h1>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 20 20'
+            fill='currentColor'
+            className={
+              sideBarState.leftNav.collapsed
+                ? 'w-6 h-6 cursor-pointer mt-2 ml-1'
+                : 'w-6 h-6 cursor-pointer transform rotate-180'
+            }
+            onClick={() =>
+              props.updateSidebar(
+                null,
+                null,
+                !sideBarState.leftNav.userCollapsed,
+                !sideBarState.leftNav.collapsed
+              )
+            }
+          >
+            <path
+              fillRule='evenodd'
+              d='M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z'
+              clipRule='evenodd'
+            />
+          </svg>
+        </div>
+      )}
       {itinerary && !sideBarState.leftNav.collapsed && (
         <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50 top-20'>
-          <div className='flex flex-col justify-center px-3 py-1 mb-4 space-y-1 border-l-4'>
+          <div className='flex flex-col justify-center px-3 py-1 my-4 space-y-1 border-l-4'>
             <NavLink
               to={`/itineraries/${itinerary.id}${editMode ? '/edit' : ''}`}
               className='text-xl font-bold'

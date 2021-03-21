@@ -17,6 +17,7 @@ export default function useApplicationData() {
     myItineraries: [],
     bookmarks: [],
     sideNav: {
+      belowBreak: false,
       rightNav: {
         collapsed: false,
         breakPointCollapsed: false,
@@ -208,19 +209,20 @@ export default function useApplicationData() {
    * @param {boolean} breakpointTrigger Overrided from menu button
    */
   function updateSidebar(right, rightUser, left, leftUser) {
-    // Normal Screens
-    // Both Side Navs default to open
-    // UserCollapse can close them
-    // breakPointCollapsed > UserCollapse
     dispatch({
       type: SHOW_SIDEBAR,
+      belowBreak: window.innerWidth < 1024,
       rightNav: {
         collapsed: right !== null ? right : state.sideNav.rightNav.collapsed,
-        breakPointCollapsed: false,
+        breakPointCollapsed: state.sideNav.rightNav.breakPointCollapsed,
         userCollapsed:
           rightUser !== null ? rightUser : state.sideNav.rightNav.userCollapsed,
       },
       leftNav: {
+        // collapsed: left !== null ? left : state.sideNav.leftNav.collapsed,
+        // breakPointCollapsed: state.sideNav.leftNav.breakPointCollapsed,
+        // userCollapsed:
+        //   leftUser !== null ? leftUser : state.sideNav.leftNav.userCollapsed,
         collapsed: left !== null ? left : state.sideNav.leftNav.collapsed,
         breakPointCollapsed: false,
         userCollapsed:
@@ -229,21 +231,45 @@ export default function useApplicationData() {
     });
   }
 
-  // useEffect(() => {
-  //   const handleWindowResize = () => {
-  //     if (window.innerWidth >= 1024) {
-  //       dispatch({
-  //         type: SHOW_SIDEBAR,
-  //         isRightNavOpen: true,
-  //         isLeftNavOpen: true,
-  //       });
-  //     }
-  //   };
+  useEffect(() => {
+    const handleWindowResize = () => {
+      if (window.innerWidth >= 1024) {
+        dispatch({
+          type: SHOW_SIDEBAR,
+          belowBreak: false,
+          rightNav: {
+            collapsed: false,
+            breakPointCollapsed: true,
+            userCollapsed: false,
+          },
+          leftNav: {
+            collapsed: false,
+            breakPointCollapsed: true,
+            userCollapsed: false,
+          },
+        });
+      } else {
+        dispatch({
+          type: SHOW_SIDEBAR,
+          belowBreak: true,
+          rightNav: {
+            collapsed: true,
+            breakPointCollapsed: false,
+            userCollapsed: true,
+          },
+          leftNav: {
+            collapsed: true,
+            breakPointCollapsed: false,
+            userCollapsed: true,
+          },
+        });
+      }
+    };
 
-  //   window.addEventListener('resize', handleWindowResize);
+    window.addEventListener('resize', handleWindowResize);
 
-  //   return () => window.removeEventListener('resize', handleWindowResize);
-  // }, []);
+    return () => window.removeEventListener('resize', handleWindowResize);
+  }, []);
 
   const deleteActivity = (itineraryId, dayId, activityId) => {
     return axios

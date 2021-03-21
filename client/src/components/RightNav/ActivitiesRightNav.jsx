@@ -19,55 +19,17 @@ export default function ActivitiesRightNav(props) {
   } = props;
 
   const [view, setView] = useState(MY_LOCATIONS);
-  // const [dropDown, setDropDown] = useState({
-  //   menuTitle: 'My Locations',
-  //   subMenuTitle: 'Find Places',
-  //   subMenuOpen: false,
-  // });
-
-  // const handleDropDown = () => {
-  //   setDropDown(prev => {
-  //     return {
-  //       ...prev,
-  //       subMenuOpen: prev.subMenuOpen ? false : true,
-  //     };
-  //   });
-  // };
-
-  // const updateMenuViewInfo = () => {
-  //   if (dropDown.menuTitle === 'My Locations') {
-  //     setView(ATTRACTION_SEARCH);
-  //     setDropDown(prev => {
-  //       return {
-  //         ...prev,
-  //         menuTitle: 'Find Places',
-  //         subMenuTitle: 'My Locations',
-  //         subMenuOpen: prev.subMenuOpen ? false : true,
-  //       };
-  //     });
-  //   } else {
-  //     setView(MY_LOCATIONS);
-  //     setDropDown(prev => {
-  //       return {
-  //         ...prev,
-  //         menuTitle: 'My Locations',
-  //         subMenuTitle: 'Find Places',
-  //         subMenuOpen: prev.subMenuOpen ? false : true,
-  //       };
-  //     });
-  //   }
-  // };
 
   return (
     <div className='w-full bg-gray-600'>
-      <div className='flex items-center w-full px-3 pb-1 space-x-2'>
+      <div className='flex items-center w-full px-3 pb-2 space-x-2 border-b border-gray-100 border-opacity-50'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 20 20'
           fill='currentColor'
           className={'h-6 w-6 cursor-pointer'}
           onClick={() =>
-            props.updateSidebar(
+            updateSidebar(
               !sideBarState.rightNav.userCollapsed,
               !sideBarState.rightNav.collapsed,
               null,
@@ -89,7 +51,7 @@ export default function ActivitiesRightNav(props) {
           Attractions
         </h1>
       </div>
-      <div className='flex flex-col divide-y divide-gray-500 divide-opacity-50'>
+      <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50'>
         <div className={'flex-shrink-0'}>
           <div
             className={

@@ -33,14 +33,13 @@ const dataReducer = (state, action) => {
       return {
         ...state,
         sideNav: {
+          belowBreak: action.belowBreak,
           rightNav: {
-            ...state.sideNav.rightNav,
             collapsed: action.rightNav.collapsed,
             breakPointCollapsed: action.rightNav.breakPointCollapsed,
             userCollapsed: action.rightNav.userCollapsed,
           },
           leftNav: {
-            ...state.sideNav.leftNav,
             collapsed: action.leftNav.collapsed,
             breakPointCollapsed: action.leftNav.breakPointCollapsed,
             userCollapsed: action.leftNav.userCollapsed,
