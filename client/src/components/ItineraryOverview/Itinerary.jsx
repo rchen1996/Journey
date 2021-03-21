@@ -364,6 +364,7 @@ export default function Itinerary(props) {
                   deleteTripNote={deleteTripNote}
                   itinerary={itinerary}
                   dispatch={dispatch}
+                  editTripNote={editTripNote}
                 />
               );
             })}
