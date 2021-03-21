@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { SET_BOOKMARKS } from '../../reducers/application';
 
 import ItineraryDays from './ItineraryDays';
+import AddNoteForm from './AddNoteForm';
 
 export default function Itinerary(props) {
   const {
@@ -21,6 +22,10 @@ export default function Itinerary(props) {
   const SHOW = 'SHOW';
   const HIDE = 'HIDE';
   const [view, setView] = useState(SHOW);
+
+  const ADD = 'ADD';
+  const DEFAULT = 'DEFAULT';
+  const [addView, setAddView] = useState(DEFAULT);
 
   const formatDate = dateString => {
     if (dateString) {
@@ -115,6 +120,10 @@ export default function Itinerary(props) {
 
   const toggleNotes = event => {
     view === SHOW ? setView(HIDE) : setView(SHOW);
+  };
+
+  const addNote = () => {
+    addView === ADD ? setAddView(DEFAULT) : setAddView(ADD);
   };
 
   return (
@@ -255,6 +264,22 @@ export default function Itinerary(props) {
         <h2 className='pl-4 ml-8 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16'>
           Trip Notes
         </h2>
+        {url.includes('edit') && (
+          <button type='button' onClick={addNote}>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              className='w-5 h-5'
+            >
+              <path
+                fillRule='evenodd'
+                d='M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z'
+                clipRule='evenodd'
+              />
+            </svg>
+          </button>
+        )}
         <button type='button' onClick={toggleNotes}>
           {view === SHOW && (
             <svg
@@ -287,6 +312,7 @@ export default function Itinerary(props) {
             </svg>
           )}
         </button>
+        {addView === ADD && <AddNoteForm />}
         <article className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>
           <div className='flex items-center pt-2'>
             {pinnedNotes.length > 0 &&
