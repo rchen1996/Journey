@@ -22,7 +22,7 @@ export default function ActivitiesRightNav(props) {
 
   return (
     <div className='w-full bg-gray-600'>
-      <div className='flex items-center w-full px-3 pb-2 space-x-2 border-b border-gray-100 border-opacity-50'>
+      <div className='flex items-center w-full px-3 pb-2 space-x-3 border-b border-gray-100 border-opacity-50'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 20 20'
