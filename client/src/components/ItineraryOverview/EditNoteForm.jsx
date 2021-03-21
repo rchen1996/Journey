@@ -78,7 +78,7 @@ export default function EditNoteForm(props) {
           className='mb-4 border-gray-300 rounded-md appearance-none focus:ring-teal-600 focus:ring-1 focus:border-teal-600'
         />
       </div>
-      <div className='space-x-2'>
+      <div className='space-x-3'>
         <button
           type='button'
           onClick={cancel}
