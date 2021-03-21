@@ -6,8 +6,7 @@ export default function PrintableItinerary({ children }) {
   const { pathname } = useLocation();
   const history = useHistory();
   const removeEdit = () => {
-    console.log('should remove edit');
-    history.push(pathname.replace('edit', ''));
+    history.push(pathname.replace('/edit', ''));
   };
   const linkToPrint = () => {
     return (
