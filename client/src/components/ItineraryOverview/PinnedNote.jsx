@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SET_ITINERARY } from '../../reducers/application';
+import EditNoteForm from './EditNoteForm';
 
 export default function PinnedNote(props) {
-  const { note, deleteTripNote, itinerary, dispatch } = props;
+  const { note, deleteTripNote, itinerary, dispatch, editTripNote } = props;
 
   const url = useLocation().pathname;
 
   const DELETE = 'DELETE';
   const NOTE = 'NOTE';
-  const [deleteView, setDeleteView] = useState(NOTE);
+  const EDIT = 'EDIT';
+  const [view, setView] = useState(NOTE);
 
   const deleteNote = () => {
     deleteTripNote(itinerary.id, note.id).then(res => {
@@ -22,7 +24,7 @@ export default function PinnedNote(props) {
 
   return (
     <div>
-      {deleteView === NOTE && (
+      {view === NOTE && (
         <div className='flex items-center py-2 '>
           <div
             key={note.id}
@@ -48,7 +50,7 @@ export default function PinnedNote(props) {
             </div>
             {url.includes('edit') && (
               <div className='flex items-center pr-2 space-x-3'>
-                <button type='button'>
+                <button type='button' onClick={() => setView(EDIT)}>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'
@@ -63,7 +65,7 @@ export default function PinnedNote(props) {
                     />
                   </svg>
                 </button>
-                <button type='button' onClick={() => setDeleteView(DELETE)}>
+                <button type='button' onClick={() => setView(DELETE)}>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'
@@ -82,16 +84,26 @@ export default function PinnedNote(props) {
           </div>
         </div>
       )}
-      {deleteView === DELETE && (
+      {view === DELETE && (
         <div>
           <p>Are you sure you want to delete this note?</p>
-          <button type='button' onClick={() => setDeleteView(NOTE)}>
+          <button type='button' onClick={() => setView(NOTE)}>
             Cancel
           </button>
           <button type='button' onClick={deleteNote}>
             Delete
           </button>
         </div>
+      )}
+      {view === EDIT && (
+        <EditNoteForm
+          editTripNote={editTripNote}
+          itinerary={itinerary}
+          dispatch={dispatch}
+          note={note}
+          setView={setView}
+          NOTE={NOTE}
+        />
       )}
     </div>
   );

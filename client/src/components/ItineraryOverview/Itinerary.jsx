@@ -18,6 +18,7 @@ export default function Itinerary(props) {
     dispatch,
     addTripNote,
     deleteTripNote,
+    editTripNote,
   } = props;
 
   const url = useLocation().pathname;
@@ -305,6 +306,7 @@ export default function Itinerary(props) {
                   deleteTripNote={deleteTripNote}
                   itinerary={itinerary}
                   dispatch={dispatch}
+                  editTripNote={editTripNote}
                 />
               );
             })}
