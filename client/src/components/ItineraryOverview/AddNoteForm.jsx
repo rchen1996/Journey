@@ -40,7 +40,7 @@ export default function AddNoteForm(props) {
 
   return (
     <form
-      className='p-4 mb-2 bg-gray-100 shadow-md rounded-xl'
+      className='p-4 mb-4 bg-gray-100 shadow-md rounded-xl'
       onSubmit={addNote}
     >
       <div className='flex flex-col pb-3'>

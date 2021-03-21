@@ -34,7 +34,7 @@ export default function PinnedNote(props) {
                 focusable='false'
                 data-prefix='fas'
                 data-icon='thumbtack'
-                className='flex-shrink-0 w-5 h-5'
+                className='self-start flex-shrink-0 w-5 h-5 mt-1'
                 role='img'
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 384 512'
