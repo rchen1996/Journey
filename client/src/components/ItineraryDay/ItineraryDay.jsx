@@ -111,7 +111,7 @@ export default function ItineraryDay(props) {
           : `flex w-full mt-16 lg:ml-64 xl:ml-80`
       }
     >
-      <section className='flex flex-col justify-start w-5/6 h-full mx-auto my-8 mt-8 space-y-4'>
+      <section className='flex flex-col justify-start w-full h-full px-12 mt-8 space-y-4'>
         <header
           className={
             view !== DELETE
