@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { SET_ITINERARY } from '../../reducers/application';
 
 export default function Note(props) {
-  const { note } = props;
+  const { note, deleteTripNote, itinerary, dispatch } = props;
 
   const url = useLocation().pathname;
 
   const DELETE = 'DELETE';
   const NOTE = 'NOTE';
   const [deleteView, setDeleteView] = useState(NOTE);
+
+  const deleteNote = () => {
+    deleteTripNote(itinerary.id, note.id).then(res => {
+      dispatch({
+        type: SET_ITINERARY,
+        itinerary: { ...itinerary, ...res.data },
+      });
+    });
+  };
 
   return (
     <div>
@@ -69,6 +79,9 @@ export default function Note(props) {
           <p>Are you sure you want to delete this note?</p>
           <button type='button' onClick={() => setDeleteView(NOTE)}>
             Cancel
+          </button>
+          <button type='button' onClick={deleteNote}>
+            Delete
           </button>
         </div>
       )}

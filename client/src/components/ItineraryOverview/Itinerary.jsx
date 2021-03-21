@@ -390,7 +390,15 @@ export default function Itinerary(props) {
           {view === SHOW &&
             regularNotes.length > 0 &&
             regularNotes.map(note => {
-              return <Note key={note.id} note={note} />;
+              return (
+                <Note
+                  key={note.id}
+                  note={note}
+                  deleteTripNote={deleteTripNote}
+                  itinerary={itinerary}
+                  dispatch={dispatch}
+                />
+              );
             })}
           {regularNotes.length === 0 && pinnedNotes.length === 0 && (
             <p>No trip notes to display</p>
