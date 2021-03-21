@@ -13,7 +13,7 @@ export default function PrintableItinerary({ children }) {
     return (
       <button
         type='button'
-        className='absolute flex items-center p-2 -mt-0.5 space-x-2 lg:mr-2 top-24 lg:right-16 right-10 hover:underline'
+        className='absolute flex items-center p-2 -mt-0.5 space-x-2 lg:mr-2 top-24 lg:right-16 right-40 hover:underline'
       >
         <span className='hidden text-sm md:inline'>Print</span>
         <svg
@@ -37,7 +37,11 @@ export default function PrintableItinerary({ children }) {
   return (
     <div
       ref={componentRef}
-      className='flex flex-col w-full pt-16 lg:ml-64 xl:ml-80'
+      className={
+        children.props.sideBarState.leftNav.collapsed
+          ? 'flex flex-col w-full pt-16 ml-16 px-32'
+          : 'flex flex-col w-full pt-16 lg:ml-64 xl:ml-80'
+      }
     >
       <ReactToPrint
         trigger={linkToPrint}

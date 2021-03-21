@@ -14,86 +14,91 @@ export default function ActivitiesRightNav(props) {
     createActivity,
     updateActivityDay,
     deleteActivity,
+    updateSidebar,
+    sideBarState,
   } = props;
 
   const [view, setView] = useState(MY_LOCATIONS);
-  const [dropDown, setDropDown] = useState({
-    menuTitle: 'My Locations',
-    subMenuTitle: 'Find Places',
-    subMenuOpen: false,
-  });
-
-  const handleDropDown = () => {
-    setDropDown(prev => {
-      return {
-        ...prev,
-        subMenuOpen: prev.subMenuOpen ? false : true,
-      };
-    });
-  };
-
-  const updateMenuViewInfo = () => {
-    if (dropDown.menuTitle === 'My Locations') {
-      setView(ATTRACTION_SEARCH);
-      setDropDown(prev => {
-        return {
-          ...prev,
-          menuTitle: 'Find Places',
-          subMenuTitle: 'My Locations',
-          subMenuOpen: prev.subMenuOpen ? false : true,
-        };
-      });
-    } else {
-      setView(MY_LOCATIONS);
-      setDropDown(prev => {
-        return {
-          ...prev,
-          menuTitle: 'My Locations',
-          subMenuTitle: 'Find Places',
-          subMenuOpen: prev.subMenuOpen ? false : true,
-        };
-      });
-    }
-  };
 
   return (
     <div className='w-full bg-gray-600'>
-      <div className='divide-y divide-gray-500 divide-opacity-50'>
-        <div className={dropDown.subMenuOpen ? 'block' : 'mb-4'}>
+      <div className='flex items-center w-full px-3 pb-2 space-x-3 border-b border-gray-100 border-opacity-50'>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 20 20'
+          fill='currentColor'
+          className={'h-6 w-6 cursor-pointer'}
+          onClick={() =>
+            updateSidebar(
+              !sideBarState.rightNav.userCollapsed,
+              !sideBarState.rightNav.collapsed,
+              null,
+              null
+            )
+          }
+        >
+          <path
+            fillRule='evenodd'
+            d='M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z'
+            clipRule='evenodd'
+          />
+        </svg>
+        <h1
+          className={
+            sideBarState.rightNav.collapsed ? 'hidden' : 'text-xl font-bold'
+          }
+        >
+          Attractions
+        </h1>
+      </div>
+      <div className='flex flex-col divide-y divide-gray-100 divide-opacity-50'>
+        <div className={'flex-shrink-0'}>
           <div
-            className='flex items-center justify-between w-full p-4 text-xl font-bold bg-gray-200 bg-opacity-25 cursor-pointer sm:px-3 sm:py-2 rounded-xl'
+            className={
+              view === MY_LOCATIONS
+                ? 'mb-2 flex items-center p-4 text-lg font-bold sm:px-3 sm:py-1 bg-gray-200 bg-opacity-25 rounded-xl cursor-pointer mt-2'
+                : 'mb-2 flex items-center p-4 text-lg font-bold sm:px-3 sm:py-1 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl cursor-pointer mt-2'
+            }
             type='button'
-            onClick={handleDropDown}
+            onClick={() => setView(MY_LOCATIONS)}
           >
-            <span className=''>{dropDown.menuTitle}</span>
             <svg
-              width='14'
-              height='14'
-              viewBox='0 0 14 11'
-              fill='none'
               xmlns='http://www.w3.org/2000/svg'
-              className={
-                dropDown.subMenuOpen
-                  ? 'transform duration-300 -rotate-0 cursor-pointer pointer-events-none mr-1'
-                  : 'transform duration-300 -rotate-90 cursor-pointer pointer-events-none mr-1'
-              }
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              className='flex-shrink-0 w-5 h-5 mr-2'
             >
               <path
-                d='M7.86603 10.5001C7.48112 11.1667 6.51887 11.1667 6.13397 10.5001L0.937822 1.50006C0.552922 0.833392 1.03405 5.98142e-05 1.80385 5.98815e-05L12.1962 6.079e-05C12.966 6.08573e-05 13.4471 0.833394 13.0622 1.50006L7.86603 10.5001Z'
-                fill='#F4F4F5'
+                fillRule='evenodd'
+                d='M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z'
+                clipRule='evenodd'
               />
             </svg>
+            <span>My Locations</span>
           </div>
           <div
-            type='button'
-            onClick={updateMenuViewInfo}
             className={
-              dropDown.subMenuOpen
-                ? 'mb-2 flex items-center justify-between w-full p-4 text-xl font-bold sm:px-3 sm:py-2 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl cursor-pointer mt-2'
-                : 'hidden'
+              view === ATTRACTION_SEARCH
+                ? 'mb-2 flex items-center p-4 text-lg font-bold sm:px-3 sm:py-1 bg-gray-200 bg-opacity-25 rounded-xl cursor-pointer mt-2'
+                : 'mb-2 flex items-center p-4 text-lg font-bold sm:px-3 sm:py-1 hover:bg-gray-200 hover:bg-opacity-25 rounded-xl cursor-pointer mt-2'
             }
+            type='button'
+            onClick={() => setView(ATTRACTION_SEARCH)}
           >
-            {dropDown.subMenuTitle}
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              className='flex-shrink-0 w-5 h-5 mr-2'
+            >
+              <path d='M9 9a2 2 0 114 0 2 2 0 01-4 0z' />
+              <path
+                fillRule='evenodd'
+                d='M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a4 4 0 00-3.446 6.032l-2.261 2.26a1 1 0 101.414 1.415l2.261-2.261A4 4 0 1011 5z'
+                clipRule='evenodd'
+              />
+            </svg>
+            <span className=''>Find Places</span>
           </div>
         </div>
         {view === MY_LOCATIONS && itinerary && (

@@ -13,6 +13,7 @@ export default function Itinerary(props) {
     addBookmark,
     deleteBookmark,
     dispatch,
+    sideBarState,
   } = props;
 
   const url = useLocation().pathname;
