@@ -482,6 +482,18 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getTripNotes = (itinerary_id) => {
+    const query = {
+      text:`SELECT * from trip_notes
+      WHERE itinerary_id = $1`,
+      values:[itinerary_id]
+    }
+    return db
+      .query(query)
+      .then(res => res.rows)
+      .catch(err => err);
+  }
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -505,5 +517,6 @@ module.exports = db => {
     createActivityWithoutDay,
     editActivityDay,
     getQueryItineraries,
+    getTripNotes
   };
 };

@@ -101,7 +101,7 @@ CREATE TABLE "trip_notes" (
   "itinerary_id" int NOT NULL,
   "note" text NOT NULL,
   "important" boolean NOT NULL default false
-)
+);
 
 ALTER TABLE "travel_parties" ADD FOREIGN KEY ("itinerary_id") REFERENCES "itineraries" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
