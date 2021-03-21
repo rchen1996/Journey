@@ -247,6 +247,7 @@ export default function Itinerary(props) {
                   <p>{note.note}</p>
                 );
               })}
+            {pinnedNotes.length === 0 && <p>No pinned notes</p>}
           </div>
         </div>
       </div>
@@ -263,6 +264,7 @@ export default function Itinerary(props) {
                 <p>{note.note}</p>
               );
             })}
+          {regularNotes.length === 0 && <p>No trip notes to display</p>}
         </article>
       </div>
 
