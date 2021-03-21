@@ -296,7 +296,7 @@ export default function Itinerary(props) {
             DEFAULT={DEFAULT}
           />
         )}
-        <article className='flex flex-col p-4 bg-gray-100 divide-y shadow-md rounded-xl divide'>
+        <article className='flex flex-col bg-gray-100 divide-y shadow-md rounded-xl divide'>
           {pinnedNotes.length > 0 &&
             pinnedNotes.map(note => {
               return (
@@ -307,11 +307,12 @@ export default function Itinerary(props) {
                   itinerary={itinerary}
                   dispatch={dispatch}
                   editTripNote={editTripNote}
+                  isRegularNotes={regularNotes.length !== 0}
                 />
               );
             })}
           {regularNotes.length !== 0 && (
-            <div className='flex items-center py-2 space-x-2'>
+            <div className='flex items-center p-4 space-x-2'>
               <button
                 type='button'
                 onClick={toggleNotes}
@@ -356,7 +357,7 @@ export default function Itinerary(props) {
           )}
           {view === SHOW &&
             regularNotes.length > 0 &&
-            regularNotes.map(note => {
+            regularNotes.map((note, index) => {
               return (
                 <Note
                   key={note.id}
@@ -364,11 +365,27 @@ export default function Itinerary(props) {
                   deleteTripNote={deleteTripNote}
                   itinerary={itinerary}
                   dispatch={dispatch}
+                  isRegularNotes={regularNotes.length !== 0}
+                  isMiddleNote={index !== regularNotes.length - 1}
                 />
               );
             })}
           {regularNotes.length === 0 && pinnedNotes.length === 0 && (
-            <p>No trip notes to display</p>
+            <div className='flex items-center p-4 space-x-2'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 20 20'
+                fill='currentColor'
+                className='w-5 h-5'
+              >
+                <path
+                  fillRule='evenodd'
+                  d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                  clipRule='evenodd'
+                />
+              </svg>
+              <p className=''>No trip notes to display</p>
+            </div>
           )}
         </article>
       </div>

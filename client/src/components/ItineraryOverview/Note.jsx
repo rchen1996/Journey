@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SET_ITINERARY } from '../../reducers/application';
+import DeleteConfirmation from '../DeleteConfirmation';
 
 export default function Note(props) {
-  const { note, deleteTripNote, itinerary, dispatch } = props;
+  const { note, deleteTripNote, itinerary, dispatch, isRegularNotes } = props;
 
   const url = useLocation().pathname;
 
@@ -20,10 +21,11 @@ export default function Note(props) {
     });
   };
 
+  const isMiddleNote = props.isMiddleNote ? '' : 'rounded-b-xl';
   return (
     <div>
       {deleteView === NOTE && (
-        <div className='flex items-center justify-between py-2 space-x-2'>
+        <div className='flex items-center justify-between p-4 space-x-2'>
           <div className='flex items-center space-x-3'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -75,14 +77,20 @@ export default function Note(props) {
         </div>
       )}
       {deleteView === DELETE && (
-        <div>
-          <p>Are you sure you want to delete this note?</p>
-          <button type='button' onClick={() => setDeleteView(NOTE)}>
-            Cancel
-          </button>
-          <button type='button' onClick={deleteNote}>
-            Delete
-          </button>
+        <div
+          className={
+            isRegularNotes
+              ? `p-4 bg-gray-600 bg-opacity-80 ${isMiddleNote}`
+              : 'p-4 bg-gray-600 bg-opacity-80 rounded-b-xl'
+          }
+        >
+          <DeleteConfirmation
+            title='Delete Note'
+            message='Are you sure you want to delete this note?'
+            removeItem={deleteNote}
+            setView={setDeleteView}
+            DEFAULT={NOTE}
+          ></DeleteConfirmation>
         </div>
       )}
     </div>
