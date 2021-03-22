@@ -51,9 +51,9 @@ export default function ItineraryListItem(props) {
         <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
           <div
             className={
-              props.user.id && !isBookmarked
+              props.user.id
                 ? 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'
-                : 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'
+                : 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform'
             }
           >
             {props.user.id && !isBookmarked && (
@@ -93,8 +93,8 @@ export default function ItineraryListItem(props) {
                       fill='#F4F4F5'
                     />
                     <path
-                      fill-rule='evenodd'
-                      clip-rule='evenodd'
+                      fillRule='evenodd'
+                      clipRule='evenodd'
                       d='M15 14C16.0609 14 17.0783 13.5786 17.8284 12.8284C18.5786 12.0783 19 11.0609 19 10C19 8.93913 18.5786 7.92172 17.8284 7.17157C17.0783 6.42143 16.0609 6 15 6C13.9391 6 12.9217 6.42143 12.1716 7.17157C11.4214 7.92172 11 8.93913 11 10C11 11.0609 11.4214 12.0783 12.1716 12.8284C12.9217 13.5786 13.9391 14 15 14V14ZM13.5 9.5C13.3674 9.5 13.2402 9.55268 13.1464 9.64645C13.0527 9.74021 13 9.86739 13 10C13 10.1326 13.0527 10.2598 13.1464 10.3536C13.2402 10.4473 13.3674 10.5 13.5 10.5H16.5C16.6326 10.5 16.7598 10.4473 16.8536 10.3536C16.9473 10.2598 17 10.1326 17 10C17 9.86739 16.9473 9.74021 16.8536 9.64645C16.7598 9.55268 16.6326 9.5 16.5 9.5H13.5Z'
                       fill='#DC2626'
                     />
@@ -156,7 +156,6 @@ export default function ItineraryListItem(props) {
           <p className='text-sm text-gray-500 line-clamp-3'>{description}</p>
         </div>
       </div>
-      {/* <span className='text-xs hover:underline'>{'Read more -->'}</span> */}
     </article>
   );
 }

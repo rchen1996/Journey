@@ -135,14 +135,13 @@ export default function ItineraryList(props) {
 
   return (
     <div className='w-full h-full pb-8 mt-16'>
-      {/* <div className='flex flex-col items-center pt-12 pb-4 space-y-2'></div> */}
       <form
         onSubmit={search}
         className='flex flex-col items-center w-full py-8 mb-8 shadow-md bg-gradient-to-b to-teal-600 from-blue-400'
       >
         <div className='flex flex-col w-3/4 p-4 py-6 mb-2 bg-gray-100 shadow-md md:w-3/4 lg:w-1/2 rounded-xl'>
           <div className='flex flex-col items-center pb-3 md:-ml-4'>
-            <h1 className='pb-1 text-5xl font-black'>Explore</h1>
+            <h1 className='pb-1 text-5xl font-black '>Explore</h1>
             <h2 className='text-center text-gray-500'>
               Get inspired by other members' explorations and adventures
             </h2>

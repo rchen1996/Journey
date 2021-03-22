@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { SET_ITINERARY } from '../../reducers/application';
 
 export default function AttractionsListItem(props) {
@@ -10,17 +11,22 @@ export default function AttractionsListItem(props) {
     createActivity,
   } = props;
 
+  const SHOW_SUCCESS = 'SHOW_SUCCESS';
+  const HIDE_SUCCESS = 'HIDE_SUCCESS';
+  const [view, setView] = useState(HIDE_SUCCESS);
+
   const addToMyLocations = () => {
     addMyLocation(attraction.id, itinerary.id).then(res => {
-      if (res.data.error) {
-        // display error => must be logged in, or don't have permissions becuase not part of travel party
-      } else {
+      if (!res.data.error) {
         dispatch({
           type: SET_ITINERARY,
           itinerary: { ...itinerary, ...res.data },
         });
 
-        // display message upon successfully added
+        setView(SHOW_SUCCESS);
+        setTimeout(() => {
+          setView(HIDE_SUCCESS);
+        }, 3000);
       }
     });
   };
@@ -28,15 +34,11 @@ export default function AttractionsListItem(props) {
   const addToDay = () => {
     const activity = { attractionId: attraction.id };
     createActivity(activity, itinerary.id, dayId).then(res => {
-      if (res.data.error) {
-        // dispay error => must be logged in, or don't have permissions because they are not part of travel party
-      } else {
+      if (!res.data.error) {
         dispatch({
           type: SET_ITINERARY,
           itinerary: { ...itinerary, ...res.data },
         });
-
-        // display message upon successfully added
       }
     });
   };
@@ -44,11 +46,33 @@ export default function AttractionsListItem(props) {
   return (
     <div className='p-3 text-gray-600 bg-gray-100 shadow-md rounded-xl'>
       {attraction.image && (
-        <div className='mb-2 aspect-w-2 aspect-h-1 aspect-w-1'>
+        <div className='flex mb-2 aspect-w-2 aspect-h-1 aspect-w-1'>
+          <div
+            className={
+              view === SHOW_SUCCESS
+                ? 'z-50 p-4 font-bold text-xl text-gray-100 bg-gray-600 bg-opacity-90 rounded-xl flex justify-center items-center pb-4 pr-6 transition duration-300 text-opacity-100'
+                : 'z-50 p-4 font-bold text-xl text-gray-100 bg-gray-600 bg-opacity-0 rounded-xl flex justify-center items-center pb-4 pr-6 transition duration-300 text-opacity-0'
+            }
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              className='w-5 h-5 mr-2'
+            >
+              <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
+            </svg>
+
+            <span>Bookmark added!</span>
+          </div>
           <img
             src={attraction.image}
             alt='attraction'
-            className='object-cover object-bottom shadow-sm rounded-xl'
+            className={
+              view === SHOW_SUCCESS
+                ? 'object-cover object-bottom shadow-sm rounded-xl'
+                : 'object-cover object-bottom shadow-sm rounded-xl'
+            }
           />
         </div>
       )}

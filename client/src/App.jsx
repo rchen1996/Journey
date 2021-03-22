@@ -17,7 +17,6 @@ import MyGroup from './components/MyGroup';
 import ItineraryDay from './components/ItineraryDay/ItineraryDay';
 import AddActivityForm from './components/ItineraryDay/AddActivityForm';
 import Bookmarks from './components/Bookmarks';
-import MenuOpener from './components/MenuOpener';
 import ManageAccount from './components/ManageAccount';
 import EditItineraryForm from './components/EditItineraryForm';
 import RightNav from './components/RightNav/RightNav';
@@ -39,7 +38,7 @@ function App() {
     deleteBookmark,
     addBookmark,
     deleteDayFromItinerary,
-    updateMenuState,
+    updateSidebar,
     deleteActivity,
     editActivity,
     changePassword,
@@ -49,6 +48,9 @@ function App() {
     updateActivityDay,
     deleteActivityWithoutDay,
     searchItineraries,
+    addTripNote,
+    deleteTripNote,
+    editTripNote,
   } = useApplicationData();
 
   const { user, myItineraries, itinerary, bookmarks, key } = state;
@@ -98,13 +100,9 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isLeftNavOpen={state.isLeftNavOpen}
+              sideBarState={state.sideNav}
+              updateSidebar={updateSidebar}
             />
-            <MenuOpener
-              updateMenuState={updateMenuState}
-              isLeftNavOpen={state.isLeftNavOpen}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener>
             {itinerary &&
               itinerary.users &&
               itinerary.users.some(member => member.id === user.id) && (
@@ -113,7 +111,8 @@ function App() {
                   itinerary={itinerary}
                   removeCollaborator={removeCollaborator}
                   addCollaborator={addCollaborator}
-                  isLeftNavOpen={state.isLeftNavOpen}
+                  sideBarState={state.sideNav}
+                  updateSidebar={updateSidebar}
                 />
               )}
           </main>
@@ -125,18 +124,15 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isLeftNavOpen={state.isLeftNavOpen}
+              sideBarState={state.sideNav}
+              updateSidebar={updateSidebar}
             />
-            <MenuOpener
-              updateMenuState={updateMenuState}
-              isLeftNavOpen={state.isLeftNavOpen}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener>
             <AddActivityForm
               dispatch={dispatch}
               onSave={createActivity}
               itinerary={itinerary}
-              isLeftNavOpen={state.isLeftNavOpen}
+              sideBarState={state.sideNav}
+              updateSidebar={updateSidebar}
             />
           </main>
         </Route>
@@ -147,28 +143,25 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isLeftNavOpen={state.isLeftNavOpen}
+              sideBarState={state.sideNav}
+              updateSidebar={updateSidebar}
             />
-            <MenuOpener
-              updateMenuState={updateMenuState}
-              isLeftNavOpen={state.isLeftNavOpen}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener>
             <ItineraryDay
               itinerary={itinerary}
               dispatch={dispatch}
               user={user}
               deleteDayFromItinerary={deleteDayFromItinerary}
               deleteActivity={deleteActivity}
-              isLeftNavOpen={state.isLeftNavOpen}
               editActivity={editActivity}
+              sideBarState={state.sideNav}
             />
             {itinerary &&
               itinerary.users &&
               itinerary.users.some(member => member.id === user.id) && (
                 <RightNav
                   itinerary={itinerary}
-                  isRightNavOpen={state.isRightNavOpen}
+                  sideBarState={state.sideNav}
+                  updateSidebar={updateSidebar}
                   dispatch={dispatch}
                   searchAttractions={searchAttractions}
                   addMyLocation={addMyLocation}
@@ -186,13 +179,9 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isLeftNavOpen={state.isLeftNavOpen}
+              sideBarState={state.sideNav}
+              updateSidebar={updateSidebar}
             />
-            <MenuOpener
-              updateMenuState={updateMenuState}
-              isLeftNavOpen={state.isLeftNavOpen}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener>
             {itinerary && (
               <EditItineraryForm
                 dispatch={dispatch}
@@ -209,13 +198,9 @@ function App() {
               itinerary={itinerary}
               setItinerary={setItinerary}
               addDayWithLocation={addDayWithLocation}
-              isLeftNavOpen={state.isLeftNavOpen}
+              sideBarState={state.sideNav}
+              updateSidebar={updateSidebar}
             />
-            <MenuOpener
-              updateMenuState={updateMenuState}
-              isLeftNavOpen={state.isLeftNavOpen}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener>
             {itinerary && (
               <PrintableItinerary>
                 <Itinerary
@@ -223,10 +208,13 @@ function App() {
                   itinerary={itinerary}
                   user={user}
                   deleteDayFromItinerary={deleteDayFromItinerary}
-                  isLeftNavOpen={state.isLeftNavOpen}
+                  sideBarState={state.sideNav}
                   addBookmark={addBookmark}
                   deleteBookmark={deleteBookmark}
                   bookmarks={bookmarks}
+                  addTripNote={addTripNote}
+                  deleteTripNote={deleteTripNote}
+                  editTripNote={editTripNote}
                 />
               </PrintableItinerary>
             )}

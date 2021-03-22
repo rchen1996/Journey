@@ -27,6 +27,10 @@ module.exports = ({
   createActivityWithoutDay,
   editActivityDay,
   getQueryItineraries,
+  getTripNotes,
+  editTripNote,
+  addTripNote,
+  deleteTripNote,
 }) => {
   router.get('/', (req, res) => {
     getAllItineraries().then(itineraries => res.send(itineraries));
@@ -175,9 +179,15 @@ module.exports = ({
     Promise.all([
       getDetailedItinerary(itinerary_id),
       getMyLocations(itinerary_id),
-    ]).then(([resultArr, myLocations]) => {
+      getTripNotes(itinerary_id),
+    ]).then(([resultArr, myLocations, tripNotes]) => {
       const itinerary = itineraryObj(resultArr);
-      res.send({ ...itinerary, my_locations: myLocations });
+
+      res.send({
+        ...itinerary,
+        my_locations: myLocations,
+        trip_notes: tripNotes,
+      });
     });
   });
 
@@ -405,16 +415,7 @@ module.exports = ({
             .slice(-1)[0]
             .days.slice(-1)[0].day_order;
 
-          console.log(
-            'new_day_order:',
-            new_day_order,
-            'last day order:',
-            last_day_order,
-            'newItinerary:',
-            newItinerary
-          );
           if (new_day_order && last_day_order !== new_day_order) {
-            console.log('does reorder');
             const daysIdArr = [];
             const daysOrderArr = [];
             newItinerary.locations.forEach(location => {
@@ -546,7 +547,7 @@ module.exports = ({
 
   router.put('/:itinerary_id/activities/:activity_id', (req, res) => {
     const { itinerary_id, activity_id } = req.params;
-    let { start_time, end_time, notes, dayId } = req.body;
+    let { start_time, end_time, notes, dayId, dayOrder } = req.body;
 
     const userId = req.session.userId;
 
@@ -589,24 +590,39 @@ module.exports = ({
           } else {
             if (start_time === '') start_time = null;
             if (end_time === '') end_time = null;
-            updateActivity(start_time, end_time, notes, activity_id).then(
-              result => {
-                if (result.message) {
-                  res.send({ error: `apiHelpers: ${result.message}` });
-                } else {
-                  getDetailedItinerary(itinerary_id).then(resultArr => {
-                    const parsed = itineraryObj(resultArr);
+            if (dayOrder === 'none') {
+              dayOrder = null;
+              start_time = null;
+              end_time = null;
+              notes = null;
+            }
+            updateActivity(
+              start_time,
+              end_time,
+              notes,
+              activity_id,
+              dayOrder,
+              itinerary_id
+            ).then(result => {
+              if (result.message) {
+                res.send({ error: `apiHelpers: ${result.message}` });
+              } else {
+                Promise.all([
+                  getDetailedItinerary(itinerary_id),
+                  getMyLocations(itinerary_id),
+                ]).then(([resultArr, myLocations]) => {
+                  const itinerary = itineraryObj(resultArr);
+                  const io = req.app.get('socketio');
 
-                    const io = req.app.get('socketio');
-
-                    io.sockets
-                      .in(Number(itinerary_id))
-                      .emit('itinerary', parsed);
-                    res.send(parsed);
+                  io.sockets.in(Number(itinerary_id)).emit('itinerary', {
+                    ...itinerary,
+                    my_locations: myLocations,
                   });
-                }
+
+                  res.send({ ...itinerary, my_locations: myLocations });
+                });
               }
-            );
+            });
           }
         }
       });
@@ -657,6 +673,59 @@ module.exports = ({
         }
       });
     }
+  });
+
+  router.post('/:itinerary_id/notes', (req, res) => {
+    const { itinerary_id } = req.params;
+    const { note, important } = req.body;
+    Promise.all([
+      addTripNote(itinerary_id, note, important),
+      getTripNotes(itinerary_id),
+    ]).then(([result, trip_notes]) => {
+      if (result.message) {
+        console.log(result.message);
+      }
+      const io = req.app.get('socketio');
+      io.sockets
+        .in(Number(itinerary_id))
+        .emit('itinerary', { trip_notes: trip_notes });
+      res.send({ trip_notes: trip_notes });
+    });
+  });
+
+  router.delete('/:itinerary_id/notes/:note_id', (req, res) => {
+    const { itinerary_id, note_id } = req.params;
+
+    Promise.all([deleteTripNote(note_id), getTripNotes(itinerary_id)]).then(
+      ([result, trip_notes]) => {
+        if (result.message) {
+          console.log(result.message);
+        }
+        const io = req.app.get('socketio');
+        io.sockets
+          .in(Number(itinerary_id))
+          .emit('itinerary', { trip_notes: trip_notes });
+        res.send({ trip_notes: trip_notes });
+      }
+    );
+  });
+
+  router.put('/:itinerary_id/notes/:note_id', (req, res) => {
+    const { itinerary_id, note_id } = req.params;
+    const { note, important } = req.body;
+    Promise.all([
+      editTripNote(note_id, note, important),
+      getTripNotes(itinerary_id),
+    ]).then(([result, trip_notes]) => {
+      if (result.message) {
+        console.log(result.message);
+      }
+      const io = req.app.get('socketio');
+      io.sockets
+        .in(Number(itinerary_id))
+        .emit('itinerary', { trip_notes: trip_notes });
+      res.send({ trip_notes: trip_notes });
+    });
   });
 
   return router;

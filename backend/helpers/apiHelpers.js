@@ -219,7 +219,6 @@ module.exports = db => {
     return db
       .query(query)
       .then(result => {
-        console.log('add Day to itinerary:', result.rows[0]);
         return result.rows[0];
       })
       .catch(err => err);
@@ -250,9 +249,11 @@ module.exports = db => {
 
   const getItinerariesForGroup = id => {
     const query = {
-      text: `SELECT itineraries.* FROM itineraries
-      JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id 
-      WHERE user_id = $1`,
+      text: `SELECT itineraries.*, COUNT(days.id) AS days FROM itineraries
+      LEFT JOIN travel_parties ON itineraries.id = travel_parties.itinerary_id
+      LEFT JOIN days ON itineraries.id = days.itinerary_id 
+      WHERE user_id = $1
+      GROUP BY itineraries.id`,
       values: [id],
     };
 
@@ -305,7 +306,14 @@ module.exports = db => {
       .catch(err => err);
   };
 
-  const updateActivity = (start_time, end_time, notes, activity_id) => {
+  const updateActivity = (
+    start_time,
+    end_time,
+    notes,
+    activity_id,
+    dayOrder,
+    itinerary_id
+  ) => {
     if (start_time && start_time.length < 8) {
       start_time += ':00';
     }
@@ -316,14 +324,37 @@ module.exports = db => {
       notes = '';
     }
 
-    const query = {
-      text: `UPDATE activities SET 
+    let text = `UPDATE activities SET 
+    start_time = $1,
+    end_time = $2,
+    notes = $3,
+    day_id = (SELECT id FROM days WHERE itinerary_id = $5 AND day_order = $6) 
+    WHERE id = $4
+    RETURNING *`;
+
+    let values = [
+      start_time,
+      end_time,
+      notes,
+      activity_id,
+      itinerary_id,
+      dayOrder,
+    ];
+
+    if (dayOrder === null) {
+      text = `UPDATE activities SET
       start_time = $1,
       end_time = $2,
-      notes = $3 
+      notes = $3,
+      day_id = $5
       WHERE id = $4
-      RETURNING *`,
-      values: [start_time, end_time, notes, activity_id],
+      RETURNING *;`;
+      values = [start_time, end_time, notes, activity_id, dayOrder];
+    }
+
+    const query = {
+      text: text,
+      values: values,
     };
     return db
       .query(query)
@@ -452,6 +483,58 @@ module.exports = db => {
       .catch(err => err);
   };
 
+  const getTripNotes = itinerary_id => {
+    const query = {
+      text: `SELECT * from trip_notes
+      WHERE itinerary_id = $1`,
+      values: [itinerary_id],
+    };
+    return db
+      .query(query)
+      .then(res => res.rows)
+      .catch(err => err);
+  };
+
+  const editTripNote = (noteId, note, important) => {
+    const query = {
+      text: `UPDATE trip_notes 
+      SET note = $2,
+      important = $3
+      WHERE id = $1
+      RETURNING *
+      `,
+      values: [noteId, note, important],
+    };
+    return db
+      .query(query)
+      .then(res => res.rows[0])
+      .catch(err => err);
+  };
+
+  const addTripNote = (itinerary_id, note, important) => {
+    const query = {
+      text: `INSERT INTO trip_notes (itinerary_id,note, important)
+      VALUES ($1,$2,$3)
+      RETURNING *;`,
+      values: [itinerary_id, note, important],
+    };
+    return db
+      .query(query)
+      .then(res => res.rows[0])
+      .catch(err => err);
+  };
+  const deleteTripNote = note_id => {
+    const query = {
+      text: `DELETE from trip_notes
+      WHERE id = $1 RETURNING*`,
+      values: [note_id],
+    };
+    return db
+      .query(query)
+      .then(res => res.rows[0])
+      .catch(err => err);
+  };
+
   return {
     getAllItineraries,
     createNewItinerary,
@@ -475,5 +558,9 @@ module.exports = db => {
     createActivityWithoutDay,
     editActivityDay,
     getQueryItineraries,
+    getTripNotes,
+    editTripNote,
+    addTripNote,
+    deleteTripNote,
   };
 };

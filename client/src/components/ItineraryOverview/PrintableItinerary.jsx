@@ -6,14 +6,13 @@ export default function PrintableItinerary({ children }) {
   const { pathname } = useLocation();
   const history = useHistory();
   const removeEdit = () => {
-    console.log('should remove edit');
-    history.push(pathname.replace('edit', ''));
+    history.push(pathname.replace('/edit', ''));
   };
   const linkToPrint = () => {
     return (
       <button
         type='button'
-        className='absolute flex items-center p-2 -mt-0.5 space-x-2 lg:mr-2 top-24 lg:right-16 right-10 hover:underline'
+        className='absolute flex items-center p-2 -mt-0.5 space-x-2 lg:mr-2 top-24 right-20 md:right-24 xl:right-36  hover:underline'
       >
         <span className='hidden text-sm md:inline'>Print</span>
         <svg
@@ -37,7 +36,11 @@ export default function PrintableItinerary({ children }) {
   return (
     <div
       ref={componentRef}
-      className='flex flex-col w-full pt-16 lg:ml-64 xl:ml-80'
+      className={
+        children.props.sideBarState.leftNav.collapsed
+          ? 'flex flex-col w-full pt-16 ml-16 px-8 md:px-18 xl:px-20'
+          : 'flex flex-col w-full pt-16 lg:ml-64 xl:ml-80 px-8 md:px-18 xl:px-20'
+      }
     >
       <ReactToPrint
         trigger={linkToPrint}

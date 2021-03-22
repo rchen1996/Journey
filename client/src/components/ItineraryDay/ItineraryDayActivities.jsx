@@ -5,7 +5,7 @@ import EditActivityForm from './EditActivityForm';
 import AlertMessage from '../AlertMessage';
 
 export default function ItineraryDayActivities(props) {
-  const { activity, editActivity, timeSlots } = props;
+  const { activity, editActivity, timeSlots, currentDay, itinerary } = props;
   const history = useHistory();
   const url = useLocation().pathname;
   const { itinerary_id, day_id } = useParams();
@@ -28,6 +28,7 @@ export default function ItineraryDayActivities(props) {
     start_time: activity.start_time,
     end_time: activity.end_time,
     notes: activity.notes,
+    dayOrder: currentDay.day_order,
   });
 
   const getTimeValue = timeString => {
@@ -45,7 +46,6 @@ export default function ItineraryDayActivities(props) {
       (a, b) => getTimeValue(a.start_time) - getTimeValue(b.start_time)
     );
 
-    console.log('filteredimeSlots', sortedTimeSlots);
     sortedTimeSlots.forEach((timeslot, index, arr) => {
       if (
         index < arr.length - 1 &&
@@ -85,8 +85,23 @@ export default function ItineraryDayActivities(props) {
       return;
     }
 
-    if (ifAvailable(activityForm.start_time, activityForm.end_time)) {
-      editActivity(itinerary_id, activity.id, activityForm).then(res => {
+    let start_time = activityForm.start_time;
+    let end_time = activityForm.end_time;
+    let notes = activityForm.notes;
+    let dayOrder = activityForm.dayOrder;
+
+    if (activityForm.dayOrder !== currentDay.day_order) {
+      start_time = null;
+      end_time = null;
+    }
+
+    let editedActivity = { start_time, end_time, notes, dayOrder };
+
+    if (
+      ifAvailable(activityForm.start_time, activityForm.end_time) ||
+      activityForm.dayOrder !== currentDay.day_order
+    ) {
+      editActivity(itinerary_id, activity.id, editedActivity).then(res => {
         if (res.error) {
           console.log('error:', res.error);
           return;
@@ -104,19 +119,6 @@ export default function ItineraryDayActivities(props) {
         status: true,
         message: 'There is a time conflict with another activity.',
       });
-
-      // editActivity(itinerary_id, activity.id, {
-      //   ...activityForm,
-      //   start_time: '',
-      //   end_time: '',
-      // }).then(res => {
-      //   if (res.error) {
-      //     console.log('error:', res.error);
-      //     return;
-      //   }
-      //   setActivityForm({ ...activityForm, start_time: '', end_time: '' });
-      //   setEditMode(BASE);
-      // });
     }
   }
 
@@ -234,7 +236,10 @@ export default function ItineraryDayActivities(props) {
               }
             >
               <img
-                src={activity.image}
+                src={
+                  activity.image ||
+                  'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2235&q=80'
+                }
                 alt='activity'
                 className='object-cover rounded-md shadow-lg'
               />
@@ -247,6 +252,7 @@ export default function ItineraryDayActivities(props) {
             handleEdit={handleEdit}
             cancel={cancel}
             EDIT={EDIT}
+            itinerary={itinerary}
           ></EditActivityForm>
           <div
             className={
@@ -335,7 +341,7 @@ export default function ItineraryDayActivities(props) {
                 />
               </svg>
 
-              <span className='ml-1 text-sm text-gray-500'>
+              <span className='ml-1 text-sm text-gray-500 line-clamp-4'>
                 {activity.description}
               </span>
             </div>

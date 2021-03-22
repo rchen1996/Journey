@@ -94,7 +94,7 @@ export default function MyGroup(props) {
   };
 
   return (
-    <section className='flex justify-center w-full h-full pt-16 lg:ml-64 xl:ml-80'>
+    <section className='flex justify-center w-full h-full pt-16 ml-16 lg:ml-64 xl:ml-80'>
       <div className='flex flex-col items-center w-3/4 h-full mt-8 space-y-4'>
         <header className='flex flex-col w-full space-y-2'>
           <div className='flex items-center justify-between'>
@@ -169,7 +169,7 @@ export default function MyGroup(props) {
                   </svg>
                 </button>
                 <button
-                  type='Submit'
+                  type='submit'
                   className='px-4 py-3 ml-6 font-semibold leading-none text-gray-200 bg-teal-600 border-2 border-transparent focus:ring-1 focus:ring-teal-600 hover:bg-transparent hover:border-teal-600 hover:text-teal-600 rounded-xl'
                 >
                   Add

@@ -18,8 +18,8 @@ export default function NewItineraryForm(props) {
   const [error, setError] = useState({
     staus: false,
     message: '',
-    show: 'flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
-    hide: 'hidden flex p-3 mx-8 mt-8 bg-red-700 bg-opacity-50 rounded-xl',
+    show: 'flex p-3 mb-4 bg-red-700 bg-opacity-50 rounded-xl ',
+    hide: 'hidden',
   });
 
   const [visibility, setVisibility] = useState(false);
@@ -104,13 +104,13 @@ export default function NewItineraryForm(props) {
         <h1 className='mb-4 ml-1 text-2xl font-bold'>
           Let's Go on an Adventure!
         </h1>
+        <AlertMessage
+          isError={error.status}
+          show={error.show}
+          hide={error.hide}
+          message={error.message}
+        ></AlertMessage>
         <div className='w-full shadow-lg bg-gray-50 rounded-xl'>
-          <AlertMessage
-            isError={error.status}
-            show={error.show}
-            hide={error.hide}
-            message={error.message}
-          ></AlertMessage>
           <form onSubmit={event => save(event)} className='flex flex-col'>
             <div className='flex flex-col mx-8 my-6'>
               <div className='flex flex-col justify-between md:space-x-8 md:flex-row'>

@@ -28,7 +28,6 @@ export default function ItineraryDays(props) {
   const handleDelete = () => {
     deleteDayFromItinerary(itinerary.id, day.id).then(res => {
       if (res.error) console.log('error: ', res.error);
-      // if (res.success) console.log('success: ', res.success);
     });
   };
   const addDays = (date, days) => {
@@ -37,17 +36,13 @@ export default function ItineraryDays(props) {
     return result;
   };
 
-  const isActivitiesZero =
-    day.activities.length === 0 ? 'rounded-b-xl' : 'rounded-t-xl';
-
   return (
     <article className='mb-6 bg-gray-100 divide-y divide-gray-600 shadow-lg divide-opacity-25 rounded-xl last:mb-0'>
       <div
         className={
           view !== DELETE
             ? 'flex items-center justify-between px-4 pt-4 pb-2 rounded-xl'
-            : 'flex items-center justify-between px-4 pt-4 pb-4 bg-gray-600 bg-opacity-75 ' +
-              isActivitiesZero
+            : 'flex items-center justify-between px-4 pt-4 pb-4 bg-gray-600 bg-opacity-75 rounded-t-xl'
         }
       >
         <div

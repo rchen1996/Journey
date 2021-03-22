@@ -51,9 +51,9 @@ export default function MyItinerariesListItem(props) {
     <div className='w-full h-auto p-4 transition duration-500 transform bg-gray-100 shadow-lg rounded-xl hover:scale-105'>
       <article className='flex flex-col justify-between'>
         <div>
-          <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
+          <figure className='mb-0.25 rounded-md aspect-w-2 aspect-h-1 group'>
             {view === DEFAULT && (
-              <div className='z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'>
+              <div className='z-10 flex items-center justify-center space-x-8 transition duration-300 transform rounded-md hover:bg-gray-700 hover:bg-opacity-90 group'>
                 <Link to={`/itineraries/${id}/edit`} className='group'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -88,7 +88,7 @@ export default function MyItinerariesListItem(props) {
               </div>
             )}
             {view === DELETE && (
-              <div className='z-10 flex space-x-8 bg-gray-700 bg-opacity-90'>
+              <div className='z-10 flex space-x-8 bg-gray-700 rounded-md bg-opacity-90'>
                 <article className='flex flex-col items-center justify-center w-full h-full'>
                   <AlertMessage
                     isError={error.status}

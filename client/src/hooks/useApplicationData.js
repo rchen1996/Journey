@@ -4,7 +4,7 @@ import dataReducer, {
   SET_MY_ITINERARIES,
   SET_ITINERARY,
   SET_BOOKMARKS,
-  SHOW_MENU,
+  SHOW_SIDEBAR,
 } from '../reducers/application';
 import axios from 'axios';
 import { io } from 'socket.io-client';
@@ -16,8 +16,19 @@ export default function useApplicationData() {
     itinerary: null,
     myItineraries: [],
     bookmarks: [],
-    isLeftNavOpen: window.innerWidth >= 1024 ? true : false,
-    isRightNavOpen: window.innerWidth >= 1024 ? true : false,
+    sideNav: {
+      belowBreak: false,
+      rightNav: {
+        collapsed: false,
+        breakPointCollapsed: false,
+        userCollapsed: false,
+      },
+      leftNav: {
+        collapsed: false,
+        breakPointCollapsed: false,
+        userCollapsed: false,
+      },
+    },
     key: Math.random(),
   });
 
@@ -197,13 +208,22 @@ export default function useApplicationData() {
    * Updates menu states when size of the window is changed.
    * @param {boolean} breakpointTrigger Overrided from menu button
    */
-  function updateMenuState(leftNavTrigger, rightNavTrigger) {
+  function updateSidebar(right, rightUser, left, leftUser) {
     dispatch({
-      type: SHOW_MENU,
-      isRightNavOpen:
-        rightNavTrigger === null ? !state.isRightNavOpen : rightNavTrigger,
-      isLeftNavOpen:
-        leftNavTrigger === null ? !state.isLeftNavOpen : leftNavTrigger,
+      type: SHOW_SIDEBAR,
+      belowBreak: window.innerWidth < 1024,
+      rightNav: {
+        collapsed: right !== null ? right : state.sideNav.rightNav.collapsed,
+        breakPointCollapsed: state.sideNav.rightNav.breakPointCollapsed,
+        userCollapsed:
+          rightUser !== null ? rightUser : state.sideNav.rightNav.userCollapsed,
+      },
+      leftNav: {
+        collapsed: left !== null ? left : state.sideNav.leftNav.collapsed,
+        breakPointCollapsed: false,
+        userCollapsed:
+          leftUser !== null ? leftUser : state.sideNav.leftNav.userCollapsed,
+      },
     });
   }
 
@@ -211,9 +231,33 @@ export default function useApplicationData() {
     const handleWindowResize = () => {
       if (window.innerWidth >= 1024) {
         dispatch({
-          type: SHOW_MENU,
-          isRightNavOpen: true,
-          isLeftNavOpen: true,
+          type: SHOW_SIDEBAR,
+          belowBreak: false,
+          rightNav: {
+            collapsed: false,
+            breakPointCollapsed: true,
+            userCollapsed: false,
+          },
+          leftNav: {
+            collapsed: false,
+            breakPointCollapsed: true,
+            userCollapsed: false,
+          },
+        });
+      } else {
+        dispatch({
+          type: SHOW_SIDEBAR,
+          belowBreak: true,
+          rightNav: {
+            collapsed: true,
+            breakPointCollapsed: false,
+            userCollapsed: true,
+          },
+          leftNav: {
+            collapsed: true,
+            breakPointCollapsed: false,
+            userCollapsed: true,
+          },
         });
       }
     };
@@ -247,7 +291,6 @@ export default function useApplicationData() {
   };
 
   const editActivity = (itinerary_id, activity_id, activityForm) => {
-    console.log('from useapplicationdata ', activityForm);
     return axios
       .put(
         `/api/itineraries/${itinerary_id}/activities/${activity_id}`,
@@ -315,6 +358,24 @@ export default function useApplicationData() {
     return axios.get(`/api/itineraries/${query}/${type}/${length}`);
   };
 
+  const addTripNote = (itinerary_id, noteString, important) => {
+    return axios.post(`/api/itineraries/${itinerary_id}/notes`, {
+      note: noteString,
+      important,
+    });
+  };
+
+  const deleteTripNote = (itinerary_id, note_id) => {
+    return axios.delete(`/api/itineraries/${itinerary_id}/notes/${note_id}`);
+  };
+
+  const editTripNote = (itinerary_id, note_id, noteStr, important) => {
+    return axios.put(`/api/itineraries/${itinerary_id}/notes/${note_id}`, {
+      note: noteStr,
+      important,
+    });
+  };
+
   return {
     state,
     dispatch,
@@ -331,7 +392,7 @@ export default function useApplicationData() {
     deleteBookmark,
     addBookmark,
     deleteDayFromItinerary,
-    updateMenuState,
+    updateSidebar,
     deleteActivity,
     changePassword,
     editActivity,
@@ -341,5 +402,8 @@ export default function useApplicationData() {
     updateActivityDay,
     deleteActivityWithoutDay,
     searchItineraries,
+    addTripNote,
+    deleteTripNote,
+    editTripNote,
   };
 }
