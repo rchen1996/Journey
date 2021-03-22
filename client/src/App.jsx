@@ -17,7 +17,6 @@ import MyGroup from './components/MyGroup';
 import ItineraryDay from './components/ItineraryDay/ItineraryDay';
 import AddActivityForm from './components/ItineraryDay/AddActivityForm';
 import Bookmarks from './components/Bookmarks';
-import MenuOpener from './components/MenuOpener';
 import ManageAccount from './components/ManageAccount';
 import EditItineraryForm from './components/EditItineraryForm';
 import RightNav from './components/RightNav/RightNav';
@@ -104,12 +103,6 @@ function App() {
               sideBarState={state.sideNav}
               updateSidebar={updateSidebar}
             />
-            {/* <MenuOpener
-              updateMenuState={updateMenuState}
-              sideBarState={state.sideNav}
-              updateSidebar={updateSidebar}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener> */}
             {itinerary &&
               itinerary.users &&
               itinerary.users.some(member => member.id === user.id) && (
@@ -134,12 +127,6 @@ function App() {
               sideBarState={state.sideNav}
               updateSidebar={updateSidebar}
             />
-            {/* <MenuOpener
-              updateMenuState={updateMenuState}
-              sideBarState={state.sideNav}
-              updateSidebar={updateSidebar}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener> */}
             <AddActivityForm
               dispatch={dispatch}
               onSave={createActivity}
@@ -159,12 +146,6 @@ function App() {
               sideBarState={state.sideNav}
               updateSidebar={updateSidebar}
             />
-            {/* <MenuOpener
-              updateMenuState={updateMenuState}
-              sideBarState={state.sideNav}
-              updateSidebar={updateSidebar}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener> */}
             <ItineraryDay
               itinerary={itinerary}
               dispatch={dispatch}
@@ -201,12 +182,6 @@ function App() {
               sideBarState={state.sideNav}
               updateSidebar={updateSidebar}
             />
-            {/* <MenuOpener
-              updateMenuState={updateMenuState}
-              sideBarState={state.sideNav}
-              updateSidebar={updateSidebar}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener> */}
             {itinerary && (
               <EditItineraryForm
                 dispatch={dispatch}
@@ -226,12 +201,6 @@ function App() {
               sideBarState={state.sideNav}
               updateSidebar={updateSidebar}
             />
-            {/* <MenuOpener
-              updateMenuState={updateMenuState}
-              sideBarState={state.sideNav}
-              updateSidebar={updateSidebar}
-              isRightNavOpen={state.isRightNavOpen}
-            ></MenuOpener> */}
             {itinerary && (
               <PrintableItinerary>
                 <Itinerary
