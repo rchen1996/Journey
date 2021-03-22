@@ -1,4 +1,5 @@
 import BookmarksItem from './BookmarksItem';
+import { Link } from 'react-router-dom';
 
 export default function Bookmarks(props) {
   const parsedBookmarks = props.bookmarks.map(bookmark => (
@@ -18,6 +19,30 @@ export default function Bookmarks(props) {
           Your travel insiprations and dream trips you have saved.
         </h2>
       </div>
+      {/* <Link to='/itineraries'></Link> */}
+      {parsedBookmarks.length === 0 && (
+        <div className='flex items-center p-3 mx-12 mt-4 text-gray-100 bg-red-600 rounded-xl bg-opacity-80 lg:w-min lg:whitespace-nowrap'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 20 20'
+            fill='currentColor'
+            className='self-start flex-shrink-0 w-5 h-5 mt-0.5 mr-2'
+          >
+            <path
+              fillRule='evenodd'
+              d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+              clipRule='evenodd'
+            />
+          </svg>
+          <h3>
+            You have no bookmarked itineraries. Check out the{' '}
+            <Link to='/itineraries' className='underline hover:text-gray-200'>
+              explore
+            </Link>{' '}
+            page to find a trip!
+          </h3>
+        </div>
+      )}
       <section className='grid gap-4 m-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-rows'>
         {parsedBookmarks}
       </section>
