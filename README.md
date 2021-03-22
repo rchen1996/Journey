@@ -21,7 +21,7 @@ Back-end: Express, Node.js, PostgreSQL and Socket.io
 
 1. Create the `.env` by using `.env.example` as a reference
 
-- Sign up for Triposo API Key
+- Sign up for Triposo API Key (https://www.triposo.com/api/signup)
 
 2. Install dependencies: `npm i`
 3. Reset database (using Node v10.20.x): `npm run db:reset`
