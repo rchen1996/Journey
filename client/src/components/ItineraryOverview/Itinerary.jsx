@@ -72,7 +72,7 @@ export default function Itinerary(props) {
 
   useEffect(() => {
     const trip_notes = itinerary.trip_notes;
-    if (trip_notes.length > 0) {
+    if (trip_notes?.length > 0) {
     }
   });
 
@@ -138,35 +138,36 @@ export default function Itinerary(props) {
           <h2 className='pl-4 ml-8 text-2xl font-bold border-l-8 border-teal-600 lg:mx-16 sm:whitespace-nowrap'>
             Itinerary Overview
           </h2>
-
-          <div className='flex items-center mr-24 space-x-1 md:mr-32 lg:mr-40'>
-            <span className='hidden text-sm md:block'>
-              {bookmarkView === BOOKMARKED && user.id
-                ? 'Bookmarked'
-                : 'Bookmark'}
-            </span>
-            <button className='focus:outline-none'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 20 20'
-                stroke='currentColor'
-                strokeWidth='1.5'
-                fill={
-                  bookmarkView === BOOKMARKED && user.id
-                    ? 'currentColor'
-                    : 'transparent'
-                }
-                className={
-                  bookmarkView === BOOKMARKED && user.id
-                    ? 'w-5 h-5 text-red-600 '
-                    : 'w-5 h-5 '
-                }
-                onClick={handleBookmark}
-              >
-                <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
-              </svg>
-            </button>
-          </div>
+          {user.id && (
+            <div className='flex items-center mr-24 space-x-1 md:mr-32 lg:mr-40'>
+              <span className='hidden text-sm md:block'>
+                {bookmarkView === BOOKMARKED && user.id
+                  ? 'Bookmarked'
+                  : 'Bookmark'}
+              </span>
+              <button className='focus:outline-none'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  stroke='currentColor'
+                  strokeWidth='1.5'
+                  fill={
+                    bookmarkView === BOOKMARKED && user.id
+                      ? 'currentColor'
+                      : 'transparent'
+                  }
+                  className={
+                    bookmarkView === BOOKMARKED && user.id
+                      ? 'w-5 h-5 text-red-600 '
+                      : 'w-5 h-5 '
+                  }
+                  onClick={handleBookmark}
+                >
+                  <path d='M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z' />
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
 
         <div className='flex flex-col p-4 mx-8 bg-gray-100 divide-y shadow-md rounded-xl divide lg:mx-16'>

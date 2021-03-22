@@ -51,9 +51,9 @@ export default function ItineraryListItem(props) {
         <figure className='mb-0.25 overflow-hidden rounded-md aspect-w-2 aspect-h-1 group'>
           <div
             className={
-              props.user.id && !isBookmarked
+              props.user.id
                 ? 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'
-                : 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform hover:bg-gray-700 hover:bg-opacity-90 group'
+                : 'z-10 flex items-center justify-center space-x-8 transition duration-300 transform'
             }
           >
             {props.user.id && !isBookmarked && (

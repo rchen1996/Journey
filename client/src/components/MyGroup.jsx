@@ -169,7 +169,7 @@ export default function MyGroup(props) {
                   </svg>
                 </button>
                 <button
-                  type='Submit'
+                  type='submit'
                   className='px-4 py-3 ml-6 font-semibold leading-none text-gray-200 bg-teal-600 border-2 border-transparent focus:ring-1 focus:ring-teal-600 hover:bg-transparent hover:border-teal-600 hover:text-teal-600 rounded-xl'
                 >
                   Add
