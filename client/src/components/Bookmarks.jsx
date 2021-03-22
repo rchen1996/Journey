@@ -19,7 +19,6 @@ export default function Bookmarks(props) {
           Your travel insiprations and dream trips you have saved.
         </h2>
       </div>
-      {/* <Link to='/itineraries'></Link> */}
       {parsedBookmarks.length === 0 && (
         <div className='flex items-center p-3 mx-12 mt-4 text-gray-100 bg-red-600 rounded-xl bg-opacity-80 lg:w-min lg:whitespace-nowrap'>
           <svg
