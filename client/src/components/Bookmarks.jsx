@@ -20,7 +20,7 @@ export default function Bookmarks(props) {
         </h2>
       </div>
       {parsedBookmarks.length === 0 && (
-        <div className='flex items-center p-3 mx-12 mt-4 text-gray-100 bg-red-600 rounded-xl bg-opacity-80 lg:w-min lg:whitespace-nowrap'>
+        <div className='flex items-center p-4 mx-12 mt-8 text-gray-100 bg-gray-600 rounded-xl bg-opacity-80 '>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 20 20'
