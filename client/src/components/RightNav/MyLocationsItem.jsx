@@ -21,9 +21,7 @@ export default function MyLocationsItem(props) {
 
   const addToDay = () => {
     updateActivityDay(location.activity_id, day_id, itinerary.id).then(res => {
-      if (res.data.error) {
-        // display error => must be logged in or don't have permissions because not part of travel party
-      } else {
+      if (!res.data.error) {
         dispatch({
           type: SET_ITINERARY,
           itinerary: { ...itinerary, ...res.data },
@@ -34,9 +32,7 @@ export default function MyLocationsItem(props) {
 
   const removeLocation = () => {
     deleteActivity(location.activity_id, itinerary.id).then(res => {
-      if (res.data.error) {
-        // display error => must be logged in or don't have permissions because not part of travel party
-      } else {
+      if (!res.data.error) {
         dispatch({
           type: SET_ITINERARY,
           itinerary: { ...itinerary, ...res.data },

@@ -17,9 +17,7 @@ export default function AttractionsListItem(props) {
 
   const addToMyLocations = () => {
     addMyLocation(attraction.id, itinerary.id).then(res => {
-      if (res.data.error) {
-        // display error => must be logged in, or don't have permissions becuase not part of travel party
-      } else {
+      if (!res.data.error) {
         dispatch({
           type: SET_ITINERARY,
           itinerary: { ...itinerary, ...res.data },
@@ -36,15 +34,11 @@ export default function AttractionsListItem(props) {
   const addToDay = () => {
     const activity = { attractionId: attraction.id };
     createActivity(activity, itinerary.id, dayId).then(res => {
-      if (res.data.error) {
-        // dispay error => must be logged in, or don't have permissions because they are not part of travel party
-      } else {
+      if (!res.data.error) {
         dispatch({
           type: SET_ITINERARY,
           itinerary: { ...itinerary, ...res.data },
         });
-
-        // display message upon successfully added
       }
     });
   };

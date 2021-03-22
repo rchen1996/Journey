@@ -219,10 +219,6 @@ export default function useApplicationData() {
           rightUser !== null ? rightUser : state.sideNav.rightNav.userCollapsed,
       },
       leftNav: {
-        // collapsed: left !== null ? left : state.sideNav.leftNav.collapsed,
-        // breakPointCollapsed: state.sideNav.leftNav.breakPointCollapsed,
-        // userCollapsed:
-        //   leftUser !== null ? leftUser : state.sideNav.leftNav.userCollapsed,
         collapsed: left !== null ? left : state.sideNav.leftNav.collapsed,
         breakPointCollapsed: false,
         userCollapsed:

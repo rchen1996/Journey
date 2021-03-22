@@ -156,7 +156,6 @@ export default function ItineraryListItem(props) {
           <p className='text-sm text-gray-500 line-clamp-3'>{description}</p>
         </div>
       </div>
-      {/* <span className='text-xs hover:underline'>{'Read more -->'}</span> */}
     </article>
   );
 }

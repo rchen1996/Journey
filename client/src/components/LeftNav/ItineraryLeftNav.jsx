@@ -176,7 +176,6 @@ export default function ItineraryLeftNav(props) {
                     },
                   }}
                   className='flex rounded-xl hover:underline'
-                  // activeClassName='bg-gray-200 bg-opacity-25 rounded-xl'
                 >
                   My Group
                   <svg
