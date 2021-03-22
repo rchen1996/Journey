@@ -119,19 +119,6 @@ export default function ItineraryDayActivities(props) {
         status: true,
         message: 'There is a time conflict with another activity.',
       });
-
-      // editActivity(itinerary_id, activity.id, {
-      //   ...activityForm,
-      //   start_time: '',
-      //   end_time: '',
-      // }).then(res => {
-      //   if (res.error) {
-      //     console.log('error:', res.error);
-      //     return;
-      //   }
-      //   setActivityForm({ ...activityForm, start_time: '', end_time: '' });
-      //   setEditMode(BASE);
-      // });
     }
   }
 

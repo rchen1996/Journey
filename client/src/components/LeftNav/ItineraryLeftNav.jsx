@@ -37,7 +37,6 @@ export default function ItineraryLeftNav(props) {
   }, [itinerary_id]);
 
   function handleSubmit(event, last_day_order, locationName) {
-    console.log('Hello');
     event.preventDefault();
     const titleCase = str => {
       const result = str

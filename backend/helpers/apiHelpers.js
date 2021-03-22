@@ -219,7 +219,6 @@ module.exports = db => {
     return db
       .query(query)
       .then(result => {
-        console.log('add Day to itinerary:', result.rows[0]);
         return result.rows[0];
       })
       .catch(err => err);

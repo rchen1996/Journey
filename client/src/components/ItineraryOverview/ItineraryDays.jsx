@@ -28,7 +28,6 @@ export default function ItineraryDays(props) {
   const handleDelete = () => {
     deleteDayFromItinerary(itinerary.id, day.id).then(res => {
       if (res.error) console.log('error: ', res.error);
-      // if (res.success) console.log('success: ', res.success);
     });
   };
   const addDays = (date, days) => {
