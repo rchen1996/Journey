@@ -6,9 +6,11 @@ Journey is a single page app for creating trip itineraries for groups in real ti
 
 ## Final Product
 
-![screenshot](#)
-![screenshot](#)
-![screenshot](#)
+![home](docs/home.png?raw=true "Home Page")
+![explore](docs/explore.png)
+![activity search](docs/activity-search.png)
+![overview](docs/overview.png)
+![print](docs/print.png)
 
 ## Getting Started
 
