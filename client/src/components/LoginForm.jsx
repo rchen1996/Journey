@@ -74,15 +74,20 @@ export default function LoginForm(props) {
 
   return (
     <>
-      <AlertMessage
-        isError={error.status}
-        show={error.show}
-        hide={error.hide}
-        message={error.message}
-      ></AlertMessage>
-
-      <section className='w-full shadow-lg bg-gray-50 rounded-xl'>
-        <form onSubmit={event => save(event)} className='flex flex-col'>
+      <section className='w-3/5 '>
+        <h1 className='self-start mb-4 ml-1 text-2xl font-bold'>
+          Welcome Back!
+        </h1>
+        <AlertMessage
+          isError={error.status}
+          show={error.show}
+          hide={error.hide}
+          message={error.message}
+        ></AlertMessage>
+        <form
+          onSubmit={event => save(event)}
+          className='flex flex-col shadow-lg bg-gray-50 rounded-xl'
+        >
           <div className='flex flex-col mx-8 my-4'>
             <label htmlFor='email' className='font-semibold'>
               Email
@@ -109,7 +114,7 @@ export default function LoginForm(props) {
           </div>
           <footer className='flex flex-col items-center justify-between px-8 py-3 bg-gray-300 bg-opacity-50 sm:items-center sm:flex-row rounded-b-xl'>
             <FormButton type='submit'>Log in</FormButton>
-            <span className='mt-2 ml-1.5 text-xs font-semibold'>
+            <span className='mt-2 ml-4 text-xs font-semibold'>
               Don't have an account? Sign up{' '}
               <Link to='/signup' className='text-teal-600 hover:underline'>
                 here!
