@@ -22,7 +22,7 @@ export default function MyGroup(props) {
     removeCollaborator(id, userId);
   };
 
-  function sendEmail(name, personWhoAdded) {
+  function sendEmail(name, personWhoAdded, email_to) {
     emailjs
       .send(
         'service_ha193ol',
@@ -31,6 +31,7 @@ export default function MyGroup(props) {
           to_name: name,
           from_name: 'Journey',
           message: `You were just added to the ${props.itinerary.name} itinerary by ${personWhoAdded}.`,
+          email_to: email_to,
         },
         'user_t1rYZ5aMx35opccJ5gGJG'
       )
@@ -64,7 +65,7 @@ export default function MyGroup(props) {
         });
         setAddInput('');
         handleDropDown();
-        sendEmail(newMember, memberWhoAdded);
+        sendEmail(newMember, memberWhoAdded, addInput);
       }
     });
   };
