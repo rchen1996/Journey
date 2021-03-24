@@ -217,7 +217,7 @@ export default function ItineraryDayActivities(props) {
                   <p className='text-xs'>{startTime}</p>
                   {duration &&
                     (duration < 1 ? (
-                      <p className='text-xs'>{duration * 60} MIN</p>
+                      <p className='text-xs font-bold'>{duration * 60} MIN</p>
                     ) : (
                       <p className='text-xs font-bold'>
                         {duration.toFixed(2)} HR
