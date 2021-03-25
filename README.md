@@ -41,6 +41,7 @@ Back-end: Express, Node.js, PostgreSQL and Socket.io
 - Node (14.X) for React
 - Axios (0.21.X)
 - React (17.X)
+- TailwindCSS (2.0.X)
 - Socket.io-client (4.X)
 - Craco (6.1.X)
 - emailjs-com (2.6.X)
