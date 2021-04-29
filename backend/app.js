@@ -7,7 +7,7 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 
-const port = process.env.PORT || 8002;
+const port = process.env.PORT || 8001;
 
 const usersRouter = require('./routes/users');
 const apiRouter = require('./routes/itineraries');
@@ -48,10 +48,10 @@ const io = socketIo(server, {
 
 app.set('socketio', io);
 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   console.log('New client connected');
 
-  socket.on('itinerary_id', (id) => {
+  socket.on('itinerary_id', id => {
     socket.join(id);
   });
 
