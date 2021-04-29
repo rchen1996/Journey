@@ -41,7 +41,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:8000',
+    origin: 'https://www.journey-lhl.netlify.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
