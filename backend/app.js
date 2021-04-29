@@ -47,6 +47,7 @@ const io = socketIo(server, {
 });
 
 app.set('socketio', io);
+app.set('trust proxy', 1);
 
 io.on('connection', socket => {
   console.log('New client connected');
