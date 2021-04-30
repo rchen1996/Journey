@@ -34,7 +34,7 @@ export default function useApplicationData() {
 
   useEffect(() => {
     if (!state.user.id) {
-      axios.get(`/api/users/:user_id`, { withCredentials: true }).then(res => {
+      axios.get(`/api/users/:user_id`).then(res => {
         const user = res.data;
         if (res.data.id) {
           dispatch({
