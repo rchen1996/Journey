@@ -3,6 +3,7 @@
 ## About
 
 Journey is a single page app for creating trip itineraries for groups in real time, and browsing public itineraries for inspiration.
+[Check it out here!](https://journey-lhl.netlify.app/)
 
 ## Tech Stack
 
