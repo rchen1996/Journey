@@ -41,7 +41,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'https://journey-lhl.netlify.app',
+    origin: 'https://journey-lhl.netlify.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
 );
@@ -54,7 +54,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: process.env.CORS_ORIGIN || 'https://journey-lhl.netlify.app',
+    origin: 'https://journey-lhl.netlify.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
