@@ -313,7 +313,7 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    const socket = io();
+    const socket = io('https://journey-lighthouse.herokuapp.com/');
     socket.on('connect', function () {
       socket.emit('itinerary_id', state.itinerary && state.itinerary.id);
     });
