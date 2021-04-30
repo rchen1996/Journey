@@ -18,4 +18,10 @@
   from = "/api/*"
   to = "https://journey-lighthouse.herokuapp.com/:splat"
   status = 200
-  force = true # COMMENT: ensure that we always redirect
+  force = true
+
+[[redirects]]
+  from = "/socket.io/*"
+  to = "https://journey-lighthouse.herokuapp.com/:splat"
+  status = 200
+  force = true
