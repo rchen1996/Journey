@@ -8,7 +8,7 @@ import dataReducer, {
 } from '../reducers/application';
 import axios from 'axios';
 import { io } from 'socket.io-client';
-const ENDPOINT = 'http://localhost:8002';
+// const ENDPOINT = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8002';
 
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(dataReducer, {
@@ -314,7 +314,7 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    const socket = io(ENDPOINT);
+    const socket = io();
     socket.on('connect', function () {
       socket.emit('itinerary_id', state.itinerary && state.itinerary.id);
     });
