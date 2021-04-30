@@ -20,11 +20,16 @@ const searchHelpers = require('./helpers/searchHelpers')(db);
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 app.use(
   cookieSession({
     name: 'session',
     keys: ['key1', 'key2'],
     secureProxy: true,
+    domain: '.journey-lhl.netlify.app',
+    sameSite: 'none',
+    secure: true,
   })
 );
 app.use(logger('dev'));
@@ -36,7 +41,12 @@ app.use(
     contentSecurityPolicy: false,
   })
 );
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: [process.env.FRONTEND_APP_URL],
+  })
+);
 
 app.use('/api/users', usersRouter(userHelpers));
 app.use('/api/itineraries', apiRouter(apiHelpers));
@@ -52,7 +62,6 @@ const io = socketIo(server, {
 });
 
 app.set('socketio', io);
-app.set('trust proxy', 1);
 
 io.on('connection', socket => {
   console.log('New client connected');
