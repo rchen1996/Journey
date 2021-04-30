@@ -26,8 +26,6 @@ app.use(
   cookieSession({
     name: 'session',
     keys: ['key1', 'key2'],
-    secureProxy: true,
-    domain: '.journey-lhl.netlify.app',
     sameSite: false,
     secure: true,
   })
