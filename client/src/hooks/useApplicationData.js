@@ -313,7 +313,7 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
-    const socket = io(process.env.ENDPOINT || null);
+    const socket = io();
     socket.on('connect', function () {
       socket.emit('itinerary_id', state.itinerary && state.itinerary.id);
     });
