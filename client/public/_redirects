@@ -1,0 +1,2 @@
+/api/* https://journey-lighthouse.herokuapp.com/:splat 200
+/socket.io/* https://journey-lighthouse.herokuapp.com/:splat 200
