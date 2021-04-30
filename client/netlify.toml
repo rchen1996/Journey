@@ -11,5 +11,14 @@
   # Default build command.
   command = "npm run build"
 
-#[build.environment]
-# REACT_APP_API_BASE_URL = "https://journey-lhl.netlify.app/"
+[[redirects]]
+  from = "/api/*"
+  to = "https://journey-lighthouse.herokuapp.com/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/socket.io/*"
+  to = "https://journey-lighthouse.herokuapp.com/socket.io/:splat"
+  status = 200
+  force = true
