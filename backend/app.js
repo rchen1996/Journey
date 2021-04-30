@@ -39,7 +39,12 @@ app.use(
     contentSecurityPolicy: false,
   })
 );
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://journey-lhl.netlify.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  })
+);
 
 app.use('/api/users', usersRouter(userHelpers));
 app.use('/api/itineraries', apiRouter(apiHelpers));
