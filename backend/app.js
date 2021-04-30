@@ -28,7 +28,7 @@ app.use(
     keys: ['key1', 'key2'],
     secureProxy: true,
     domain: '.journey-lhl.netlify.app',
-    sameSite: 'none',
+    sameSite: false,
     secure: true,
   })
 );
