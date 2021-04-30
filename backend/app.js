@@ -41,12 +41,7 @@ app.use(
     contentSecurityPolicy: false,
   })
 );
-app.use(
-  cors({
-    credentials: true,
-    origin: [process.env.FRONTEND_APP_URL],
-  })
-);
+app.use(cors());
 
 app.use('/api/users', usersRouter(userHelpers));
 app.use('/api/itineraries', apiRouter(apiHelpers));
