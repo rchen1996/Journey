@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://journey-lighthouse.herokuapp.com/",
+  "proxy": "http://localhost:8001",
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "@storybook/addon-postcss": "^2.0.0",
